@@ -699,29 +699,10 @@ body {
 }
 
 /* ============================================
-   STAGE BREAKDOWN — 2 cards visible on mobile
+   STAGE BREAKDOWN
    ============================================ */
 
-@media (max-width: 768px) {
-  .stage-breakdown-scroll {
-    display: grid;
-    grid-template-columns: repeat(4, calc(50% - 6px));
-    gap: 8px;
-    overflow-x: auto;
-    padding: 0 12px 12px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    scroll-snap-type: x mandatory;
-  }
-  .stage-breakdown-scroll::-webkit-scrollbar { display: none; }
-  .stage-breakdown-card {
-    scroll-snap-align: start;
-    flex-shrink: 0;
-    min-width: 0;
-  }
-}
-
-/* Stage breakdown desktop */
+/* Desktop — compact fixed-width cards in a row */
 .stage-breakdown-scroll {
   display: flex;
   gap: 8px;
@@ -734,4 +715,19 @@ body {
 .stage-breakdown-card {
   flex: 0 0 90px;
   min-width: 90px;
+}
+
+/* Mobile — exactly 2 cards visible at once, snap scroll */
+@media (max-width: 768px) {
+  .stage-breakdown-scroll {
+    padding: 8px 12px 12px;
+    gap: 10px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 12px;
+  }
+  .stage-breakdown-card {
+    flex: 0 0 calc(50% - 17px);
+    min-width: calc(50% - 17px);
+    scroll-snap-align: start;
+  }
 }
