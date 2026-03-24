@@ -669,3 +669,31 @@ body {
   .fab { display: none; }
   .mobile-tabbar { display: none; }
 }
+
+/* ============================================
+   BACK BUTTON
+   ============================================ */
+
+/* Hidden on desktop */
+.back-btn { display: none; }
+
+@media (max-width: 768px) {
+  .back-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-2);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding-bottom: 1px;
+    transition: background 0.15s;
+  }
+  .back-btn:active { background: var(--bg); }
+}

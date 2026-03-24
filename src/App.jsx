@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
 import MobileTabBar from './components/MobileTabBar'
 import Opportunities from './pages/Opportunities'
@@ -11,20 +11,34 @@ import { TaskModal, RelModal } from './components/modals/OtherModals'
 import { useAppData } from './hooks/useAppData'
 
 const PAGE_META = {
-  '/opportunities':         { title: 'Opportunities', sub: 'Aggregated view of all active opportunity sources'    },
-  '/opportunities/permits': { title: 'Permit Feed',   sub: 'Live commercial permit leads from Tampa Bay counties' },
-  '/relationships':         { title: 'Relationships', sub: 'GC and MEP engineer relationship tracker'             },
-  '/tasks':                 { title: 'Task Board',    sub: 'Team actions, follow-ups and assignments'             },
+  '/opportunities':         { title: 'Opportunities', sub: 'Aggregated view of all active opportunity sources',    parent: null               },
+  '/opportunities/permits': { title: 'Permit Feed',   sub: 'Live commercial permit leads from Tampa Bay counties', parent: '/opportunities'    },
+  '/relationships':         { title: 'Relationships', sub: 'GC and MEP engineer relationship tracker',             parent: null               },
+  '/tasks':                 { title: 'Task Board',    sub: 'Team actions, follow-ups and assignments',             parent: null               },
 }
 
 function Header() {
   const location = useLocation()
+  const navigate  = useNavigate()
   const meta = PAGE_META[location.pathname] || PAGE_META['/opportunities']
+
   return (
     <div className="header">
-      <div>
-        <div className="header-title">{meta.title}</div>
-        <div className="header-sub">{meta.sub}</div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        {/* Back arrow — only shown on mobile when there's a parent route */}
+        {meta.parent && (
+          <button
+            onClick={() => navigate(meta.parent)}
+            className="back-btn"
+            aria-label="Go back"
+          >
+            ‹
+          </button>
+        )}
+        <div>
+          <div className="header-title">{meta.title}</div>
+          <div className="header-sub">{meta.sub}</div>
+        </div>
       </div>
     </div>
   )
@@ -80,7 +94,6 @@ export default function App() {
         </div>
       </div>
 
-      {/* Mobile bottom tab bar — hidden on desktop via CSS */}
       <MobileTabBar leads={leads} tasks={tasks} />
 
       {modal?.type === 'lead' && <LeadModal lead={modal.data} onClose={() => setModal(null)} onSave={handleSaveLead} />}
