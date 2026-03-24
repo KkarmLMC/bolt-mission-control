@@ -16,29 +16,26 @@ function Clock() {
   )
 }
 
-const NAV_ITEMS = [
-  { path: '/',             icon: '⚡', label: 'Permit Feed'   },
-  { path: '/pipeline',     icon: '📊', label: 'Pipeline'      },
-  { path: '/relationships',icon: '🤝', label: 'Relationships' },
-  { path: '/tasks',        icon: '✅', label: 'Task Board'    },
-]
-
 export default function Sidebar({ leads, rels, tasks }) {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const newLeads     = leads.filter(l => l.status === 'NEW LEAD').length
-  const activeLeads  = leads.filter(l => !['WON ✓', 'LOST ✗'].includes(l.status)).length
-  const openTasks    = tasks.filter(t => !t.done).length
-  const overdueTasks = tasks.filter(t => !t.done && t.due_date && t.due_date < new Date().toISOString().split('T')[0]).length
-  const criticalLeads= leads.filter(l => l.priority?.includes('CRITICAL')).length
+  const newLeads      = leads.filter(l => l.status === 'NEW LEAD').length
+  const activeLeads   = leads.filter(l => !['WON ✓', 'LOST ✗'].includes(l.status)).length
+  const openTasks     = tasks.filter(t => !t.done).length
+  const overdueTasks  = tasks.filter(t => !t.done && t.due_date && t.due_date < new Date().toISOString().split('T')[0]).length
+  const criticalLeads = leads.filter(l => l.priority?.includes('CRITICAL')).length
+  const isOppsActive  = location.pathname.startsWith('/opportunities')
 
-  const counts = {
-    '/':              newLeads,
-    '/pipeline':      activeLeads,
-    '/relationships': rels.length,
-    '/tasks':         openTasks,
-  }
+  const topNavItems = [
+    { path: '/opportunities', icon: '📊', label: 'Opportunities', count: activeLeads },
+    { path: '/relationships', icon: '🤝', label: 'Relationships',  count: rels.length },
+    { path: '/tasks',         icon: '✅', label: 'Task Board',     count: openTasks   },
+  ]
+
+  const oppsChildren = [
+    { path: '/opportunities/permits', icon: '⚡', label: 'Permit Feed', count: newLeads },
+  ]
 
   return (
     <div className="sidebar">
@@ -54,21 +51,50 @@ export default function Sidebar({ leads, rels, tasks }) {
 
       <div className="sidebar-section">
         <div className="sidebar-section-label">Navigation</div>
-        {NAV_ITEMS.map(item => {
-          const active = location.pathname === item.path
-          const count  = counts[item.path] || 0
+        {topNavItems.map(item => {
+          const active = location.pathname === item.path ||
+            (item.path === '/opportunities' && isOppsActive)
           return (
-            <button
-              key={item.path}
-              className={`nav-item ${active ? 'active' : ''}`}
-              onClick={() => navigate(item.path)}
-            >
-              <span className="nav-icon">{item.icon}</span>
-              {item.label}
-              {count > 0 && (
-                <span className={`nav-badge ${active ? 'active-badge' : 'gray'}`}>{count}</span>
+            <div key={item.path}>
+              <button
+                className={`nav-item ${active ? 'active' : ''}`}
+                onClick={() => navigate(item.path)}
+              >
+                <span className="nav-icon">{item.icon}</span>
+                {item.label}
+                {item.count > 0 && (
+                  <span className={`nav-badge ${active ? 'active-badge' : 'gray'}`}>{item.count}</span>
+                )}
+              </button>
+
+              {item.path === '/opportunities' && isOppsActive && (
+                <div style={{
+                  marginLeft: 14,
+                  borderLeft: '2px solid var(--border)',
+                  paddingLeft: 8,
+                  marginTop: 2,
+                  marginBottom: 4,
+                }}>
+                  {oppsChildren.map(child => {
+                    const childActive = location.pathname === child.path
+                    return (
+                      <button
+                        key={child.path}
+                        className={`nav-item ${childActive ? 'active' : ''}`}
+                        style={{ fontSize: 12.5, padding: '6px 10px' }}
+                        onClick={e => { e.stopPropagation(); navigate(child.path) }}
+                      >
+                        <span className="nav-icon" style={{ fontSize: 13 }}>{child.icon}</span>
+                        {child.label}
+                        {child.count > 0 && (
+                          <span className={`nav-badge ${childActive ? 'active-badge' : 'gray'}`}>{child.count}</span>
+                        )}
+                      </button>
+                    )
+                  })}
+                </div>
               )}
-            </button>
+            </div>
           )
         })}
       </div>

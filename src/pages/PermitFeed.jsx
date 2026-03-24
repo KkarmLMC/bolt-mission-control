@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { fmt$, prioBadge, statusBadge } from '../lib/utils'
+import FAB from '../components/FAB'
 
 export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
   const [filter, setFilter] = useState('ALL')
@@ -28,19 +29,19 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
           <div className="stat-delta">All active opportunities</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">Critical Priority</span><div className="stat-icon red">🔴</div></div>
+          <div className="stat-card-top"><span className="stat-label">Critical</span><div className="stat-icon red">🔴</div></div>
           <div className="stat-value red">{counts.critical}</div>
-          <div className="stat-delta">Over $5M — call this week</div>
+          <div className="stat-delta">Call this week</div>
         </div>
         <div className="stat-card">
           <div className="stat-card-top"><span className="stat-label">High Priority</span><div className="stat-icon amber">🟠</div></div>
           <div className="stat-value amber">{counts.high}</div>
-          <div className="stat-delta">Over $1M or high-value type</div>
+          <div className="stat-delta">Over $1M</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">New / Uncontacted</span><div className="stat-icon green">📬</div></div>
+          <div className="stat-card-top"><span className="stat-label">New</span><div className="stat-icon green">📬</div></div>
           <div className="stat-value green">{counts.uncontacted}</div>
-          <div className="stat-delta">Awaiting first contact</div>
+          <div className="stat-delta">Uncontacted</div>
         </div>
       </div>
 
@@ -52,15 +53,15 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
           </span>
           <button className="btn btn-primary btn-sm" onClick={onAdd}>+ Add Lead</button>
         </div>
-        <div style={{ padding: '12px 20px 0' }}>
+        <div style={{ padding: '10px 14px 0' }}>
           <div className="filter-bar">
             {['ALL','CRITICAL','HIGH','MEDIUM','NEW LEAD','CONTACTED','WON ✓'].map(f => (
               <button key={f} className={`filter-pill ${filter === f ? 'active' : ''}`} onClick={() => setFilter(f)}>{f}</button>
             ))}
-            <div className="search-box">
-              <span style={{ color: 'var(--text-3)' }}>🔍</span>
-              <input placeholder="Search leads..." value={search} onChange={e => setSearch(e.target.value)} />
-            </div>
+          </div>
+          <div className="search-box" style={{ marginBottom: 8 }}>
+            <span style={{ color: 'var(--text-3)' }}>🔍</span>
+            <input placeholder="Search leads..." value={search} onChange={e => setSearch(e.target.value)} />
           </div>
         </div>
         <div className="card-body">
@@ -70,7 +71,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
             <div className="empty">
               <div className="empty-icon">⚡</div>
               <div className="empty-title">No leads yet</div>
-              <div className="empty-desc">Add leads manually or run the permit scraper to populate this feed.</div>
+              <div className="empty-desc">Add leads manually or run the permit scraper.</div>
               <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Lead</button>
             </div>
           ) : (
@@ -110,6 +111,8 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
           )}
         </div>
       </div>
+
+      <FAB onClick={onAdd} />
     </div>
   )
 }

@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
+import MobileTabBar from './components/MobileTabBar'
+import Opportunities from './pages/Opportunities'
 import PermitFeed from './pages/PermitFeed'
-import Pipeline from './pages/Pipeline'
 import Relationships from './pages/Relationships'
 import TaskBoard from './pages/TaskBoard'
 import LeadModal from './components/modals/LeadModal'
@@ -10,18 +11,28 @@ import { TaskModal, RelModal } from './components/modals/OtherModals'
 import { useAppData } from './hooks/useAppData'
 
 const PAGE_META = {
-  '/':              { title: 'Permit Feed',    sub: 'Live commercial permit leads from Tampa Bay counties'         },
-  '/pipeline':      { title: 'Pipeline',       sub: 'Track opportunities from first contact to closed contract'    },
-  '/relationships': { title: 'Relationships',  sub: 'GC and MEP engineer relationship tracker'                    },
-  '/tasks':         { title: 'Task Board',     sub: 'Team actions, follow-ups and assignments'                    },
+  '/opportunities':         { title: 'Opportunities', sub: 'Aggregated view of all active opportunity sources'    },
+  '/opportunities/permits': { title: 'Permit Feed',   sub: 'Live commercial permit leads from Tampa Bay counties' },
+  '/relationships':         { title: 'Relationships', sub: 'GC and MEP engineer relationship tracker'             },
+  '/tasks':                 { title: 'Task Board',    sub: 'Team actions, follow-ups and assignments'             },
+}
+
+function Header() {
+  const location = useLocation()
+  const meta = PAGE_META[location.pathname] || PAGE_META['/opportunities']
+  return (
+    <div className="header">
+      <div>
+        <div className="header-title">{meta.title}</div>
+        <div className="header-sub">{meta.sub}</div>
+      </div>
+    </div>
+  )
 }
 
 export default function App() {
-  const { leads, rels, tasks, loading, setupNeeded, saveLead, saveRel, saveTask, toggleTask } = useAppData()
+  const { leads, rels, tasks, loading, saveLead, saveRel, saveTask, toggleTask } = useAppData()
   const [modal, setModal] = useState(null)
-
-  const currentPath = window.location.pathname
-  const meta = PAGE_META[currentPath] || PAGE_META['/']
 
   const handleSaveLead = async (f) => { await saveLead(f); setModal(null) }
   const handleSaveRel  = async (f) => { await saveRel(f);  setModal(null) }
@@ -32,26 +43,18 @@ export default function App() {
       <Sidebar leads={leads} rels={rels} tasks={tasks} />
 
       <div className="main">
-        <div className="header">
-          <div>
-            <div className="header-title">{meta.title}</div>
-            <div className="header-sub">{meta.sub}</div>
-          </div>
-        </div>
-
+        <Header />
         <div style={{ flex: 1, overflow: 'hidden', overflowY: 'auto' }}>
           <Routes>
-            <Route path="/" element={
+            <Route path="/" element={<Navigate to="/opportunities" replace />} />
+            <Route path="/opportunities" element={
+              <Opportunities leads={leads} loading={loading.permits} />
+            } />
+            <Route path="/opportunities/permits" element={
               <PermitFeed
                 leads={leads}
                 loading={loading.permits}
                 onAdd={() => setModal({ type: 'lead', data: null })}
-                onEdit={l => setModal({ type: 'lead', data: l })}
-              />
-            } />
-            <Route path="/pipeline" element={
-              <Pipeline
-                leads={leads}
                 onEdit={l => setModal({ type: 'lead', data: l })}
               />
             } />
@@ -72,10 +75,13 @@ export default function App() {
                 onToggle={toggleTask}
               />
             } />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to="/opportunities" replace />} />
           </Routes>
         </div>
       </div>
+
+      {/* Mobile bottom tab bar — hidden on desktop via CSS */}
+      <MobileTabBar leads={leads} tasks={tasks} />
 
       {modal?.type === 'lead' && <LeadModal lead={modal.data} onClose={() => setModal(null)} onSave={handleSaveLead} />}
       {modal?.type === 'rel'  && <RelModal  rel={modal.data}  onClose={() => setModal(null)} onSave={handleSaveRel}  />}

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import FAB from '../components/FAB'
 
 export default function Relationships({ rels, loading, onAdd, onEdit }) {
   const [typeF, setTypeF] = useState('ALL')
@@ -16,19 +17,19 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
     <div className="page fade-in">
       <div className="stat-grid">
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">Total Companies</span><div className="stat-icon blue">🏢</div></div>
+          <div className="stat-card-top"><span className="stat-label">Total</span><div className="stat-icon blue">🏢</div></div>
           <div className="stat-value blue">{rels.length}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">GC Relationships</span><div className="stat-icon blue">🏗️</div></div>
+          <div className="stat-card-top"><span className="stat-label">GCs</span><div className="stat-icon blue">🏗️</div></div>
           <div className="stat-value">{rels.filter(r => r.type === 'GC').length}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">MEP Engineers</span><div className="stat-icon amber">⚡</div></div>
+          <div className="stat-card-top"><span className="stat-label">MEP Eng.</span><div className="stat-icon amber">⚡</div></div>
           <div className="stat-value amber">{rels.filter(r => r.type === 'MEP Engineer').length}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">On Bid Lists</span><div className="stat-icon green">✅</div></div>
+          <div className="stat-card-top"><span className="stat-label">Bid Lists</span><div className="stat-icon green">✅</div></div>
           <div className="stat-value green">{rels.filter(r => r.on_bid_list).length}</div>
         </div>
       </div>
@@ -41,15 +42,15 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
           </span>
           <button className="btn btn-primary btn-sm" onClick={onAdd}>+ Add Company</button>
         </div>
-        <div style={{ padding: '12px 20px 0' }}>
+        <div style={{ padding: '10px 12px 0' }}>
           <div className="filter-bar">
             {['ALL','GC','MEP Engineer','Owner/Developer'].map(t => (
               <button key={t} className={`filter-pill ${typeF === t ? 'active' : ''}`} onClick={() => setTypeF(t)}>{t}</button>
             ))}
-            <div className="search-box">
-              <span style={{ color: 'var(--text-3)' }}>🔍</span>
-              <input placeholder="Search companies..." value={search} onChange={e => setSearch(e.target.value)} />
-            </div>
+          </div>
+          <div className="search-box" style={{ marginBottom: 8 }}>
+            <span style={{ color: 'var(--text-3)' }}>🔍</span>
+            <input placeholder="Search companies..." value={search} onChange={e => setSearch(e.target.value)} />
           </div>
         </div>
         <div className="card-body">
@@ -59,7 +60,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
             <div className="empty">
               <div className="empty-icon">🤝</div>
               <div className="empty-title">No companies yet</div>
-              <div className="empty-desc">Add your GC and MEP engineer relationships to track outreach progress.</div>
+              <div className="empty-desc">Add your GC and MEP engineer relationships.</div>
               <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Company</button>
             </div>
           ) : (
@@ -92,7 +93,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
                             <div key={i} className={`pip ${d ? 'done' : ''}`} />
                           ))}
                         </div>
-                        <span style={{ fontSize: 10, color: 'var(--text-3)' }}>{score(r)}/5 steps</span>
+                        <span style={{ fontSize: 10, color: 'var(--text-3)' }}>{score(r)}/5</span>
                       </td>
                       <td onClick={e => e.stopPropagation()}>
                         <button className="btn btn-ghost btn-sm" onClick={() => onEdit(r)}>Edit</button>
@@ -105,6 +106,8 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
           )}
         </div>
       </div>
+
+      <FAB onClick={onAdd} />
     </div>
   )
 }

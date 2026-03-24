@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { today, dueClass, dueLabel } from '../lib/utils'
+import FAB from '../components/FAB'
 
 export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
   const [filter, setFilter] = useState('ALL')
@@ -49,16 +50,16 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
           </span>
           <button className="btn btn-primary btn-sm" onClick={onAdd}>+ Add Task</button>
         </div>
-        <div style={{ padding: '12px 20px 0' }}>
+        <div style={{ padding: '10px 12px 0' }}>
           <div className="filter-bar">
             {['ALL','OPEN','TODAY','OVERDUE','DONE'].map(f => (
               <button key={f} className={`filter-pill ${filter === f ? 'active' : ''}`} onClick={() => setFilter(f)}>{f}</button>
             ))}
-            <div style={{ display: 'flex', gap: 4, marginLeft: 12, borderLeft: '1px solid var(--border)', paddingLeft: 12 }}>
-              {['ALL','Kodylee','Shaun','Field Crew'].map(a => (
-                <button key={a} className={`filter-pill ${assigneeF === a ? 'active' : ''}`} onClick={() => setAssigneeF(a)}>{a}</button>
-              ))}
-            </div>
+          </div>
+          <div className="filter-bar" style={{ paddingTop: 0 }}>
+            {['ALL','Kodylee','Shaun','Field Crew'].map(a => (
+              <button key={a} className={`filter-pill ${assigneeF === a ? 'active' : ''}`} onClick={() => setAssigneeF(a)}>{a}</button>
+            ))}
           </div>
         </div>
         <div className="card-body" style={{ paddingTop: 4 }}>
@@ -68,31 +69,35 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
             <div className="empty">
               <div className="empty-icon">✅</div>
               <div className="empty-title">No tasks here</div>
-              <div className="empty-desc">Add tasks to track follow-ups, calls, and actions for your team.</div>
+              <div className="empty-desc">Add tasks to track follow-ups, calls, and actions.</div>
               <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Task</button>
             </div>
           ) : filtered.map(t => (
-            <div key={t.id} className="task-row" style={{ opacity: t.done ? 0.55 : 1 }}>
-              <div className={`checkbox ${t.done ? 'checked' : ''}`} onClick={() => onToggle(t)}>
+            <div key={t.id} className="task-row" style={{ opacity: t.done ? 0.55 : 1 }} onClick={() => onEdit(t)}>
+              <div
+                className={`checkbox ${t.done ? 'checked' : ''}`}
+                onClick={e => { e.stopPropagation(); onToggle(t) }}
+              >
                 {t.done && <span style={{ color: 'white', fontSize: 10, fontWeight: 700 }}>✓</span>}
               </div>
               <div className="task-body">
                 <div className={`task-title ${t.done ? 'done' : ''}`}>{t.title}</div>
                 {t.related_to && <div className="task-sub">Re: {t.related_to}</div>}
-              </div>
-              <div className="task-meta">
-                <span className="assignee-chip">{t.assigned_to}</span>
-                <span className={`due-tag ${dueClass(t.due_date)}`}>{dueLabel(t.due_date)}</span>
-                <span style={{
-                  fontSize: 11, fontWeight: 600, minWidth: 52,
-                  color: t.priority === 'CRITICAL' ? 'var(--red)' : t.priority === 'HIGH' ? 'var(--amber)' : 'var(--text-3)'
-                }}>{t.priority}</span>
-                <button className="btn btn-ghost btn-sm" onClick={() => onEdit(t)}>Edit</button>
+                <div className="task-meta">
+                  <span className="assignee-chip">{t.assigned_to}</span>
+                  <span className={`due-tag ${dueClass(t.due_date)}`}>{dueLabel(t.due_date)}</span>
+                  <span style={{
+                    fontSize: 10.5, fontWeight: 600,
+                    color: t.priority === 'CRITICAL' ? 'var(--red)' : t.priority === 'HIGH' ? 'var(--amber)' : 'var(--text-3)'
+                  }}>{t.priority}</span>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      <FAB onClick={onAdd} />
     </div>
   )
 }
