@@ -96,13 +96,13 @@ export default function Opportunities({ leads, loading }) {
             Stage Breakdown
           </span>
         </div>
-        <div style={{ padding: "12px 16px 16px", display: "flex", gap: 8, overflowX: "auto", WebkitOverflowScrolling: "touch", scrollbarWidth: "none" }}>
+        <div className="stage-breakdown-scroll">
           {stages.map(s => {
             const count = leads.filter(l => l.status === s.key).length
             const val   = leads.filter(l => l.status === s.key).reduce((acc, l) => acc + (l.value_int || 0), 0)
             return (
-              <div key={s.key} style={{
-                flex: '0 0 90px', minWidth: '90px', background: 'var(--bg)', border: '1px solid var(--border)',
+              <div key={s.key} className="stage-breakdown-card" style={{
+                background: 'var(--bg)', border: '1px solid var(--border)',
                 borderTop: `3px solid ${s.color}`, borderRadius: 8, padding: '12px 14px',
               }}>
                 <div style={{ fontSize: 11, fontWeight: 600, color: s.color, marginBottom: 4 }}>{s.label}</div>

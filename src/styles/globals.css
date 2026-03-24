@@ -697,3 +697,41 @@ body {
   }
   .back-btn:active { background: var(--bg); }
 }
+
+/* ============================================
+   STAGE BREAKDOWN — 2 cards visible on mobile
+   ============================================ */
+
+@media (max-width: 768px) {
+  .stage-breakdown-scroll {
+    display: grid;
+    grid-template-columns: repeat(4, calc(50% - 6px));
+    gap: 8px;
+    overflow-x: auto;
+    padding: 0 12px 12px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+  }
+  .stage-breakdown-scroll::-webkit-scrollbar { display: none; }
+  .stage-breakdown-card {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+}
+
+/* Stage breakdown desktop */
+.stage-breakdown-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 16px 16px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.stage-breakdown-scroll::-webkit-scrollbar { display: none; }
+.stage-breakdown-card {
+  flex: 0 0 90px;
+  min-width: 90px;
+}
