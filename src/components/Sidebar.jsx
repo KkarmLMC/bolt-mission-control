@@ -39,9 +39,12 @@ export default function Sidebar({ leads = [], rels = [], tasks = [] }) {
   }
 
   const topNavItems = [
-    { path: '/opportunities', Icon: ChartBar,   label: 'Opportunities', count: activeLeads },
-    { path: '/relationships', Icon: Handshake,  label: 'Relationships',  count: rels.length },
-    { path: '/tasks',         Icon: CheckSquare, label: 'Task Board',    count: openTasks   },
+    { path: '/opportunities',  Icon: ChartBar,      label: 'Opportunities', count: activeLeads },
+    { path: '/change-orders',  Icon: ClipboardText, label: 'Change Orders', count: 0           },
+    { path: '/ops-board',      Icon: CalendarBlank, label: 'Ops Board',     count: 0           },
+    { path: '/relationships',  Icon: Handshake,     label: 'Relationships', count: rels.length },
+    { path: '/tasks',          Icon: CheckSquare,   label: 'Task Board',    count: openTasks   },
+    { path: '/qb-import',      Icon: DownloadSimple,label: 'QB Import',     count: 0           },
   ]
 
   const oppsChildren = [
