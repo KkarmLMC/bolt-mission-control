@@ -209,7 +209,7 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
   const tod = today()
 
   return (
-    <div style={{ overflowX: 'auto', overflowY: 'auto', maxHeight: 'calc(100vh - 220px)' }}>
+    <div style={{ overflowX: 'auto', overflowY: 'auto', maxHeight: 'calc(100vh - 220px - 64px)', WebkitOverflowScrolling: 'touch' }}>
       <div style={{ minWidth: 160 + days.length * 38 }}>
         {/* Header row */}
         <div style={{ display: 'flex', borderBottom: '2px solid var(--border-l)', position: 'sticky', top: 0, zIndex: 10, background: '#fff' }}>
@@ -343,7 +343,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
   }
 
   return (
-    <div style={{ overflowX: 'auto', overflowY: 'auto', maxHeight: 'calc(100vh - 220px)' }}>
+    <div style={{ overflowX: 'auto', overflowY: 'auto', maxHeight: 'calc(100vh - 220px - 64px)', WebkitOverflowScrolling: 'touch' }}>
       <div style={{ minWidth: 140 + days.length * 80 }}>
         {/* Header */}
         <div style={{ display: 'flex', borderBottom: '2px solid var(--border-l)', position: 'sticky', top: 0, zIndex: 10, background: '#fff' }}>
@@ -439,6 +439,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
 
 // ─── Month Grid View ───────────────────────────────────────────────────────────
 function MonthGridView({ projects, assignments, currentDate, onSelectProject }) {
+  // On mobile the cells need minimum height to show content but still allow scroll
   const year  = currentDate.getFullYear()
   const month = currentDate.getMonth()
   const firstDay = new Date(year, month, 1)
@@ -482,7 +483,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
           return (
             <div key={i} style={{
               background: isToday ? '#EFF6FF' : inMonth ? '#fff' : 'var(--surface-raised)',
-              minHeight: 90, padding: '6px 6px 4px',
+              minHeight: 72, padding: '4px 4px 2px',
             }}>
               <div style={{
                 width: 22, height: 22, borderRadius: '50%', marginBottom: 3,
@@ -595,11 +596,13 @@ export default function OpsBoard() {
   const endLabel   = `${MON_NAMES[days[days.length-1].getMonth()]} ${days[days.length-1].getDate()}, ${days[days.length-1].getFullYear()}`
 
   return (
-    <div className="page fade-in" style={{ padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div className="page fade-in" style={{ padding: 0, display: 'flex', flexDirection: 'column', minHeight: 0, flex: 1 }}>
 
       {/* Header bar */}
-      <div style={{ padding: 'var(--sp-3) var(--sp-4)', background: '#fff', borderBottom: '1px solid var(--border-l)', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', flexWrap: 'wrap' }}>
+      <div style={{ padding: 'var(--sp-2) var(--sp-3)', background: '#fff', borderBottom: '1px solid var(--border-l)', flexShrink: 0 }}>
+
+        {/* Row 1 — View + Span + Date nav */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', marginBottom: 'var(--sp-2)', flexWrap: 'wrap' }}>
 
           {/* View toggles */}
           <div style={{ display: 'flex', background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 2, gap: 1, flexShrink: 0 }}>
@@ -609,8 +612,8 @@ export default function OpsBoard() {
               { key: 'month', Icon: CalendarBlank, label: 'Month' },
             ].map(({ key, Icon, label }) => (
               <button key={key} onClick={() => setView(key)}
-                style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 10px', borderRadius: 'var(--r-md)', border: 'none', background: view === key ? 'var(--navy)' : 'transparent', color: view === key ? '#fff' : 'var(--text-2)', fontWeight: 700, fontSize: 11, cursor: 'pointer', transition: 'all 0.15s' }}>
-                <Icon size={13} weight={view === key ? 'fill' : 'regular'} />
+                style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 'var(--r-md)', border: 'none', background: view === key ? 'var(--navy)' : 'transparent', color: view === key ? '#fff' : 'var(--text-2)', fontWeight: 700, fontSize: 11, cursor: 'pointer', transition: 'all 0.15s' }}>
+                <Icon size={12} weight={view === key ? 'fill' : 'regular'} />
                 {label}
               </button>
             ))}
@@ -621,7 +624,7 @@ export default function OpsBoard() {
             <div style={{ display: 'flex', background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 2, gap: 1, flexShrink: 0 }}>
               {[['week','1W'],['2week','2W'],['month','4W']].map(([key, lbl]) => (
                 <button key={key} onClick={() => setSpan(key)}
-                  style={{ padding: '5px 10px', borderRadius: 'var(--r-md)', border: 'none', background: span === key ? 'var(--navy)' : 'transparent', color: span === key ? '#fff' : 'var(--text-2)', fontWeight: 700, fontSize: 11, cursor: 'pointer', transition: 'all 0.15s' }}>
+                  style={{ padding: '4px 8px', borderRadius: 'var(--r-md)', border: 'none', background: span === key ? 'var(--navy)' : 'transparent', color: span === key ? '#fff' : 'var(--text-2)', fontWeight: 700, fontSize: 11, cursor: 'pointer', transition: 'all 0.15s' }}>
                   {lbl}
                 </button>
               ))}
@@ -629,49 +632,54 @@ export default function OpsBoard() {
           )}
 
           {/* Date navigation */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', flexShrink: 0 }}>
-            <button onClick={() => go(-1)} style={{ width: 28, height: 28, borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <CaretLeft size={13} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-1)', flexShrink: 0 }}>
+            <button onClick={() => go(-1)} style={{ width: 26, height: 26, borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <CaretLeft size={12} />
             </button>
-            <button onClick={() => setCurrentDate(today())} style={{ padding: '4px 10px', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'transparent', fontSize: 11, fontWeight: 600, cursor: 'pointer', color: 'var(--navy)' }}>
+            <button onClick={() => setCurrentDate(today())} style={{ padding: '3px 8px', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'transparent', fontSize: 11, fontWeight: 600, cursor: 'pointer', color: 'var(--navy)' }}>
               Today
             </button>
-            <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-1)', minWidth: 150 }}>
+            <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-1)', whiteSpace: 'nowrap' }}>
+
               {view === 'month'
                 ? `${MON_NAMES[currentDate.getMonth()]} ${currentDate.getFullYear()}`
                 : `${startLabel} – ${endLabel}`}
             </span>
-            <button onClick={() => go(1)} style={{ width: 28, height: 28, borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <CaretRight size={13} />
+            <button onClick={() => go(1)} style={{ width: 26, height: 26, borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <CaretRight size={12} />
             </button>
           </div>
+        </div>
 
-          {/* Conflict badge */}
-          {conflicts.length > 0 && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 'var(--r-lg)', background: '#FEF2F2', color: '#B91C1C', fontSize: 11, fontWeight: 700, flexShrink: 0 }}>
-              <Warning size={13} weight="fill" />
-              {conflicts.length} conflict{conflicts.length !== 1 ? 's' : ''}
-            </div>
-          )}
+        {/* Row 2 — Search + Filter + Conflicts */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
 
           {/* Search */}
-          <div style={{ position: 'relative', marginLeft: 'auto', flexShrink: 0 }}>
-            <MagnifyingGlass size={13} style={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
+          <div style={{ position: 'relative', flex: 1 }}>
+            <MagnifyingGlass size={12} style={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search jobs…"
-              style={{ paddingLeft: 26, paddingRight: 8, width: 160, height: 30, fontSize: 12 }} />
+              style={{ paddingLeft: 24, paddingRight: 8, width: '100%', height: 28, fontSize: 11 }} />
           </div>
 
           {/* Stage filter */}
           <select value={stageFilter} onChange={e => setStageFilter(e.target.value)}
-            style={{ height: 30, fontSize: 12, paddingLeft: 8, paddingRight: 8, width: 120, flexShrink: 0 }}>
+            style={{ height: 28, fontSize: 11, paddingLeft: 6, paddingRight: 6, width: 110, flexShrink: 0 }}>
             <option value="all">All Stages</option>
             {STAGES_LIST.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
+
+          {/* Conflict badge */}
+          {conflicts.length > 0 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 'var(--r-lg)', background: '#FEF2F2', color: '#B91C1C', fontSize: 11, fontWeight: 700, flexShrink: 0, whiteSpace: 'nowrap' }}>
+              <Warning size={12} weight="fill" />
+              {conflicts.length}
+            </div>
+          )}
         </div>
       </div>
 
       {/* Board content */}
-      <div style={{ flex: 1, overflow: 'hidden', padding: view === 'month' ? 'var(--sp-4)' : 0 }}>
+      <div style={{ flex: 1, overflow: 'auto', WebkitOverflowScrolling: 'touch', padding: view === 'month' ? 'var(--sp-4)' : 0, paddingBottom: 'calc(var(--sp-4) + env(safe-area-inset-bottom, 0px))' }}>
         {loading ? (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 'var(--sp-3)' }}>
             <div className="spinner" />
