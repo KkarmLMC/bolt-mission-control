@@ -43,12 +43,12 @@ function COModal({ co, onClose, onAction }) {
           .insert({
             po_number:     soNumber,
             project_name:  co.job_reference,
-            job_reference: co.job_reference,
+            project_ref:   co.projects?.job_number || null,
             division:      co.division,
             status:        'draft',
             notes:         `Auto-created from Change Order ${co.co_number}. Justification: ${co.justification}`,
             created_by:    profile?.full_name || profile?.email,
-            customer_name: co.submitted_by,
+            customer_name: co.projects?.customer_account || co.submitted_by,
           })
           .select('id')
           .single()
@@ -95,7 +95,7 @@ function COModal({ co, onClose, onAction }) {
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--sp-5)' }}>
           <div>
             <div style={{ fontSize: 'var(--fs-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)', marginBottom: 4 }}>{co.co_number}</div>
-            <div style={{ fontSize: 'var(--fs-lg)', fontWeight: 800 }}>{co.job_reference}</div>
+            <div style={{ fontSize: 'var(--fs-lg)', fontWeight: 800 }}>{co.projects?.name || co.job_reference}</div>
             <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 4 }}>
               Submitted by <strong>{co.submitted_by}</strong> · {new Date(co.created_at).toLocaleDateString()}
             </div>
@@ -255,7 +255,7 @@ export default function ChangeOrders() {
                   <tr key={co.id} onClick={() => setSelected(co)}>
                     <td><span className="cell-mono">{co.co_number}</span></td>
                     <td>
-                      <div className="cell-primary">{co.job_reference}</div>
+                      <div className="cell-primary">{co.projects?.name || co.job_reference}</div>
                       {co.warehouses && <div className="cell-sub">{co.warehouses.name}</div>}
                     </td>
                     <td>
