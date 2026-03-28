@@ -1,6 +1,6 @@
 import { useState, lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { ArrowLeft } from '@phosphor-icons/react'
+import { ArrowLeft, SignOut } from '@phosphor-icons/react'
 import Sidebar from './components/Sidebar'
 import MobileTabBar from './components/MobileTabBar'
 import Opportunities from './pages/Opportunities'
@@ -24,21 +24,35 @@ const PAGE_META = {
 function Header() {
   const location = useLocation()
   const navigate  = useNavigate()
+  const { profile, signOut } = useAuth()
   const meta = PAGE_META[location.pathname] || PAGE_META['/opportunities']
 
+  const handleSignOut = async () => {
+    await signOut()
+    navigate('/login')
+  }
+
   return (
-    <div className="header">
+    <div className="header" style={{ background: 'var(--navy)', borderBottom: 'none' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        {/* Back arrow — only shown on mobile when there's a parent route */}
         {meta.parent && (
-          <button onClick={() => navigate(meta.parent)} className="back-btn" aria-label="Go back">
-            <ArrowLeft size={18} />
+          <button onClick={() => navigate(meta.parent)}
+            style={{ border: 'none', background: 'rgba(255,255,255,0.1)', borderRadius: 6, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+            <ArrowLeft size={18} color="#fff" />
           </button>
         )}
         <div>
-          <div className="header-title">{meta.title}</div>
-          <div className="header-sub">{meta.sub}</div>
+          <div className="header-title" style={{ color: '#fff' }}>{meta.title}</div>
         </div>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div className="status-live" style={{ fontSize: 10 }}>
+          <div className="dot-live" />LIVE
+        </div>
+        <button onClick={handleSignOut}
+          style={{ border: 'none', background: 'rgba(255,255,255,0.1)', borderRadius: 6, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          <SignOut size={16} color="rgba(255,255,255,0.7)" />
+        </button>
       </div>
     </div>
   )
