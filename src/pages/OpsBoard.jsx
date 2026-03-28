@@ -536,17 +536,18 @@ export default function OpsBoard() {
   useEffect(() => {
     Promise.all([
       db.from('projects')
-        .select('*, purchase_orders(po_number)')
-        .eq('archived', false)
-        .not('stage', 'eq', 'Cancelled')
+        .select('id, name, job_number, customer_account, city, state, stage, contract_value, scheduled_date, target_completion, notes, purchase_order_id')
+        .neq('archived', true)
         .order('scheduled_date', { ascending: true, nullsFirst: false }),
       db.from('project_assignments')
         .select('*'),
       db.from('daily_field_logs')
         .select('project_id, report_date, crew_members')
         .gte('report_date', fmtDate(addDays(today(), -30))),
-    ]).then(([{ data: p }, { data: a }, { data: fl }]) => {
-      setProjects(p || [])
+    ]).then(([{ data: p, error: pErr }, { data: a, error: aErr }, { data: fl }]) => {
+      if (pErr) console.error('Projects query error:', pErr)
+      if (aErr) console.error('Assignments query error:', aErr)
+      setProjects((p || []).filter(proj => proj.stage !== 'Cancelled'))
       setAssignments(a || [])
       setFieldLogs(fl || [])
       setLoading(false)
