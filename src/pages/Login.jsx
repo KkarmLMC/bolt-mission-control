@@ -178,8 +178,12 @@ export default function Login() {
         <div style={{ width: 56, height: 56, borderRadius: 'var(--r-xl)', background: 'var(--navy)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto var(--sp-4)' }}>
           <Lightning size={28} weight="fill" style={{ color: '#fff' }} />
         </div>
-        <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, lineHeight: 1.1 }}>Field Ops</div>
-        <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', marginTop: 4 }}>Lightning Master · Bolt Lightning Protection</div>
+        <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, lineHeight: 1.1 }}>
+          {import.meta.env.VITE_APP_NAME || 'Field Ops'}
+        </div>
+        <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', marginTop: 4 }}>
+          {import.meta.env.VITE_APP_SUBTITLE || 'Lightning Master · Bolt Lightning Protection'}
+        </div>
       </div>
 
       <div style={{ width: '100%', maxWidth: 380, background: 'var(--surface-raised)', borderRadius: 'var(--r-2xl)', padding: 'var(--sp-6)', border: '1px solid var(--border-l)', boxShadow: '0 4px 24px rgba(0,0,0,0.06)' }}>
