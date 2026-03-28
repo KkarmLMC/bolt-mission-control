@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import {
-  ListChecks, CalendarBlank, Warning, CheckCircle, Check,
-} from '@phosphor-icons/react'
+import { Check, CheckCircle } from '@phosphor-icons/react'
 import { today, dueClass, dueLabel } from '../lib/utils'
 import FAB from '../components/FAB'
 
@@ -26,35 +24,34 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
 
   return (
     <div className="page fade-in">
+
+      {/* Flat stat cards — no icons */}
       <div className="stat-grid">
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">Open Tasks</span><div className="stat-icon blue"><ListChecks size={16} weight="bold" style={{ color: 'var(--blue)' }} /></div></div>
+          <div className="stat-label">Open</div>
           <div className="stat-value blue">{tasks.filter(t => !t.done).length}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">Due Today</span><div className="stat-icon amber"><CalendarBlank size={16} weight="bold" style={{ color: 'var(--amber)' }} /></div></div>
+          <div className="stat-label">Due Today</div>
           <div className="stat-value amber">{dueToday}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">Overdue</span><div className="stat-icon red"><Warning size={16} weight="fill" style={{ color: 'var(--red)' }} /></div></div>
+          <div className="stat-label">Overdue</div>
           <div className="stat-value red">{overdue}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">Completed</span><div className="stat-icon green"><CheckCircle size={16} weight="fill" style={{ color: 'var(--green)' }} /></div></div>
+          <div className="stat-label">Completed</div>
           <div className="stat-value green">{tasks.filter(t => t.done).length}</div>
         </div>
       </div>
 
       <div className="card">
         <div className="card-header">
-          <span className="card-title">
-            <span className="card-dot" style={{ background: 'var(--green)', width: 8, height: 8, borderRadius: 2, display: 'inline-block' }} />
-            Task Board
-          </span>
+          <span className="card-title">Task Board</span>
           <button className="btn btn-primary btn-sm" onClick={onAdd}>+ Add Task</button>
         </div>
 
-        <div style={{ padding: '10px 12px 0' }}>
+        <div style={{ padding: 'var(--sp-2) var(--sp-4) 0' }}>
           <div className="filter-bar">
             {['ALL','OPEN','TODAY','OVERDUE','DONE'].map(f => (
               <button key={f} className={`filter-pill ${filter === f ? 'active' : ''}`} onClick={() => setFilter(f)}>{f}</button>
@@ -72,17 +69,14 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
             <div className="loading"><div className="spinner" /></div>
           ) : filtered.length === 0 ? (
             <div className="empty">
-              <CheckCircle size={36} style={{ opacity: 0.3, marginBottom: 8 }} />
+              <CheckCircle size={36} style={{ color: 'var(--text-3)', marginBottom: 8 }} />
               <div className="empty-title">No tasks here</div>
               <div className="empty-desc">Add tasks to track follow-ups, calls, and actions.</div>
               <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Task</button>
             </div>
           ) : filtered.map(t => (
             <div key={t.id} className="task-row" style={{ opacity: t.done ? 0.55 : 1 }} onClick={() => onEdit(t)}>
-              <div
-                className={`checkbox ${t.done ? 'checked' : ''}`}
-                onClick={e => { e.stopPropagation(); onToggle(t) }}
-              >
+              <div className={`checkbox ${t.done ? 'checked' : ''}`} onClick={e => { e.stopPropagation(); onToggle(t) }}>
                 {t.done && <Check size={10} weight="bold" style={{ color: 'white' }} />}
               </div>
               <div className="task-body">

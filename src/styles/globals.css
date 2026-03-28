@@ -204,31 +204,24 @@ body {
 .btn-icon { padding: 7px; }
 
 /* ============================================================
-   STAT CARDS
+   STAT CARDS — flat, no icons, Field Ops style
    ============================================================ */
 .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
-.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 18px 20px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; transition: box-shadow var(--ease-base); }
-.stat-card:hover { box-shadow: var(--shadow-md); }
-.stat-card-top { display: flex; align-items: center; justify-content: space-between; }
-.stat-label { font-size: var(--fs-xs); font-weight: 500; color: var(--text-3); }
-.stat-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-.stat-icon.red { background: var(--red-soft); }
-.stat-icon.blue { background: var(--blue-soft); }
-.stat-icon.green { background: var(--green-s); }
-.stat-icon.amber { background: var(--amber-s); }
-.stat-value { font-size: 28px; font-weight: 700; color: var(--text-1); letter-spacing: -0.03em; line-height: 1; }
-.stat-value.red { color: var(--red); }
-.stat-value.blue { color: var(--blue); }
+.stat-card { background: var(--surface-raised); border: none; border-radius: var(--r-xl); padding: var(--sp-5) var(--sp-4) 1.75rem; }
+.stat-label { font-size: var(--fs-xs); font-weight: 500; color: var(--text-3); margin-bottom: var(--sp-2); text-transform: uppercase; letter-spacing: 0.04em; }
+.stat-value { font-size: 1.75rem; font-weight: 700; line-height: 1; letter-spacing: -0.02em; color: var(--text-1); }
+.stat-value.red   { color: var(--red); }
+.stat-value.blue  { color: var(--blue); }
 .stat-value.green { color: var(--green); }
 .stat-value.amber { color: var(--amber); }
-.stat-delta { font-size: 11px; color: var(--text-3); }
+.stat-delta { font-size: 11px; color: var(--text-3); margin-top: var(--sp-1); }
 
 /* ============================================================
    CARDS
    ============================================================ */
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 16px; }
-.card-header { padding: 16px 20px; border-bottom: 1px solid var(--border-l); display: flex; align-items: center; justify-content: space-between; }
-.card-title { font-size: var(--fs-sm); font-weight: 600; color: var(--text-1); display: flex; align-items: center; gap: 8px; }
+.card { background: var(--surface-raised); border: none; border-radius: var(--r-xl); overflow: hidden; margin-bottom: var(--sp-4); }
+.card-header { padding: var(--sp-3) var(--sp-4); background: var(--navy); border-bottom: none; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); }
+.card-title { font-size: var(--fs-sm); font-weight: 700; color: #fff; display: flex; align-items: center; gap: var(--sp-2); }
 .card-title-dot { width: 8px; height: 8px; border-radius: 2px; }
 .card-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
 
@@ -398,7 +391,7 @@ textarea { resize: vertical; min-height: 70px; }
   .header-title { font-size: 15px; }
   .header-sub { display: none; }
   .stat-grid { grid-template-columns: repeat(2,1fr); gap: 8px; margin-bottom: 12px; }
-  .stat-card { padding: 12px; gap: 4px; border-radius: var(--r-md); }
+  .stat-card { padding: var(--sp-3) var(--sp-3) var(--sp-5); border-radius: var(--r-lg); }
   .stat-value { font-size: 20px; }
   .stat-icon { width: 26px; height: 26px; border-radius: 6px; }
   .card { border-radius: var(--r-md); margin-bottom: 10px; }
