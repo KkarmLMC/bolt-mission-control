@@ -388,6 +388,15 @@ padding-bottom: max(var(--sp-3), env(safe-area-inset-bottom));
 
 Always apply to bottom nav bar and modal footers.
 
+### Disable Pull-to-Refresh
+Always add `overflow: hidden` to root elements. Without this, iOS/Android Safari will trigger a hard page refresh when the user pulls down on mobile.
+
+```css
+html, body, #root { height: 100%; overflow: hidden; }
+```
+
+Page content still scrolls normally because `.page-content` has `overflow-y: auto`.
+
 ### Bottom Sheets (mobile modals)
 ```css
 border-radius: 20px 20px 0 0;
