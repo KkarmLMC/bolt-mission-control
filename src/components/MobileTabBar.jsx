@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom'
-import { ChartBar, Handshake, CheckSquare, ClipboardText } from '@phosphor-icons/react'
+import { ChartBar, Handshake, CheckSquare, ClipboardText, CalendarBlank } from '@phosphor-icons/react'
 
 export default function MobileTabBar({ leads = [], tasks = [] }) {
   const navigate = useNavigate()
@@ -13,6 +13,7 @@ export default function MobileTabBar({ leads = [], tasks = [] }) {
     { path: '/change-orders',  Icon: ClipboardText, label: 'Change Orders', count: 0          },
     { path: '/relationships',  Icon: Handshake,     label: 'Relationships', count: 0          },
     { path: '/tasks',          Icon: CheckSquare,   label: 'Tasks',         count: openTasks  },
+    { path: '/ops-board',        Icon: CalendarBlank, label: 'Ops Board',     count: 0          },
   ]
 
   return (
