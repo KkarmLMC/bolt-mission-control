@@ -485,3 +485,4 @@ textarea { resize: vertical; min-height: 70px; }
   .back-btn { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: var(--r-md); border: 1px solid var(--border); background: var(--surface); color: var(--text-2); font-size: 22px; cursor: pointer; flex-shrink: 0; transition: background var(--ease-fast); }
   .back-btn:active { background: var(--bg); }
 }
+/* cache-bust Sat Mar 28 15:03:37 UTC 2026 */
