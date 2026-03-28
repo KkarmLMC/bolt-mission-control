@@ -1,6 +1,13 @@
 import { createClient } from '@supabase/supabase-js'
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
-const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
-
-export const db = createClient(SUPABASE_URL, SUPABASE_KEY)
+export const db = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY,
+  {
+    auth: {
+      persistSession: true,
+      storageKey: 'missioncontrol-auth',
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+    },
+  }
+)

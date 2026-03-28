@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
 import MobileTabBar from './components/MobileTabBar'
@@ -9,6 +9,9 @@ import TaskBoard from './pages/TaskBoard'
 import LeadModal from './components/modals/LeadModal'
 import { TaskModal, RelModal } from './components/modals/OtherModals'
 import { useAppData } from './hooks/useAppData'
+import { useAuth } from './lib/useAuth.jsx'
+
+const Login = lazy(() => import('./pages/Login'))
 
 const PAGE_META = {
   '/opportunities':         { title: 'Opportunities', sub: 'Aggregated view of all active opportunity sources',    parent: null               },
@@ -47,10 +50,28 @@ function Header() {
 export default function App() {
   const { leads, rels, tasks, loading, saveLead, saveRel, saveTask, toggleTask } = useAppData()
   const [modal, setModal] = useState(null)
+  const { session, loading: authLoading } = useAuth()
 
   const handleSaveLead = async (f) => { await saveLead(f); setModal(null) }
   const handleSaveRel  = async (f) => { await saveRel(f);  setModal(null) }
   const handleSaveTask = async (f) => { await saveTask(f); setModal(null) }
+
+  // Auth loading spinner
+  if (authLoading) return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100dvh' }}>
+      <div className="spinner" />
+    </div>
+  )
+
+  // No session — show login
+  if (!session) return (
+    <Suspense fallback={null}>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </Suspense>
+  )
 
   return (
     <div className="app">
