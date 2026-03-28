@@ -14,6 +14,7 @@ import { useAuth } from './lib/useAuth.jsx'
 
 const Login         = lazy(() => import('./pages/Login'))
 const ChangeOrders  = lazy(() => import('./pages/ChangeOrders'))
+const QBImport      = lazy(() => import('./pages/QBImport'))
 
 const PAGE_META = {
   '/opportunities':         { title: 'Opportunities', sub: 'Aggregated view of all active opportunity sources',    parent: null               },
@@ -21,6 +22,7 @@ const PAGE_META = {
   '/relationships':         { title: 'Relationships', sub: 'GC and MEP engineer relationship tracker',             parent: null               },
   '/tasks':                 { title: 'Task Board',    sub: 'Team actions, follow-ups and assignments',             parent: null               },
   '/change-orders':         { title: 'Change Orders', sub: 'Field part requests pending management review',        parent: null               },
+  '/qb-import':             { title: 'QB Import',     sub: 'Import Sales Orders from QuickBooks Desktop CSV',     parent: null               },
 }
 
 function Header() {
@@ -115,6 +117,7 @@ export default function App() {
               />
             } />
             <Route path="/change-orders" element={<ChangeOrders />} />
+            <Route path="/qb-import" element={<QBImport />} />
             <Route path="/tasks" element={
               <TaskBoard
                 tasks={tasks}

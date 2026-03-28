@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Lightning, Hammer, Radio, CaretRight, ClipboardText, ArrowRight } from '@phosphor-icons/react'
+import { Lightning, Hammer, Radio, CaretRight, ClipboardText, ArrowRight, DownloadSimple } from '@phosphor-icons/react'
 import { fmt$, statusBadge, prioBadge } from '../lib/utils'
 import { db } from '../lib/supabase.js'
 
@@ -60,6 +60,17 @@ export default function Opportunities({ leads, loading }) {
           <ArrowRight size={16} style={{ color: '#C2410C', flexShrink: 0 }} />
         </div>
       )}
+
+      {/* QB Import shortcut */}
+      <div onClick={() => navigate('/qb-import')}
+        style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', padding: 'var(--sp-3) var(--sp-4)', marginBottom: 'var(--sp-4)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', border: '1px solid var(--border-l)' }}>
+        <DownloadSimple size={18} style={{ color: 'var(--navy)', flexShrink: 0 }} />
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700 }}>Import from QuickBooks</div>
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>Upload a QB Desktop CSV to create Sales Orders</div>
+        </div>
+        <ArrowRight size={14} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+      </div>
 
       {/* Stat cards — flat, no icons, Field Ops style */}
       <div className="stat-grid">

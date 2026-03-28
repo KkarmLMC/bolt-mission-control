@@ -1,0 +1,528 @@
+import { useState, useRef, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
+import {
+  UploadSimple, FileCsv, CheckCircle, Warning,
+  ArrowLeft, MagnifyingGlass, Trash, ArrowRight,
+  Table, X,
+} from '@phosphor-icons/react'
+import { db } from '../lib/supabase.js'
+import { useAuth } from '../lib/useAuth.jsx'
+
+// ─── QB column name aliases ────────────────────────────────────────────────────
+// QB Desktop exports column names inconsistently across versions — map them all
+const COL = {
+  invoiceNum:   ['Invoice No', 'Num', 'Invoice Number', 'Transaction No', 'DocNumber', 'Ref No'],
+  date:         ['Date', 'Invoice Date', 'TxnDate', 'Transaction Date'],
+  customer:     ['Customer', 'Name', 'Customer:Job', 'Customer Name', 'Bill To'],
+  dueDate:      ['Due Date', 'DueDate'],
+  amount:       ['Amount', 'Total', 'Balance', 'Grand Total', 'TotalAmt', 'Original Amount'],
+  itemDesc:     ['Item Description', 'Description', 'Product/Service', 'Item', 'Service Description'],
+  itemQty:      ['Qty', 'Quantity', 'Qty/hr Rate'],
+  itemRate:     ['Rate', 'Unit Price', 'Sales Price', 'UnitPrice', 'Price Each'],
+  itemAmount:   ['Item Amount', 'Line Amount', 'Amount', 'Ext. Price'],
+  jobName:      ['Job Name', 'Ship To', 'Project Name', 'Memo', 'Customer Memo', 'P.O. No.'],
+  address:      ['Bill To', 'Address', 'Billing Address'],
+}
+
+function findCol(headers, aliases) {
+  const h = headers.map(x => x.trim().toLowerCase())
+  for (const alias of aliases) {
+    const idx = h.findIndex(x => x === alias.toLowerCase() || x.includes(alias.toLowerCase()))
+    if (idx !== -1) return idx
+  }
+  return -1
+}
+
+function parseCSV(text) {
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean)
+  if (!lines.length) return { headers: [], rows: [] }
+
+  // Handle quoted fields
+  const parseLine = line => {
+    const result = []
+    let cur = '', inQ = false
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i]
+      if (c === '"') { inQ = !inQ }
+      else if (c === ',' && !inQ) { result.push(cur.trim()); cur = '' }
+      else { cur += c }
+    }
+    result.push(cur.trim())
+    return result
+  }
+
+  const headers = parseLine(lines[0])
+  const rows = lines.slice(1).map(l => {
+    const vals = parseLine(l)
+    const row = {}
+    headers.forEach((h, i) => { row[h.trim()] = vals[i] || '' })
+    return row
+  })
+
+  return { headers, rows }
+}
+
+function detectFormat(headers) {
+  const h = headers.join(' ').toLowerCase()
+  if (h.includes('item') || h.includes('qty') || h.includes('rate')) return 'detail'
+  return 'summary'
+}
+
+function parseAmount(str) {
+  if (!str) return 0
+  const n = parseFloat(str.replace(/[$,\s]/g, '').replace(/[()]/g, match => match === '(' ? '-' : ''))
+  return isNaN(n) ? 0 : n
+}
+
+function groupByInvoice(rows, headers) {
+  const invoiceIdx = findCol(headers, COL.invoiceNum)
+  const dateIdx    = findCol(headers, COL.date)
+  const custIdx    = findCol(headers, COL.customer)
+  const amtIdx     = findCol(headers, COL.amount)
+  const jobIdx     = findCol(headers, COL.jobName)
+  const descIdx    = findCol(headers, COL.itemDesc)
+  const qtyIdx     = findCol(headers, COL.itemQty)
+  const rateIdx    = findCol(headers, COL.itemRate)
+  const lineAmtIdx = findCol(headers, COL.itemAmount)
+  const dueDateIdx = findCol(headers, COL.dueDate)
+
+  const map = new Map()
+
+  rows.forEach(row => {
+    const vals = Object.values(row)
+    const get  = idx => (idx >= 0 ? vals[idx] : '') || ''
+
+    const invoiceNum = get(invoiceIdx)
+    if (!invoiceNum) return // skip blank rows
+
+    if (!map.has(invoiceNum)) {
+      map.set(invoiceNum, {
+        invoiceNum,
+        date:       get(dateIdx),
+        dueDate:    get(dueDateIdx),
+        customer:   get(custIdx),
+        jobName:    get(jobIdx),
+        total:      parseAmount(get(amtIdx)),
+        lineItems:  [],
+        raw:        row,
+      })
+    }
+
+    const entry = map.get(invoiceNum)
+
+    // Update total from header row (highest amount)
+    const rowAmt = parseAmount(get(amtIdx))
+    if (rowAmt > entry.total) entry.total = rowAmt
+
+    // Add line item if description present
+    const desc = get(descIdx)
+    if (desc && desc.length > 0) {
+      const qty  = parseFloat(get(qtyIdx)) || 1
+      const rate = parseAmount(get(rateIdx))
+      const lAmt = parseAmount(get(lineAmtIdx)) || (qty * rate)
+      entry.lineItems.push({ description: desc, quantity: qty, unit_cost: rate, amount: lAmt })
+    }
+  })
+
+  return Array.from(map.values())
+}
+
+// ─── Preview row ───────────────────────────────────────────────────────────────
+function InvoiceRow({ inv, selected, onToggle }) {
+  const [expanded, setExpanded] = useState(false)
+  return (
+    <>
+      <tr style={{ background: selected ? '#EFF6FF' : 'transparent', cursor: 'pointer' }}
+        onClick={() => onToggle(inv.invoiceNum)}>
+        <td style={{ padding: '10px 12px' }}>
+          <input type="checkbox" checked={selected} onChange={() => onToggle(inv.invoiceNum)}
+            onClick={e => e.stopPropagation()} />
+        </td>
+        <td style={{ padding: '10px 12px', fontFamily: 'var(--mono)', fontSize: 12 }}>{inv.invoiceNum}</td>
+        <td style={{ padding: '10px 12px' }}>
+          <div style={{ fontSize: 13, fontWeight: 600 }}>{inv.customer}</div>
+          {inv.jobName && <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 2 }}>{inv.jobName}</div>}
+        </td>
+        <td style={{ padding: '10px 12px', fontSize: 12 }}>{inv.date}</td>
+        <td style={{ padding: '10px 12px', fontSize: 13, fontWeight: 700, color: 'var(--amber)', fontFamily: 'var(--mono)' }}>
+          ${inv.total.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+        </td>
+        <td style={{ padding: '10px 12px' }}>
+          <span style={{ fontSize: 11, color: 'var(--text-3)' }}>{inv.lineItems.length} lines</span>
+        </td>
+        <td style={{ padding: '10px 12px' }}>
+          {inv.lineItems.length > 0 && (
+            <button onClick={e => { e.stopPropagation(); setExpanded(x => !x) }}
+              style={{ border: 'none', background: 'none', cursor: 'pointer', color: 'var(--text-3)', fontSize: 11 }}>
+              {expanded ? '▲ Hide' : '▼ Show'}
+            </button>
+          )}
+        </td>
+      </tr>
+      {expanded && inv.lineItems.map((li, i) => (
+        <tr key={i} style={{ background: '#F8FAFF' }}>
+          <td />
+          <td />
+          <td colSpan={2} style={{ padding: '6px 12px 6px 24px', fontSize: 12, color: 'var(--text-2)' }}>
+            {li.description}
+          </td>
+          <td style={{ padding: '6px 12px', fontSize: 12, fontFamily: 'var(--mono)' }}>
+            {li.quantity > 1 ? `${li.quantity} × $${li.unit_cost}` : `$${li.amount.toLocaleString()}`}
+          </td>
+          <td colSpan={2} />
+        </tr>
+      ))}
+    </>
+  )
+}
+
+// ─── Main ──────────────────────────────────────────────────────────────────────
+export default function QBImport() {
+  const navigate = useNavigate()
+  const { profile } = useAuth()
+  const fileRef = useRef()
+  const [step, setStep] = useState('upload') // upload | preview | importing | done
+  const [dragOver, setDragOver] = useState(false)
+  const [fileName, setFileName] = useState('')
+  const [parsed, setParsed] = useState([]) // grouped invoices
+  const [format, setFormat] = useState('')
+  const [selected, setSelected] = useState(new Set())
+  const [division, setDivision] = useState('LM')
+  const [importing, setImporting] = useState(false)
+  const [results, setResults] = useState([])
+  const [error, setError] = useState('')
+  const [search, setSearch] = useState('')
+
+  const handleFile = useCallback(file => {
+    if (!file || !file.name.toLowerCase().endsWith('.csv')) {
+      setError('Please upload a CSV file exported from QuickBooks Desktop.')
+      return
+    }
+    setError('')
+    setFileName(file.name)
+    const reader = new FileReader()
+    reader.onload = e => {
+      const text = e.target.result
+      const { headers, rows } = parseCSV(text)
+      if (!headers.length) { setError('Could not parse CSV. Make sure it is a valid QuickBooks export.'); return }
+      const fmt = detectFormat(headers)
+      const invoices = groupByInvoice(rows, headers)
+      if (!invoices.length) { setError('No invoices found in this file. Make sure you exported an Invoice or Transaction report.'); return }
+      setFormat(fmt)
+      setParsed(invoices)
+      setSelected(new Set(invoices.map(i => i.invoiceNum)))
+      setStep('preview')
+    }
+    reader.readAsText(file)
+  }, [])
+
+  const onDrop = e => {
+    e.preventDefault(); setDragOver(false)
+    handleFile(e.dataTransfer.files[0])
+  }
+
+  const toggleAll = () => {
+    if (selected.size === filtered.length) setSelected(new Set())
+    else setSelected(new Set(filtered.map(i => i.invoiceNum)))
+  }
+
+  const toggleOne = num => {
+    const s = new Set(selected)
+    s.has(num) ? s.delete(num) : s.add(num)
+    setSelected(s)
+  }
+
+  const filtered = parsed.filter(i =>
+    !search || i.customer.toLowerCase().includes(search.toLowerCase()) ||
+    i.invoiceNum.toLowerCase().includes(search.toLowerCase()) ||
+    (i.jobName || '').toLowerCase().includes(search.toLowerCase())
+  )
+
+  const runImport = async () => {
+    setImporting(true)
+    const toImport = parsed.filter(i => selected.has(i.invoiceNum))
+    const res = []
+
+    for (const inv of toImport) {
+      try {
+        // Check if SO already exists
+        const { data: existing } = await db.from('purchase_orders')
+          .select('id, po_number')
+          .eq('quickbooks_doc_number', inv.invoiceNum)
+          .maybeSingle()
+
+        if (existing) { res.push({ invoiceNum: inv.invoiceNum, action: 'skipped', reason: 'Already imported' }); continue }
+
+        // Create SO
+        const soNum = `QB-${inv.invoiceNum}`
+        const { data: so, error: soErr } = await db.from('purchase_orders').insert({
+          po_number:             soNum,
+          customer_name:         inv.customer,
+          project_name:          inv.jobName || inv.customer,
+          division,
+          status:                'published',
+          po_date:               inv.date || null,
+          grand_total:           inv.total,
+          materials_total:       inv.total,
+          quickbooks_doc_number: inv.invoiceNum,
+          quickbooks_sync_at:    new Date().toISOString(),
+          created_by:            profile?.full_name || profile?.email,
+        }).select('id').single()
+
+        if (soErr) throw soErr
+
+        // Line items
+        if (inv.lineItems.length) {
+          await db.from('po_line_items').insert(
+            inv.lineItems.map((li, idx) => ({
+              po_id: so.id, line_type: 'material',
+              description: li.description, quantity: li.quantity,
+              unit_cost: li.unit_cost, sort_order: idx,
+            }))
+          )
+        }
+
+        // Create project
+        const { data: project } = await db.from('projects').insert({
+          name:              inv.jobName || inv.customer,
+          customer_account:  inv.customer,
+          stage:             'Awarded',
+          contract_value:    inv.total,
+          purchase_order_id: so.id,
+          quickbooks_sync_at: new Date().toISOString(),
+        }).select('id').single()
+
+        // Link SO back to project
+        if (project) {
+          await db.from('purchase_orders').update({ project_id: project.id }).eq('id', so.id)
+        }
+
+        res.push({ invoiceNum: inv.invoiceNum, customer: inv.customer, action: 'created', soNum })
+      } catch (e) {
+        res.push({ invoiceNum: inv.invoiceNum, action: 'error', reason: e.message })
+      }
+    }
+
+    setResults(res)
+    setImporting(false)
+    setStep('done')
+  }
+
+  // ── Upload screen ──
+  if (step === 'upload') return (
+    <div className="page fade-in">
+      <div style={{ marginBottom: 'var(--sp-5)' }}>
+        <button onClick={() => navigate(-1)}
+          style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--fs-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--sp-3)' }}>
+          <ArrowLeft size={14} /> Back
+        </button>
+        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>QUICKBOOKS</div>
+        <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800 }}>Import Sales Orders</div>
+        <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', marginTop: 4 }}>
+          Import invoices exported from QuickBooks Desktop as CSV
+        </div>
+      </div>
+
+      {/* How to export instructions */}
+      <div className="card" style={{ marginBottom: 'var(--sp-4)' }}>
+        <div className="card-header"><span className="card-title">How to export from QuickBooks Desktop</span></div>
+        <div style={{ padding: 'var(--sp-4)', display: 'flex', flexDirection: 'column', gap: 'var(--sp-3)' }}>
+          {[
+            ['1', 'Open QuickBooks Desktop and go to Reports → Sales → Sales by Customer Detail'],
+            ['2', 'Set the date range to the period you want to import'],
+            ['3', 'Click "Excel" or "Export" at the top of the report'],
+            ['4', 'Choose "Create a comma-separated values (.csv) file"'],
+            ['5', 'Save the file and upload it below'],
+          ].map(([n, text]) => (
+            <div key={n} style={{ display: 'flex', gap: 'var(--sp-3)', alignItems: 'flex-start' }}>
+              <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{n}</div>
+              <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-2)', paddingTop: 2 }}>{text}</div>
+            </div>
+          ))}
+          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 'var(--sp-3)', marginTop: 'var(--sp-1)' }}>
+            💡 Tip: The <strong>Invoice Detail</strong> report is best — it includes line items. The <strong>Transaction List</strong> report also works but won't import individual line items.
+          </div>
+        </div>
+      </div>
+
+      {/* Division selector */}
+      <div className="card" style={{ marginBottom: 'var(--sp-4)' }}>
+        <div className="card-header"><span className="card-title">Import Settings</span></div>
+        <div style={{ padding: 'var(--sp-4)' }}>
+          <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>Division</label>
+          <div style={{ display: 'flex', gap: 'var(--sp-2)' }}>
+            {['LM', 'Bolt'].map(d => (
+              <button key={d} onClick={() => setDivision(d)}
+                style={{ padding: 'var(--sp-2) var(--sp-5)', borderRadius: 'var(--r-lg)', border: `1px solid ${division === d ? 'var(--navy)' : 'var(--border-l)'}`, background: division === d ? 'var(--navy)' : 'transparent', color: division === d ? '#fff' : 'var(--text-2)', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'pointer' }}>
+                {d === 'LM' ? 'Lightning Master' : 'Bolt Lightning'}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Drop zone */}
+      <div
+        onDragOver={e => { e.preventDefault(); setDragOver(true) }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={onDrop}
+        onClick={() => fileRef.current?.click()}
+        style={{
+          border: `2px dashed ${dragOver ? 'var(--navy)' : 'var(--border-l)'}`,
+          borderRadius: 'var(--r-xl)',
+          background: dragOver ? '#EFF6FF' : 'var(--surface-raised)',
+          padding: 'var(--sp-10)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          gap: 'var(--sp-3)', cursor: 'pointer', transition: 'all 0.15s',
+        }}>
+        <FileCsv size={44} style={{ color: dragOver ? 'var(--navy)' : 'var(--text-3)' }} />
+        <div style={{ fontSize: 'var(--fs-md)', fontWeight: 700, color: dragOver ? 'var(--navy)' : 'var(--text-1)' }}>
+          Drop your QB CSV here
+        </div>
+        <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)' }}>or click to browse</div>
+        <input ref={fileRef} type="file" accept=".csv" style={{ display: 'none' }}
+          onChange={e => handleFile(e.target.files[0])} />
+      </div>
+
+      {error && (
+        <div style={{ marginTop: 'var(--sp-3)', padding: 'var(--sp-3)', borderRadius: 'var(--r-lg)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--fs-sm)', display: 'flex', gap: 'var(--sp-2)', alignItems: 'center' }}>
+          <Warning size={15} style={{ flexShrink: 0 }} /> {error}
+        </div>
+      )}
+    </div>
+  )
+
+  // ── Preview screen ──
+  if (step === 'preview') return (
+    <div className="page fade-in">
+      <div style={{ marginBottom: 'var(--sp-4)' }}>
+        <button onClick={() => setStep('upload')}
+          style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--fs-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--sp-3)' }}>
+          <ArrowLeft size={14} /> Change file
+        </button>
+        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>QUICKBOOKS IMPORT</div>
+        <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800 }}>Review & Confirm</div>
+        <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', marginTop: 4 }}>
+          {fileName} · {parsed.length} invoice{parsed.length !== 1 ? 's' : ''} found · {format === 'detail' ? 'Detail format (with line items)' : 'Summary format'}
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div className="stat-grid" style={{ marginBottom: 'var(--sp-4)' }}>
+        <div className="stat-card">
+          <div className="stat-label">Total Invoices</div>
+          <div className="stat-value">{parsed.length}</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-label">Selected</div>
+          <div className="stat-value blue">{selected.size}</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-label">Total Value</div>
+          <div className="stat-value amber">
+            ${parsed.filter(i => selected.has(i.invoiceNum)).reduce((s, i) => s + i.total, 0).toLocaleString('en-US', { minimumFractionDigits: 0 })}
+          </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-label">Division</div>
+          <div className="stat-value" style={{ fontSize: 'var(--fs-lg)' }}>{division}</div>
+        </div>
+      </div>
+
+      {/* Search */}
+      <div style={{ position: 'relative', marginBottom: 'var(--sp-3)' }}>
+        <MagnifyingGlass size={14} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
+        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by customer, invoice #, or job…"
+          style={{ width: '100%', paddingLeft: 30 }} />
+        {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', border: 'none', background: 'none', cursor: 'pointer', color: 'var(--text-3)', display: 'flex' }}><X size={13} /></button>}
+      </div>
+
+      {/* Table */}
+      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 'var(--sp-4)' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{ background: 'var(--navy)' }}>
+              <th style={{ padding: '10px 12px', textAlign: 'left', width: 36 }}>
+                <input type="checkbox"
+                  checked={selected.size === filtered.length && filtered.length > 0}
+                  onChange={toggleAll} />
+              </th>
+              {['Invoice #', 'Customer / Job', 'Date', 'Amount', 'Lines', ''].map(h => (
+                <th key={h} style={{ padding: '10px 12px', textAlign: 'left', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.map((inv, idx) => (
+              <InvoiceRow key={inv.invoiceNum}
+                inv={inv}
+                selected={selected.has(inv.invoiceNum)}
+                onToggle={toggleOne}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Confirm button */}
+      <button onClick={runImport} disabled={selected.size === 0 || importing}
+        style={{ width: '100%', padding: 'var(--sp-4)', borderRadius: 'var(--r-xl)', border: 'none', background: selected.size === 0 ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--fs-md)', cursor: selected.size === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)' }}>
+        {importing
+          ? <><div className="spinner" style={{ borderTopColor: '#fff' }} /> Importing…</>
+          : <>Import {selected.size} Sales Order{selected.size !== 1 ? 's' : ''} <ArrowRight size={16} /></>
+        }
+      </button>
+      <div style={{ fontSize: 11, color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--sp-2)' }}>
+        Each selected invoice will create a Sales Order and a linked Project in your system.
+      </div>
+    </div>
+  )
+
+  // ── Done screen ──
+  if (step === 'done') {
+    const created = results.filter(r => r.action === 'created').length
+    const skipped = results.filter(r => r.action === 'skipped').length
+    const errors  = results.filter(r => r.action === 'error').length
+    return (
+      <div className="page fade-in">
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: 'var(--sp-8) 0', gap: 'var(--sp-4)' }}>
+          <CheckCircle size={52} weight="fill" style={{ color: 'var(--success)' }} />
+          <div style={{ fontSize: 'var(--fs-xl)', fontWeight: 800 }}>Import Complete</div>
+          <div style={{ display: 'flex', gap: 'var(--sp-4)', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, color: 'var(--success)' }}>{created}</div>
+              <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Created</div>
+            </div>
+            {skipped > 0 && <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, color: 'var(--amber)' }}>{skipped}</div>
+              <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Skipped</div>
+            </div>}
+            {errors > 0 && <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, color: 'var(--error)' }}>{errors}</div>
+              <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Errors</div>
+            </div>}
+          </div>
+          {errors > 0 && (
+            <div style={{ width: '100%', maxWidth: 480, background: 'var(--error-soft)', borderRadius: 'var(--r-lg)', padding: 'var(--sp-3)', textAlign: 'left' }}>
+              {results.filter(r => r.action === 'error').map(r => (
+                <div key={r.invoiceNum} style={{ fontSize: 'var(--fs-xs)', color: 'var(--error-alt)', marginBottom: 4 }}>
+                  {r.invoiceNum}: {r.reason}
+                </div>
+              ))}
+            </div>
+          )}
+          <div style={{ display: 'flex', gap: 'var(--sp-3)', marginTop: 'var(--sp-2)' }}>
+            <button onClick={() => { setStep('upload'); setParsed([]); setResults([]); setFileName('') }}
+              style={{ padding: 'var(--sp-3) var(--sp-5)', borderRadius: 'var(--r-lg)', border: '1px solid var(--border-l)', background: 'transparent', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'pointer' }}>
+              Import Another File
+            </button>
+            <button onClick={() => navigate('/change-orders')}
+              style={{ padding: 'var(--sp-3) var(--sp-5)', borderRadius: 'var(--r-lg)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
+              View Change Orders <ArrowRight size={14} />
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
