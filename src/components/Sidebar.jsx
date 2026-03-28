@@ -142,9 +142,10 @@ export default function Sidebar({ leads = [], rels = [], tasks = [] }) {
           <Clock />
         </div>
 
-        {/* User */}
+        {/* User — click to open Profile & Security */}
         {profile && (
-          <div className="user-card" style={{ marginBottom: 8 }}>
+          <div className="user-card" onClick={() => navigate('/profile')}
+            style={{ marginBottom: 8, cursor: 'pointer' }}>
             <div className="avatar">
               {(profile.full_name || profile.email || '?').slice(0, 2).toUpperCase()}
             </div>
@@ -153,7 +154,7 @@ export default function Sidebar({ leads = [], rels = [], tasks = [] }) {
                 {profile.full_name || profile.email}
               </div>
               <div className="user-role" style={{ textTransform: 'capitalize' }}>
-                {profile.role} · {profile.division}
+                {profile.role} · Edit profile & PIN
               </div>
             </div>
           </div>

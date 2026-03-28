@@ -15,6 +15,7 @@ import { useAuth } from './lib/useAuth.jsx'
 const Login         = lazy(() => import('./pages/Login'))
 const ChangeOrders  = lazy(() => import('./pages/ChangeOrders'))
 const QBImport      = lazy(() => import('./pages/QBImport'))
+const Profile       = lazy(() => import('./pages/Profile'))
 const OpsBoard      = lazy(() => import('./pages/OpsBoard'))
 
 const PAGE_META = {
@@ -130,6 +131,7 @@ export default function App() {
                 onToggle={toggleTask}
               />
             } />
+            <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<Navigate to="/opportunities" replace />} />
           </Routes>
         </div>
