@@ -11,16 +11,16 @@ import { useAuth } from '../lib/useAuth.jsx'
 // ─── QB column name aliases ────────────────────────────────────────────────────
 // QB Desktop exports column names inconsistently across versions — map them all
 const COL = {
-  invoiceNum:   ['Invoice No', 'Num', 'Invoice Number', 'Transaction No', 'DocNumber', 'Ref No'],
+  invoiceNum:   ['Num', 'Invoice No', 'Invoice Number', 'Transaction No', 'DocNumber', 'Ref No'],
   date:         ['Date', 'Invoice Date', 'TxnDate', 'Transaction Date'],
-  customer:     ['Customer', 'Name', 'Customer:Job', 'Customer Name', 'Bill To'],
+  customer:     ['Name', 'Customer', 'Customer:Job', 'Customer Name', 'Bill To'],
   dueDate:      ['Due Date', 'DueDate'],
-  amount:       ['Amount', 'Total', 'Balance', 'Grand Total', 'TotalAmt', 'Original Amount'],
-  itemDesc:     ['Item Description', 'Description', 'Product/Service', 'Item', 'Service Description'],
+  amount:       ['Balance', 'Amount', 'Total', 'Grand Total', 'TotalAmt', 'Original Amount'],
+  itemDesc:     ['Item', 'Description', 'Item Description', 'Product/Service', 'Service Description'],
   itemQty:      ['Qty', 'Quantity', 'Qty/hr Rate'],
-  itemRate:     ['Rate', 'Unit Price', 'Sales Price', 'UnitPrice', 'Price Each'],
-  itemAmount:   ['Item Amount', 'Line Amount', 'Amount', 'Ext. Price'],
-  jobName:      ['Job Name', 'Ship To', 'Project Name', 'Memo', 'Customer Memo', 'P.O. No.'],
+  itemRate:     ['Sales Price', 'Rate', 'Unit Price', 'UnitPrice', 'Price Each'],
+  itemAmount:   ['Amount', 'Item Amount', 'Line Amount', 'Ext. Price'],
+  jobName:      ['Memo', 'Job Name', 'Ship To', 'Project Name', 'Customer Memo', 'P.O. No.'],
   address:      ['Bill To', 'Address', 'Billing Address'],
 }
 
@@ -94,14 +94,23 @@ function groupByInvoice(rows, headers) {
 
     const invoiceNum = get(invoiceIdx)
     if (!invoiceNum) return // skip blank rows
+    // Skip non-Invoice rows (QB exports include subtotal/total rows)
+    const rowType = Object.values(row)[0] || ''
+    if (rowType && rowType !== 'Invoice') return
+
+    // QB Desktop uses "Customer:Job" notation — split it
+    const rawName = get(custIdx)
+    const colonIdx = rawName.indexOf(':')
+    const customerName = colonIdx > -1 ? rawName.slice(0, colonIdx) : rawName
+    const jobFromName  = colonIdx > -1 ? rawName.slice(colonIdx + 1) : ''
 
     if (!map.has(invoiceNum)) {
       map.set(invoiceNum, {
         invoiceNum,
         date:       get(dateIdx),
         dueDate:    get(dueDateIdx),
-        customer:   get(custIdx),
-        jobName:    get(jobIdx),
+        customer:   customerName,
+        jobName:    get(jobIdx) || jobFromName,
         total:      parseAmount(get(amtIdx)),
         lineItems:  [],
         raw:        row,
