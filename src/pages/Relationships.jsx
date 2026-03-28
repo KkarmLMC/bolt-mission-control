@@ -1,8 +1,9 @@
 import { useState } from 'react'
+import { Buildings, Hammer, Lightning, CheckCircle, MagnifyingGlass, Handshake, X } from '@phosphor-icons/react'
 import FAB from '../components/FAB'
 
 export default function Relationships({ rels, loading, onAdd, onEdit }) {
-  const [typeF, setTypeF] = useState('ALL')
+  const [typeF, setTypeF]   = useState('ALL')
   const [search, setSearch] = useState('')
 
   const filtered = rels.filter(r => {
@@ -17,19 +18,19 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
     <div className="page fade-in">
       <div className="stat-grid">
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">Total</span><div className="stat-icon blue">🏢</div></div>
+          <div className="stat-card-top"><span className="stat-label">Total</span><div className="stat-icon blue"><Buildings size={16} weight="bold" style={{ color: 'var(--blue)' }} /></div></div>
           <div className="stat-value blue">{rels.length}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">GCs</span><div className="stat-icon blue">🏗️</div></div>
+          <div className="stat-card-top"><span className="stat-label">GCs</span><div className="stat-icon blue"><Hammer size={16} weight="bold" style={{ color: 'var(--blue)' }} /></div></div>
           <div className="stat-value">{rels.filter(r => r.type === 'GC').length}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">MEP Eng.</span><div className="stat-icon amber">⚡</div></div>
+          <div className="stat-card-top"><span className="stat-label">MEP Eng.</span><div className="stat-icon amber"><Lightning size={16} weight="bold" style={{ color: 'var(--amber)' }} /></div></div>
           <div className="stat-value amber">{rels.filter(r => r.type === 'MEP Engineer').length}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">Bid Lists</span><div className="stat-icon green">✅</div></div>
+          <div className="stat-card-top"><span className="stat-label">Bid Lists</span><div className="stat-icon green"><CheckCircle size={16} weight="fill" style={{ color: 'var(--green)' }} /></div></div>
           <div className="stat-value green">{rels.filter(r => r.on_bid_list).length}</div>
         </div>
       </div>
@@ -37,11 +38,12 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
       <div className="card">
         <div className="card-header">
           <span className="card-title">
-            <span className="card-title-dot" style={{ background: 'var(--amber)' }} />
+            <span className="card-dot" style={{ background: 'var(--amber)', width: 8, height: 8, borderRadius: 2, display: 'inline-block' }} />
             Companies & Relationships
           </span>
           <button className="btn btn-primary btn-sm" onClick={onAdd}>+ Add Company</button>
         </div>
+
         <div style={{ padding: '10px 12px 0' }}>
           <div className="filter-bar">
             {['ALL','GC','MEP Engineer','Owner/Developer'].map(t => (
@@ -49,16 +51,18 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
             ))}
           </div>
           <div className="search-box" style={{ marginBottom: 8 }}>
-            <span style={{ color: 'var(--text-3)' }}>🔍</span>
+            <MagnifyingGlass size={14} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
             <input placeholder="Search companies..." value={search} onChange={e => setSearch(e.target.value)} />
+            {search && <button onClick={() => setSearch('')} style={{ border: 'none', background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}><X size={13} /></button>}
           </div>
         </div>
+
         <div className="card-body">
           {loading ? (
             <div className="loading"><div className="spinner" /><span>Loading...</span></div>
           ) : filtered.length === 0 ? (
             <div className="empty">
-              <div className="empty-icon">🤝</div>
+              <Handshake size={36} style={{ opacity: 0.3, marginBottom: 8 }} />
               <div className="empty-title">No companies yet</div>
               <div className="empty-desc">Add your GC and MEP engineer relationships.</div>
               <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Company</button>
@@ -76,11 +80,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
                         <div className="cell-primary">{r.company_name}</div>
                         <div className="cell-sub">{r.city}</div>
                       </td>
-                      <td>
-                        <span className={`badge ${r.type === 'GC' ? 'badge-gc' : r.type === 'MEP Engineer' ? 'badge-mep' : 'badge-dev'}`}>
-                          {r.type}
-                        </span>
-                      </td>
+                      <td><span className={`badge ${r.type === 'GC' ? 'badge-gc' : r.type === 'MEP Engineer' ? 'badge-mep' : 'badge-dev'}`}>{r.type}</span></td>
                       <td><span className={`badge badge-t${r.tier?.replace('T', '')}`}>{r.tier}</span></td>
                       <td>
                         <div style={{ fontSize: 13 }}>{r.key_contact || '—'}</div>

@@ -1,6 +1,10 @@
 import { useState } from 'react'
+import { MagnifyingGlass, Lightning, X } from '@phosphor-icons/react'
 import { fmt$, prioBadge, statusBadge } from '../lib/utils'
 import FAB from '../components/FAB'
+import {
+  ClipboardText, Warning, ArrowUp, EnvelopeSimple,
+} from '@phosphor-icons/react'
 
 export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
   const [filter, setFilter] = useState('ALL')
@@ -14,9 +18,9 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
   })
 
   const counts = {
-    total: leads.length,
-    critical: leads.filter(l => l.priority?.includes('CRITICAL')).length,
-    high: leads.filter(l => l.priority?.includes('HIGH')).length,
+    total:       leads.length,
+    critical:    leads.filter(l => l.priority?.includes('CRITICAL')).length,
+    high:        leads.filter(l => l.priority?.includes('HIGH')).length,
     uncontacted: leads.filter(l => l.status === 'NEW LEAD').length,
   }
 
@@ -24,22 +28,22 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
     <div className="page fade-in">
       <div className="stat-grid">
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">Total Leads</span><div className="stat-icon blue">📋</div></div>
+          <div className="stat-card-top"><span className="stat-label">Total Leads</span><div className="stat-icon blue"><ClipboardText size={16} weight="bold" style={{ color: 'var(--blue)' }} /></div></div>
           <div className="stat-value blue">{counts.total}</div>
           <div className="stat-delta">All active opportunities</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">Critical</span><div className="stat-icon red">🔴</div></div>
+          <div className="stat-card-top"><span className="stat-label">Critical</span><div className="stat-icon red"><Warning size={16} weight="fill" style={{ color: 'var(--red)' }} /></div></div>
           <div className="stat-value red">{counts.critical}</div>
           <div className="stat-delta">Call this week</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">High Priority</span><div className="stat-icon amber">🟠</div></div>
+          <div className="stat-card-top"><span className="stat-label">High Priority</span><div className="stat-icon amber"><ArrowUp size={16} weight="bold" style={{ color: 'var(--amber)' }} /></div></div>
           <div className="stat-value amber">{counts.high}</div>
           <div className="stat-delta">Over $1M</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">New</span><div className="stat-icon green">📬</div></div>
+          <div className="stat-card-top"><span className="stat-label">New</span><div className="stat-icon green"><EnvelopeSimple size={16} weight="bold" style={{ color: 'var(--green)' }} /></div></div>
           <div className="stat-value green">{counts.uncontacted}</div>
           <div className="stat-delta">Uncontacted</div>
         </div>
@@ -48,11 +52,12 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
       <div className="card">
         <div className="card-header">
           <span className="card-title">
-            <span className="card-title-dot" style={{ background: 'var(--red)' }} />
+            <span className="card-dot" style={{ background: 'var(--red)', width: 8, height: 8, borderRadius: 2, display: 'inline-block' }} />
             Permit Leads
           </span>
           <button className="btn btn-primary btn-sm" onClick={onAdd}>+ Add Lead</button>
         </div>
+
         <div style={{ padding: '10px 14px 0' }}>
           <div className="filter-bar">
             {['ALL','CRITICAL','HIGH','MEDIUM','NEW LEAD','CONTACTED','WON ✓'].map(f => (
@@ -60,16 +65,18 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
             ))}
           </div>
           <div className="search-box" style={{ marginBottom: 8 }}>
-            <span style={{ color: 'var(--text-3)' }}>🔍</span>
+            <MagnifyingGlass size={14} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
             <input placeholder="Search leads..." value={search} onChange={e => setSearch(e.target.value)} />
+            {search && <button onClick={() => setSearch('')} style={{ border: 'none', background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}><X size={13} /></button>}
           </div>
         </div>
+
         <div className="card-body">
           {loading ? (
             <div className="loading"><div className="spinner" /><span>Loading leads...</span></div>
           ) : filtered.length === 0 ? (
             <div className="empty">
-              <div className="empty-icon">⚡</div>
+              <Lightning size={36} style={{ opacity: 0.3, marginBottom: 8 }} />
               <div className="empty-title">No leads yet</div>
               <div className="empty-desc">Add leads manually or run the permit scraper.</div>
               <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Lead</button>
@@ -78,10 +85,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
             <div className="table-wrap">
               <table className="data-table">
                 <thead>
-                  <tr>
-                    <th>Priority</th><th>Project</th><th>Value</th><th>County</th>
-                    <th>Status</th><th>Contractor</th><th>Next Action</th><th></th>
-                  </tr>
+                  <tr><th>Priority</th><th>Project</th><th>Value</th><th>County</th><th>Status</th><th>Contractor</th><th>Next Action</th><th></th></tr>
                 </thead>
                 <tbody>
                   {filtered.map(l => (
@@ -95,14 +99,8 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
                       <td><span className="badge" style={{ background: 'var(--bg)', color: 'var(--text-2)' }}>{l.county}</span></td>
                       <td><span className={`badge ${statusBadge(l.status)}`}>{l.status}</span></td>
                       <td><span style={{ fontSize: 12 }}>{l.contractor || '—'}</span></td>
-                      <td>
-                        <span style={{ fontSize: 12, color: 'var(--text-3)', maxWidth: 180, display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                          {l.next_action || '—'}
-                        </span>
-                      </td>
-                      <td onClick={e => e.stopPropagation()}>
-                        <button className="btn btn-ghost btn-sm" onClick={() => onEdit(l)}>Edit</button>
-                      </td>
+                      <td><span style={{ fontSize: 12, color: 'var(--text-3)', maxWidth: 180, display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.next_action || '—'}</span></td>
+                      <td onClick={e => e.stopPropagation()}><button className="btn btn-ghost btn-sm" onClick={() => onEdit(l)}>Edit</button></td>
                     </tr>
                   ))}
                 </tbody>

@@ -1,4 +1,8 @@
 import { useNavigate } from 'react-router-dom'
+import {
+  CurrencyDollar, Trophy, Target, Warning,
+  Lightning, Hammer, Radio, CaretRight,
+} from '@phosphor-icons/react'
 import { fmt$, statusBadge, prioBadge } from '../lib/utils'
 
 export default function Opportunities({ leads, loading }) {
@@ -11,7 +15,6 @@ export default function Opportunities({ leads, loading }) {
   const criticalCount = leads.filter(l => l.priority?.includes('CRITICAL')).length
   const newLeads      = leads.filter(l => l.status === 'NEW LEAD').length
 
-  // Stage breakdown for summary bar
   const stages = [
     { key: 'NEW LEAD',      label: 'New',      color: 'var(--red)'    },
     { key: 'CONTACTED',     label: 'Contacted',color: 'var(--blue)'   },
@@ -23,66 +26,37 @@ export default function Opportunities({ leads, loading }) {
     { key: 'LOST ✗',        label: 'Lost',     color: 'var(--text-4)' },
   ]
 
-  // Top 5 highest-value active leads
   const topLeads = [...activeLeads]
     .sort((a, b) => (b.value_int || 0) - (a.value_int || 0))
     .slice(0, 5)
 
-  // Child tabs with descriptions
   const children = [
-    {
-      path: '/opportunities/permits',
-      icon: '⚡',
-      label: 'Permit Feed',
-      description: 'Live commercial permit leads from Tampa Bay counties',
-      count: newLeads,
-      countLabel: 'new',
-      color: 'var(--red)',
-    },
-    // Future children — placeholder cards to show the roadmap
-    {
-      path: null,
-      icon: '🏗️',
-      label: 'Bid Board',
-      description: 'Active bids, RFPs, and quote requests',
-      count: null,
-      countLabel: 'coming soon',
-      color: 'var(--blue)',
-      soon: true,
-    },
-    {
-      path: null,
-      icon: '📡',
-      label: 'Scraped Sources',
-      description: 'Aggregated leads from county portals and scraper pipelines',
-      count: null,
-      countLabel: 'coming soon',
-      color: 'var(--purple)',
-      soon: true,
-    },
+    { path: '/opportunities/permits', Icon: Lightning, label: 'Permit Feed',    description: 'Live commercial permit leads from Tampa Bay counties', count: newLeads, countLabel: 'new',        color: 'var(--red)'    },
+    { path: null,                     Icon: Hammer,    label: 'Bid Board',      description: 'Active bids, RFPs, and quote requests',               count: null,     countLabel: 'coming soon', color: 'var(--blue)',  soon: true },
+    { path: null,                     Icon: Radio,     label: 'Scraped Sources',description: 'Aggregated leads from county portals and scraper pipelines', count: null, countLabel: 'coming soon', color: 'var(--purple)', soon: true },
   ]
 
   return (
     <div className="page fade-in">
-      {/* Top stats */}
+      {/* Stats */}
       <div className="stat-grid">
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">Pipeline Value</span><div className="stat-icon amber">💰</div></div>
+          <div className="stat-card-top"><span className="stat-label">Pipeline Value</span><div className="stat-icon amber"><CurrencyDollar size={16} weight="bold" style={{ color: 'var(--amber)' }} /></div></div>
           <div className="stat-value amber">{fmt$(pipelineVal)}</div>
           <div className="stat-delta">{activeLeads.length} active opportunities</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">Won Value</span><div className="stat-icon green">🏆</div></div>
+          <div className="stat-card-top"><span className="stat-label">Won Value</span><div className="stat-icon green"><Trophy size={16} weight="bold" style={{ color: 'var(--green)' }} /></div></div>
           <div className="stat-value green">{fmt$(wonVal)}</div>
           <div className="stat-delta">Closed contracts</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">Win Rate</span><div className="stat-icon blue">🎯</div></div>
+          <div className="stat-card-top"><span className="stat-label">Win Rate</span><div className="stat-icon blue"><Target size={16} weight="bold" style={{ color: 'var(--blue)' }} /></div></div>
           <div className="stat-value blue">{winRate}%</div>
           <div className="stat-delta">All-time across {leads.length} leads</div>
         </div>
         <div className="stat-card">
-          <div className="stat-card-top"><span className="stat-label">Critical</span><div className="stat-icon red">🔴</div></div>
+          <div className="stat-card-top"><span className="stat-label">Critical</span><div className="stat-icon red"><Warning size={16} weight="fill" style={{ color: 'var(--red)' }} /></div></div>
           <div className="stat-value red">{criticalCount}</div>
           <div className="stat-delta">Require immediate action</div>
         </div>
@@ -92,7 +66,7 @@ export default function Opportunities({ leads, loading }) {
       <div className="card" style={{ marginBottom: 16 }}>
         <div className="card-header">
           <span className="card-title">
-            <span className="card-title-dot" style={{ background: 'var(--blue)' }} />
+            <span className="card-dot" style={{ background: 'var(--blue)', width: 8, height: 8, borderRadius: 2, display: 'inline-block' }} />
             Stage Breakdown
           </span>
         </div>
@@ -116,83 +90,60 @@ export default function Opportunities({ leads, loading }) {
         </div>
       </div>
 
-      {/* Child tabs */}
+      {/* Opportunity sources */}
       <div className="card" style={{ marginBottom: 16 }}>
         <div className="card-header">
           <span className="card-title">
-            <span className="card-title-dot" style={{ background: 'var(--amber)' }} />
+            <span className="card-dot" style={{ background: 'var(--amber)', width: 8, height: 8, borderRadius: 2, display: 'inline-block' }} />
             Opportunity Sources
           </span>
         </div>
         <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
           {children.map(c => (
-            <div
-              key={c.label}
-              onClick={() => c.path && navigate(c.path)}
-              style={{
-                display: 'flex', alignItems: 'center', gap: 14,
-                padding: '14px 16px', borderRadius: 8,
-                border: '1px solid var(--border)',
-                background: c.soon ? 'var(--bg)' : 'var(--surface)',
-                cursor: c.path ? 'pointer' : 'default',
-                opacity: c.soon ? 0.6 : 1,
-                transition: 'all 0.15s',
-              }}
+            <div key={c.label} onClick={() => c.path && navigate(c.path)}
+              style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px', borderRadius: 8, border: '1px solid var(--border)', background: c.soon ? 'var(--bg)' : 'var(--surface)', cursor: c.path ? 'pointer' : 'default', opacity: c.soon ? 0.6 : 1, transition: 'all 0.15s' }}
               onMouseEnter={e => { if (c.path) e.currentTarget.style.boxShadow = 'var(--shadow-md)' }}
               onMouseLeave={e => { e.currentTarget.style.boxShadow = 'none' }}
             >
-              <div style={{
-                width: 38, height: 38, borderRadius: 8, flexShrink: 0,
-                background: c.color + '18', display: 'flex', alignItems: 'center',
-                justifyContent: 'center', fontSize: 18,
-              }}>{c.icon}</div>
+              <div style={{ width: 38, height: 38, borderRadius: 8, flexShrink: 0, background: c.color + '18', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <c.Icon size={18} weight="bold" style={{ color: c.color }} />
+              </div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-1)' }}>{c.label}</div>
                 <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 2 }}>{c.description}</div>
               </div>
               {c.count !== null ? (
-                <span style={{
-                  fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 20,
-                  background: c.color + '18', color: c.color,
-                }}>{c.count} {c.countLabel}</span>
+                <span style={{ fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 20, background: c.color + '18', color: c.color }}>{c.count} {c.countLabel}</span>
               ) : (
-                <span style={{
-                  fontSize: 10, fontWeight: 600, padding: '3px 10px', borderRadius: 20,
-                  background: 'var(--bg)', color: 'var(--text-3)', border: '1px solid var(--border)',
-                  textTransform: 'uppercase', letterSpacing: '0.05em',
-                }}>Soon</span>
+                <span style={{ fontSize: 10, fontWeight: 600, padding: '3px 10px', borderRadius: 20, background: 'var(--bg)', color: 'var(--text-3)', border: '1px solid var(--border)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Soon</span>
               )}
-              {c.path && <span style={{ color: 'var(--text-3)', fontSize: 14 }}>›</span>}
+              {c.path && <CaretRight size={14} style={{ color: 'var(--text-3)', flexShrink: 0 }} />}
             </div>
           ))}
         </div>
       </div>
 
-      {/* Top leads table */}
+      {/* Top leads */}
       <div className="card">
         <div className="card-header">
           <span className="card-title">
-            <span className="card-title-dot" style={{ background: 'var(--green)' }} />
+            <span className="card-dot" style={{ background: 'var(--green)', width: 8, height: 8, borderRadius: 2, display: 'inline-block' }} />
             Top Active Leads
           </span>
-          <button className="btn btn-ghost btn-sm" onClick={() => navigate('/opportunities/permits')}>
-            View all →
-          </button>
+          <button className="btn btn-ghost btn-sm" onClick={() => navigate('/opportunities/permits')}>View all →</button>
         </div>
         {loading ? (
           <div className="loading"><div className="spinner" /></div>
         ) : topLeads.length === 0 ? (
           <div className="empty">
-            <div className="empty-icon">⚡</div>
+            <Lightning size={36} style={{ opacity: 0.3, marginBottom: 8 }} />
             <div className="empty-title">No active leads</div>
             <div className="empty-desc">Add leads via Permit Feed to see them here.</div>
           </div>
         ) : (
           <div className="table-wrap">
             <table className="data-table">
-              <thead>
-                <tr><th>Project</th><th>Value</th><th>Stage</th><th>Priority</th><th>County</th></tr>
-              </thead>
+              <thead><tr><th>Project</th><th>Value</th><th>Stage</th><th>Priority</th><th>County</th></tr></thead>
               <tbody>
                 {topLeads.map(l => (
                   <tr key={l.id} onClick={() => navigate('/opportunities/permits')}>

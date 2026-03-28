@@ -1,5 +1,6 @@
 import { useState, lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { ArrowLeft } from '@phosphor-icons/react'
 import Sidebar from './components/Sidebar'
 import MobileTabBar from './components/MobileTabBar'
 import Opportunities from './pages/Opportunities'
@@ -30,12 +31,8 @@ function Header() {
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         {/* Back arrow — only shown on mobile when there's a parent route */}
         {meta.parent && (
-          <button
-            onClick={() => navigate(meta.parent)}
-            className="back-btn"
-            aria-label="Go back"
-          >
-            ‹
+          <button onClick={() => navigate(meta.parent)} className="back-btn" aria-label="Go back">
+            <ArrowLeft size={18} />
           </button>
         )}
         <div>
