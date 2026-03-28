@@ -12,13 +12,15 @@ import { TaskModal, RelModal } from './components/modals/OtherModals'
 import { useAppData } from './hooks/useAppData'
 import { useAuth } from './lib/useAuth.jsx'
 
-const Login = lazy(() => import('./pages/Login'))
+const Login         = lazy(() => import('./pages/Login'))
+const ChangeOrders  = lazy(() => import('./pages/ChangeOrders'))
 
 const PAGE_META = {
   '/opportunities':         { title: 'Opportunities', sub: 'Aggregated view of all active opportunity sources',    parent: null               },
   '/opportunities/permits': { title: 'Permit Feed',   sub: 'Live commercial permit leads from Tampa Bay counties', parent: '/opportunities'    },
   '/relationships':         { title: 'Relationships', sub: 'GC and MEP engineer relationship tracker',             parent: null               },
   '/tasks':                 { title: 'Task Board',    sub: 'Team actions, follow-ups and assignments',             parent: null               },
+  '/change-orders':         { title: 'Change Orders', sub: 'Field part requests pending management review',        parent: null               },
 }
 
 function Header() {
@@ -112,6 +114,7 @@ export default function App() {
                 onEdit={r => setModal({ type: 'rel', data: r })}
               />
             } />
+            <Route path="/change-orders" element={<ChangeOrders />} />
             <Route path="/tasks" element={
               <TaskBoard
                 tasks={tasks}

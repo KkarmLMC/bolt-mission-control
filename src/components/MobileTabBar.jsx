@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom'
-import { ChartBar, Handshake, CheckSquare } from '@phosphor-icons/react'
+import { ChartBar, Handshake, CheckSquare, ClipboardText } from '@phosphor-icons/react'
 
 export default function MobileTabBar({ leads = [], tasks = [] }) {
   const navigate = useNavigate()
@@ -9,9 +9,10 @@ export default function MobileTabBar({ leads = [], tasks = [] }) {
   const openTasks   = tasks.filter(t => !t.done).length
 
   const tabs = [
-    { path: '/opportunities', Icon: ChartBar,    label: 'Opportunities', count: activeLeads },
-    { path: '/relationships', Icon: Handshake,   label: 'Relationships',  count: 0          },
-    { path: '/tasks',         Icon: CheckSquare, label: 'Tasks',          count: openTasks  },
+    { path: '/opportunities',  Icon: ChartBar,      label: 'Ops',           count: activeLeads },
+    { path: '/change-orders',  Icon: ClipboardText, label: 'Change Orders', count: 0          },
+    { path: '/relationships',  Icon: Handshake,     label: 'Relationships', count: 0          },
+    { path: '/tasks',          Icon: CheckSquare,   label: 'Tasks',         count: openTasks  },
   ]
 
   return (

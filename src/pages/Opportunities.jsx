@@ -1,9 +1,18 @@
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Lightning, Hammer, Radio, CaretRight } from '@phosphor-icons/react'
+import { Lightning, Hammer, Radio, CaretRight, ClipboardText, ArrowRight } from '@phosphor-icons/react'
 import { fmt$, statusBadge, prioBadge } from '../lib/utils'
+import { db } from '../lib/supabase.js'
 
 export default function Opportunities({ leads, loading }) {
   const navigate = useNavigate()
+  const [pendingCOs, setPendingCOs] = useState([])
+
+  useEffect(() => {
+    db.from('change_orders').select('id, co_number, job_reference, submitted_by, created_at, change_order_items(id)')
+      .eq('status', 'pending').order('created_at', { ascending: false })
+      .then(({ data }) => setPendingCOs(data || []))
+  }, [])
 
   const activeLeads   = leads.filter(l => !['WON ✓', 'LOST ✗'].includes(l.status))
   const pipelineVal   = activeLeads.reduce((s, l) => s + (l.value_int || 0), 0)
@@ -35,6 +44,22 @@ export default function Opportunities({ leads, loading }) {
 
   return (
     <div className="page fade-in">
+
+      {/* Change Orders alert */}
+      {pendingCOs.length > 0 && (
+        <div onClick={() => navigate('/change-orders')} style={{ background: '#FFF7ED', border: '1px solid #FED7AA', borderRadius: 'var(--r-xl)', padding: 'var(--sp-3) var(--sp-4)', marginBottom: 'var(--sp-4)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--sp-3)' }}>
+          <ClipboardText size={20} style={{ color: '#C2410C', flexShrink: 0 }} />
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: '#C2410C' }}>
+              {pendingCOs.length} Part Request{pendingCOs.length !== 1 ? 's' : ''} Pending Review
+            </div>
+            <div style={{ fontSize: 'var(--fs-xs)', color: '#9A3412', marginTop: 2 }}>
+              {pendingCOs[0]?.job_reference}{pendingCOs.length > 1 ? ` + ${pendingCOs.length - 1} more` : ''}
+            </div>
+          </div>
+          <ArrowRight size={16} style={{ color: '#C2410C', flexShrink: 0 }} />
+        </div>
+      )}
 
       {/* Stat cards — flat, no icons, Field Ops style */}
       <div className="stat-grid">

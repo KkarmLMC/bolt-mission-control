@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
   ChartBar, Handshake, CheckSquare, Lightning,
-  Warning, SignOut, ArrowLineLeft, ArrowLineRight,
+  Warning, SignOut, ClipboardText,
 } from '@phosphor-icons/react'
 import { useAuth } from '../lib/useAuth.jsx'
 
