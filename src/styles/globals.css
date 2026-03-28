@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Mono:wght@400;500&display=swap');
 
 /* ============================================================
    DESIGN TOKENS — aligned with Field Ops
@@ -9,23 +9,23 @@
   --red-dark:   #D42430;
   --red-soft:   #FEF0F1;
   --red-mid:    rgba(245,51,63,0.12);
-  --navy:       #0B1F3A;
-  --navy-dark:  #071428;
+  --navy:       #04245C;
+  --navy-dark:  #031a45;
   --blue:       #1D4ED8;
   --blue-dark:  #1E40AF;
   --blue-soft:  #EFF6FF;
 
   /* Surfaces */
-  --bg:               #F4F5F7;
+  --bg:               #FFFFFF;
   --surface:          #FFFFFF;
-  --surface-raised:   #FFFFFF;
-  --hover:            #F8F9FB;
-  --border:           #E8EAF0;
-  --border-l:         #F0F1F5;
+  --surface-raised:   #F7F8FA;
+  --hover:            #F3F4F6;
+  --border:           #EFEFEF;
+  --border-l:         #EFEFEF;
 
   /* Text */
-  --text-1:   #111827;
-  --text-2:   #4B5563;
+  --text-1:   #000000;
+  --text-2:   #374151;
   --text-3:   #9CA3AF;
   --text-4:   #D1D5DB;
 
@@ -72,9 +72,9 @@
   --radius-sm: 6px;
 
   /* Typography */
-  --font: 'DM Sans', sans-serif;
+  --font: 'Plus Jakarta Sans', sans-serif;
   --mono: 'DM Mono', monospace;
-  --fs-2xs: 0.625rem;
+  --fs-2xs: 0.5625rem;
   --fs-xs:  0.75rem;
   --fs-sm:  0.8125rem;
   --fs-base: 0.875rem;
