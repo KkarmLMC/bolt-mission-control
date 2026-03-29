@@ -539,8 +539,15 @@ textarea { resize: vertical; min-height: 70px; }
     position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
     background: var(--surface); border-top: 1px solid var(--border);
     height: 64px; padding-bottom: env(safe-area-inset-bottom);
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
-  .tab-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border: none; background: none; cursor: pointer; padding: 8px 4px; transition: all var(--ease-base); position: relative; }
+  .mobile-tabbar::-webkit-scrollbar { display: none; }
+  .tab-item { flex: 0 0 22%; min-width: 4.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border: none; background: none; cursor: pointer; padding: 8px 4px; transition: all var(--ease-base); position: relative; scroll-snap-align: start; }
   .tab-label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-1); font-family: var(--font); }
   .tab-item.active .tab-label { color: var(--red); }
   .tab-badge { position: absolute; top: 6px; right: calc(50% - 18px); min-width: 16px; height: 16px; background: var(--red); color: white; font-size: 9px; font-weight: 700; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 0 4px; font-family: var(--mono); }
