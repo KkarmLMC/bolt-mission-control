@@ -16,6 +16,7 @@ const Login         = lazy(() => import('./pages/Login'))
 const ChangeOrders  = lazy(() => import('./pages/ChangeOrders'))
 const QBImport      = lazy(() => import('./pages/QBImport'))
 const Profile       = lazy(() => import('./pages/Profile'))
+const UserManagement = lazy(() => import('./pages/UserManagement'))
 const OpsBoard      = lazy(() => import('./pages/OpsBoard'))
 
 const PAGE_META = {
@@ -144,6 +145,7 @@ export default function App() {
               />
             } />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/users" element={<UserManagement />} />
             <Route path="*" element={<Navigate to="/opportunities" replace />} />
           </Routes>
         </div>
