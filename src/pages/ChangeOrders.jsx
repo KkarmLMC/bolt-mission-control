@@ -5,6 +5,7 @@ import {
 } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
+import { logActivity } from '../lib/logActivity.js'
 
 const STATUS = {
   pending:  { label: 'Pending Review', bg: '#FFF7ED', color: '#C2410C' },
@@ -78,6 +79,14 @@ function COModal({ co, onClose, onAction }) {
       const { error: coErr } = await db.from('change_orders').update(update).eq('id', co.id)
       if (coErr) throw coErr
 
+      await logActivity(db, profile?.id, 'mission_control', {
+        category:    'sales_order',
+        action:      `change_order_${action}`,
+        label:       `${action.charAt(0).toUpperCase() + action.slice(1)} Change Order ${co.co_number || co.id}`,
+        entity_type: 'change_order',
+        entity_id:   co.id,
+        meta:        { action, notes },
+      })
       onAction(action, co.id, notes)
     } catch (e) {
       setError(e.message || 'Something went wrong.')

@@ -75,6 +75,14 @@ function JobPanel({ project, assignments, onClose, onSave }) {
   const handleSave = async () => {
     setSaving(true)
     await db.from('projects').update(form).eq('id', project.id)
+    logActivity(db, undefined, 'mission_control', {
+      category:    'sales_order',
+      action:      'project_updated',
+      label:       `Updated project: ${form.name || project.name}`,
+      entity_type: 'project',
+      entity_id:   project.id,
+      meta:        { stage: form.stage },
+    })
     setSaving(false)
     setEditing(false)
     onSave({ ...project, ...form })
