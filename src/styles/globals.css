@@ -108,7 +108,9 @@ body {
   background: var(--bg);
   color: var(--text-1);
   font-size: var(--fs-base);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
 }
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
