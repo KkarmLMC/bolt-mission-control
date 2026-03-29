@@ -222,23 +222,11 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
           )}
 
           {/* User profile */}
-          {profile && !collapsed && (
-            <div onClick={() => navigate('/profile')}
-              className="sidebar-item"
-              style={{ padding: 'var(--sp-2) var(--sp-3)', marginBottom: 'var(--sp-1)', cursor: 'pointer', borderRadius: 'var(--r-lg)' }}>
-              <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-1)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {profile.full_name || profile.email}
-              </div>
-              <div style={{ fontSize: 10, color: 'var(--text-3)', textTransform: 'capitalize', marginTop: 1 }}>
-                {profile.role} · Edit profile & PIN
-              </div>
-            </div>
-          )}
-          {profile && collapsed && (
-            <button onClick={() => navigate('/profile')} className="sidebar-item" title="Profile & Security">
-              <User size={17} style={{ flexShrink: 0 }} />
-            </button>
-          )}
+          {/* Profile */}
+          <button onClick={() => navigate('/profile')} className="sidebar-item" title={collapsed ? 'Profile' : undefined}>
+            <User size={17} style={{ flexShrink: 0 }} />
+            {!collapsed && <span className="sidebar-item-label">Profile</span>}
+          </button>
 
           {/* Sign out */}
           <button onClick={handleSignOut} className="sidebar-item"
