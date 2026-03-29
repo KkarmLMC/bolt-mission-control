@@ -39,9 +39,9 @@ function COModal({ co, onClose, onAction }) {
         // Auto-create Draft Sales Order
         const soNumber = 'SO-' + Date.now().toString().slice(-6)
         const { data: so, error: soErr } = await db
-          .from('purchase_orders')
+          .from('sales_orders')
           .insert({
-            po_number:     soNumber,
+            so_number:     soNumber,
             project_name:  co.job_reference,
             project_ref:   co.projects?.job_number || null,
             division:      co.division,
@@ -58,7 +58,7 @@ function COModal({ co, onClose, onAction }) {
         // Create line items from CO items
         if (co.change_order_items?.length) {
           const lines = co.change_order_items.map((item, idx) => ({
-            po_id:       so.id,
+            so_id:       so.id,
             line_type:   'material',
             part_id:     item.part_id,
             description: item.parts?.name || 'Unknown Part',
@@ -68,11 +68,11 @@ function COModal({ co, onClose, onAction }) {
             warehouse_id: co.warehouse_id || null,
             sort_order:  idx,
           }))
-          const { error: liErr } = await db.from('po_line_items').insert(lines)
+          const { error: liErr } = await db.from('so_line_items').insert(lines)
           if (liErr) throw liErr
         }
 
-        update.converted_po_id = so.id
+        update.converted_so_id = so.id
       }
 
       const { error: coErr } = await db.from('change_orders').update(update).eq('id', co.id)

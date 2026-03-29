@@ -255,8 +255,8 @@ export default function QBImport() {
     for (const inv of toImport) {
       try {
         // Check if SO already exists
-        const { data: existing } = await db.from('purchase_orders')
-          .select('id, po_number')
+        const { data: existing } = await db.from('sales_orders')
+          .select('id, so_number')
           .eq('quickbooks_doc_number', inv.invoiceNum)
           .maybeSingle()
 
@@ -264,13 +264,13 @@ export default function QBImport() {
 
         // Create SO
         const soNum = `QB-${inv.invoiceNum}`
-        const { data: so, error: soErr } = await db.from('purchase_orders').insert({
-          po_number:             soNum,
+        const { data: so, error: soErr } = await db.from('sales_orders').insert({
+          so_number:             soNum,
           customer_name:         inv.customer,
           project_name:          inv.jobName || inv.customer,
           division,
           status:                'published',
-          po_date:               inv.date || null,
+          so_date:               inv.date || null,
           grand_total:           inv.total,
           materials_total:       inv.total,
           quickbooks_doc_number: inv.invoiceNum,
@@ -282,9 +282,9 @@ export default function QBImport() {
 
         // Line items
         if (inv.lineItems.length) {
-          await db.from('po_line_items').insert(
+          await db.from('so_line_items').insert(
             inv.lineItems.map((li, idx) => ({
-              po_id: so.id, line_type: 'material',
+              so_id: so.id, line_type: 'material',
               description: li.description, quantity: li.quantity,
               unit_cost: li.unit_cost, sort_order: idx,
             }))
@@ -303,7 +303,7 @@ export default function QBImport() {
 
         // Link SO back to project
         if (project) {
-          await db.from('purchase_orders').update({ project_id: project.id }).eq('id', so.id)
+          await db.from('sales_orders').update({ project_id: project.id }).eq('id', so.id)
         }
 
         res.push({ invoiceNum: inv.invoiceNum, customer: inv.customer, action: 'created', soNum })
