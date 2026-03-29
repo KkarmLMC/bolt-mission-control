@@ -112,7 +112,7 @@ export default function Opportunities({ leads, loading }) {
               }}>
                 <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: s.color, marginBottom: 4 }}>{s.label}</div>
                 <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-1)', lineHeight: 1 }}>{count}</div>
-                <div style={{ fontSize: 11, color: 'var(--text-3)', fontFamily: 'var(--mono)', marginTop: 4 }}>{val > 0 ? fmt$(val) : '—'}</div>
+                <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 4 }}>{val > 0 ? fmt$(val) : '—'}</div>
               </div>
             )
           })}
@@ -136,7 +136,7 @@ export default function Opportunities({ leads, loading }) {
               {c.count !== null && c.count !== undefined ? (
                 <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-full)', background: 'var(--red-soft)', color: 'var(--red)', flexShrink: 0 }}>{c.count} new</span>
               ) : c.soon ? (
-                <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.05em', flexShrink: 0 }}>Soon</span>
+                <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--text-2)', flexShrink: 0 }}>Soon</span>
               ) : null}
               {c.path && <CaretRight size={14} style={{ color: 'var(--text-2)', flexShrink: 0 }} />}
             </div>
