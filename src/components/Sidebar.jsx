@@ -40,7 +40,7 @@ function SubNav({ children, collapsed, goTo, currentPath }) {
       <div style={{ position: 'relative', paddingLeft: 4 }}>
         <div style={{
           position: 'absolute', left: '1.375rem', top: 4, bottom: 4,
-          width: 1, background: 'var(--border)', borderRadius: 1,
+          width: 1, background: 'var(--border-l)', borderRadius: 1,
         }} />
         {children.map(child => {
           const active = pathMatch(child.path, currentPath)
@@ -95,9 +95,9 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
               <span style={{
                 marginLeft: 'auto', fontSize: 10, fontWeight: 700,
                 padding: '1px 6px', borderRadius: 10,
-                background: active ? 'var(--red)' : 'rgba(255,255,255,0.15)',
-                color: active ? '#fff' : 'rgba(255,255,255,0.6)',
-                fontFamily: 'var(--mono)',
+                background: active ? 'var(--navy)' : 'var(--hover)',
+                color: active ? '#fff' : 'var(--text-2)',
+                fontFamily: 'var(--font)',
               }}>{item.count}</span>
             )}
           </span>
@@ -105,7 +105,7 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
         {collapsed && active && (
           <div style={{
             position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)',
-            width: '0.25rem', height: '0.25rem', borderRadius: '50%', background: 'var(--red)',
+            width: '0.25rem', height: '0.25rem', borderRadius: '50%', background: 'var(--navy)',
           }} />
         )}
       </button>
@@ -157,13 +157,13 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
         {/* Logo */}
         <div className="sidebar-brand-row">
           {collapsed
-            ? <Lightning size={22} weight="fill" style={{ color: '#fff' }} />
+            ? <Lightning size={22} weight="fill" style={{ color: 'var(--navy)' }} />
             : (
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: '#fff', letterSpacing: '-0.01em' }}>
+                <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: 'var(--text-1)', letterSpacing: '-0.01em' }}>
                   Mission Control
                 </div>
-                <div style={{ fontSize: 10, fontWeight: 500, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                <div style={{ fontSize: 10, fontWeight: 500, color: 'var(--text-3)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
                   Bolt LP · LMC
                 </div>
               </div>
@@ -193,7 +193,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
             {criticalLeads > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 6, marginBottom: 4, background: 'rgba(245,51,63,0.15)' }}>
                 <Warning size={13} weight="fill" style={{ color: 'var(--red)', flexShrink: 0 }} />
-                <span style={{ fontSize: 12, fontWeight: 600, color: '#FCA5A5' }}>
+                <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--red)' }}>
                   {criticalLeads} critical lead{criticalLeads > 1 ? 's' : ''}
                 </span>
               </div>
@@ -201,7 +201,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
             {overdueTasks > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 6, marginBottom: 4, background: 'rgba(245,158,11,0.15)' }}>
                 <Warning size={13} weight="fill" style={{ color: 'var(--amber)', flexShrink: 0 }} />
-                <span style={{ fontSize: 12, fontWeight: 600, color: '#FCD34D' }}>
+                <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--amber)' }}>
                   {overdueTasks} overdue task{overdueTasks > 1 ? 's' : ''}
                 </span>
               </div>
