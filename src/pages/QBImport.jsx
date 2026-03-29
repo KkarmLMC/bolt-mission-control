@@ -7,6 +7,7 @@ import {
 } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
+import { logActivity } from '../lib/logActivity.js'
 
 // ─── QB column name aliases ────────────────────────────────────────────────────
 // QB Desktop exports column names inconsistently across versions — map them all
@@ -314,6 +315,13 @@ export default function QBImport() {
 
     setResults(res)
     setImporting(false)
+    const createdCount = res.filter(r => r.action === 'created').length
+    await logActivity(db, profile?.id, 'mission_control', {
+      category:    'import',
+      action:      'qb_import',
+      label:       `QB Import — ${createdCount} SO${createdCount !== 1 ? 's' : ''} created`,
+      meta:        { created: createdCount, skipped: res.filter(r => r.action === 'skipped').length, total: res.length },
+    })
     setStep('done')
   }
 
