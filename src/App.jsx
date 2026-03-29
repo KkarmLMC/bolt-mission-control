@@ -69,7 +69,7 @@ export default function App() {
   const { leads, rels, tasks, loading, saveLead, saveRel, saveTask, toggleTask } = useAppData()
   const [modal, setModal] = useState(null)
   const [collapsed, setCollapsed] = useState(false)
-  const { session, loading: authLoading } = useAuth()
+  const { session, loading: authLoading, profile } = useAuth()
 
   const handleSaveLead = async (f) => { await saveLead(f); setModal(null) }
   const handleSaveRel  = async (f) => { await saveRel(f);  setModal(null) }
@@ -87,6 +87,16 @@ export default function App() {
     <Suspense fallback={null}>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </Suspense>
+  )
+
+  // PIN guard — if authenticated but no PIN set, force PIN setup before app access
+  if (session && profile !== undefined && profile !== null && !profile?.pin_hash) return (
+    <Suspense fallback={null}>
+      <Routes>
+        <Route path="/login" element={<Login forcePinSetup session={session} />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Suspense>
