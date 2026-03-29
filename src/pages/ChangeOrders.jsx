@@ -15,7 +15,7 @@ const STATUS = {
 
 function StatusBadge({ status }) {
   const s = STATUS[status] || STATUS.pending
-  return <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: 11, fontWeight: 700, background: s.bg, color: s.color }}>{s.label}</span>
+  return <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: 'var(--fs-xs)', fontWeight: 700, background: s.bg, color: s.color }}>{s.label}</span>
 }
 
 function COModal({ co, onClose, onAction }) {
@@ -125,8 +125,8 @@ function COModal({ co, onClose, onAction }) {
             <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-3) 0', borderBottom: '1px solid var(--border-l)' }}>
               <div>
                 <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 600 }}>{item.parts?.name || '—'}</div>
-                {item.parts?.sku && <div style={{ fontSize: 10, fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>{item.parts.sku}</div>}
-                {item.notes && <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 2 }}>{item.notes}</div>}
+                {item.parts?.sku && <div style={{ fontSize: 'var(--fs-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>{item.parts.sku}</div>}
+                {item.notes && <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 2 }}>{item.notes}</div>}
               </div>
               <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 800, fontFamily: 'var(--mono)' }}>×{item.quantity}</div>
             </div>
@@ -157,7 +157,7 @@ function COModal({ co, onClose, onAction }) {
                 {saving ? <div className="spinner" style={{ borderTopColor: '#fff' }} /> : <><CheckCircle size={16} /> Approve → SO</>}
               </button>
             </div>
-            <div style={{ fontSize: 10, color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--sp-2)' }}>
+            <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--sp-2)' }}>
               Approving creates a Draft Sales Order in Warehouse IQ automatically.
             </div>
           </>
@@ -168,7 +168,7 @@ function COModal({ co, onClose, onAction }) {
           <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 'var(--sp-3)', marginTop: 'var(--sp-3)' }}>
             <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 4 }}>Review Notes</div>
             <div style={{ fontSize: 'var(--fs-sm)' }}>{co.review_notes}</div>
-            <div style={{ fontSize: 10, color: 'var(--text-3)', marginTop: 4 }}>by {co.reviewed_by} · {new Date(co.reviewed_at).toLocaleDateString()}</div>
+            <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 4 }}>by {co.reviewed_by} · {new Date(co.reviewed_at).toLocaleDateString()}</div>
           </div>
         )}
       </div>
@@ -229,7 +229,7 @@ export default function ChangeOrders() {
         <div className="card-header">
           <span className="card-title">Change Orders</span>
           {pendingCount > 0 && (
-            <span style={{ fontSize: 11, fontWeight: 700, padding: '2px 10px', borderRadius: 20, background: '#FFF7ED', color: '#C2410C' }}>
+            <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, padding: '2px 10px', borderRadius: 20, background: '#FFF7ED', color: '#C2410C' }}>
               {pendingCount} need review
             </span>
           )}
@@ -270,11 +270,11 @@ export default function ChangeOrders() {
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                         <Package size={13} style={{ color: 'var(--text-2)' }} />
-                        <span style={{ fontSize: 12 }}>{co.change_order_items?.length || 0} part{co.change_order_items?.length !== 1 ? 's' : ''}</span>
+                        <span style={{ fontSize: 'var(--fs-sm)' }}>{co.change_order_items?.length || 0} part{co.change_order_items?.length !== 1 ? 's' : ''}</span>
                       </div>
                     </td>
-                    <td><span style={{ fontSize: 13 }}>{co.submitted_by}</span></td>
-                    <td><span className="cell-mono" style={{ fontSize: 11 }}>{new Date(co.created_at).toLocaleDateString()}</span></td>
+                    <td><span style={{ fontSize: 'var(--fs-sm)' }}>{co.submitted_by}</span></td>
+                    <td><span className="cell-mono" style={{ fontSize: 'var(--fs-xs)' }}>{new Date(co.created_at).toLocaleDateString()}</span></td>
                     <td><StatusBadge status={co.status} /></td>
                     <td><ArrowRight size={14} style={{ color: 'var(--text-2)' }} /></td>
                   </tr>

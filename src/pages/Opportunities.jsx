@@ -111,8 +111,8 @@ export default function Opportunities({ leads, loading }) {
                 borderTop: `3px solid ${s.color}`, borderRadius: 'var(--r-md)', padding: '12px 14px',
               }}>
                 <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: s.color, marginBottom: 4 }}>{s.label}</div>
-                <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-1)', lineHeight: 1 }}>{count}</div>
-                <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 4 }}>{val > 0 ? fmt$(val) : '—'}</div>
+                <div style={{ fontSize: 'var(--fs-stat)', fontWeight: 700, color: 'var(--text-1)', lineHeight: 1 }}>{count}</div>
+                <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 4 }}>{val > 0 ? fmt$(val) : '—'}</div>
               </div>
             )
           })}
@@ -172,7 +172,7 @@ export default function Opportunities({ leads, loading }) {
                     <td><span className="cell-mono" style={{ color: 'var(--amber)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
                     <td><span className={`badge ${statusBadge(l.status)}`}>{l.status}</span></td>
                     <td><span className={`badge ${prioBadge(l.priority)}`}>{l.priority?.replace(/[🔴🟠🟡🟢]/, '').trim()}</span></td>
-                    <td><span style={{ fontSize: 12 }}>{l.county}</span></td>
+                    <td><span style={{ fontSize: 'var(--fs-sm)' }}>{l.county}</span></td>
                   </tr>
                 ))}
               </tbody>

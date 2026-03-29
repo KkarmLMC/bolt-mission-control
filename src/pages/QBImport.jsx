@@ -148,22 +148,22 @@ function InvoiceRow({ inv, selected, onToggle }) {
           <input type="checkbox" checked={selected} onChange={() => onToggle(inv.invoiceNum)}
             onClick={e => e.stopPropagation()} />
         </td>
-        <td style={{ padding: '10px 12px', fontFamily: 'var(--mono)', fontSize: 12 }}>{inv.invoiceNum}</td>
+        <td style={{ padding: '10px 12px', fontFamily: 'var(--mono)', fontSize: 'var(--fs-sm)' }}>{inv.invoiceNum}</td>
         <td style={{ padding: '10px 12px' }}>
-          <div style={{ fontSize: 13, fontWeight: 600 }}>{inv.customer}</div>
-          {inv.jobName && <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 2 }}>{inv.jobName}</div>}
+          <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 600 }}>{inv.customer}</div>
+          {inv.jobName && <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 2 }}>{inv.jobName}</div>}
         </td>
-        <td style={{ padding: '10px 12px', fontSize: 12 }}>{inv.date}</td>
-        <td style={{ padding: '10px 12px', fontSize: 13, fontWeight: 700, color: 'var(--amber)', fontFamily: 'var(--mono)' }}>
+        <td style={{ padding: '10px 12px', fontSize: 'var(--fs-sm)' }}>{inv.date}</td>
+        <td style={{ padding: '10px 12px', fontSize: 'var(--fs-sm)', fontWeight: 700, color: 'var(--amber)', fontFamily: 'var(--mono)' }}>
           ${inv.total.toLocaleString('en-US', { minimumFractionDigits: 2 })}
         </td>
         <td style={{ padding: '10px 12px' }}>
-          <span style={{ fontSize: 11, color: 'var(--text-3)' }}>{inv.lineItems.length} lines</span>
+          <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>{inv.lineItems.length} lines</span>
         </td>
         <td style={{ padding: '10px 12px' }}>
           {inv.lineItems.length > 0 && (
             <button onClick={e => { e.stopPropagation(); setExpanded(x => !x) }}
-              style={{ border: 'none', background: 'none', cursor: 'pointer', color: 'var(--text-3)', fontSize: 11 }}>
+              style={{ border: 'none', background: 'none', cursor: 'pointer', color: 'var(--text-3)', fontSize: 'var(--fs-xs)' }}>
               {expanded ? '▲ Hide' : '▼ Show'}
             </button>
           )}
@@ -173,10 +173,10 @@ function InvoiceRow({ inv, selected, onToggle }) {
         <tr key={i} style={{ background: '#F8FAFF' }}>
           <td />
           <td />
-          <td colSpan={2} style={{ padding: '6px 12px 6px 24px', fontSize: 12, color: 'var(--text-2)' }}>
+          <td colSpan={2} style={{ padding: '6px 12px 6px 24px', fontSize: 'var(--fs-sm)', color: 'var(--text-2)' }}>
             {li.description}
           </td>
-          <td style={{ padding: '6px 12px', fontSize: 12, fontFamily: 'var(--mono)' }}>
+          <td style={{ padding: '6px 12px', fontSize: 'var(--fs-sm)', fontFamily: 'var(--mono)' }}>
             {li.quantity > 1 ? `${li.quantity} × $${li.unit_cost}` : `$${li.amount.toLocaleString()}`}
           </td>
           <td colSpan={2} />
@@ -352,7 +352,7 @@ export default function QBImport() {
             ['5', 'Save the file and upload it below'],
           ].map(([n, text]) => (
             <div key={n} style={{ display: 'flex', gap: 'var(--sp-3)', alignItems: 'flex-start' }}>
-              <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{n}</div>
+              <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 'var(--fs-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{n}</div>
               <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-2)', paddingTop: 2 }}>{text}</div>
             </div>
           ))}
@@ -465,7 +465,7 @@ export default function QBImport() {
                   onChange={toggleAll} />
               </th>
               {['Invoice #', 'Customer / Job', 'Date', 'Amount', 'Lines', ''].map(h => (
-                <th key={h} style={{ padding: '10px 12px', textAlign: 'left', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
+                <th key={h} style={{ padding: '10px 12px', textAlign: 'left', fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
               ))}
             </tr>
           </thead>
@@ -489,7 +489,7 @@ export default function QBImport() {
           : <>Import {selected.size} Sales Order{selected.size !== 1 ? 's' : ''} <ArrowRight size={16} /></>
         }
       </button>
-      <div style={{ fontSize: 11, color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--sp-2)' }}>
+      <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--sp-2)' }}>
         Each selected invoice will create a Sales Order and a linked Project in your system.
       </div>
     </div>
