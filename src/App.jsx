@@ -31,7 +31,7 @@ const PAGE_META = {
 function Header() {
   const location = useLocation()
   const navigate  = useNavigate()
-  const { profile, signOut } = useAuth()
+  const { signOut } = useAuth()
   const meta = PAGE_META[location.pathname] || PAGE_META['/opportunities']
 
   const handleSignOut = async () => {
