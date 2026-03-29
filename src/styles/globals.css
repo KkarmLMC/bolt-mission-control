@@ -120,7 +120,7 @@ body {
 /* ============================================================
    LAYOUT
    ============================================================ */
-.app { display: flex; height: 100vh; overflow: hidden; }
+.app { display: flex; height: 100%; overflow: hidden; }
 .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
 .page { flex: 1; overflow-y: auto; padding: var(--content-pad) var(--content-pad) var(--sp-8); }
 
