@@ -260,14 +260,14 @@ export default function ChangeOrders() {
                     </td>
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                        <Package size={13} style={{ color: 'var(--text-3)' }} />
+                        <Package size={13} style={{ color: 'var(--text-2)' }} />
                         <span style={{ fontSize: 12 }}>{co.change_order_items?.length || 0} part{co.change_order_items?.length !== 1 ? 's' : ''}</span>
                       </div>
                     </td>
                     <td><span style={{ fontSize: 13 }}>{co.submitted_by}</span></td>
                     <td><span className="cell-mono" style={{ fontSize: 11 }}>{new Date(co.created_at).toLocaleDateString()}</span></td>
                     <td><StatusBadge status={co.status} /></td>
-                    <td><ArrowRight size={14} style={{ color: 'var(--text-3)' }} /></td>
+                    <td><ArrowRight size={14} style={{ color: 'var(--text-2)' }} /></td>
                   </tr>
                 ))}
               </tbody>

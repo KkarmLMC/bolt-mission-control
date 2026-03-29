@@ -69,7 +69,7 @@ export default function Opportunities({ leads, loading }) {
           <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700 }}>Import from QuickBooks</div>
           <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>Upload a QB Desktop CSV to create Sales Orders</div>
         </div>
-        <ArrowRight size={14} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+        <ArrowRight size={14} style={{ color: 'var(--text-2)', flexShrink: 0 }} />
       </div>
 
       {/* Stat cards — flat, no icons, Field Ops style */}
@@ -138,7 +138,7 @@ export default function Opportunities({ leads, loading }) {
               ) : c.soon ? (
                 <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.05em', flexShrink: 0 }}>Soon</span>
               ) : null}
-              {c.path && <CaretRight size={14} style={{ color: 'var(--text-3)', flexShrink: 0 }} />}
+              {c.path && <CaretRight size={14} style={{ color: 'var(--text-2)', flexShrink: 0 }} />}
             </div>
           ))}
         </div>
