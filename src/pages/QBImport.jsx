@@ -269,7 +269,7 @@ export default function QBImport() {
           customer_name:         inv.customer,
           project_name:          inv.jobName || inv.customer,
           division,
-          status:                'published',
+          status:                'queued',
           so_date:               inv.date || null,
           grand_total:           inv.total,
           materials_total:       inv.total,
