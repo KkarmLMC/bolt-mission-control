@@ -24,7 +24,7 @@ export default function MobileTabBar({ leads = [], tasks = [] }) {
         return (
           <button key={path} className={`tab-item ${active ? 'active' : ''}`} onClick={() => navigate(path)}>
             {count > 0 && <div className="tab-badge">{count}</div>}
-            <Icon size={22} weight={active ? 'fill' : 'regular'} color={active ? 'var(--red)' : 'var(--text-3)'} />
+            <Icon size={22} weight={active ? 'fill' : 'regular'} color={active ? 'var(--red)' : 'var(--text-1)'} />
             <span className="tab-label">{label}</span>
           </button>
         )
