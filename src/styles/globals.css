@@ -157,8 +157,9 @@ body {
   transition: all var(--ease-base);
   border: none; background: none; width: 100%; text-align: left;
 }
-.nav-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
-.nav-item.active { background: rgba(255,255,255,0.12); color: #fff; }
+.nav-item:hover:not(.active) { background: rgba(255,255,255,0.08); color: #fff; }
+.nav-item.active { background: #000000; color: #fff; }
+.nav-item.active:hover { background: #000000; color: #fff; }
 .nav-icon { width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; opacity: 0.75; }
 .nav-item.active .nav-icon { opacity: 1; }
 .nav-badge { margin-left: auto; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 10px; font-family: var(--mono); }
