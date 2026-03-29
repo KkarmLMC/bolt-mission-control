@@ -211,17 +211,17 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
 
         {/* Footer */}
         <div className="sidebar-footer-nav">
-          {!collapsed && <div className="sidebar-section-label">ACCOUNT</div>}
-
-          {/* Live clock — only expanded */}
           {!collapsed && (
-            <div style={{ padding: '4px 0.625rem 6px', display: 'flex', alignItems: 'center', gap: 6 }}>
-              <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)', animation: 'livepulse 2s infinite', flexShrink: 0 }} />
-              <Clock />
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-2) 0.625rem var(--sp-1)' }}>
+              <span className="sidebar-section-label" style={{ padding: 0 }}>ACCOUNT</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--green)', animation: 'livepulse 2s infinite', flexShrink: 0 }} />
+                <Clock />
+              </div>
             </div>
           )}
+          {collapsed && <div style={{ height: 'var(--sp-1)' }} />}
 
-          {/* User profile */}
           {/* Profile */}
           <button onClick={() => navigate('/profile')} className={`sidebar-item ${location.pathname === '/profile' ? 'sidebar-item--active' : ''}`} title={collapsed ? 'View Profile' : undefined}>
             <User size={17} style={{ flexShrink: 0 }} />
