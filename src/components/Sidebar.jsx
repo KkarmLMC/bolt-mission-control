@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import {
   ChartBar, Handshake, CheckSquare, Lightning,
   Warning, SignOut, ClipboardText, DownloadSimple,
-  CalendarBlank, ArrowLineLeft, ArrowLineRight, User, UserGear,
+  CalendarBlank, ArrowLineLeft, ArrowLineRight, User, UserGear, Receipt,
 } from '@phosphor-icons/react'
 import { useAuth } from '../lib/useAuth.jsx'
 
@@ -144,6 +144,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
       ],
     },
     { path: '/change-orders',  Icon: ClipboardText,  label: 'Change Orders', count: 0           },
+    { path: '/sales-orders',   Icon: Receipt,        label: 'Sales Orders',  count: 0           },
     { path: '/ops-board',      Icon: CalendarBlank,  label: 'Ops Board',     count: 0           },
     { path: '/relationships',  Icon: Handshake,      label: 'Relationships', count: rels.length },
     { path: '/tasks',          Icon: CheckSquare,    label: 'Task Board',    count: openTasks   },
