@@ -66,8 +66,8 @@
   --r-sm:   6px;
   --r-md:   8px;
   --r-lg:   10px;
-  --r-xl:   14px;
-  --r-2xl:  18px;
+  --r-xl:   1rem;      /* 16px — matches Field Ops */
+  --r-2xl:  1.25rem;   /* 20px — matches Field Ops */
   --r-full: 9999px;
   --radius:    10px;
   --radius-sm: 6px;
@@ -77,12 +77,12 @@
   --mono: 'DM Mono', monospace;
   --fs-2xs: 0.5625rem;
   --fs-xs:  0.75rem;
-  --fs-sm:  0.8125rem;
-  --fs-base: 0.875rem;
-  --fs-md:  1rem;
-  --fs-lg:  1.125rem;
-  --fs-xl:  1.25rem;
-  --fs-2xl: 1.5rem;
+  --fs-sm:  clamp(0.75rem, 1.5vw, 0.8125rem);
+  --fs-base: clamp(0.8125rem, 1.6vw, 0.875rem);
+  --fs-md:  clamp(0.875rem, 1.75vw, 1rem);
+  --fs-lg:  clamp(0.9375rem, 1.9vw, 1.125rem);
+  --fs-xl:  clamp(1rem, 2vw, 1.25rem);
+  --fs-2xl: clamp(1.25rem, 2.5vw, 1.5rem);
 
   /* Sidebar */
   --sidebar-w: 240px;
@@ -101,7 +101,7 @@
    RESET
    ============================================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body, #root { height: 100%; }
+html, body, #root { height: 100%; overflow: hidden; }
 body {
   font-family: var(--font);
   background: var(--bg);
