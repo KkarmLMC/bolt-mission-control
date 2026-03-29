@@ -173,13 +173,13 @@ body {
 
 .sidebar-nav {
   flex: 1;
+  min-height: 0;
   padding: var(--sp-2);
   display: flex;
   flex-direction: column;
   gap: 0.125rem;
   overflow-y: auto;
   overflow-x: hidden;
-  border-bottom: 1px solid var(--border);
 }
 
 .sidebar-section-label {
@@ -252,6 +252,7 @@ body {
   flex-direction: column;
   gap: 0.125rem;
   flex-shrink: 0;
+  border-top: 1px solid var(--border);
 }
 
 .sidebar-collapse-btn {
