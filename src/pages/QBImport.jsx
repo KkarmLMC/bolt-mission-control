@@ -333,7 +333,7 @@ export default function QBImport() {
           style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--fs-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--sp-3)' }}>
           <ArrowLeft size={14} /> Back
         </button>
-        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>QUICKBOOKS</div>
+        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 4 }}>QUICKBOOKS</div>
         <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800 }}>Import Sales Orders</div>
         <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', marginTop: 4 }}>
           Import invoices exported from QuickBooks Desktop as CSV
@@ -417,7 +417,7 @@ export default function QBImport() {
           style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--fs-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--sp-3)' }}>
           <ArrowLeft size={14} /> Change file
         </button>
-        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>QUICKBOOKS IMPORT</div>
+        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 4 }}>QUICKBOOKS IMPORT</div>
         <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800 }}>Review & Confirm</div>
         <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', marginTop: 4 }}>
           {fileName} · {parsed.length} invoice{parsed.length !== 1 ? 's' : ''} found · {format === 'detail' ? 'Detail format (with line items)' : 'Summary format'}
@@ -508,15 +508,15 @@ export default function QBImport() {
           <div style={{ display: 'flex', gap: 'var(--sp-4)', flexWrap: 'wrap', justifyContent: 'center' }}>
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, color: 'var(--success)' }}>{created}</div>
-              <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Created</div>
+              <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-2)' }}>Created</div>
             </div>
             {skipped > 0 && <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, color: 'var(--amber)' }}>{skipped}</div>
-              <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Skipped</div>
+              <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-2)' }}>Skipped</div>
             </div>}
             {errors > 0 && <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, color: 'var(--error)' }}>{errors}</div>
-              <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Errors</div>
+              <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-2)' }}>Errors</div>
             </div>}
           </div>
           {errors > 0 && (

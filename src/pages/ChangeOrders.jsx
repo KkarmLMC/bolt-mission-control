@@ -114,13 +114,13 @@ function COModal({ co, onClose, onAction }) {
 
         {/* Justification */}
         <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 'var(--sp-4)', marginBottom: 'var(--sp-4)' }}>
-          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-2)' }}>Justification</div>
+          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 'var(--sp-2)' }}>Justification</div>
           <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-2)', lineHeight: 1.6 }}>{co.justification || '—'}</div>
         </div>
 
         {/* Parts */}
         <div style={{ marginBottom: 'var(--sp-4)' }}>
-          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-2)' }}>Parts Requested</div>
+          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 'var(--sp-2)' }}>Parts Requested</div>
           {co.change_order_items?.map((item, idx) => (
             <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-3) 0', borderBottom: '1px solid var(--border-l)' }}>
               <div>

@@ -164,7 +164,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
                 <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: 'var(--text-1)', letterSpacing: '-0.01em' }}>
                   Mission Control
                 </div>
-                <div style={{ fontSize: 10, fontWeight: 500, color: 'var(--text-3)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                <div style={{ fontSize: 10, fontWeight: 500, color: 'var(--text-3)' }}>
                   Bolt LP · LMC
                 </div>
               </div>

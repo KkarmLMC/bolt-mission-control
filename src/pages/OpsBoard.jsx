@@ -160,7 +160,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
                 ['End',         project.target_completion || '—'],
               ].map(([lbl, val]) => (
                 <div key={lbl} style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 'var(--sp-3)' }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>{lbl}</div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-2)', marginBottom: 4 }}>{lbl}</div>
                   <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: 'var(--text-1)', fontFamily: lbl === 'Contract' || lbl === 'SO Number' ? 'var(--mono)' : 'var(--font)' }}>{val}</div>
                 </div>
               ))}
@@ -168,7 +168,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
 
             {/* Assigned crew */}
             <div style={{ marginBottom: 'var(--sp-4)' }}>
-              <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-2)' }}>
+              <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 'var(--sp-2)' }}>
                 Assigned Crew
               </div>
               {crew.length === 0 ? (
@@ -189,7 +189,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
             {/* Notes */}
             {project.notes && (
               <div style={{ marginBottom: 'var(--sp-4)' }}>
-                <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--sp-2)' }}>Notes</div>
+                <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 'var(--sp-2)' }}>Notes</div>
                 <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-2)', lineHeight: 1.6, background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 'var(--sp-3)' }}>
                   {project.notes}
                 </div>
@@ -233,7 +233,7 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
                 background: isToday ? 'var(--navy)' : isSun ? 'var(--surface-raised)' : 'transparent',
                 borderRight: '1px solid var(--border-l)',
               }}>
-                <div style={{ fontSize: 9, fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--text-2)', textTransform: 'uppercase' }}>
+                <div style={{ fontSize: 9, fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--text-2)' }}>
                   {DAY_NAMES[d.getDay()]}
                 </div>
                 <div style={{ fontSize: 11, fontWeight: 700, color: isToday ? '#fff' : isSun ? 'var(--text-3)' : 'var(--text-2)' }}>
@@ -367,7 +367,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
                 background: isToday ? 'var(--navy)' : isSun ? 'var(--surface-raised)' : 'transparent',
                 borderRight: '1px solid var(--border-l)',
               }}>
-                <div style={{ fontSize: 10, fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--text-2)', textTransform: 'uppercase' }}>
+                <div style={{ fontSize: 10, fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--text-2)' }}>
                   {DAY_NAMES[d.getDay()]} {d.getDate()}
                 </div>
                 <div style={{ fontSize: 9, color: isToday ? 'rgba(255,255,255,0.5)' : 'var(--text-4)' }}>
