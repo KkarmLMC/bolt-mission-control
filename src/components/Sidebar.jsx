@@ -15,7 +15,7 @@ function Clock() {
     return () => clearInterval(i)
   }, [])
   return (
-    <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--mono)' }}>
+    <span style={{ fontSize: 11, color: 'var(--text-3)', fontFamily: 'var(--font)' }}>
       {t.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
       {' · '}
       {t.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
@@ -226,10 +226,10 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
             <div onClick={() => navigate('/profile')}
               className="sidebar-item"
               style={{ padding: 'var(--sp-2) var(--sp-3)', marginBottom: 'var(--sp-1)', cursor: 'pointer', borderRadius: 'var(--r-lg)' }}>
-              <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.85)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-1)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {profile.full_name || profile.email}
               </div>
-              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', textTransform: 'capitalize', marginTop: 1 }}>
+              <div style={{ fontSize: 10, color: 'var(--text-3)', textTransform: 'capitalize', marginTop: 1 }}>
                 {profile.role} · Edit profile & PIN
               </div>
             </div>
@@ -243,7 +243,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
           {/* Sign out */}
           <button onClick={handleSignOut} className="sidebar-item"
             title={collapsed ? 'Sign Out' : undefined}
-            style={{ color: 'var(--text-3)' }}>
+            >
             <SignOut size={17} style={{ flexShrink: 0 }} />
             {!collapsed && <span className="sidebar-item-label">Sign Out</span>}
           </button>
