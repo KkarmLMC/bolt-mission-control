@@ -8,6 +8,9 @@ import {
 import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { soStatus } from '../lib/statusColors.js'
+import { logActivity } from '../lib/logActivity.js'
+
+const APP_SOURCE = (import.meta.env.VITE_APP_NAME || 'lmc_platform').toLowerCase().replace(/ /g, '_')
 
 // Local icon map — color/bg come from soStatus() in statusColors.js
 const SO_STATUS_ICON = {
@@ -136,6 +139,11 @@ export default function SODetail() {
       })
       if (error) throw error
       if (data?.success) {
+        logActivity(db, user?.id, APP_SOURCE, {
+          category: 'sales_order', action: 'cancelled',
+          label: `Cancelled ${po?.so_number || id}: ${cancelReason.trim()}`,
+          entity_type: 'sales_order', entity_id: id,
+          meta: { so_number: po?.so_number, reason: cancelReason.trim(), reversed_items: data.reversed_items } })
         setCancelResult(data)
         // Update local state after a moment so user sees the result
         setTimeout(() => { navigate('/sales-orders') }, 2500)
@@ -188,11 +196,21 @@ export default function SODetail() {
 
   const StatusIcon = SO_STATUS_ICON[po.status] || SO_STATUS_ICON[order?.status] || CheckCircle
 
-  const handleAction = async (actionFn) => {
+  const handleAction = async (actionFn, actionLabel) => {
     if (!actionFn || acting) return
+    const prevStatus = po?.status
     setActing(true)
-    try { await actionFn(id, navigate, setPo) }
-    finally { setActing(false) }
+    try {
+      await actionFn(id, navigate, setPo)
+      // Log if the action caused a local state change (DB-modifying action vs external link)
+      if (po?.status !== prevStatus || actionLabel) {
+        logActivity(db, user?.id, APP_SOURCE, {
+          category: 'sales_order', action: 'status_changed',
+          label: actionLabel || `${po?.so_number || id}: ${prevStatus} → action taken`,
+          entity_type: 'sales_order', entity_id: id,
+          meta: { prev_status: prevStatus, so_number: po?.so_number } })
+      }
+    } finally { setActing(false) }
   }
 
   return (
