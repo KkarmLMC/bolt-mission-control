@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import {
   UploadSimple, FileCsv, CheckCircle, Warning,
   ArrowLeft, MagnifyingGlass, Trash, ArrowRight,
-  Table, X } from '@phosphor-icons/react'
+  Table, X, FileXls } from '@phosphor-icons/react'
+import * as XLSX from 'xlsx'
 import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
@@ -55,6 +56,41 @@ function parseCSV(text) {
     const vals = parseLine(l)
     const row = {}
     headers.forEach((h, i) => { row[h.trim()] = vals[i] || '' })
+    return row
+  })
+
+  return { headers, rows }
+}
+
+function parseXLSX(buffer) {
+  const wb = XLSX.read(buffer, { type: 'array', cellDates: true })
+  const ws = wb.Sheets[wb.SheetNames[0]]
+  const raw = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' })
+  if (!raw.length) return { headers: [], rows: [] }
+
+  // QB Desktop Excel exports have spacer columns (blanks between real columns).
+  // Find the row that contains real headers (Type, Num, Date, Name, etc.)
+  let headerRowIdx = 0
+  for (let i = 0; i < Math.min(raw.length, 5); i++) {
+    const rowStr = raw[i].map(c => String(c || '')).join(' ').toLowerCase()
+    if (rowStr.includes('type') || rowStr.includes('num') || rowStr.includes('name')) {
+      headerRowIdx = i; break
+    }
+  }
+
+  const rawHeaders = raw[headerRowIdx].map(c => String(c || '').trim())
+  // Filter out blank spacer columns — keep only columns that have a header
+  const realCols = rawHeaders.map((h, i) => ({ h, i })).filter(x => x.h.length > 0)
+  const headers = realCols.map(x => x.h)
+
+  const rows = raw.slice(headerRowIdx + 1).map(rawRow => {
+    const row = {}
+    realCols.forEach(({ h, i }) => {
+      let val = rawRow[i] ?? ''
+      // Convert Date objects to string
+      if (val instanceof Date) val = val.toISOString().split('T')[0]
+      row[h] = String(val)
+    })
     return row
   })
 
@@ -202,17 +238,24 @@ export default function QBImport() {
   const [search, setSearch] = useState('')
 
   const handleFile = useCallback(file => {
-    if (!file || !file.name.toLowerCase().endsWith('.csv')) {
-      setError('Please upload a CSV file exported from QuickBooks Desktop.')
+    const ext = file?.name?.toLowerCase().split('.').pop()
+    if (!file || !['csv', 'xlsx', 'xls'].includes(ext)) {
+      setError('Please upload a CSV or Excel (.xlsx) file exported from QuickBooks Desktop.')
       return
     }
     setError('')
     setFileName(file.name)
     const reader = new FileReader()
     reader.onload = e => {
-      const text = e.target.result
-      const { headers, rows } = parseCSV(text)
-      if (!headers.length) { setError('Could not parse CSV. Make sure it is a valid QuickBooks export.'); return }
+      let headers, rows
+      if (ext === 'csv') {
+        const text = e.target.result
+        ;({ headers, rows } = parseCSV(text))
+      } else {
+        const buffer = new Uint8Array(e.target.result)
+        ;({ headers, rows } = parseXLSX(buffer))
+      }
+      if (!headers.length) { setError('Could not parse file. Make sure it is a valid QuickBooks export.'); return }
       const fmt = detectFormat(headers)
       const invoices = groupByInvoice(rows, headers)
       if (!invoices.length) { setError('No records found. Make sure you exported an Invoice, Sales Order, or Transaction report from QuickBooks.'); return }
@@ -221,7 +264,8 @@ export default function QBImport() {
       setSelected(new Set(invoices.map(i => i.invoiceNum)))
       setStep('preview')
     }
-    reader.readAsText(file)
+    if (ext === 'csv') reader.readAsText(file)
+    else reader.readAsArrayBuffer(file)
   }, [])
 
   const onDrop = e => {
@@ -330,7 +374,7 @@ export default function QBImport() {
         <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>QUICKBOOKS</div>
         <div style={{ fontSize: 'var(--text-base)', fontWeight: 800 }}>Import Sales Orders</div>
         <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 4 }}>
-          Import invoices or sales orders exported from QuickBooks Desktop as CSV
+          Import invoices or sales orders exported from QuickBooks Desktop
         </div>
       </div>
 
@@ -342,8 +386,8 @@ export default function QBImport() {
             ['1', 'Open QuickBooks Desktop and go to Reports → Sales'],
             ['2', 'Choose either Open Sales Orders Detail or Sales by Customer Detail'],
             ['3', 'Set the date range and click OK to run the report'],
-            ['4', 'Click "Excel" or "Export" at the top of the report'],
-            ['5', 'Choose "Create a comma-separated values (.csv) file" and upload below'],
+            ['4', 'Click "Excel" or "Export" at the top — save as Excel (.xlsx) or CSV'],
+            ['5', 'Upload the file below — both formats are supported'],
           ].map(([n, text]) => (
             <div key={n} style={{ display: 'flex', gap: 'var(--gap-m)', alignItems: 'flex-start' }}>
               <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{n}</div>
@@ -385,12 +429,12 @@ export default function QBImport() {
           padding: 'var(--pad-xxl)',
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
           gap: 'var(--gap-m)', cursor: 'pointer', transition: 'all 0.15s' }}>
-        <FileCsv size={44} style={{ color: dragOver ? 'var(--navy)' : 'var(--text-3)' }} />
+        <FileXls size={44} style={{ color: dragOver ? 'var(--navy)' : 'var(--text-3)' }} />
         <div style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: dragOver ? 'var(--navy)' : 'var(--black)' }}>
-          Drop your QB CSV here
+          Drop your QB export here
         </div>
-        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>or click to browse</div>
-        <input ref={fileRef} type="file" accept=".csv" style={{ display: 'none' }}
+        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>CSV or Excel (.xlsx) · click to browse</div>
+        <input ref={fileRef} type="file" accept=".csv,.xlsx,.xls" style={{ display: 'none' }}
           onChange={e => handleFile(e.target.files[0])} />
       </div>
 
