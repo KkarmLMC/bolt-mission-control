@@ -170,7 +170,7 @@ function InvoiceRow({ inv, selected, onToggle }) {
         </td>
       </tr>
       {expanded && inv.lineItems.map((li, i) => (
-        <tr key={i} style={{ background: 'var(--surface-raised)' }}>
+        <tr key={i} style={{ background: 'var(--white)' }}>
           <td />
           <td />
           <td colSpan={2} style={{ padding: '6px 12px 6px 24px', fontSize: 'var(--text-sm)', color: 'var(--black)' }}>
@@ -356,7 +356,7 @@ export default function QBImport() {
               <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', paddingTop: 2 }}>{text}</div>
             </div>
           ))}
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', marginTop: 'var(--mar-xs)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', marginTop: 'var(--mar-xs)' }}>
             💡 Tip: The <strong>Invoice Detail</strong> report is best — it includes line items. The <strong>Transaction List</strong> report also works but won't import individual line items.
           </div>
         </div>
@@ -455,7 +455,7 @@ export default function QBImport() {
       </div>
 
       {/* Table */}
-      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ background: 'var(--navy)' }}>

@@ -125,7 +125,7 @@ export default function SalesOrders() {
               <div key={o.id}
                 onClick={() => navigate(`/sales-orders/${o.id}`)}
                 style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', borderBottom: idx < visible.length - 1 ? '1px solid var(--border-l)' : 'none', cursor: 'pointer' }}>
-                <div style={{ width: 36, height: 36, borderRadius: 'var(--r-l)', background: 'var(--surface-raised)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 'var(--r-l)', background: 'var(--white)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <Receipt size={16} style={{ color: 'var(--navy)' }} />
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>

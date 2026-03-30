@@ -63,7 +63,7 @@ export default function Opportunities({ leads, loading }) {
 
       {/* QB Import shortcut */}
       <div onClick={() => navigate('/qb-import')}
-        style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', border: '1px solid var(--border-l)' }}>
+        style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', border: '1px solid var(--border-l)' }}>
         <DownloadSimple size={18} style={{ color: 'var(--navy)', flexShrink: 0 }} />
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Import from QuickBooks</div>
@@ -107,7 +107,7 @@ export default function Opportunities({ leads, loading }) {
             const val   = leads.filter(l => l.status === s.key).reduce((acc, l) => acc + (l.value_int || 0), 0)
             return (
               <div key={s.key} className="stage-breakdown-card" style={{
-                background: 'var(--surface-raised)', border: '1px solid var(--border-l)',
+                background: 'var(--white)', border: '1px solid var(--border-l)',
                 borderTop: `3px solid ${s.color}`, borderRadius: 'var(--r-m)', padding: '12px 14px',
               }}>
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: s.color, marginBottom: 4 }}>{s.label}</div>
@@ -127,7 +127,7 @@ export default function Opportunities({ leads, loading }) {
         <div style={{ padding: 'var(--pad-l)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-s)' }}>
           {children.map(c => (
             <div key={c.label} onClick={() => c.path && navigate(c.path)}
-              style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-l)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-l)', background: 'var(--surface-raised)', cursor: c.path ? 'pointer' : 'default', opacity: c.soon ? 0.5 : 1 }}>
+              style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-l)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-l)', background: 'var(--white)', cursor: c.path ? 'pointer' : 'default', opacity: c.soon ? 0.5 : 1 }}>
               <c.Icon size={18} style={{ color: 'var(--black)', flexShrink: 0 }} />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--black)' }}>{c.label}</div>

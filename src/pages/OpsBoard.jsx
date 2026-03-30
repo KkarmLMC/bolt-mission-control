@@ -159,7 +159,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
                 ['Start',       project.scheduled_date || '—'],
                 ['End',         project.target_completion || '—'],
               ].map(([lbl, val]) => (
-                <div key={lbl} style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)' }}>
+                <div key={lbl} style={{ background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)' }}>
                   <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>{lbl}</div>
                   <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)', fontFamily: lbl === 'Contract' || lbl === 'SO Number' ? 'var(--mono)' : 'var(--font)' }}>{val}</div>
                 </div>
@@ -190,7 +190,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
             {project.notes && (
               <div style={{ marginBottom: 'var(--mar-l)' }}>
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-s)' }}>Notes</div>
-                <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6, background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)' }}>
+                <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6, background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)' }}>
                   {project.notes}
                 </div>
               </div>
@@ -613,7 +613,7 @@ export default function OpsBoard() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', marginBottom: 'var(--mar-s)', flexWrap: 'wrap' }}>
 
           {/* View toggles */}
-          <div style={{ display: 'flex', background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 2, gap: 1, flexShrink: 0 }}>
+          <div style={{ display: 'flex', background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 2, gap: 1, flexShrink: 0 }}>
             {[
               { key: 'gantt', Icon: Rows, label: 'Gantt' },
               { key: 'crew',  Icon: Users, label: 'Crew'  },
@@ -629,7 +629,7 @@ export default function OpsBoard() {
 
           {/* Span toggles — hidden on month view */}
           {view !== 'month' && (
-            <div style={{ display: 'flex', background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 2, gap: 1, flexShrink: 0 }}>
+            <div style={{ display: 'flex', background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 2, gap: 1, flexShrink: 0 }}>
               {[['week','1W'],['2week','2W'],['month','4W']].map(([key, lbl]) => (
                 <button key={key} onClick={() => setSpan(key)}
                   style={{ padding: '4px 8px', borderRadius: 'var(--r-m)', border: 'none', background: span === key ? 'var(--navy)' : 'transparent', color: span === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
