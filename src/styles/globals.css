@@ -361,6 +361,18 @@
 /* ============================================================
    RESET
    ============================================================ */
+
+/* Button element reset — prevents browser default borders/outlines on all buttons */
+button {
+  border: none;
+  outline: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font);
+  -webkit-tap-highlight-color: transparent;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body, #root { height: 100%; overflow: hidden; }
 body {
@@ -868,4 +880,6 @@ textarea { resize: vertical; min-height: 70px; }
   background: var(--white);
   border-radius: var(--r-m);
   padding: var(--pad-xxl);
+  border: none;
+  outline: none;
 }
