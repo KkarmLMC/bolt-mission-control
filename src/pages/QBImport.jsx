@@ -17,7 +17,7 @@ const COL = {
   customer:     ['Name', 'Customer', 'Customer:Job', 'Customer Name', 'Bill To'],
   dueDate:      ['Due Date', 'DueDate', 'Ship Date', 'Expected Date'],
   amount:       ['Balance', 'Amount', 'Total', 'Grand Total', 'TotalAmt', 'Original Amount', 'Open Balance'],
-  itemDesc:     ['Item', 'Description', 'Item Description', 'Product/Service', 'Service Description'],
+  itemDesc:     ['Item', 'Description', 'Item Description', 'Product/Service', 'Service Description', 'Memo'],
   itemQty:      ['Qty', 'Quantity', 'Qty/hr Rate'],
   itemRate:     ['Sales Price', 'Rate', 'Unit Price', 'UnitPrice', 'Price Each'],
   itemAmount:   ['Amount', 'Item Amount', 'Line Amount', 'Ext. Price'],
@@ -173,7 +173,7 @@ function groupByInvoice(rows, headers) {
         date:       get(dateIdx),
         dueDate:    get(dueDateIdx),
         customer:   customerName,
-        jobName:    get(jobIdx) || jobFromName,
+        jobName:    jobFromName || get(jobIdx),
         total:      parseAmount(get(amtIdx)),
         lineItems:  [],
         raw:        row })
@@ -194,6 +194,15 @@ function groupByInvoice(rows, headers) {
       entry.lineItems.push({ description: desc, quantity: qty, unit_cost: rate, amount: lAmt })
     }
   })
+
+  // Recalculate totals from line items when available
+  // (Sales by Item reports have per-line amounts, not invoice totals)
+  for (const entry of map.values()) {
+    if (entry.lineItems.length > 0) {
+      const lineTotal = entry.lineItems.reduce((sum, li) => sum + li.amount, 0)
+      if (lineTotal > entry.total) entry.total = lineTotal
+    }
+  }
 
   return Array.from(map.values())
 }
