@@ -883,3 +883,86 @@ textarea { resize: vertical; min-height: 70px; }
   border: none;
   outline: none;
 }
+
+/* ── Login component CSS classes ─────────────────────────────────────────────── */
+/* PIN pad number buttons */
+.pin-btn {
+  height: 64px;
+  border-radius: var(--r-m);
+  background: var(--bg);
+  border: none;
+  outline: none;
+  font-size: var(--text-base);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font);
+  color: var(--black);
+  transition: background var(--ease-fast);
+  -webkit-tap-highlight-color: transparent;
+  width: 100%;
+}
+.pin-btn:hover  { background: var(--navy); color: var(--white); }
+.pin-btn:active { background: var(--navy-dark); color: var(--white); transform: scale(0.97); }
+.pin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.pin-submit {
+  width: 100%;
+  max-width: 260px;
+  padding: var(--pad-m);
+  border-radius: var(--r-m);
+  background: var(--navy);
+  color: var(--white);
+  font-weight: 700;
+  font-size: var(--text-md);
+  cursor: pointer;
+  font-family: var(--font);
+  border: none;
+  outline: none;
+  transition: background var(--ease-fast);
+}
+.pin-submit:hover:not(:disabled)    { background: var(--navy-dark); }
+.pin-submit:disabled                { background: var(--hover); color: var(--text-4); cursor: not-allowed; }
+.pin-submit--mismatch               { background: var(--error-soft); color: var(--error-dark); }
+
+.login-submit {
+  width: 100%;
+  padding: var(--pad-m);
+  border-radius: var(--r-m);
+  background: var(--navy);
+  color: var(--white);
+  font-weight: 700;
+  font-size: var(--text-md);
+  cursor: pointer;
+  font-family: var(--font);
+  border: none;
+  outline: none;
+  transition: background var(--ease-fast), opacity var(--ease-fast);
+}
+.login-submit:hover:not(:disabled) { background: var(--navy-dark); }
+.login-submit:disabled             { opacity: 0.7; cursor: not-allowed; }
+
+.login-link-btn {
+  width: 100%;
+  padding: var(--pad-s);
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--navy);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  text-align: center;
+}
+.login-link-btn:hover { color: var(--navy-dark); }
+
+.login-error {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-s);
+  padding: var(--pad-s) var(--pad-m);
+  background: var(--error-soft);
+  border-radius: var(--r-m);
+  color: var(--error-dark);
+  font-size: var(--text-sm);
+}
