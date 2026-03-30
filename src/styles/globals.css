@@ -659,6 +659,27 @@ body {
 .btn-sm { padding: 5px 12px; font-size: var(--text-xs); }
 .btn-icon { padding: 7px; }
 
+/* BEM button variants — used by synced shared pages */
+.btn--navy    { background: var(--navy);  color: var(--white); }
+.btn--navy:hover:not(:disabled) { background: var(--navy-dark); }
+.btn--navy:active:not(:disabled) { background: var(--navy-shade-40); }
+
+.btn--red     { background: var(--red);   color: var(--white); }
+.btn--red:hover:not(:disabled) { background: var(--red-dark); }
+.btn--red:active:not(:disabled) { background: var(--red-shade-40); }
+
+.btn--black   { background: var(--black); color: var(--white); }
+.btn--black:hover:not(:disabled) { background: var(--grey-shade-40); }
+
+.btn--secondary { background: var(--white); color: var(--black); border: 1px solid var(--border-l); }
+.btn--secondary:hover:not(:disabled) { background: var(--hover); border-color: var(--grey-tint-40); }
+
+.btn--ghost   { background: none; color: var(--text-3); border: none; }
+.btn--ghost:hover:not(:disabled) { background: var(--hover); color: var(--black); }
+
+.btn--sm   { padding: 0.375rem 0.75rem; font-size: var(--text-sm); }
+.btn--full { width: 100%; justify-content: center; }
+
 /* ============================================================
    STAT CARDS — flat, no icons, Field Ops style
    ============================================================ */
@@ -754,6 +775,21 @@ body {
 .badge-new { background: var(--red-soft); color: var(--red); }
 .badge-contacted { background: var(--blue-soft); color: var(--blue); }
 .badge-meeting { background: var(--warning-soft); color: var(--warning-text); }
+
+/* BEM badge variants — used by synced shared pages (SO statuses, field statuses) */
+.badge--awarded    { background: var(--blue-soft);    color: var(--blue); }
+.badge--scheduled  { background: var(--warning-soft); color: var(--warning-text); }
+.badge--inprogress { background: var(--orange-soft);  color: var(--orange); }
+.badge--review     { background: var(--error-soft);   color: var(--red); }
+.badge--customer   { background: var(--purple-soft);  color: var(--purple); }
+.badge--signed     { background: var(--success-soft); color: var(--success); }
+.badge--complete   { background: var(--success-soft); color: var(--success-dark); }
+.badge--hold       { background: var(--bg);           color: var(--text-3); }
+.badge--failed     { background: var(--error-soft);   color: var(--red); }
+.badge--pending    { background: var(--warning-soft); color: var(--warning-text); }
+.badge--active     { background: var(--orange-soft);  color: var(--orange); }
+.badge--cancelled  { background: var(--bg);           color: var(--text-3); }
+.badge--queued     { background: var(--purple-soft);  color: var(--purple); }
 .badge-proposal { background: var(--purple-soft); color: var(--purple); }
 .badge-bidlist { background: var(--success-soft); color: var(--teal); }
 .badge-bid { background: var(--blue-soft); color: var(--blue); }
@@ -766,6 +802,37 @@ body {
 .badge-gc { background: var(--blue-soft); color: var(--blue); }
 .badge-mep { background: var(--warning-soft); color: var(--warning-text); }
 .badge-dev { background: var(--purple-soft); color: var(--purple); }
+
+/* ── Shared structural classes — synced from FO/WIQ design system ──────────── */
+.page-stack { display: flex; flex-direction: column; gap: var(--sp-4); }
+
+.page-sub-nav { display: flex; border-bottom: 1px solid var(--border-l); gap: 0; overflow-x: auto; scrollbar-width: none; background: var(--white); }
+.page-sub-nav__item { padding: .625rem var(--sp-4); font-size: var(--text-sm); font-weight: 600; color: var(--text-3); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; border: none; background: none; margin-bottom: -1px; font-family: var(--font); }
+.page-sub-nav__item--active { color: var(--black); border-bottom: 2px solid var(--navy); }
+
+.section-divider { display: flex; align-items: center; gap: var(--sp-3); margin: var(--sp-4) 0 var(--sp-3); }
+.section-divider-title { font-size: var(--text-sm); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--black); flex-shrink: 0; }
+.section-divider-line { flex: 1; height: 1px; background: var(--border-l); }
+.section-divider-label { font-size: var(--text-sm); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); flex-shrink: 0; }
+
+.sheet { position: relative; background: var(--white); border-radius: var(--r-l) var(--r-l) 0 0; box-shadow: 0 -8px 32px rgba(0,0,0,.12); }
+.sheet-handle { width: 2.5rem; height: 4px; background: var(--border-l); border-radius: var(--r-xs); margin: var(--sp-3) auto var(--sp-2); }
+.sheet-header { padding: var(--sp-2) var(--sp-4) var(--sp-3); border-bottom: 1px solid var(--border-l); }
+.sheet-title { font-size: var(--text-md); font-weight: 700; color: var(--black); }
+.sheet-body { padding: var(--sp-3) var(--sp-4); }
+.sheet-footer { padding: var(--sp-3) var(--sp-4); border-top: 1px solid var(--border-l); }
+
+.sync-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border-radius: var(--r-xs); font-size: var(--text-xs); font-weight: 600; }
+.sync-badge--online  { background: var(--success-soft); color: var(--success-text); }
+.sync-badge--offline { background: var(--warning-soft); color: var(--warning-text); }
+.sync-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+/* Text utilities */
+.text-red   { color: var(--red); }
+.text-green { color: var(--success); }
+.text-amber { color: var(--warning); }
+.text-blue  { color: var(--blue); }
+.text-muted { color: var(--text-3); }
 
 /* ============================================================
    FILTERS
