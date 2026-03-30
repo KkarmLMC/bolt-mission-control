@@ -19,6 +19,7 @@ const Profile       = lazy(() => import('./pages/Profile'))
 const UserManagement = lazy(() => import('./pages/UserManagement'))
 const SalesOrders    = lazy(() => import('./pages/SalesOrders'))
 const SODetail       = lazy(() => import('./pages/SODetail'))
+const SONew          = lazy(() => import('./pages/SONew'))
 const OpsBoard      = lazy(() => import('./pages/OpsBoard'))
 
 const PAGE_META = {
@@ -28,6 +29,7 @@ const PAGE_META = {
   '/tasks':                 { title: 'Task Board',    sub: 'Team actions, follow-ups and assignments',             parent: null               },
   '/change-orders':         { title: 'Change Orders', sub: 'Field part requests pending management review',        parent: null               },
   '/sales-orders':          { title: 'Sales Orders', parent: null },
+  '/sales-orders/new':      { title: 'New Sales Order', parent: '/sales-orders' },
   '/qb-import':             { title: 'QB Import',     sub: 'Import Sales Orders from QuickBooks Desktop CSV',     parent: null               },
   '/ops-board':             { title: 'Ops Board',     sub: 'Project schedule and crew deployment overview',        parent: null               } }
 
@@ -149,6 +151,7 @@ export default function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/users" element={<UserManagement />} />
             <Route path="/sales-orders" element={<SalesOrders />} />
+            <Route path="/sales-orders/new" element={<SONew />} />
             <Route path="/sales-orders/:id" element={<SODetail />} />
             <Route path="*" element={<Navigate to="/opportunities" replace />} />
           </Routes>

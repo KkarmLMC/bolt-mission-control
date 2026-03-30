@@ -62,7 +62,7 @@ function SectionGroup({ label, items }) {
   )
 }
 
-export default function PODetail() {
+export default function SODetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [po, setPo] = useState(null)

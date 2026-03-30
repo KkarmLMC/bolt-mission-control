@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Receipt, MagnifyingGlass, CaretRight } from '@phosphor-icons/react'
+import { Receipt, MagnifyingGlass, CaretRight, Plus } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 
 const STATUS_COLOR = {
@@ -51,10 +51,16 @@ export default function SalesOrders() {
     <div className="page-content fade-in">
 
       {/* Header */}
-      <div style={{ marginBottom: 'var(--mar-l)' }}>
-        <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: 'var(--text-3)', marginBottom: 4 }}>MISSION CONTROL</div>
-        <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Sales Orders</div>
-        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 2 }}>All orders across Bolt LP and Lightning Master</div>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--mar-l)', gap: 'var(--gap-m)' }}>
+        <div>
+          <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: 'var(--text-3)', marginBottom: 4 }}>MISSION CONTROL</div>
+          <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Sales Orders</div>
+          <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 2 }}>All orders across Bolt LP and Lightning Master</div>
+        </div>
+        <button onClick={() => navigate('/sales-orders/new')}
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: 'pointer', flexShrink: 0 }}>
+          <Plus size={15} weight="bold" /> New SO
+        </button>
       </div>
 
       {/* Stats row */}
