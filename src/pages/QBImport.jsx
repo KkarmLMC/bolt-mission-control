@@ -66,9 +66,29 @@ function parseXLSX(buffer) {
   try {
     const wb = xlsxRead(buffer, { type: 'array', cellDates: true })
     if (!wb.SheetNames.length) return { headers: [], rows: [], error: 'No sheets found in workbook' }
-    const ws = wb.Sheets[wb.SheetNames[0]]
-    const raw = xlsxUtils.sheet_to_json(ws, { header: 1, defval: '' })
-    if (!raw.length) return { headers: [], rows: [], error: 'Sheet is empty' }
+
+    // QB Desktop adds a "QuickBooks Desktop Export Tips" sheet as sheet 0.
+    // Find the first sheet that contains actual QB data headers.
+    let ws, raw
+    for (const name of wb.SheetNames) {
+      const candidate = wb.Sheets[name]
+      const candidateRows = xlsxUtils.sheet_to_json(candidate, { header: 1, defval: '' })
+      if (!candidateRows.length) continue
+      // Check first 5 rows for QB header keywords
+      const hasHeaders = candidateRows.slice(0, 5).some(row => {
+        const str = row.map(c => String(c || '')).join(' ').toLowerCase()
+        return (str.includes('type') && str.includes('num')) || (str.includes('date') && str.includes('name'))
+      })
+      if (hasHeaders) { ws = candidate; raw = candidateRows; break }
+    }
+
+    // Fallback: if no sheet matched, use the last sheet (often the data sheet)
+    if (!raw) {
+      const lastName = wb.SheetNames[wb.SheetNames.length - 1]
+      ws = wb.Sheets[lastName]
+      raw = xlsxUtils.sheet_to_json(ws, { header: 1, defval: '' })
+    }
+    if (!raw.length) return { headers: [], rows: [], error: 'No data found in any sheet' }
 
     // QB Desktop Excel exports have spacer columns (blanks between real columns).
     // Find the row that contains real headers (Type, Num, Date, Name, etc.)
