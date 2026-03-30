@@ -17,7 +17,7 @@ const STAGES = {
   'Inspection':  { color: 'var(--warning)', bg: 'var(--warning-soft)', label: 'Inspection'  },
   'Complete':    { color: 'var(--grey-base)', bg: 'var(--grey-tint-80)', label: 'Complete'    },
   'On Hold':     { color: 'var(--error-alt)', bg: 'var(--error-soft)', label: 'On Hold'     },
-  'Cancelled':   { color: 'var(--grey-tint-20)', bg: '#F9FAFB', label: 'Cancelled'   },
+  'Cancelled':   { color: 'var(--grey-tint-20)', bg: 'var(--surface-raised)', label: 'Cancelled'   },
 }
 
 const STAGES_LIST = ['Awarded','Scheduled','In Progress','Inspection','Complete','On Hold']
@@ -620,7 +620,7 @@ export default function OpsBoard() {
               { key: 'month', Icon: CalendarBlank, label: 'Month' },
             ].map(({ key, Icon, label }) => (
               <button key={key} onClick={() => setView(key)}
-                style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 'var(--r-m)', border: 'none', background: view === key ? 'var(--navy)' : 'transparent', color: view === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 'var(--r-m)', border: 'none', background: view === key ? 'var(--navy)' : 'var(--hover)', color: view === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
                 <Icon size={12} weight={view === key ? 'fill' : 'regular'} />
                 {label}
               </button>
@@ -632,7 +632,7 @@ export default function OpsBoard() {
             <div style={{ display: 'flex', background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 2, gap: 1, flexShrink: 0 }}>
               {[['week','1W'],['2week','2W'],['month','4W']].map(([key, lbl]) => (
                 <button key={key} onClick={() => setSpan(key)}
-                  style={{ padding: '4px 8px', borderRadius: 'var(--r-m)', border: 'none', background: span === key ? 'var(--navy)' : 'transparent', color: span === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
+                  style={{ padding: '4px 8px', borderRadius: 'var(--r-m)', border: 'none', background: span === key ? 'var(--navy)' : 'var(--hover)', color: span === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
                   {lbl}
                 </button>
               ))}

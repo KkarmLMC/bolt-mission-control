@@ -26,7 +26,7 @@ export default function Opportunities({ leads, loading }) {
     { key: 'CONTACTED',     label: 'Contacted',color: 'var(--blue)'   },
     { key: 'MEETING SET',   label: 'Meeting',  color: 'var(--warning)'  },
     { key: 'PROPOSAL SENT', label: 'Proposal', color: 'var(--purple)' },
-    { key: 'ON BID LIST',   label: 'Bid List', color: '#0d9488'   },
+    { key: 'ON BID LIST',   label: 'Bid List', color: 'var(--teal)'   },
     { key: 'BID SUBMITTED', label: 'Bid Out',  color: 'var(--blue-shade-20)'       },
     { key: 'WON ✓',         label: 'Won',      color: 'var(--success)'  },
     { key: 'LOST ✗',        label: 'Lost',     color: 'var(--text-4)' },
@@ -63,7 +63,7 @@ export default function Opportunities({ leads, loading }) {
 
       {/* QB Import shortcut */}
       <div onClick={() => navigate('/qb-import')}
-        style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', border: '1px solid var(--border-l)' }}>
+        style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', border: 'none', boxShadow: 'var(--shadow-xs)' }}>
         <DownloadSimple size={18} style={{ color: 'var(--navy)', flexShrink: 0 }} />
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Import from QuickBooks</div>
@@ -107,7 +107,7 @@ export default function Opportunities({ leads, loading }) {
             const val   = leads.filter(l => l.status === s.key).reduce((acc, l) => acc + (l.value_int || 0), 0)
             return (
               <div key={s.key} className="stage-breakdown-card" style={{
-                background: 'var(--white)', border: '1px solid var(--border-l)',
+                background: 'var(--white)', border: 'none', boxShadow: 'var(--shadow-xs)',
                 borderTop: `3px solid ${s.color}`, borderRadius: 'var(--r-m)', padding: '12px 14px',
               }}>
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: s.color, marginBottom: 4 }}>{s.label}</div>

@@ -5,7 +5,7 @@ const STAGES = [
   { key: 'CONTACTED',      label: 'Contacted',    color: 'var(--blue)'   },
   { key: 'MEETING SET',    label: 'Meeting Set',  color: 'var(--warning)'  },
   { key: 'PROPOSAL SENT',  label: 'Proposal Out', color: 'var(--purple)' },
-  { key: 'ON BID LIST',    label: 'On Bid List',  color: '#0d9488'   },
+  { key: 'ON BID LIST',    label: 'On Bid List',  color: 'var(--teal)'   },
   { key: 'BID SUBMITTED',  label: 'Bid Submitted',color: 'var(--blue-shade-20)'       },
   { key: 'WON ✓',          label: 'Won',          color: 'var(--success)'  },
   { key: 'LOST ✗',         label: 'Lost',         color: 'var(--text-3)' },

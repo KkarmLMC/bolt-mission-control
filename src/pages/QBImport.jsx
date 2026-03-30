@@ -370,7 +370,7 @@ export default function QBImport() {
           <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
             {['LM', 'Bolt'].map(d => (
               <button key={d} onClick={() => setDivision(d)}
-                style={{ padding: 'var(--pad-s) var(--pad-xl)', borderRadius: 'var(--r-l)', border: `1px solid ${division === d ? 'var(--navy)' : 'var(--border-l)'}`, background: division === d ? 'var(--navy)' : 'transparent', color: division === d ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+                style={{ padding: 'var(--pad-s) var(--pad-xl)', borderRadius: 'var(--r-l)', border: `1px solid ${division === d ? 'var(--navy)' : 'var(--border-l)'}`, background: division === d ? 'var(--navy)' : 'var(--hover)', color: division === d ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
                 {d === 'LM' ? 'Lightning Master' : 'Bolt Lightning'}
               </button>
             ))}
