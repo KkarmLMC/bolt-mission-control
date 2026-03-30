@@ -8,6 +8,7 @@ import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
 import ProjectPicker from '../components/ProjectPicker.jsx'
+import PageHeader from '../components/ui/PageHeader'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function Label({ children, required }) {
@@ -514,11 +515,7 @@ export default function PONew() {
   return (
     <div className="page-content fade-in">
 
-      {/* Page header */}
-      <div style={{ marginBottom: 'var(--mar-xl)' }}>
-        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>SALES ORDERS</div>
-        <div style={{ fontSize: 'var(--text-base)', fontWeight: 800 }}>New Sales Order</div>
-      </div>
+      <PageHeader eyebrow="SALES ORDERS" title="New Sales Order" />
 
       {/* Division selector */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xl)' }}>
