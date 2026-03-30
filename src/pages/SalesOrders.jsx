@@ -4,13 +4,13 @@ import { Receipt, MagnifyingGlass, CaretRight } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 
 const STATUS_COLOR = {
-  queued:       { bg: '#EEF2FF', color: '#6366F1' },
-  running:      { bg: '#FEF3C7', color: '#D97706' },
-  fulfillment:  { bg: '#EFF6FF', color: '#0369A1' },
-  shipment:     { bg: '#ECFEFF', color: '#0891B2' },
-  back_ordered: { bg: '#ECFEFF', color: '#0891B2' },
-  complete:     { bg: '#F0FDF4', color: '#15803D' },
-  cancelled:    { bg: '#F1F5F9', color: '#64748B' },
+  queued:       { bg: 'var(--purple-soft)', color: 'var(--purple-tint-20)' },
+  running:      { bg: 'var(--warning-soft)', color: 'var(--warning)' },
+  fulfillment:  { bg: 'var(--blue-soft)', color: 'var(--blue-shade-40)' },
+  shipment:     { bg: 'var(--blue-tint-80)', color: 'var(--blue-shade-20)' },
+  back_ordered: { bg: 'var(--blue-tint-80)', color: 'var(--blue-shade-20)' },
+  complete:     { bg: 'var(--success-soft)', color: 'var(--success-text)' },
+  cancelled:    { bg: 'var(--grey-tint-80)', color: 'var(--grey-base)' },
 }
 
 const STATUS_LABELS = ['All', 'queued', 'running', 'fulfillment', 'shipment', 'back_ordered', 'complete', 'cancelled']
@@ -53,7 +53,7 @@ export default function SalesOrders() {
 
       {/* Header */}
       <div style={{ marginBottom: 'var(--mar-l)' }}>
-        <div style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: 'var(--text-3)', marginBottom: 4 }}>MISSION CONTROL</div>
+        <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: 'var(--text-3)', marginBottom: 4 }}>MISSION CONTROL</div>
         <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Sales Orders</div>
         <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 2 }}>All orders across Bolt LP and Lightning Master</div>
       </div>
@@ -96,7 +96,7 @@ export default function SalesOrders() {
           const sc     = STATUS_COLOR[s] || {}
           return (
             <button key={s} onClick={() => setFilter(s)} style={{
-              padding: '4px 12px', borderRadius: 'var(--r-full)', border: '1px solid var(--border)',
+              padding: '4px 12px', borderRadius: 'var(--r-xxl)', border: '1px solid var(--border-l)',
               background: active ? (sc.bg || 'var(--navy)') : 'var(--white)',
               color: active ? (sc.color || '#fff') : 'var(--black)',
               fontSize: 'var(--text-xs)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap',
@@ -120,7 +120,7 @@ export default function SalesOrders() {
       ) : (
         <div className="card">
           {visible.map((o, idx) => {
-            const sc = STATUS_COLOR[o.status] || { bg: '#F1F5F9', color: '#64748B' }
+            const sc = STATUS_COLOR[o.status] || { bg: 'var(--grey-tint-80)', color: 'var(--grey-base)' }
             return (
               <div key={o.id}
                 onClick={() => navigate(`/sales-orders/${o.id}`)}

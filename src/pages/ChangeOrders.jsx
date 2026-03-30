@@ -8,9 +8,9 @@ import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
 
 const STATUS = {
-  pending:  { label: 'Pending Review', bg: '#FFF7ED', color: '#C2410C' },
-  approved: { label: 'Approved',       bg: '#F0FDF4', color: '#15803D' },
-  rejected: { label: 'Rejected',       bg: '#FEF2F2', color: '#B91C1C' },
+  pending:  { label: 'Pending Review', bg: 'var(--orange-soft)', color: 'var(--orange-shade-20)' },
+  approved: { label: 'Approved',       bg: 'var(--success-soft)', color: 'var(--success-text)' },
+  rejected: { label: 'Rejected',       bg: 'var(--error-soft)', color: 'var(--error-dark)' },
 }
 
 function StatusBadge({ status }) {
@@ -149,11 +149,11 @@ function COModal({ co, onClose, onAction }) {
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)' }}>
               <button onClick={() => handleAction('rejected')} disabled={saving}
-                style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--error)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--error)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                 <XCircle size={16} /> Reject
               </button>
               <button onClick={() => handleAction('approved')} disabled={saving}
-                style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-xl)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                 {saving ? <div className="spinner" style={{ borderTopColor: '#fff' }} /> : <><CheckCircle size={16} /> Approve → SO</>}
               </button>
             </div>
@@ -229,7 +229,7 @@ export default function ChangeOrders() {
         <div className="card-header">
           <span className="card-title">Change Orders</span>
           {pendingCount > 0 && (
-            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 10px', borderRadius: 20, background: '#FFF7ED', color: '#C2410C' }}>
+            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 10px', borderRadius: 20, background: 'var(--orange-soft)', color: 'var(--orange-shade-20)' }}>
               {pendingCount} need review
             </span>
           )}

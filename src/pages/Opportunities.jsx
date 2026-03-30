@@ -27,7 +27,7 @@ export default function Opportunities({ leads, loading }) {
     { key: 'MEETING SET',   label: 'Meeting',  color: 'var(--warning)'  },
     { key: 'PROPOSAL SENT', label: 'Proposal', color: 'var(--purple)' },
     { key: 'ON BID LIST',   label: 'Bid List', color: '#0d9488'   },
-    { key: 'BID SUBMITTED', label: 'Bid Out',  color: '#0891B2'       },
+    { key: 'BID SUBMITTED', label: 'Bid Out',  color: 'var(--blue-shade-20)'       },
     { key: 'WON ✓',         label: 'Won',      color: 'var(--success)'  },
     { key: 'LOST ✗',        label: 'Lost',     color: 'var(--text-4)' },
   ]
@@ -47,23 +47,23 @@ export default function Opportunities({ leads, loading }) {
 
       {/* Change Orders alert */}
       {pendingCOs.length > 0 && (
-        <div onClick={() => navigate('/change-orders')} style={{ background: '#FFF7ED', border: '1px solid #FED7AA', borderRadius: 'var(--r-xl)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
-          <ClipboardText size={20} style={{ color: '#C2410C', flexShrink: 0 }} />
+        <div onClick={() => navigate('/change-orders')} style={{ background: 'var(--orange-soft)', border: '1px solid #FED7AA', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
+          <ClipboardText size={20} style={{ color: 'var(--orange-shade-20)', flexShrink: 0 }} />
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#C2410C' }}>
+            <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--orange-shade-20)' }}>
               {pendingCOs.length} Part Request{pendingCOs.length !== 1 ? 's' : ''} Pending Review
             </div>
-            <div style={{ fontSize: 'var(--text-xs)', color: '#9A3412', marginTop: 2 }}>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--orange-shade-40)', marginTop: 2 }}>
               {pendingCOs[0]?.job_reference}{pendingCOs.length > 1 ? ` + ${pendingCOs.length - 1} more` : ''}
             </div>
           </div>
-          <ArrowRight size={16} style={{ color: '#C2410C', flexShrink: 0 }} />
+          <ArrowRight size={16} style={{ color: 'var(--orange-shade-20)', flexShrink: 0 }} />
         </div>
       )}
 
       {/* QB Import shortcut */}
       <div onClick={() => navigate('/qb-import')}
-        style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', border: '1px solid var(--border-l)' }}>
+        style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', border: '1px solid var(--border-l)' }}>
         <DownloadSimple size={18} style={{ color: 'var(--navy)', flexShrink: 0 }} />
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Import from QuickBooks</div>
@@ -134,7 +134,7 @@ export default function Opportunities({ leads, loading }) {
                 <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>{c.description}</div>
               </div>
               {c.count !== null && c.count !== undefined ? (
-                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-full)', background: 'var(--red-soft)', color: 'var(--red)', flexShrink: 0 }}>{c.count} new</span>
+                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-xxl)', background: 'var(--red-soft)', color: 'var(--red)', flexShrink: 0 }}>{c.count} new</span>
               ) : c.soon ? (
                 <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--black)', flexShrink: 0 }}>Soon</span>
               ) : null}

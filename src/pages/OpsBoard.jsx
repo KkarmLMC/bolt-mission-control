@@ -11,13 +11,13 @@ import { db } from '../lib/supabase.js'
 
 // ─── Stage config ──────────────────────────────────────────────────────────────
 const STAGES = {
-  'Awarded':     { color: '#6366F1', bg: '#EEF2FF', label: 'Awarded'     },
-  'Scheduled':   { color: '#0284C7', bg: '#E0F2FE', label: 'Scheduled'   },
-  'In Progress': { color: '#059669', bg: '#ECFDF5', label: 'In Progress' },
-  'Inspection':  { color: '#D97706', bg: '#FEF3C7', label: 'Inspection'  },
-  'Complete':    { color: '#64748B', bg: '#F1F5F9', label: 'Complete'    },
-  'On Hold':     { color: '#DC2626', bg: '#FEF2F2', label: 'On Hold'     },
-  'Cancelled':   { color: '#9CA3AF', bg: '#F9FAFB', label: 'Cancelled'   },
+  'Awarded':     { color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)', label: 'Awarded'     },
+  'Scheduled':   { color: 'var(--blue-shade-20)', bg: 'var(--blue-tint-80)', label: 'Scheduled'   },
+  'In Progress': { color: 'var(--success)', bg: 'var(--success-soft)', label: 'In Progress' },
+  'Inspection':  { color: 'var(--warning)', bg: 'var(--warning-soft)', label: 'Inspection'  },
+  'Complete':    { color: 'var(--grey-base)', bg: 'var(--grey-tint-80)', label: 'Complete'    },
+  'On Hold':     { color: 'var(--error-alt)', bg: 'var(--error-soft)', label: 'On Hold'     },
+  'Cancelled':   { color: 'var(--grey-tint-20)', bg: '#F9FAFB', label: 'Cancelled'   },
 }
 
 const STAGES_LIST = ['Awarded','Scheduled','In Progress','Inspection','Complete','On Hold']
@@ -233,7 +233,7 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
                 background: isToday ? 'var(--navy)' : isSun ? 'var(--surface-raised)' : 'transparent',
                 borderRight: '1px solid var(--border-l)',
               }}>
-                <div style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--black)' }}>
+                <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--black)' }}>
                   {DAY_NAMES[d.getDay()]}
                 </div>
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: isToday ? '#fff' : isSun ? 'var(--text-3)' : 'var(--black)' }}>
@@ -301,7 +301,7 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
                                 width: 16, height: 16, borderRadius: '50%',
                                 background: 'rgba(255,255,255,0.3)',
                                 border: '1px solid rgba(255,255,255,0.6)',
-                                fontSize: 'var(--blackxs)', fontWeight: 700, color: '#fff',
+                                fontSize: 'var(--text-2xs)', fontWeight: 700, color: '#fff',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                 flexShrink: 0,
                               }}>
@@ -370,7 +370,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--black)' }}>
                   {DAY_NAMES[d.getDay()]} {d.getDate()}
                 </div>
-                <div style={{ fontSize: 'var(--blackxs)', color: isToday ? 'rgba(255,255,255,0.5)' : 'var(--text-4)' }}>
+                <div style={{ fontSize: 'var(--text-2xs)', color: isToday ? 'rgba(255,255,255,0.5)' : 'var(--text-4)' }}>
                   {MON_NAMES[d.getMonth()]}
                 </div>
               </div>
@@ -490,7 +490,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
 
           return (
             <div key={i} style={{
-              background: isToday ? '#EFF6FF' : inMonth ? '#fff' : 'var(--surface-raised)',
+              background: isToday ? 'var(--blue-soft)' : inMonth ? '#fff' : 'var(--surface-raised)',
               minHeight: 72, padding: '4px 4px 2px',
             }}>
               <div style={{
@@ -511,7 +511,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
                     style={{
                       padding: '2px 5px', borderRadius: 3, marginBottom: 2,
                       background: stage.color, color: '#fff',
-                      fontSize: 'var(--blackxs)', fontWeight: 700, cursor: 'pointer',
+                      fontSize: 'var(--text-2xs)', fontWeight: 700, cursor: 'pointer',
                       overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                     }}>
                     {proj.customer_account?.split(' ')[0] || proj.name.split(' ')[0]}
@@ -519,7 +519,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
                 )
               })}
               {jobs.length > 3 && (
-                <div style={{ fontSize: 'var(--blackxs)', color: 'var(--text-3)', fontWeight: 600 }}>+{jobs.length - 3} more</div>
+                <div style={{ fontSize: 'var(--text-2xs)', color: 'var(--text-3)', fontWeight: 600 }}>+{jobs.length - 3} more</div>
               )}
             </div>
           )
@@ -678,7 +678,7 @@ export default function OpsBoard() {
 
           {/* Conflict badge */}
           {conflicts.length > 0 && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 'var(--r-l)', background: '#FEF2F2', color: '#B91C1C', fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, whiteSpace: 'nowrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-dark)', fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, whiteSpace: 'nowrap' }}>
               <Warning size={12} weight="fill" />
               {conflicts.length}
             </div>

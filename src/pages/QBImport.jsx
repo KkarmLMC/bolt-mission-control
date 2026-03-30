@@ -142,7 +142,7 @@ function InvoiceRow({ inv, selected, onToggle }) {
   const [expanded, setExpanded] = useState(false)
   return (
     <>
-      <tr style={{ background: selected ? '#EFF6FF' : 'transparent', cursor: 'pointer' }}
+      <tr style={{ background: selected ? 'var(--blue-soft)' : 'transparent', cursor: 'pointer' }}
         onClick={() => onToggle(inv.invoiceNum)}>
         <td style={{ padding: '10px 12px' }}>
           <input type="checkbox" checked={selected} onChange={() => onToggle(inv.invoiceNum)}
@@ -170,7 +170,7 @@ function InvoiceRow({ inv, selected, onToggle }) {
         </td>
       </tr>
       {expanded && inv.lineItems.map((li, i) => (
-        <tr key={i} style={{ background: '#F8FAFF' }}>
+        <tr key={i} style={{ background: 'var(--surface-raised)' }}>
           <td />
           <td />
           <td colSpan={2} style={{ padding: '6px 12px 6px 24px', fontSize: 'var(--text-sm)', color: 'var(--black)' }}>
@@ -386,8 +386,8 @@ export default function QBImport() {
         onClick={() => fileRef.current?.click()}
         style={{
           border: `2px dashed ${dragOver ? 'var(--navy)' : 'var(--border-l)'}`,
-          borderRadius: 'var(--r-xl)',
-          background: dragOver ? '#EFF6FF' : 'var(--surface-raised)',
+          borderRadius: 'var(--r-m)',
+          background: dragOver ? 'var(--blue-soft)' : 'var(--surface-raised)',
           padding: 'var(--pad-xxl)',
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
           gap: 'var(--gap-m)', cursor: 'pointer', transition: 'all 0.15s',
@@ -455,7 +455,7 @@ export default function QBImport() {
       </div>
 
       {/* Table */}
-      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+      <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ background: 'var(--navy)' }}>
@@ -483,7 +483,7 @@ export default function QBImport() {
 
       {/* Confirm button */}
       <button onClick={runImport} disabled={selected.size === 0 || importing}
-        style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-xl)', border: 'none', background: selected.size === 0 ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--text-md)', cursor: selected.size === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
+        style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-m)', border: 'none', background: selected.size === 0 ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--text-md)', cursor: selected.size === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
         {importing
           ? <><div className="spinner" style={{ borderTopColor: '#fff' }} /> Importing…</>
           : <>Import {selected.size} Sales Order{selected.size !== 1 ? 's' : ''} <ArrowRight size={16} /></>
