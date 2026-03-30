@@ -678,7 +678,7 @@ body {
    ============================================================ */
 .card { background: var(--white);  border-radius: var(--r-m); overflow: hidden; margin-bottom: var(--mar-l); }
 .card-header { padding: var(--pad-m) var(--pad-l); background: var(--navy); border-bottom: none; display: flex; align-items: center; justify-content: space-between; gap: var(--gap-s); }
-.card-title { font-size: var(--text-sm); font-weight: 700; color: #fff; display: flex; align-items: center; gap: var(--gap-s); }
+.card-title { font-size: var(--text-base); font-weight: 700; color: #fff; display: flex; align-items: center; gap: var(--gap-s); }
 .card-title-dot { width: 8px; height: 8px; border-radius: 2px; }
 .card-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
 
