@@ -7,9 +7,28 @@ import {
   CaretLeft, CaretRight, X, PencilSimple,
   Plus, ArrowSquareOut } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import { logActivity } from '../lib/logActivity.js'
 import { projectStage } from '../lib/statusColors.js'
 
-// ─── Stage config ──────────────────────────────────────────────────────────────
+// ─── Date helpers ──────────────────────────────────────────────────────────────
+const today     = () => { const d = new Date(); d.setHours(0,0,0,0); return d }
+const fmtDate   = (d) => d.toISOString().slice(0,10)
+const parseDate = (s) => { if (!s) return null; const d = new Date(s + 'T00:00:00'); return isNaN(d) ? null : d }
+const addDays   = (d, n) => { const r = new Date(d); r.setDate(r.getDate() + n); return r }
+const isSameDay = (a, b) => a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate()
+const isWeekend = (d) => d.getDay() === 0
+const getDaysInRange = (start, count) => Array.from({ length: count }, (_, i) => addDays(start, i))
+
+const DAY_NAMES = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+const MON_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+
+// ─── Stage config — thin wrapper over statusColors.js tokens ──────────────────
+const STAGES_LIST = ['Awarded','Scheduled','In Progress','Inspection','Completion','Customer Sign-Off','Postponed','Complete','Cancelled','Hold']
+
+// STAGES map: uses projectStage() tokens so colors stay in sync with design system
+const STAGES = Object.fromEntries(
+  STAGES_LIST.map(s => [s, projectStage(s)])
+)
 
 function getInitials(name) {
   return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()
