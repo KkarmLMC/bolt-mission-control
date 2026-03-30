@@ -190,7 +190,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
 
         {/* Alerts — only show when not collapsed and there are alerts */}
         {!collapsed && (criticalLeads > 0 || overdueTasks > 0) && (
-          <div style={{ padding: 'var(--sp-2)', borderTop: '1px solid var(--border)', flexShrink: 0 }}>
+          <div style={{ padding: 'var(--pad-s)', borderTop: '1px solid var(--border)', flexShrink: 0 }}>
             <div className="sidebar-section-label">ALERTS</div>
             {criticalLeads > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 6, marginBottom: 4, background: 'rgba(245,51,63,0.15)' }}>
@@ -214,7 +214,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
         {/* Footer */}
         <div className="sidebar-footer-nav">
           {!collapsed && (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-2) 0.625rem var(--sp-1)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-s) 0.625rem var(--pad-xs)' }}>
               <span className="sidebar-section-label" style={{ padding: 0 }}>ACCOUNT</span>
               <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                 <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--success)', animation: 'livepulse 2s infinite', flexShrink: 0 }} />
@@ -222,7 +222,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
               </div>
             </div>
           )}
-          {collapsed && <div style={{ height: 'var(--sp-1)' }} />}
+          {collapsed && <div style={{ height: '0.25rem' }} />}
 
           {/* Profile */}
           <button onClick={() => navigate('/profile')} className={`sidebar-item ${location.pathname === '/profile' ? 'sidebar-item--active' : ''}`} title={collapsed ? 'View Profile' : undefined}>

@@ -43,7 +43,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
           <button className="btn btn-primary btn-sm" onClick={onAdd}>+ Add Company</button>
         </div>
 
-        <div style={{ padding: 'var(--sp-2) var(--sp-4) 0' }}>
+        <div style={{ padding: 'var(--pad-s) var(--pad-l) 0' }}>
           <div className="filter-bar">
             {['ALL','GC','MEP Engineer','Owner/Developer'].map(t => (
               <button key={t} className={`filter-pill ${typeF === t ? 'active' : ''}`} onClick={() => setTypeF(t)}>{t}</button>

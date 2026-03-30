@@ -54,7 +54,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
           <button className="btn btn-primary btn-sm" onClick={onAdd}>+ Add Lead</button>
         </div>
 
-        <div style={{ padding: 'var(--sp-3) var(--sp-4) 0' }}>
+        <div style={{ padding: 'var(--pad-m) var(--pad-l) 0' }}>
           <div className="filter-bar">
             {['ALL','CRITICAL','HIGH','MEDIUM','NEW LEAD','CONTACTED','WON ✓'].map(f => (
               <button key={f} className={`filter-pill ${filter === f ? 'active' : ''}`} onClick={() => setFilter(f)}>{f}</button>

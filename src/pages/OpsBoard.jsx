@@ -97,8 +97,8 @@ function JobPanel({ project, assignments, onClose, onSave }) {
       animation: 'slideInRight 0.2s ease',
     }}>
       {/* Header */}
-      <div style={{ background: 'var(--navy)', padding: 'var(--sp-4)' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--sp-3)' }}>
+      <div style={{ background: 'var(--navy)', padding: 'var(--pad-l)' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--mar-m)' }}>
           <StageBadge stage={project.stage} />
           <div style={{ display: 'flex', gap: 8 }}>
             <button onClick={() => setEditing(e => !e)} style={{ border: 'none', background: 'rgba(255,255,255,0.15)', borderRadius: 6, width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
@@ -118,17 +118,17 @@ function JobPanel({ project, assignments, onClose, onSave }) {
       </div>
 
       {/* Content */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: 'var(--sp-4)' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: 'var(--pad-l)' }}>
 
         {editing ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-3)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--gap-m)' }}>
             <div>
               <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>Stage</label>
               <select value={form.stage} onChange={e => setForm(f => ({ ...f, stage: e.target.value }))}>
                 {STAGES_LIST.map(s => <option key={s}>{s}</option>)}
               </select>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-2)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-s)' }}>
               <div>
                 <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>Start Date</label>
                 <input type="date" value={form.scheduled_date} onChange={e => setForm(f => ({ ...f, scheduled_date: e.target.value }))} />
@@ -142,9 +142,9 @@ function JobPanel({ project, assignments, onClose, onSave }) {
               <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>Notes</label>
               <textarea value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} rows={3} />
             </div>
-            <div style={{ display: 'flex', gap: 'var(--sp-2)' }}>
-              <button onClick={() => setEditing(false)} style={{ flex: 1, padding: 'var(--sp-2)', borderRadius: 'var(--r-l)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 600 }}>Cancel</button>
-              <button onClick={handleSave} disabled={saving} style={{ flex: 2, padding: 'var(--sp-2)', borderRadius: 'var(--r-l)', border: 'none', background: 'var(--navy)', color: '#fff', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 700 }}>
+            <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
+              <button onClick={() => setEditing(false)} style={{ flex: 1, padding: 'var(--pad-s)', borderRadius: 'var(--r-l)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 600 }}>Cancel</button>
+              <button onClick={handleSave} disabled={saving} style={{ flex: 2, padding: 'var(--pad-s)', borderRadius: 'var(--r-l)', border: 'none', background: 'var(--navy)', color: '#fff', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 700 }}>
                 {saving ? 'Saving…' : 'Save Changes'}
               </button>
             </div>
@@ -152,14 +152,14 @@ function JobPanel({ project, assignments, onClose, onSave }) {
         ) : (
           <>
             {/* Key info */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-3)', marginBottom: 'var(--sp-4)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-l)' }}>
               {[
                 ['SO Number',   project.job_number || '—'],
                 ['Contract',    project.contract_value ? `$${Number(project.contract_value).toLocaleString()}` : '—'],
                 ['Start',       project.scheduled_date || '—'],
                 ['End',         project.target_completion || '—'],
               ].map(([lbl, val]) => (
-                <div key={lbl} style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--sp-3)' }}>
+                <div key={lbl} style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)' }}>
                   <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>{lbl}</div>
                   <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)', fontFamily: lbl === 'Contract' || lbl === 'SO Number' ? 'var(--mono)' : 'var(--font)' }}>{val}</div>
                 </div>
@@ -167,14 +167,14 @@ function JobPanel({ project, assignments, onClose, onSave }) {
             </div>
 
             {/* Assigned crew */}
-            <div style={{ marginBottom: 'var(--sp-4)' }}>
-              <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--sp-2)' }}>
+            <div style={{ marginBottom: 'var(--mar-l)' }}>
+              <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-s)' }}>
                 Assigned Crew
               </div>
               {crew.length === 0 ? (
                 <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', fontStyle: 'italic' }}>No crew assigned yet</div>
               ) : crew.map(a => (
-                <div key={a.id} style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', padding: 'var(--sp-2) 0', borderBottom: '1px solid var(--border-l)' }}>
+                <div key={a.id} style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-s) 0', borderBottom: '1px solid var(--border-l)' }}>
                   <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     {getInitials(a.crew_name)}
                   </div>
@@ -188,9 +188,9 @@ function JobPanel({ project, assignments, onClose, onSave }) {
 
             {/* Notes */}
             {project.notes && (
-              <div style={{ marginBottom: 'var(--sp-4)' }}>
-                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--sp-2)' }}>Notes</div>
-                <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6, background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--sp-3)' }}>
+              <div style={{ marginBottom: 'var(--mar-l)' }}>
+                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-s)' }}>Notes</div>
+                <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6, background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)' }}>
                   {project.notes}
                 </div>
               </div>
@@ -201,9 +201,9 @@ function JobPanel({ project, assignments, onClose, onSave }) {
 
       {/* Footer */}
       {!editing && (
-        <div style={{ padding: 'var(--sp-4)', borderTop: '1px solid var(--border-l)' }}>
+        <div style={{ padding: 'var(--pad-l)', borderTop: '1px solid var(--border-l)' }}>
           <button onClick={() => navigate(`/installations/${project.id}`)}
-            style={{ width: '100%', padding: 'var(--sp-3)', borderRadius: 'var(--r-l)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)' }}>
+            style={{ width: '100%', padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
             Open Job Page <ArrowSquareOut size={14} />
           </button>
         </div>
@@ -607,10 +607,10 @@ export default function OpsBoard() {
     <div className="page fade-in" style={{ padding: 0, display: 'flex', flexDirection: 'column', minHeight: 0, flex: 1 }}>
 
       {/* Header bar */}
-      <div style={{ padding: 'var(--sp-2) var(--sp-3)', background: '#fff', borderBottom: '1px solid var(--border-l)', flexShrink: 0 }}>
+      <div style={{ padding: 'var(--pad-s) var(--pad-m)', background: '#fff', borderBottom: '1px solid var(--border-l)', flexShrink: 0 }}>
 
         {/* Row 1 — View + Span + Date nav */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', marginBottom: 'var(--sp-2)', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', marginBottom: 'var(--mar-s)', flexWrap: 'wrap' }}>
 
           {/* View toggles */}
           <div style={{ display: 'flex', background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 2, gap: 1, flexShrink: 0 }}>
@@ -640,7 +640,7 @@ export default function OpsBoard() {
           )}
 
           {/* Date navigation */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-1)', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-xs)', flexShrink: 0 }}>
             <button onClick={() => go(-1)} style={{ width: 26, height: 26, borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <CaretLeft size={12} />
             </button>
@@ -660,7 +660,7 @@ export default function OpsBoard() {
         </div>
 
         {/* Row 2 — Search + Filter + Conflicts */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
 
           {/* Search */}
           <div style={{ position: 'relative', flex: 1 }}>
@@ -687,9 +687,9 @@ export default function OpsBoard() {
       </div>
 
       {/* Board content */}
-      <div style={{ flex: 1, overflow: 'auto', WebkitOverflowScrolling: 'touch', padding: view === 'month' ? 'var(--sp-4)' : 0, paddingBottom: 'calc(var(--sp-4) + env(safe-area-inset-bottom, 0px))' }}>
+      <div style={{ flex: 1, overflow: 'auto', WebkitOverflowScrolling: 'touch', padding: view === 'month' ? 'var(--pad-l)' : 0, paddingBottom: 'calc(var(--pad-l) + env(safe-area-inset-bottom, 0px))' }}>
         {loading ? (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 'var(--sp-3)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 'var(--gap-m)' }}>
             <div className="spinner" />
             <span style={{ color: 'var(--text-3)', fontSize: 'var(--text-sm)' }}>Loading operations board…</span>
           </div>

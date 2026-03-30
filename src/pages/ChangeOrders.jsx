@@ -98,10 +98,10 @@ function COModal({ co, onClose, onAction }) {
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'flex-end', padding: 0 }}
       onClick={e => e.target === e.currentTarget && onClose()}>
-      <div style={{ background: '#fff', borderRadius: '20px 20px 0 0', width: '100%', maxHeight: '88vh', overflowY: 'auto', padding: 'var(--sp-6) var(--sp-5)' }}>
+      <div style={{ background: '#fff', borderRadius: '20px 20px 0 0', width: '100%', maxHeight: '88vh', overflowY: 'auto', padding: 'var(--pad-xxl) var(--pad-xl)' }}>
 
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--sp-5)' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--mar-xl)' }}>
           <div>
             <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)', marginBottom: 4 }}>{co.co_number}</div>
             <div style={{ fontSize: 'var(--text-lg)', fontWeight: 800 }}>{co.projects?.name || co.job_reference}</div>
@@ -113,16 +113,16 @@ function COModal({ co, onClose, onAction }) {
         </div>
 
         {/* Justification */}
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--sp-4)', marginBottom: 'var(--sp-4)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--sp-2)' }}>Justification</div>
+        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-s)' }}>Justification</div>
           <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6 }}>{co.justification || '—'}</div>
         </div>
 
         {/* Parts */}
-        <div style={{ marginBottom: 'var(--sp-4)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--sp-2)' }}>Parts Requested</div>
+        <div style={{ marginBottom: 'var(--mar-l)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-s)' }}>Parts Requested</div>
           {co.change_order_items?.map((item, idx) => (
-            <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-3) 0', borderBottom: '1px solid var(--border-l)' }}>
+            <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-m) 0', borderBottom: '1px solid var(--border-l)' }}>
               <div>
                 <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{item.parts?.name || '—'}</div>
                 {item.parts?.sku && <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>{item.parts.sku}</div>}
@@ -136,28 +136,28 @@ function COModal({ co, onClose, onAction }) {
         {/* Review notes + actions — only if pending */}
         {co.status === 'pending' && (
           <>
-            <div style={{ marginBottom: 'var(--sp-4)' }}>
+            <div style={{ marginBottom: 'var(--mar-l)' }}>
               <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>
                 Review Notes <span style={{ fontWeight: 400, color: 'var(--text-3)' }}>(optional)</span>
               </label>
               <textarea value={notes} onChange={e => setNotes(e.target.value)}
                 placeholder="Add context for the field team or warehouse…" rows={2}
-                style={{ width: '100%', padding: 'var(--sp-3)', borderRadius: 'var(--r-l)', border: '1px solid var(--border-l)', fontSize: 'var(--text-sm)', fontFamily: 'var(--font)', resize: 'vertical' }} />
+                style={{ width: '100%', padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', border: '1px solid var(--border-l)', fontSize: 'var(--text-sm)', fontFamily: 'var(--font)', resize: 'vertical' }} />
             </div>
 
-            {error && <div style={{ padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-xs)', marginBottom: 'var(--sp-3)' }}>{error}</div>}
+            {error && <div style={{ padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-xs)', marginBottom: 'var(--mar-m)' }}>{error}</div>}
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-3)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)' }}>
               <button onClick={() => handleAction('rejected')} disabled={saving}
-                style={{ padding: 'var(--sp-3)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--error)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--error)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                 <XCircle size={16} /> Reject
               </button>
               <button onClick={() => handleAction('approved')} disabled={saving}
-                style={{ padding: 'var(--sp-3)', borderRadius: 'var(--r-xl)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-xl)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                 {saving ? <div className="spinner" style={{ borderTopColor: '#fff' }} /> : <><CheckCircle size={16} /> Approve → SO</>}
               </button>
             </div>
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--sp-2)' }}>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--mar-s)' }}>
               Approving creates a Draft Sales Order in Warehouse IQ automatically.
             </div>
           </>
@@ -165,7 +165,7 @@ function COModal({ co, onClose, onAction }) {
 
         {/* Already reviewed */}
         {co.status !== 'pending' && co.review_notes && (
-          <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--sp-3)', marginTop: 'var(--sp-3)' }}>
+          <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', marginTop: 'var(--mar-m)' }}>
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>Review Notes</div>
             <div style={{ fontSize: 'var(--text-sm)' }}>{co.review_notes}</div>
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 4 }}>by {co.reviewed_by} · {new Date(co.reviewed_at).toLocaleDateString()}</div>
@@ -235,7 +235,7 @@ export default function ChangeOrders() {
           )}
         </div>
 
-        <div style={{ padding: 'var(--sp-3) var(--sp-4) 0' }}>
+        <div style={{ padding: 'var(--pad-m) var(--pad-l) 0' }}>
           <div className="filter-bar">
             {[['pending','Pending'], ['approved','Approved'], ['rejected','Rejected'], ['all','All']].map(([val, lbl]) => (
               <button key={val} className={`filter-pill ${filter === val ? 'active' : ''}`} onClick={() => setFilter(val)}>

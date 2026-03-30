@@ -52,14 +52,14 @@ export default function SalesOrders() {
     <div className="page-content fade-in">
 
       {/* Header */}
-      <div style={{ marginBottom: 'var(--sp-4)' }}>
+      <div style={{ marginBottom: 'var(--mar-l)' }}>
         <div style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: 'var(--text-3)', marginBottom: 4 }}>MISSION CONTROL</div>
         <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Sales Orders</div>
         <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 2 }}>All orders across Bolt LP and Lightning Master</div>
       </div>
 
       {/* Stats row */}
-      <div className="stat-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 'var(--sp-4)' }}>
+      <div className="stat-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 'var(--mar-l)' }}>
         <div className="stat-card">
           <div className="stat-card__label">Total Orders</div>
           <div className="stat-card__value">{orders.length}</div>
@@ -77,7 +77,7 @@ export default function SalesOrders() {
       </div>
 
       {/* Search */}
-      <div style={{ position: 'relative', marginBottom: 'var(--sp-3)' }}>
+      <div style={{ position: 'relative', marginBottom: 'var(--mar-m)' }}>
         <MagnifyingGlass size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
         <input
           value={query}
@@ -89,7 +89,7 @@ export default function SalesOrders() {
       </div>
 
       {/* Status filter pills */}
-      <div style={{ display: 'flex', gap: 'var(--sp-2)', flexWrap: 'wrap', marginBottom: 'var(--sp-4)', overflowX: 'auto' }}>
+      <div style={{ display: 'flex', gap: 'var(--gap-s)', flexWrap: 'wrap', marginBottom: 'var(--mar-l)', overflowX: 'auto' }}>
         {STATUS_LABELS.map(s => {
           const active = filter === s
           const count  = s === 'All' ? orders.length : counts[s]
@@ -110,7 +110,7 @@ export default function SalesOrders() {
 
       {/* List */}
       {loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--sp-10)' }}><div className="spinner" /></div>
+        <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
       ) : visible.length === 0 ? (
         <div className="empty">
           <Receipt size={36} style={{ color: 'var(--text-3)', marginBottom: 8 }} />
@@ -124,7 +124,7 @@ export default function SalesOrders() {
             return (
               <div key={o.id}
                 onClick={() => navigate(`/sales-orders/${o.id}`)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', padding: 'var(--sp-3) var(--sp-4)', borderBottom: idx < visible.length - 1 ? '1px solid var(--border-l)' : 'none', cursor: 'pointer' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', borderBottom: idx < visible.length - 1 ? '1px solid var(--border-l)' : 'none', cursor: 'pointer' }}>
                 <div style={{ width: 36, height: 36, borderRadius: 'var(--r-l)', background: 'var(--surface-raised)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <Receipt size={16} style={{ color: 'var(--navy)' }} />
                 </div>

@@ -51,7 +51,7 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
           <button className="btn btn-primary btn-sm" onClick={onAdd}>+ Add Task</button>
         </div>
 
-        <div style={{ padding: 'var(--sp-2) var(--sp-4) 0' }}>
+        <div style={{ padding: 'var(--pad-s) var(--pad-l) 0' }}>
           <div className="filter-bar">
             {['ALL','OPEN','TODAY','OVERDUE','DONE'].map(f => (
               <button key={f} className={`filter-pill ${filter === f ? 'active' : ''}`} onClick={() => setFilter(f)}>{f}</button>
