@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import {
   UploadSimple, FileCsv, CheckCircle, Warning,
   ArrowLeft, MagnifyingGlass, Trash, ArrowRight,
-  Table, X,
-} from '@phosphor-icons/react'
+  Table, X } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
@@ -22,8 +21,7 @@ const COL = {
   itemRate:     ['Sales Price', 'Rate', 'Unit Price', 'UnitPrice', 'Price Each'],
   itemAmount:   ['Amount', 'Item Amount', 'Line Amount', 'Ext. Price'],
   jobName:      ['Memo', 'Job Name', 'Ship To', 'Project Name', 'Customer Memo', 'P.O. No.'],
-  address:      ['Bill To', 'Address', 'Billing Address'],
-}
+  address:      ['Bill To', 'Address', 'Billing Address'] }
 
 function findCol(headers, aliases) {
   const h = headers.map(x => x.trim().toLowerCase())
@@ -114,8 +112,7 @@ function groupByInvoice(rows, headers) {
         jobName:    get(jobIdx) || jobFromName,
         total:      parseAmount(get(amtIdx)),
         lineItems:  [],
-        raw:        row,
-      })
+        raw:        row })
     }
 
     const entry = map.get(invoiceNum)
@@ -163,7 +160,7 @@ function InvoiceRow({ inv, selected, onToggle }) {
         <td style={{ padding: '10px 12px' }}>
           {inv.lineItems.length > 0 && (
             <button onClick={e => { e.stopPropagation(); setExpanded(x => !x) }}
-              style={{ border: 'none', background: 'none', cursor: 'pointer', color: 'var(--text-3)', fontSize: 'var(--text-xs)' }}>
+              style={{ background: 'none', cursor: 'pointer', color: 'var(--text-3)', fontSize: 'var(--text-xs)' }}>
               {expanded ? '▲ Hide' : '▼ Show'}
             </button>
           )}
@@ -276,8 +273,7 @@ export default function QBImport() {
           materials_total:       inv.total,
           quickbooks_doc_number: inv.invoiceNum,
           quickbooks_sync_at:    new Date().toISOString(),
-          created_by:            profile?.full_name || profile?.email,
-        }).select('id').single()
+          created_by:            profile?.full_name || profile?.email }).select('id').single()
 
         if (soErr) throw soErr
 
@@ -287,8 +283,7 @@ export default function QBImport() {
             inv.lineItems.map((li, idx) => ({
               so_id: so.id, line_type: 'material',
               description: li.description, quantity: li.quantity,
-              unit_cost: li.unit_cost, sort_order: idx,
-            }))
+              unit_cost: li.unit_cost, sort_order: idx }))
           )
         }
 
@@ -299,8 +294,7 @@ export default function QBImport() {
           stage:             'Awarded',
           contract_value:    inv.total,
           purchase_order_id: so.id,
-          quickbooks_sync_at: new Date().toISOString(),
-        }).select('id').single()
+          quickbooks_sync_at: new Date().toISOString() }).select('id').single()
 
         // Link SO back to project
         if (project) {
@@ -320,8 +314,7 @@ export default function QBImport() {
       category:    'import',
       action:      'qb_import',
       label:       `QB Import — ${createdCount} SO${createdCount !== 1 ? 's' : ''} created`,
-      meta:        { created: createdCount, skipped: res.filter(r => r.action === 'skipped').length, total: res.length },
-    })
+      meta:        { created: createdCount, skipped: res.filter(r => r.action === 'skipped').length, total: res.length } })
     setStep('done')
   }
 
@@ -330,7 +323,7 @@ export default function QBImport() {
     <div className="page fade-in">
       <div style={{ marginBottom: 'var(--mar-xl)' }}>
         <button onClick={() => navigate(-1)}
-          style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
           <ArrowLeft size={14} /> Back
         </button>
         <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>QUICKBOOKS</div>
@@ -387,11 +380,10 @@ export default function QBImport() {
         style={{
           border: `2px dashed ${dragOver ? 'var(--navy)' : 'var(--border-l)'}`,
           borderRadius: 'var(--r-m)',
-          background: dragOver ? 'var(--blue-soft)' : 'var(--surface-raised)',
+          background: dragOver ? 'var(--blue-soft)' : 'var(--white)',
           padding: 'var(--pad-xxl)',
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-          gap: 'var(--gap-m)', cursor: 'pointer', transition: 'all 0.15s',
-        }}>
+          gap: 'var(--gap-m)', cursor: 'pointer', transition: 'all 0.15s' }}>
         <FileCsv size={44} style={{ color: dragOver ? 'var(--navy)' : 'var(--text-3)' }} />
         <div style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: dragOver ? 'var(--navy)' : 'var(--black)' }}>
           Drop your QB CSV here
@@ -414,7 +406,7 @@ export default function QBImport() {
     <div className="page fade-in">
       <div style={{ marginBottom: 'var(--mar-l)' }}>
         <button onClick={() => setStep('upload')}
-          style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
           <ArrowLeft size={14} /> Change file
         </button>
         <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>QUICKBOOKS IMPORT</div>
@@ -451,7 +443,7 @@ export default function QBImport() {
         <MagnifyingGlass size={14} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by customer, invoice #, or job…"
           style={{ width: '100%', paddingLeft: 30 }} />
-        {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', border: 'none', background: 'none', cursor: 'pointer', color: 'var(--text-3)', display: 'flex' }}><X size={13} /></button>}
+        {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)', display: 'flex' }}><X size={13} /></button>}
       </div>
 
       {/* Table */}
@@ -483,7 +475,7 @@ export default function QBImport() {
 
       {/* Confirm button */}
       <button onClick={runImport} disabled={selected.size === 0 || importing}
-        style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-m)', border: 'none', background: selected.size === 0 ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--text-md)', cursor: selected.size === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
+        style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-m)', background: selected.size === 0 ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--text-md)', cursor: selected.size === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
         {importing
           ? <><div className="spinner" style={{ borderTopColor: '#fff' }} /> Importing…</>
           : <>Import {selected.size} Sales Order{selected.size !== 1 ? 's' : ''} <ArrowRight size={16} /></>
@@ -530,11 +522,11 @@ export default function QBImport() {
           )}
           <div style={{ display: 'flex', gap: 'var(--gap-m)', marginTop: 'var(--mar-s)' }}>
             <button onClick={() => { setStep('upload'); setParsed([]); setResults([]); setFileName('') }}
-              style={{ padding: 'var(--pad-m) var(--pad-xl)', borderRadius: 'var(--r-l)', border: '1px solid var(--border-l)', background: 'transparent', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+              style={{ padding: 'var(--pad-m) var(--pad-xl)', borderRadius: 'var(--r-l)', background: 'transparent', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
               Import Another File
             </button>
             <button onClick={() => navigate('/change-orders')}
-              style={{ padding: 'var(--pad-m) var(--pad-xl)', borderRadius: 'var(--r-l)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
+              style={{ padding: 'var(--pad-m) var(--pad-xl)', borderRadius: 'var(--r-l)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
               View Change Orders <ArrowRight size={14} />
             </button>
           </div>

@@ -47,7 +47,7 @@ export default function Opportunities({ leads, loading }) {
 
       {/* Change Orders alert */}
       {pendingCOs.length > 0 && (
-        <div onClick={() => navigate('/change-orders')} style={{ background: 'var(--orange-soft)', border: '1px solid #FED7AA', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
+        <div onClick={() => navigate('/change-orders')} style={{ background: 'var(--orange-soft)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
           <ClipboardText size={20} style={{ color: 'var(--orange-shade-20)', flexShrink: 0 }} />
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--orange-shade-20)' }}>
@@ -63,7 +63,7 @@ export default function Opportunities({ leads, loading }) {
 
       {/* QB Import shortcut */}
       <div onClick={() => navigate('/qb-import')}
-        style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', border: 'none', boxShadow: 'var(--shadow-xs)' }}>
+        style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
         <DownloadSimple size={18} style={{ color: 'var(--navy)', flexShrink: 0 }} />
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Import from QuickBooks</div>
@@ -107,9 +107,8 @@ export default function Opportunities({ leads, loading }) {
             const val   = leads.filter(l => l.status === s.key).reduce((acc, l) => acc + (l.value_int || 0), 0)
             return (
               <div key={s.key} className="stage-breakdown-card" style={{
-                background: 'var(--white)', border: 'none', boxShadow: 'var(--shadow-xs)',
-                borderTop: `3px solid ${s.color}`, borderRadius: 'var(--r-m)', padding: '12px 14px',
-              }}>
+                background: 'var(--white)',
+                borderTop: `3px solid ${s.color}`, borderRadius: 'var(--r-m)', padding: '12px 14px' }}>
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: s.color, marginBottom: 4 }}>{s.label}</div>
                 <div style={{ fontSize: 'var(--text-display)', fontWeight: 700, color: 'var(--black)', lineHeight: 1 }}>{count}</div>
                 <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 4 }}>{val > 0 ? fmt$(val) : '—'}</div>

@@ -60,8 +60,7 @@ export function RelModal({ rel, onClose, onSave }) {
   const [f, setF] = useState(rel || {
     company_name: '', type: 'GC', tier: 'T1', city: 'Tampa', phone: '',
     key_contact: '', contact_role: 'Estimating', linkedin_done: false,
-    meeting_done: false, preq_submitted: false, on_bid_list: false, spec_sent: false, notes: '',
-  })
+    meeting_done: false, preq_submitted: false, on_bid_list: false, spec_sent: false, notes: '' })
   const s = (k, v) => setF(x => ({ ...x, [k]: v }))
   const t = k => setF(x => ({ ...x, [k]: !x[k] }))
 

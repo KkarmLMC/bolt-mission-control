@@ -10,8 +10,7 @@ const STATUS_COLOR = {
   shipment:     { bg: 'var(--blue-tint-80)', color: 'var(--blue-shade-20)' },
   back_ordered: { bg: 'var(--blue-tint-80)', color: 'var(--blue-shade-20)' },
   complete:     { bg: 'var(--success-soft)', color: 'var(--success-text)' },
-  cancelled:    { bg: 'var(--grey-tint-80)', color: 'var(--grey-base)' },
-}
+  cancelled:    { bg: 'var(--grey-tint-80)', color: 'var(--grey-base)' } }
 
 const STATUS_LABELS = ['All', 'queued', 'running', 'fulfillment', 'shipment', 'back_ordered', 'complete', 'cancelled']
 
@@ -96,12 +95,11 @@ export default function SalesOrders() {
           const sc     = STATUS_COLOR[s] || {}
           return (
             <button key={s} onClick={() => setFilter(s)} style={{
-              padding: '4px 12px', borderRadius: 'var(--r-xxl)', border: '1px solid var(--border-l)',
+              padding: '4px 12px', borderRadius: 'var(--r-xxl)',
               background: active ? (sc.bg || 'var(--navy)') : 'var(--white)',
               color: active ? (sc.color || '#fff') : 'var(--black)',
               fontSize: 'var(--text-xs)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap',
-              transition: 'all var(--ease-fast)',
-            }}>
+              transition: 'all var(--ease-fast)' }}>
               {s === 'All' ? 'All' : s.replace('_', ' ')} {count > 0 && `(${count})`}
             </button>
           )

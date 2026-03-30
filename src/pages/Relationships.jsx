@@ -52,7 +52,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
           <div className="search-box" style={{ marginBottom: 8 }}>
             <MagnifyingGlass size={14} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
             <input placeholder="Search companies..." value={search} onChange={e => setSearch(e.target.value)} />
-            {search && <button onClick={() => setSearch('')} style={{ border: 'none', background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}><X size={13} /></button>}
+            {search && <button onClick={() => setSearch('')} style={{ background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}><X size={13} /></button>}
           </div>
         </div>
 

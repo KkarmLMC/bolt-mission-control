@@ -5,8 +5,7 @@ import {
   Users, Buildings, Warning, CheckCircle,
   Clock, Lightning, Wrench, MagnifyingGlass,
   CaretLeft, CaretRight, X, PencilSimple,
-  Plus, ArrowSquareOut,
-} from '@phosphor-icons/react'
+  Plus, ArrowSquareOut } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 
 // ─── Stage config ──────────────────────────────────────────────────────────────
@@ -17,8 +16,7 @@ const STAGES = {
   'Inspection':  { color: 'var(--warning)', bg: 'var(--warning-soft)', label: 'Inspection'  },
   'Complete':    { color: 'var(--grey-base)', bg: 'var(--grey-tint-80)', label: 'Complete'    },
   'On Hold':     { color: 'var(--error-alt)', bg: 'var(--error-soft)', label: 'On Hold'     },
-  'Cancelled':   { color: 'var(--grey-tint-20)', bg: 'var(--surface-raised)', label: 'Cancelled'   },
-}
+  'Cancelled':   { color: 'var(--grey-tint-20)', bg: 'var(--white)', label: 'Cancelled'   } }
 
 const STAGES_LIST = ['Awarded','Scheduled','In Progress','Inspection','Complete','On Hold']
 
@@ -52,8 +50,7 @@ function StageBadge({ stage, small }) {
       fontWeight: 700,
       background: s.bg,
       color: s.color,
-      whiteSpace: 'nowrap',
-    }}>{s.label}</span>
+      whiteSpace: 'nowrap' }}>{s.label}</span>
   )
 }
 
@@ -65,8 +62,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
     stage:            project.stage || 'Awarded',
     scheduled_date:   project.scheduled_date || '',
     target_completion: project.target_completion || '',
-    notes:            project.notes || '',
-  })
+    notes:            project.notes || '' })
   const [saving, setSaving] = useState(false)
 
   const stage = STAGES[form.stage] || STAGES['Awarded']
@@ -81,8 +77,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
       label:       `Updated project: ${form.name || project.name}`,
       entity_type: 'project',
       entity_id:   project.id,
-      meta:        { stage: form.stage },
-    })
+      meta:        { stage: form.stage } })
     setSaving(false)
     setEditing(false)
     onSave({ ...project, ...form })
@@ -92,19 +87,17 @@ function JobPanel({ project, assignments, onClose, onSave }) {
     <div style={{
       position: 'fixed', top: 0, right: 0, bottom: 0,
       width: 360, background: '#fff',
-      boxShadow: '-8px 0 40px rgba(0,0,0,0.12)',
       zIndex: 200, display: 'flex', flexDirection: 'column',
-      animation: 'slideInRight 0.2s ease',
-    }}>
+      animation: 'slideInRight 0.2s ease' }}>
       {/* Header */}
       <div style={{ background: 'var(--navy)', padding: 'var(--pad-l)' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--mar-m)' }}>
           <StageBadge stage={project.stage} />
           <div style={{ display: 'flex', gap: 8 }}>
-            <button onClick={() => setEditing(e => !e)} style={{ border: 'none', background: 'rgba(255,255,255,0.15)', borderRadius: 6, width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
+            <button onClick={() => setEditing(e => !e)} style={{ background: 'rgba(255,255,255,0.15)', borderRadius: 6, width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
               <PencilSimple size={13} />
             </button>
-            <button onClick={onClose} style={{ border: 'none', background: 'rgba(255,255,255,0.15)', borderRadius: 6, width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
+            <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.15)', borderRadius: 6, width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
               <X size={13} />
             </button>
           </div>
@@ -143,8 +136,8 @@ function JobPanel({ project, assignments, onClose, onSave }) {
               <textarea value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} rows={3} />
             </div>
             <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
-              <button onClick={() => setEditing(false)} style={{ flex: 1, padding: 'var(--pad-s)', borderRadius: 'var(--r-l)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 600 }}>Cancel</button>
-              <button onClick={handleSave} disabled={saving} style={{ flex: 2, padding: 'var(--pad-s)', borderRadius: 'var(--r-l)', border: 'none', background: 'var(--navy)', color: '#fff', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 700 }}>
+              <button onClick={() => setEditing(false)} style={{ flex: 1, padding: 'var(--pad-s)', borderRadius: 'var(--r-l)', background: 'transparent', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 600 }}>Cancel</button>
+              <button onClick={handleSave} disabled={saving} style={{ flex: 2, padding: 'var(--pad-s)', borderRadius: 'var(--r-l)', background: 'var(--navy)', color: '#fff', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 700 }}>
                 {saving ? 'Saving…' : 'Save Changes'}
               </button>
             </div>
@@ -201,9 +194,9 @@ function JobPanel({ project, assignments, onClose, onSave }) {
 
       {/* Footer */}
       {!editing && (
-        <div style={{ padding: 'var(--pad-l)', borderTop: '1px solid var(--border-l)' }}>
+        <div style={{ padding: 'var(--pad-l)' }}>
           <button onClick={() => navigate(`/installations/${project.id}`)}
-            style={{ width: '100%', padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
+            style={{ width: '100%', padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
             Open Job Page <ArrowSquareOut size={14} />
           </button>
         </div>
@@ -230,9 +223,8 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
             return (
               <div key={fmtDate(d)} style={{
                 width: 38, flexShrink: 0, padding: '4px 2px', textAlign: 'center',
-                background: isToday ? 'var(--navy)' : isSun ? 'var(--surface-raised)' : 'transparent',
-                borderRight: '1px solid var(--border-l)',
-              }}>
+                background: isToday ? 'var(--navy)' : isSun ? 'var(--white)' : 'transparent',
+                borderRight: '1px solid var(--border-l)' }}>
                 <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--black)' }}>
                   {DAY_NAMES[d.getDay()]}
                 </div>
@@ -252,7 +244,7 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
           const crew  = assignments.filter(a => a.project_id === proj.id)
 
           return (
-            <div key={proj.id} style={{ display: 'flex', borderBottom: '1px solid var(--border-l)', minHeight: 44, alignItems: 'center', background: pi % 2 === 0 ? 'transparent' : 'var(--surface-raised)' }}>
+            <div key={proj.id} style={{ display: 'flex', borderBottom: '1px solid var(--border-l)', minHeight: 44, alignItems: 'center', background: pi % 2 === 0 ? 'transparent' : 'var(--white)' }}>
               {/* Job name column */}
               <div style={{ width: 160, flexShrink: 0, padding: '6px 12px', borderRight: '1px solid var(--border-l)', cursor: 'pointer' }}
                 onClick={() => onSelectProject(proj)}>
@@ -278,8 +270,7 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
                     background: isSun && !isInRange ? 'rgba(0,0,0,0.02)' : 'transparent',
                     borderRight: '1px solid var(--border-l)',
                     position: 'relative',
-                    borderLeft: isToday ? '2px solid var(--navy)' : 'none',
-                  }}>
+                    borderLeft: isToday ? '2px solid var(--navy)' : 'none' }}>
                     {isInRange && (
                       <div
                         onClick={() => onSelectProject(proj)}
@@ -292,19 +283,16 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
                           cursor: 'pointer',
                           display: 'flex', alignItems: 'center', justifyContent: 'center',
                           overflow: 'hidden',
-                          opacity: 0.85,
-                        }}>
+                          opacity: 0.85 }}>
                         {isStart && (
                           <div style={{ position: 'absolute', left: 6, right: 6, display: 'flex', gap: 2, justifyContent: 'flex-start', overflow: 'hidden' }}>
                             {crew.slice(0, 3).map(a => (
                               <div key={a.id} title={a.crew_name} style={{
                                 width: 16, height: 16, borderRadius: '50%',
                                 background: 'rgba(255,255,255,0.3)',
-                                border: '1px solid rgba(255,255,255,0.6)',
                                 fontSize: 'var(--text-2xs)', fontWeight: 700, color: '#fff',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                flexShrink: 0,
-                              }}>
+                                flexShrink: 0 }}>
                                 {getInitials(a.crew_name)[0]}
                               </div>
                             ))}
@@ -364,9 +352,8 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
             return (
               <div key={fmtDate(d)} style={{
                 width: 80, flexShrink: 0, padding: '4px 8px', textAlign: 'center',
-                background: isToday ? 'var(--navy)' : isSun ? 'var(--surface-raised)' : 'transparent',
-                borderRight: '1px solid var(--border-l)',
-              }}>
+                background: isToday ? 'var(--navy)' : isSun ? 'var(--white)' : 'transparent',
+                borderRight: '1px solid var(--border-l)' }}>
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--black)' }}>
                   {DAY_NAMES[d.getDay()]} {d.getDate()}
                 </div>
@@ -380,7 +367,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
 
         {/* Crew rows */}
         {crew.map((c, ci) => (
-          <div key={c.name} style={{ display: 'flex', borderBottom: '1px solid var(--border-l)', minHeight: 52, alignItems: 'stretch', background: ci % 2 === 0 ? 'transparent' : 'var(--surface-raised)' }}>
+          <div key={c.name} style={{ display: 'flex', borderBottom: '1px solid var(--border-l)', minHeight: 52, alignItems: 'stretch', background: ci % 2 === 0 ? 'transparent' : 'var(--white)' }}>
             {/* Crew name */}
             <div style={{ width: 140, flexShrink: 0, padding: '8px 12px', borderRight: '1px solid var(--border-l)', display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -405,8 +392,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
                   background: isSun ? 'rgba(0,0,0,0.02)' : 'transparent',
                   borderRight: '1px solid var(--border-l)',
                   borderLeft: isToday ? '2px solid var(--navy)' : 'none',
-                  padding: 3, display: 'flex', flexDirection: 'column', gap: 2,
-                }}>
+                  padding: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
                   {assigned.map(proj => {
                     const stage = STAGES[proj.stage] || STAGES['Awarded']
                     return (
@@ -418,8 +404,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
                           background: stage.color, color: '#fff',
                           fontSize: 'var(--text-xs)', fontWeight: 700,
                           overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-                          border: conflict ? '2px solid #DC2626' : 'none',
-                        }}>
+                          border: conflict ? '2px solid #DC2626' : 'none' }}>
                         {proj.customer_account?.split(' ')[0] || proj.name.split(' ')[0]}
                       </div>
                     )
@@ -490,14 +475,12 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
 
           return (
             <div key={i} style={{
-              background: isToday ? 'var(--blue-soft)' : inMonth ? '#fff' : 'var(--surface-raised)',
-              minHeight: 72, padding: '4px 4px 2px',
-            }}>
+              background: isToday ? 'var(--blue-soft)' : inMonth ? '#fff' : 'var(--white)',
+              minHeight: 72, padding: '4px 4px 2px' }}>
               <div style={{
                 width: 22, height: 22, borderRadius: '50%', marginBottom: 3,
                 background: isToday ? 'var(--navy)' : 'transparent',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
+                display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <span style={{ fontSize: 'var(--text-xs)', fontWeight: isToday ? 700 : 400, color: isToday ? '#fff' : inMonth ? 'var(--black)' : 'var(--text-4)' }}>
                   {d.getDate()}
                 </span>
@@ -512,8 +495,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
                       padding: '2px 5px', borderRadius: 3, marginBottom: 2,
                       background: stage.color, color: '#fff',
                       fontSize: 'var(--text-2xs)', fontWeight: 700, cursor: 'pointer',
-                      overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-                    }}>
+                      overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {proj.customer_account?.split(' ')[0] || proj.name.split(' ')[0]}
                   </div>
                 )
@@ -620,7 +602,7 @@ export default function OpsBoard() {
               { key: 'month', Icon: CalendarBlank, label: 'Month' },
             ].map(({ key, Icon, label }) => (
               <button key={key} onClick={() => setView(key)}
-                style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 'var(--r-m)', border: 'none', background: view === key ? 'var(--navy)' : 'var(--hover)', color: view === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 'var(--r-m)', background: view === key ? 'var(--navy)' : 'var(--hover)', color: view === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
                 <Icon size={12} weight={view === key ? 'fill' : 'regular'} />
                 {label}
               </button>
@@ -632,7 +614,7 @@ export default function OpsBoard() {
             <div style={{ display: 'flex', background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 2, gap: 1, flexShrink: 0 }}>
               {[['week','1W'],['2week','2W'],['month','4W']].map(([key, lbl]) => (
                 <button key={key} onClick={() => setSpan(key)}
-                  style={{ padding: '4px 8px', borderRadius: 'var(--r-m)', border: 'none', background: span === key ? 'var(--navy)' : 'var(--hover)', color: span === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
+                  style={{ padding: '4px 8px', borderRadius: 'var(--r-m)', background: span === key ? 'var(--navy)' : 'var(--hover)', color: span === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
                   {lbl}
                 </button>
               ))}
@@ -641,10 +623,10 @@ export default function OpsBoard() {
 
           {/* Date navigation */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-xs)', flexShrink: 0 }}>
-            <button onClick={() => go(-1)} style={{ width: 26, height: 26, borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <button onClick={() => go(-1)} style={{ width: 26, height: 26, borderRadius: 'var(--r-m)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <CaretLeft size={12} />
             </button>
-            <button onClick={() => setCurrentDate(today())} style={{ padding: '3px 8px', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'transparent', fontSize: 'var(--text-xs)', fontWeight: 600, cursor: 'pointer', color: 'var(--navy)' }}>
+            <button onClick={() => setCurrentDate(today())} style={{ padding: '3px 8px', borderRadius: 'var(--r-m)', background: 'transparent', fontSize: 'var(--text-xs)', fontWeight: 600, cursor: 'pointer', color: 'var(--navy)' }}>
               Today
             </button>
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', whiteSpace: 'nowrap' }}>
@@ -653,7 +635,7 @@ export default function OpsBoard() {
                 ? `${MON_NAMES[currentDate.getMonth()]} ${currentDate.getFullYear()}`
                 : `${startLabel} – ${endLabel}`}
             </span>
-            <button onClick={() => go(1)} style={{ width: 26, height: 26, borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <button onClick={() => go(1)} style={{ width: 26, height: 26, borderRadius: 'var(--r-m)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <CaretRight size={12} />
             </button>
           </div>

@@ -3,8 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import {
   ChartBar, Handshake, CheckSquare, Lightning,
   Warning, SignOut, ClipboardText, DownloadSimple,
-  CalendarBlank, ArrowLineLeft, ArrowLineRight, User, UserGear, Receipt,
-} from '@phosphor-icons/react'
+  CalendarBlank, ArrowLineLeft, ArrowLineRight, User, UserGear, Receipt } from '@phosphor-icons/react'
 import { useAuth } from '../lib/useAuth.jsx'
 
 // ── Live clock ────────────────────────────────────────────────────────────────
@@ -40,8 +39,7 @@ function SubNav({ children, collapsed, goTo, currentPath }) {
       <div style={{ position: 'relative', paddingLeft: 4 }}>
         <div style={{
           position: 'absolute', left: '1.375rem', top: 4, bottom: 4,
-          width: 1, background: 'var(--border-l)', borderRadius: 1,
-        }} />
+          width: 1, background: 'var(--border-l)', borderRadius: 1 }} />
         {children.map(child => {
           const active = pathMatch(child.path, currentPath)
           return (
@@ -62,8 +60,7 @@ function SubNav({ children, collapsed, goTo, currentPath }) {
                       padding: '1px 6px', borderRadius: 10,
                       background: active ? 'var(--red)' : 'rgba(255,255,255,0.15)',
                       color: active ? '#fff' : 'rgba(255,255,255,0.6)',
-                      fontFamily: 'var(--mono)',
-                    }}>{child.count}</span>
+                      fontFamily: 'var(--mono)' }}>{child.count}</span>
                   )}
                 </span>
               )}
@@ -97,16 +94,14 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
                 padding: '1px 6px', borderRadius: 10,
                 background: active ? 'var(--navy)' : 'var(--hover)',
                 color: active ? '#fff' : 'var(--black)',
-                fontFamily: 'var(--font)',
-              }}>{item.count}</span>
+                fontFamily: 'var(--font)' }}>{item.count}</span>
             )}
           </span>
         )}
         {collapsed && active && (
           <div style={{
             position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)',
-            width: '0.25rem', height: '0.25rem', borderRadius: '50%', background: 'var(--navy)',
-          }} />
+            width: '0.25rem', height: '0.25rem', borderRadius: '50%', background: 'var(--navy)' }} />
         )}
       </button>
 
@@ -141,8 +136,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
     { path: '/opportunities',  Icon: ChartBar,       label: 'Opportunities', count: activeLeads,
       children: [
         { path: '/opportunities/permits', Icon: Lightning, label: 'Permit Feed', count: newLeads },
-      ],
-    },
+      ] },
     { path: '/change-orders',  Icon: ClipboardText,  label: 'Change Orders', count: 0           },
     { path: '/sales-orders',   Icon: Receipt,        label: 'Sales Orders',  count: 0           },
     { path: '/ops-board',      Icon: CalendarBlank,  label: 'Ops Board',     count: 0           },

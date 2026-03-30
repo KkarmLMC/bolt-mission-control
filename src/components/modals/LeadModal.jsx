@@ -4,8 +4,7 @@ const DEFAULTS = {
   project_name: '', address: '', county: 'Pinellas', permit_number: '',
   permit_type: 'Commercial New Construction', value_str: '', value_int: 0,
   status: 'NEW LEAD', priority: '🟠 HIGH', contractor: '', contact_name: '',
-  contact_phone: '', next_action: 'Call GC — confirm LP scope', notes: '', assigned_to: 'Kodylee',
-}
+  contact_phone: '', next_action: 'Call GC — confirm LP scope', notes: '', assigned_to: 'Kodylee' }
 
 export default function LeadModal({ lead, onClose, onSave }) {
   const [f, setF] = useState(lead || DEFAULTS)

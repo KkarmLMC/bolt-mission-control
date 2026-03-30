@@ -29,8 +29,7 @@ const PAGE_META = {
   '/change-orders':         { title: 'Change Orders', sub: 'Field part requests pending management review',        parent: null               },
   '/sales-orders':          { title: 'Sales Orders', parent: null },
   '/qb-import':             { title: 'QB Import',     sub: 'Import Sales Orders from QuickBooks Desktop CSV',     parent: null               },
-  '/ops-board':             { title: 'Ops Board',     sub: 'Project schedule and crew deployment overview',        parent: null               },
-}
+  '/ops-board':             { title: 'Ops Board',     sub: 'Project schedule and crew deployment overview',        parent: null               } }
 
 function Header() {
   const location = useLocation()
@@ -48,7 +47,7 @@ function Header() {
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         {meta.parent && (
           <button onClick={() => navigate(meta.parent)}
-            style={{ border: 'none', background: 'rgba(255,255,255,0.1)', borderRadius: 6, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+            style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 6, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
             <ArrowLeft size={18} color="#fff" />
           </button>
         )}
@@ -61,7 +60,7 @@ function Header() {
           <div className="dot-live" />LIVE
         </div>
         <button onClick={handleSignOut}
-          style={{ border: 'none', background: 'rgba(255,255,255,0.1)', borderRadius: 6, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 6, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
           <SignOut size={16} color="rgba(255,255,255,0.7)" />
         </button>
       </div>

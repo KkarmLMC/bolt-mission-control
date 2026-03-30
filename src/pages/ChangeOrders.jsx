@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import {
   ClipboardText, Clock, CheckCircle, XCircle,
-  ArrowRight, Package, Warning,
-} from '@phosphor-icons/react'
+  ArrowRight, Package, Warning } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
@@ -10,8 +9,7 @@ import { logActivity } from '../lib/logActivity.js'
 const STATUS = {
   pending:  { label: 'Pending Review', bg: 'var(--orange-soft)', color: 'var(--orange-shade-20)' },
   approved: { label: 'Approved',       bg: 'var(--success-soft)', color: 'var(--success-text)' },
-  rejected: { label: 'Rejected',       bg: 'var(--error-soft)', color: 'var(--error-dark)' },
-}
+  rejected: { label: 'Rejected',       bg: 'var(--error-soft)', color: 'var(--error-dark)' } }
 
 function StatusBadge({ status }) {
   const s = STATUS[status] || STATUS.pending
@@ -33,8 +31,7 @@ function COModal({ co, onClose, onAction }) {
         status:       action,
         reviewed_by:  profile?.full_name || profile?.email,
         reviewed_at:  new Date().toISOString(),
-        review_notes: notes || null,
-      }
+        review_notes: notes || null }
 
       if (action === 'approved') {
         // Auto-create Draft Sales Order
@@ -49,8 +46,7 @@ function COModal({ co, onClose, onAction }) {
             status:        'draft',
             notes:         `Auto-created from Change Order ${co.co_number}. Justification: ${co.justification}`,
             created_by:    profile?.full_name || profile?.email,
-            customer_name: co.projects?.customer_account || co.submitted_by,
-          })
+            customer_name: co.projects?.customer_account || co.submitted_by })
           .select('id')
           .single()
 
@@ -67,8 +63,7 @@ function COModal({ co, onClose, onAction }) {
             quantity:    item.quantity,
             unit_cost:   item.parts?.unit_cost || 0,
             warehouse_id: co.warehouse_id || null,
-            sort_order:  idx,
-          }))
+            sort_order:  idx }))
           const { error: liErr } = await db.from('so_line_items').insert(lines)
           if (liErr) throw liErr
         }
@@ -85,8 +80,7 @@ function COModal({ co, onClose, onAction }) {
         label:       `${action.charAt(0).toUpperCase() + action.slice(1)} Change Order ${co.co_number || co.id}`,
         entity_type: 'change_order',
         entity_id:   co.id,
-        meta:        { action, notes },
-      })
+        meta:        { action, notes } })
       onAction(action, co.id, notes)
     } catch (e) {
       setError(e.message || 'Something went wrong.')
@@ -142,18 +136,18 @@ function COModal({ co, onClose, onAction }) {
               </label>
               <textarea value={notes} onChange={e => setNotes(e.target.value)}
                 placeholder="Add context for the field team or warehouse…" rows={2}
-                style={{ width: '100%', padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', border: '1px solid var(--border-l)', fontSize: 'var(--text-sm)', fontFamily: 'var(--font)', resize: 'vertical' }} />
+                style={{ width: '100%', padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', fontSize: 'var(--text-sm)', fontFamily: 'var(--font)', resize: 'vertical' }} />
             </div>
 
             {error && <div style={{ padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-xs)', marginBottom: 'var(--mar-m)' }}>{error}</div>}
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)' }}>
               <button onClick={() => handleAction('rejected')} disabled={saving}
-                style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'var(--white)', color: 'var(--error)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--error)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                 <XCircle size={16} /> Reject
               </button>
               <button onClick={() => handleAction('approved')} disabled={saving}
-                style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                 {saving ? <div className="spinner" style={{ borderTopColor: '#fff' }} /> : <><CheckCircle size={16} /> Approve → SO</>}
               </button>
             </div>
