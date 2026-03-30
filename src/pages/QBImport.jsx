@@ -148,22 +148,22 @@ function InvoiceRow({ inv, selected, onToggle }) {
           <input type="checkbox" checked={selected} onChange={() => onToggle(inv.invoiceNum)}
             onClick={e => e.stopPropagation()} />
         </td>
-        <td style={{ padding: '10px 12px', fontFamily: 'var(--mono)', fontSize: 'var(--fs-sm)' }}>{inv.invoiceNum}</td>
+        <td style={{ padding: '10px 12px', fontFamily: 'var(--mono)', fontSize: 'var(--text-sm)' }}>{inv.invoiceNum}</td>
         <td style={{ padding: '10px 12px' }}>
-          <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 600 }}>{inv.customer}</div>
-          {inv.jobName && <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 2 }}>{inv.jobName}</div>}
+          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{inv.customer}</div>
+          {inv.jobName && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>{inv.jobName}</div>}
         </td>
-        <td style={{ padding: '10px 12px', fontSize: 'var(--fs-sm)' }}>{inv.date}</td>
-        <td style={{ padding: '10px 12px', fontSize: 'var(--fs-sm)', fontWeight: 700, color: 'var(--amber)', fontFamily: 'var(--mono)' }}>
+        <td style={{ padding: '10px 12px', fontSize: 'var(--text-sm)' }}>{inv.date}</td>
+        <td style={{ padding: '10px 12px', fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--amber)', fontFamily: 'var(--mono)' }}>
           ${inv.total.toLocaleString('en-US', { minimumFractionDigits: 2 })}
         </td>
         <td style={{ padding: '10px 12px' }}>
-          <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>{inv.lineItems.length} lines</span>
+          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{inv.lineItems.length} lines</span>
         </td>
         <td style={{ padding: '10px 12px' }}>
           {inv.lineItems.length > 0 && (
             <button onClick={e => { e.stopPropagation(); setExpanded(x => !x) }}
-              style={{ border: 'none', background: 'none', cursor: 'pointer', color: 'var(--text-3)', fontSize: 'var(--fs-xs)' }}>
+              style={{ border: 'none', background: 'none', cursor: 'pointer', color: 'var(--text-3)', fontSize: 'var(--text-xs)' }}>
               {expanded ? '▲ Hide' : '▼ Show'}
             </button>
           )}
@@ -173,10 +173,10 @@ function InvoiceRow({ inv, selected, onToggle }) {
         <tr key={i} style={{ background: '#F8FAFF' }}>
           <td />
           <td />
-          <td colSpan={2} style={{ padding: '6px 12px 6px 24px', fontSize: 'var(--fs-sm)', color: 'var(--text-2)' }}>
+          <td colSpan={2} style={{ padding: '6px 12px 6px 24px', fontSize: 'var(--text-sm)', color: 'var(--black)' }}>
             {li.description}
           </td>
-          <td style={{ padding: '6px 12px', fontSize: 'var(--fs-sm)', fontFamily: 'var(--mono)' }}>
+          <td style={{ padding: '6px 12px', fontSize: 'var(--text-sm)', fontFamily: 'var(--mono)' }}>
             {li.quantity > 1 ? `${li.quantity} × $${li.unit_cost}` : `$${li.amount.toLocaleString()}`}
           </td>
           <td colSpan={2} />
@@ -330,12 +330,12 @@ export default function QBImport() {
     <div className="page fade-in">
       <div style={{ marginBottom: 'var(--sp-5)' }}>
         <button onClick={() => navigate(-1)}
-          style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--fs-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--sp-3)' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--sp-3)' }}>
           <ArrowLeft size={14} /> Back
         </button>
-        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 4 }}>QUICKBOOKS</div>
-        <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800 }}>Import Sales Orders</div>
-        <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', marginTop: 4 }}>
+        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>QUICKBOOKS</div>
+        <div style={{ fontSize: 'var(--text-base)', fontWeight: 800 }}>Import Sales Orders</div>
+        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 4 }}>
           Import invoices exported from QuickBooks Desktop as CSV
         </div>
       </div>
@@ -352,11 +352,11 @@ export default function QBImport() {
             ['5', 'Save the file and upload it below'],
           ].map(([n, text]) => (
             <div key={n} style={{ display: 'flex', gap: 'var(--sp-3)', alignItems: 'flex-start' }}>
-              <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 'var(--fs-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{n}</div>
-              <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-2)', paddingTop: 2 }}>{text}</div>
+              <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{n}</div>
+              <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', paddingTop: 2 }}>{text}</div>
             </div>
           ))}
-          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 'var(--sp-3)', marginTop: 'var(--sp-1)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--sp-3)', marginTop: 'var(--sp-1)' }}>
             💡 Tip: The <strong>Invoice Detail</strong> report is best — it includes line items. The <strong>Transaction List</strong> report also works but won't import individual line items.
           </div>
         </div>
@@ -366,11 +366,11 @@ export default function QBImport() {
       <div className="card" style={{ marginBottom: 'var(--sp-4)' }}>
         <div className="card-header"><span className="card-title">Import Settings</span></div>
         <div style={{ padding: 'var(--sp-4)' }}>
-          <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>Division</label>
+          <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>Division</label>
           <div style={{ display: 'flex', gap: 'var(--sp-2)' }}>
             {['LM', 'Bolt'].map(d => (
               <button key={d} onClick={() => setDivision(d)}
-                style={{ padding: 'var(--sp-2) var(--sp-5)', borderRadius: 'var(--r-lg)', border: `1px solid ${division === d ? 'var(--navy)' : 'var(--border-l)'}`, background: division === d ? 'var(--navy)' : 'transparent', color: division === d ? '#fff' : 'var(--text-2)', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'pointer' }}>
+                style={{ padding: 'var(--sp-2) var(--sp-5)', borderRadius: 'var(--r-l)', border: `1px solid ${division === d ? 'var(--navy)' : 'var(--border-l)'}`, background: division === d ? 'var(--navy)' : 'transparent', color: division === d ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
                 {d === 'LM' ? 'Lightning Master' : 'Bolt Lightning'}
               </button>
             ))}
@@ -393,16 +393,16 @@ export default function QBImport() {
           gap: 'var(--sp-3)', cursor: 'pointer', transition: 'all 0.15s',
         }}>
         <FileCsv size={44} style={{ color: dragOver ? 'var(--navy)' : 'var(--text-3)' }} />
-        <div style={{ fontSize: 'var(--fs-md)', fontWeight: 700, color: dragOver ? 'var(--navy)' : 'var(--text-1)' }}>
+        <div style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: dragOver ? 'var(--navy)' : 'var(--black)' }}>
           Drop your QB CSV here
         </div>
-        <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)' }}>or click to browse</div>
+        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>or click to browse</div>
         <input ref={fileRef} type="file" accept=".csv" style={{ display: 'none' }}
           onChange={e => handleFile(e.target.files[0])} />
       </div>
 
       {error && (
-        <div style={{ marginTop: 'var(--sp-3)', padding: 'var(--sp-3)', borderRadius: 'var(--r-lg)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--fs-sm)', display: 'flex', gap: 'var(--sp-2)', alignItems: 'center' }}>
+        <div style={{ marginTop: 'var(--sp-3)', padding: 'var(--sp-3)', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', display: 'flex', gap: 'var(--sp-2)', alignItems: 'center' }}>
           <Warning size={15} style={{ flexShrink: 0 }} /> {error}
         </div>
       )}
@@ -414,12 +414,12 @@ export default function QBImport() {
     <div className="page fade-in">
       <div style={{ marginBottom: 'var(--sp-4)' }}>
         <button onClick={() => setStep('upload')}
-          style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--fs-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--sp-3)' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--sp-3)' }}>
           <ArrowLeft size={14} /> Change file
         </button>
-        <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 4 }}>QUICKBOOKS IMPORT</div>
-        <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800 }}>Review & Confirm</div>
-        <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', marginTop: 4 }}>
+        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>QUICKBOOKS IMPORT</div>
+        <div style={{ fontSize: 'var(--text-base)', fontWeight: 800 }}>Review & Confirm</div>
+        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 4 }}>
           {fileName} · {parsed.length} invoice{parsed.length !== 1 ? 's' : ''} found · {format === 'detail' ? 'Detail format (with line items)' : 'Summary format'}
         </div>
       </div>
@@ -442,7 +442,7 @@ export default function QBImport() {
         </div>
         <div className="stat-card">
           <div className="stat-label">Division</div>
-          <div className="stat-value" style={{ fontSize: 'var(--fs-lg)' }}>{division}</div>
+          <div className="stat-value" style={{ fontSize: 'var(--text-lg)' }}>{division}</div>
         </div>
       </div>
 
@@ -465,7 +465,7 @@ export default function QBImport() {
                   onChange={toggleAll} />
               </th>
               {['Invoice #', 'Customer / Job', 'Date', 'Amount', 'Lines', ''].map(h => (
-                <th key={h} style={{ padding: '10px 12px', textAlign: 'left', fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
+                <th key={h} style={{ padding: '10px 12px', textAlign: 'left', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
               ))}
             </tr>
           </thead>
@@ -483,13 +483,13 @@ export default function QBImport() {
 
       {/* Confirm button */}
       <button onClick={runImport} disabled={selected.size === 0 || importing}
-        style={{ width: '100%', padding: 'var(--sp-4)', borderRadius: 'var(--r-xl)', border: 'none', background: selected.size === 0 ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--fs-md)', cursor: selected.size === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)' }}>
+        style={{ width: '100%', padding: 'var(--sp-4)', borderRadius: 'var(--r-xl)', border: 'none', background: selected.size === 0 ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--text-md)', cursor: selected.size === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)' }}>
         {importing
           ? <><div className="spinner" style={{ borderTopColor: '#fff' }} /> Importing…</>
           : <>Import {selected.size} Sales Order{selected.size !== 1 ? 's' : ''} <ArrowRight size={16} /></>
         }
       </button>
-      <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--sp-2)' }}>
+      <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--sp-2)' }}>
         Each selected invoice will create a Sales Order and a linked Project in your system.
       </div>
     </div>
@@ -504,25 +504,25 @@ export default function QBImport() {
       <div className="page fade-in">
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: 'var(--sp-8) 0', gap: 'var(--sp-4)' }}>
           <CheckCircle size={52} weight="fill" style={{ color: 'var(--success)' }} />
-          <div style={{ fontSize: 'var(--fs-xl)', fontWeight: 800 }}>Import Complete</div>
+          <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Import Complete</div>
           <div style={{ display: 'flex', gap: 'var(--sp-4)', flexWrap: 'wrap', justifyContent: 'center' }}>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, color: 'var(--success)' }}>{created}</div>
-              <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-2)' }}>Created</div>
+              <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: 'var(--success)' }}>{created}</div>
+              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)' }}>Created</div>
             </div>
             {skipped > 0 && <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, color: 'var(--amber)' }}>{skipped}</div>
-              <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-2)' }}>Skipped</div>
+              <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: 'var(--amber)' }}>{skipped}</div>
+              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)' }}>Skipped</div>
             </div>}
             {errors > 0 && <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 'var(--fs-2xl)', fontWeight: 800, color: 'var(--error)' }}>{errors}</div>
-              <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-2)' }}>Errors</div>
+              <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: 'var(--error)' }}>{errors}</div>
+              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)' }}>Errors</div>
             </div>}
           </div>
           {errors > 0 && (
-            <div style={{ width: '100%', maxWidth: 480, background: 'var(--error-soft)', borderRadius: 'var(--r-lg)', padding: 'var(--sp-3)', textAlign: 'left' }}>
+            <div style={{ width: '100%', maxWidth: 480, background: 'var(--error-soft)', borderRadius: 'var(--r-l)', padding: 'var(--sp-3)', textAlign: 'left' }}>
               {results.filter(r => r.action === 'error').map(r => (
-                <div key={r.invoiceNum} style={{ fontSize: 'var(--fs-xs)', color: 'var(--error-alt)', marginBottom: 4 }}>
+                <div key={r.invoiceNum} style={{ fontSize: 'var(--text-xs)', color: 'var(--error-alt)', marginBottom: 4 }}>
                   {r.invoiceNum}: {r.reason}
                 </div>
               ))}
@@ -530,11 +530,11 @@ export default function QBImport() {
           )}
           <div style={{ display: 'flex', gap: 'var(--sp-3)', marginTop: 'var(--sp-2)' }}>
             <button onClick={() => { setStep('upload'); setParsed([]); setResults([]); setFileName('') }}
-              style={{ padding: 'var(--sp-3) var(--sp-5)', borderRadius: 'var(--r-lg)', border: '1px solid var(--border-l)', background: 'transparent', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'pointer' }}>
+              style={{ padding: 'var(--sp-3) var(--sp-5)', borderRadius: 'var(--r-l)', border: '1px solid var(--border-l)', background: 'transparent', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
               Import Another File
             </button>
             <button onClick={() => navigate('/change-orders')}
-              style={{ padding: 'var(--sp-3) var(--sp-5)', borderRadius: 'var(--r-lg)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
+              style={{ padding: 'var(--sp-3) var(--sp-5)', borderRadius: 'var(--r-l)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--sp-2)' }}>
               View Change Orders <ArrowRight size={14} />
             </button>
           </div>

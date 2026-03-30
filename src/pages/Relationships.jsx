@@ -82,17 +82,17 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
                       <td><span className={`badge ${r.type === 'GC' ? 'badge-gc' : r.type === 'MEP Engineer' ? 'badge-mep' : 'badge-dev'}`}>{r.type}</span></td>
                       <td><span className={`badge badge-t${r.tier?.replace('T', '')}`}>{r.tier}</span></td>
                       <td>
-                        <div style={{ fontSize: 'var(--fs-sm)' }}>{r.key_contact || '—'}</div>
+                        <div style={{ fontSize: 'var(--text-sm)' }}>{r.key_contact || '—'}</div>
                         <div className="cell-sub">{r.contact_role || ''}</div>
                       </td>
-                      <td><span className="cell-mono" style={{ fontSize: 'var(--fs-sm)' }}>{r.phone || '—'}</span></td>
+                      <td><span className="cell-mono" style={{ fontSize: 'var(--text-sm)' }}>{r.phone || '—'}</span></td>
                       <td>
                         <div className="progress-pips">
                           {[r.linkedin_done, r.meeting_done, r.preq_submitted, r.on_bid_list, r.spec_sent].map((d, i) => (
                             <div key={i} className={`pip ${d ? 'done' : ''}`} />
                           ))}
                         </div>
-                        <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>{score(r)}/5</span>
+                        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{score(r)}/5</span>
                       </td>
                       <td onClick={e => e.stopPropagation()}>
                         <button className="btn btn-ghost btn-sm" onClick={() => onEdit(r)}>Edit</button>

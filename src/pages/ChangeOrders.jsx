@@ -15,7 +15,7 @@ const STATUS = {
 
 function StatusBadge({ status }) {
   const s = STATUS[status] || STATUS.pending
-  return <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: 'var(--fs-xs)', fontWeight: 700, background: s.bg, color: s.color }}>{s.label}</span>
+  return <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: 'var(--text-xs)', fontWeight: 700, background: s.bg, color: s.color }}>{s.label}</span>
 }
 
 function COModal({ co, onClose, onAction }) {
@@ -103,9 +103,9 @@ function COModal({ co, onClose, onAction }) {
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--sp-5)' }}>
           <div>
-            <div style={{ fontSize: 'var(--fs-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)', marginBottom: 4 }}>{co.co_number}</div>
-            <div style={{ fontSize: 'var(--fs-lg)', fontWeight: 800 }}>{co.projects?.name || co.job_reference}</div>
-            <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 4 }}>
+            <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)', marginBottom: 4 }}>{co.co_number}</div>
+            <div style={{ fontSize: 'var(--text-lg)', fontWeight: 800 }}>{co.projects?.name || co.job_reference}</div>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 4 }}>
               Submitted by <strong>{co.submitted_by}</strong> · {new Date(co.created_at).toLocaleDateString()}
             </div>
           </div>
@@ -113,22 +113,22 @@ function COModal({ co, onClose, onAction }) {
         </div>
 
         {/* Justification */}
-        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 'var(--sp-4)', marginBottom: 'var(--sp-4)' }}>
-          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 'var(--sp-2)' }}>Justification</div>
-          <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-2)', lineHeight: 1.6 }}>{co.justification || '—'}</div>
+        <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--sp-4)', marginBottom: 'var(--sp-4)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--sp-2)' }}>Justification</div>
+          <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6 }}>{co.justification || '—'}</div>
         </div>
 
         {/* Parts */}
         <div style={{ marginBottom: 'var(--sp-4)' }}>
-          <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 'var(--sp-2)' }}>Parts Requested</div>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--sp-2)' }}>Parts Requested</div>
           {co.change_order_items?.map((item, idx) => (
             <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-3) 0', borderBottom: '1px solid var(--border-l)' }}>
               <div>
-                <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 600 }}>{item.parts?.name || '—'}</div>
-                {item.parts?.sku && <div style={{ fontSize: 'var(--fs-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>{item.parts.sku}</div>}
-                {item.notes && <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 2 }}>{item.notes}</div>}
+                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{item.parts?.name || '—'}</div>
+                {item.parts?.sku && <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>{item.parts.sku}</div>}
+                {item.notes && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>{item.notes}</div>}
               </div>
-              <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 800, fontFamily: 'var(--mono)' }}>×{item.quantity}</div>
+              <div style={{ fontSize: 'var(--text-sm)', fontWeight: 800, fontFamily: 'var(--mono)' }}>×{item.quantity}</div>
             </div>
           ))}
         </div>
@@ -137,27 +137,27 @@ function COModal({ co, onClose, onAction }) {
         {co.status === 'pending' && (
           <>
             <div style={{ marginBottom: 'var(--sp-4)' }}>
-              <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>
+              <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>
                 Review Notes <span style={{ fontWeight: 400, color: 'var(--text-3)' }}>(optional)</span>
               </label>
               <textarea value={notes} onChange={e => setNotes(e.target.value)}
                 placeholder="Add context for the field team or warehouse…" rows={2}
-                style={{ width: '100%', padding: 'var(--sp-3)', borderRadius: 'var(--r-lg)', border: '1px solid var(--border-l)', fontSize: 'var(--fs-sm)', fontFamily: 'var(--font)', resize: 'vertical' }} />
+                style={{ width: '100%', padding: 'var(--sp-3)', borderRadius: 'var(--r-l)', border: '1px solid var(--border-l)', fontSize: 'var(--text-sm)', fontFamily: 'var(--font)', resize: 'vertical' }} />
             </div>
 
-            {error && <div style={{ padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-lg)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--fs-xs)', marginBottom: 'var(--sp-3)' }}>{error}</div>}
+            {error && <div style={{ padding: 'var(--sp-2) var(--sp-3)', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-xs)', marginBottom: 'var(--sp-3)' }}>{error}</div>}
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-3)' }}>
               <button onClick={() => handleAction('rejected')} disabled={saving}
-                style={{ padding: 'var(--sp-3)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--error)', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                style={{ padding: 'var(--sp-3)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border-l)', background: 'var(--surface-raised)', color: 'var(--error)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                 <XCircle size={16} /> Reject
               </button>
               <button onClick={() => handleAction('approved')} disabled={saving}
-                style={{ padding: 'var(--sp-3)', borderRadius: 'var(--r-xl)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                style={{ padding: 'var(--sp-3)', borderRadius: 'var(--r-xl)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                 {saving ? <div className="spinner" style={{ borderTopColor: '#fff' }} /> : <><CheckCircle size={16} /> Approve → SO</>}
               </button>
             </div>
-            <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--sp-2)' }}>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--sp-2)' }}>
               Approving creates a Draft Sales Order in Warehouse IQ automatically.
             </div>
           </>
@@ -165,10 +165,10 @@ function COModal({ co, onClose, onAction }) {
 
         {/* Already reviewed */}
         {co.status !== 'pending' && co.review_notes && (
-          <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 'var(--sp-3)', marginTop: 'var(--sp-3)' }}>
-            <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 4 }}>Review Notes</div>
-            <div style={{ fontSize: 'var(--fs-sm)' }}>{co.review_notes}</div>
-            <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 4 }}>by {co.reviewed_by} · {new Date(co.reviewed_at).toLocaleDateString()}</div>
+          <div style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--sp-3)', marginTop: 'var(--sp-3)' }}>
+            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>Review Notes</div>
+            <div style={{ fontSize: 'var(--text-sm)' }}>{co.review_notes}</div>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 4 }}>by {co.reviewed_by} · {new Date(co.reviewed_at).toLocaleDateString()}</div>
           </div>
         )}
       </div>
@@ -229,7 +229,7 @@ export default function ChangeOrders() {
         <div className="card-header">
           <span className="card-title">Change Orders</span>
           {pendingCount > 0 && (
-            <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, padding: '2px 10px', borderRadius: 20, background: '#FFF7ED', color: '#C2410C' }}>
+            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 10px', borderRadius: 20, background: '#FFF7ED', color: '#C2410C' }}>
               {pendingCount} need review
             </span>
           )}
@@ -269,14 +269,14 @@ export default function ChangeOrders() {
                     </td>
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                        <Package size={13} style={{ color: 'var(--text-2)' }} />
-                        <span style={{ fontSize: 'var(--fs-sm)' }}>{co.change_order_items?.length || 0} part{co.change_order_items?.length !== 1 ? 's' : ''}</span>
+                        <Package size={13} style={{ color: 'var(--black)' }} />
+                        <span style={{ fontSize: 'var(--text-sm)' }}>{co.change_order_items?.length || 0} part{co.change_order_items?.length !== 1 ? 's' : ''}</span>
                       </div>
                     </td>
-                    <td><span style={{ fontSize: 'var(--fs-sm)' }}>{co.submitted_by}</span></td>
-                    <td><span className="cell-mono" style={{ fontSize: 'var(--fs-xs)' }}>{new Date(co.created_at).toLocaleDateString()}</span></td>
+                    <td><span style={{ fontSize: 'var(--text-sm)' }}>{co.submitted_by}</span></td>
+                    <td><span className="cell-mono" style={{ fontSize: 'var(--text-xs)' }}>{new Date(co.created_at).toLocaleDateString()}</span></td>
                     <td><StatusBadge status={co.status} /></td>
-                    <td><ArrowRight size={14} style={{ color: 'var(--text-2)' }} /></td>
+                    <td><ArrowRight size={14} style={{ color: 'var(--black)' }} /></td>
                   </tr>
                 ))}
               </tbody>

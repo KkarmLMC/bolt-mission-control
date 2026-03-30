@@ -15,7 +15,7 @@ function Clock() {
     return () => clearInterval(i)
   }, [])
   return (
-    <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', fontFamily: 'var(--font)' }}>
+    <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', fontFamily: 'var(--font)' }}>
       {t.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
       {' · '}
       {t.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
@@ -58,7 +58,7 @@ function SubNav({ children, collapsed, goTo, currentPath }) {
                   {child.label}
                   {child.count > 0 && (
                     <span style={{
-                      marginLeft: 6, fontSize: 'var(--fs-xs)', fontWeight: 700,
+                      marginLeft: 6, fontSize: 'var(--text-xs)', fontWeight: 700,
                       padding: '1px 6px', borderRadius: 10,
                       background: active ? 'var(--red)' : 'rgba(255,255,255,0.15)',
                       color: active ? '#fff' : 'rgba(255,255,255,0.6)',
@@ -93,10 +93,10 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
             {item.label}
             {item.count > 0 && (
               <span style={{
-                marginLeft: 'auto', fontSize: 'var(--fs-xs)', fontWeight: 700,
+                marginLeft: 'auto', fontSize: 'var(--text-xs)', fontWeight: 700,
                 padding: '1px 6px', borderRadius: 10,
                 background: active ? 'var(--navy)' : 'var(--hover)',
-                color: active ? '#fff' : 'var(--text-2)',
+                color: active ? '#fff' : 'var(--black)',
                 fontFamily: 'var(--font)',
               }}>{item.count}</span>
             )}
@@ -162,10 +162,10 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
             ? <Lightning size={22} weight="fill" style={{ color: 'var(--navy)' }} />
             : (
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: 'var(--text-1)', letterSpacing: '-0.01em' }}>
+                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)', letterSpacing: '-0.01em' }}>
                   Mission Control
                 </div>
-                <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 500, color: 'var(--text-3)' }}>
+                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 500, color: 'var(--text-3)' }}>
                   Bolt LP · LMC
                 </div>
               </div>
@@ -195,7 +195,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
             {criticalLeads > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 6, marginBottom: 4, background: 'rgba(245,51,63,0.15)' }}>
                 <Warning size={13} weight="fill" style={{ color: 'var(--red)', flexShrink: 0 }} />
-                <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, color: 'var(--red)' }}>
+                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--red)' }}>
                   {criticalLeads} critical lead{criticalLeads > 1 ? 's' : ''}
                 </span>
               </div>
@@ -203,7 +203,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
             {overdueTasks > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 6, marginBottom: 4, background: 'rgba(245,158,11,0.15)' }}>
                 <Warning size={13} weight="fill" style={{ color: 'var(--amber)', flexShrink: 0 }} />
-                <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, color: 'var(--amber)' }}>
+                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--amber)' }}>
                   {overdueTasks} overdue task{overdueTasks > 1 ? 's' : ''}
                 </span>
               </div>

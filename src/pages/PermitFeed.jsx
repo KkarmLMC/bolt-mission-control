@@ -92,10 +92,10 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
                         <div className="cell-sub">{l.address || l.permit_number || '—'}</div>
                       </td>
                       <td><span className="cell-mono" style={{ color: 'var(--amber)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
-                      <td><span className="badge" style={{ background: 'var(--surface-raised)', color: 'var(--text-2)' }}>{l.county}</span></td>
+                      <td><span className="badge" style={{ background: 'var(--surface-raised)', color: 'var(--black)' }}>{l.county}</span></td>
                       <td><span className={`badge ${statusBadge(l.status)}`}>{l.status}</span></td>
-                      <td><span style={{ fontSize: 'var(--fs-sm)' }}>{l.contractor || '—'}</span></td>
-                      <td><span style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', maxWidth: 180, display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.next_action || '—'}</span></td>
+                      <td><span style={{ fontSize: 'var(--text-sm)' }}>{l.contractor || '—'}</span></td>
+                      <td><span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', maxWidth: 180, display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.next_action || '—'}</span></td>
                       <td onClick={e => e.stopPropagation()}><button className="btn btn-ghost btn-sm" onClick={() => onEdit(l)}>Edit</button></td>
                     </tr>
                   ))}

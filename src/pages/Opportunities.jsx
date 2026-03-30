@@ -50,10 +50,10 @@ export default function Opportunities({ leads, loading }) {
         <div onClick={() => navigate('/change-orders')} style={{ background: '#FFF7ED', border: '1px solid #FED7AA', borderRadius: 'var(--r-xl)', padding: 'var(--sp-3) var(--sp-4)', marginBottom: 'var(--sp-4)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--sp-3)' }}>
           <ClipboardText size={20} style={{ color: '#C2410C', flexShrink: 0 }} />
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: '#C2410C' }}>
+            <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: '#C2410C' }}>
               {pendingCOs.length} Part Request{pendingCOs.length !== 1 ? 's' : ''} Pending Review
             </div>
-            <div style={{ fontSize: 'var(--fs-xs)', color: '#9A3412', marginTop: 2 }}>
+            <div style={{ fontSize: 'var(--text-xs)', color: '#9A3412', marginTop: 2 }}>
               {pendingCOs[0]?.job_reference}{pendingCOs.length > 1 ? ` + ${pendingCOs.length - 1} more` : ''}
             </div>
           </div>
@@ -66,10 +66,10 @@ export default function Opportunities({ leads, loading }) {
         style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-xl)', padding: 'var(--sp-3) var(--sp-4)', marginBottom: 'var(--sp-4)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', border: '1px solid var(--border-l)' }}>
         <DownloadSimple size={18} style={{ color: 'var(--navy)', flexShrink: 0 }} />
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700 }}>Import from QuickBooks</div>
-          <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>Upload a QB Desktop CSV to create Sales Orders</div>
+          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Import from QuickBooks</div>
+          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>Upload a QB Desktop CSV to create Sales Orders</div>
         </div>
-        <ArrowRight size={14} style={{ color: 'var(--text-2)', flexShrink: 0 }} />
+        <ArrowRight size={14} style={{ color: 'var(--black)', flexShrink: 0 }} />
       </div>
 
       {/* Stat cards — flat, no icons, Field Ops style */}
@@ -108,11 +108,11 @@ export default function Opportunities({ leads, loading }) {
             return (
               <div key={s.key} className="stage-breakdown-card" style={{
                 background: 'var(--surface-raised)', border: '1px solid var(--border-l)',
-                borderTop: `3px solid ${s.color}`, borderRadius: 'var(--r-md)', padding: '12px 14px',
+                borderTop: `3px solid ${s.color}`, borderRadius: 'var(--r-m)', padding: '12px 14px',
               }}>
-                <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: s.color, marginBottom: 4 }}>{s.label}</div>
-                <div style={{ fontSize: 'var(--fs-stat)', fontWeight: 700, color: 'var(--text-1)', lineHeight: 1 }}>{count}</div>
-                <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 4 }}>{val > 0 ? fmt$(val) : '—'}</div>
+                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: s.color, marginBottom: 4 }}>{s.label}</div>
+                <div style={{ fontSize: 'var(--text-display)', fontWeight: 700, color: 'var(--black)', lineHeight: 1 }}>{count}</div>
+                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 4 }}>{val > 0 ? fmt$(val) : '—'}</div>
               </div>
             )
           })}
@@ -127,18 +127,18 @@ export default function Opportunities({ leads, loading }) {
         <div style={{ padding: 'var(--sp-4)', display: 'flex', flexDirection: 'column', gap: 'var(--sp-2)' }}>
           {children.map(c => (
             <div key={c.label} onClick={() => c.path && navigate(c.path)}
-              style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-4)', padding: 'var(--sp-3) var(--sp-4)', borderRadius: 'var(--r-lg)', background: 'var(--surface-raised)', cursor: c.path ? 'pointer' : 'default', opacity: c.soon ? 0.5 : 1 }}>
-              <c.Icon size={18} style={{ color: 'var(--text-2)', flexShrink: 0 }} />
+              style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-4)', padding: 'var(--sp-3) var(--sp-4)', borderRadius: 'var(--r-l)', background: 'var(--surface-raised)', cursor: c.path ? 'pointer' : 'default', opacity: c.soon ? 0.5 : 1 }}>
+              <c.Icon size={18} style={{ color: 'var(--black)', flexShrink: 0 }} />
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, color: 'var(--text-1)' }}>{c.label}</div>
-                <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 2 }}>{c.description}</div>
+                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--black)' }}>{c.label}</div>
+                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>{c.description}</div>
               </div>
               {c.count !== null && c.count !== undefined ? (
-                <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-full)', background: 'var(--red-soft)', color: 'var(--red)', flexShrink: 0 }}>{c.count} new</span>
+                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-full)', background: 'var(--red-soft)', color: 'var(--red)', flexShrink: 0 }}>{c.count} new</span>
               ) : c.soon ? (
-                <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--text-2)', flexShrink: 0 }}>Soon</span>
+                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--black)', flexShrink: 0 }}>Soon</span>
               ) : null}
-              {c.path && <CaretRight size={14} style={{ color: 'var(--text-2)', flexShrink: 0 }} />}
+              {c.path && <CaretRight size={14} style={{ color: 'var(--black)', flexShrink: 0 }} />}
             </div>
           ))}
         </div>
@@ -172,7 +172,7 @@ export default function Opportunities({ leads, loading }) {
                     <td><span className="cell-mono" style={{ color: 'var(--amber)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
                     <td><span className={`badge ${statusBadge(l.status)}`}>{l.status}</span></td>
                     <td><span className={`badge ${prioBadge(l.priority)}`}>{l.priority?.replace(/[🔴🟠🟡🟢]/, '').trim()}</span></td>
-                    <td><span style={{ fontSize: 'var(--fs-sm)' }}>{l.county}</span></td>
+                    <td><span style={{ fontSize: 'var(--text-sm)' }}>{l.county}</span></td>
                   </tr>
                 ))}
               </tbody>

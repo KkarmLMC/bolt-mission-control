@@ -53,9 +53,9 @@ export default function SalesOrders() {
 
       {/* Header */}
       <div style={{ marginBottom: 'var(--sp-4)' }}>
-        <div style={{ fontSize: 'var(--fs-2xs)', fontWeight: 700, color: 'var(--text-3)', marginBottom: 4 }}>MISSION CONTROL</div>
-        <div style={{ fontSize: 'var(--fs-xl)', fontWeight: 800 }}>Sales Orders</div>
-        <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', marginTop: 2 }}>All orders across Bolt LP and Lightning Master</div>
+        <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: 'var(--text-3)', marginBottom: 4 }}>MISSION CONTROL</div>
+        <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Sales Orders</div>
+        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 2 }}>All orders across Bolt LP and Lightning Master</div>
       </div>
 
       {/* Stats row */}
@@ -72,7 +72,7 @@ export default function SalesOrders() {
         </div>
         <div className="stat-card">
           <div className="stat-card__label">Total Value</div>
-          <div className="stat-card__value" style={{ color: 'var(--navy)', fontSize: 'var(--fs-lg)' }}>{fmt(totalValue)}</div>
+          <div className="stat-card__value" style={{ color: 'var(--navy)', fontSize: 'var(--text-lg)' }}>{fmt(totalValue)}</div>
         </div>
       </div>
 
@@ -97,9 +97,9 @@ export default function SalesOrders() {
           return (
             <button key={s} onClick={() => setFilter(s)} style={{
               padding: '4px 12px', borderRadius: 'var(--r-full)', border: '1px solid var(--border)',
-              background: active ? (sc.bg || 'var(--navy)') : 'var(--surface)',
-              color: active ? (sc.color || '#fff') : 'var(--text-2)',
-              fontSize: 'var(--fs-xs)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap',
+              background: active ? (sc.bg || 'var(--navy)') : 'var(--white)',
+              color: active ? (sc.color || '#fff') : 'var(--black)',
+              fontSize: 'var(--text-xs)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap',
               transition: 'all var(--ease-fast)',
             }}>
               {s === 'All' ? 'All' : s.replace('_', ' ')} {count > 0 && `(${count})`}
@@ -125,23 +125,23 @@ export default function SalesOrders() {
               <div key={o.id}
                 onClick={() => navigate(`/sales-orders/${o.id}`)}
                 style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', padding: 'var(--sp-3) var(--sp-4)', borderBottom: idx < visible.length - 1 ? '1px solid var(--border-l)' : 'none', cursor: 'pointer' }}>
-                <div style={{ width: 36, height: 36, borderRadius: 'var(--r-lg)', background: 'var(--surface-raised)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div style={{ width: 36, height: 36, borderRadius: 'var(--r-l)', background: 'var(--surface-raised)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <Receipt size={16} style={{ color: 'var(--navy)' }} />
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
-                    <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: 'var(--navy)' }}>{o.so_number}</span>
-                    <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, padding: '1px 6px', borderRadius: 4, background: sc.bg, color: sc.color }}>{(o.status || '').replace('_', ' ')}</span>
+                    <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--navy)' }}>{o.so_number}</span>
+                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '1px 6px', borderRadius: 4, background: sc.bg, color: sc.color }}>{(o.status || '').replace('_', ' ')}</span>
                   </div>
-                  <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {o.customer_name}{o.project_name ? ` — ${o.project_name}` : ''}
                   </div>
-                  <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)', marginTop: 1 }}>{fmtDate(o.created_at)}</div>
+                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 1 }}>{fmtDate(o.created_at)}</div>
                 </div>
                 <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                  <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: 'var(--text-1)' }}>{fmt(o.grand_total)}</div>
+                  <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>{fmt(o.grand_total)}</div>
                 </div>
-                <CaretRight size={14} style={{ color: 'var(--text-2)', flexShrink: 0 }} />
+                <CaretRight size={14} style={{ color: 'var(--black)', flexShrink: 0 }} />
               </div>
             )
           })}

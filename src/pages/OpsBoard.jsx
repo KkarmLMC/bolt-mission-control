@@ -109,10 +109,10 @@ function JobPanel({ project, assignments, onClose, onSave }) {
             </button>
           </div>
         </div>
-        <div style={{ fontSize: 'var(--fs-md)', fontWeight: 800, color: '#fff', lineHeight: 1.3, marginBottom: 4 }}>
+        <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: '#fff', lineHeight: 1.3, marginBottom: 4 }}>
           {project.name}
         </div>
-        <div style={{ fontSize: 'var(--fs-xs)', color: 'rgba(255,255,255,0.6)' }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)' }}>
           {project.customer_account} · {project.city}{project.state ? `, ${project.state}` : ''}
         </div>
       </div>
@@ -123,28 +123,28 @@ function JobPanel({ project, assignments, onClose, onSave }) {
         {editing ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-3)' }}>
             <div>
-              <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>Stage</label>
+              <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>Stage</label>
               <select value={form.stage} onChange={e => setForm(f => ({ ...f, stage: e.target.value }))}>
                 {STAGES_LIST.map(s => <option key={s}>{s}</option>)}
               </select>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--sp-2)' }}>
               <div>
-                <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>Start Date</label>
+                <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>Start Date</label>
                 <input type="date" value={form.scheduled_date} onChange={e => setForm(f => ({ ...f, scheduled_date: e.target.value }))} />
               </div>
               <div>
-                <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>End Date</label>
+                <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>End Date</label>
                 <input type="date" value={form.target_completion} onChange={e => setForm(f => ({ ...f, target_completion: e.target.value }))} />
               </div>
             </div>
             <div>
-              <label style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', display: 'block', marginBottom: 6 }}>Notes</label>
+              <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>Notes</label>
               <textarea value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} rows={3} />
             </div>
             <div style={{ display: 'flex', gap: 'var(--sp-2)' }}>
-              <button onClick={() => setEditing(false)} style={{ flex: 1, padding: 'var(--sp-2)', borderRadius: 'var(--r-lg)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', fontSize: 'var(--fs-sm)', fontWeight: 600 }}>Cancel</button>
-              <button onClick={handleSave} disabled={saving} style={{ flex: 2, padding: 'var(--sp-2)', borderRadius: 'var(--r-lg)', border: 'none', background: 'var(--navy)', color: '#fff', cursor: 'pointer', fontSize: 'var(--fs-sm)', fontWeight: 700 }}>
+              <button onClick={() => setEditing(false)} style={{ flex: 1, padding: 'var(--sp-2)', borderRadius: 'var(--r-l)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 600 }}>Cancel</button>
+              <button onClick={handleSave} disabled={saving} style={{ flex: 2, padding: 'var(--sp-2)', borderRadius: 'var(--r-l)', border: 'none', background: 'var(--navy)', color: '#fff', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 700 }}>
                 {saving ? 'Saving…' : 'Save Changes'}
               </button>
             </div>
@@ -159,28 +159,28 @@ function JobPanel({ project, assignments, onClose, onSave }) {
                 ['Start',       project.scheduled_date || '—'],
                 ['End',         project.target_completion || '—'],
               ].map(([lbl, val]) => (
-                <div key={lbl} style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 'var(--sp-3)' }}>
-                  <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 4 }}>{lbl}</div>
-                  <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: 'var(--text-1)', fontFamily: lbl === 'Contract' || lbl === 'SO Number' ? 'var(--mono)' : 'var(--font)' }}>{val}</div>
+                <div key={lbl} style={{ background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--sp-3)' }}>
+                  <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>{lbl}</div>
+                  <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)', fontFamily: lbl === 'Contract' || lbl === 'SO Number' ? 'var(--mono)' : 'var(--font)' }}>{val}</div>
                 </div>
               ))}
             </div>
 
             {/* Assigned crew */}
             <div style={{ marginBottom: 'var(--sp-4)' }}>
-              <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 'var(--sp-2)' }}>
+              <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--sp-2)' }}>
                 Assigned Crew
               </div>
               {crew.length === 0 ? (
-                <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)', fontStyle: 'italic' }}>No crew assigned yet</div>
+                <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', fontStyle: 'italic' }}>No crew assigned yet</div>
               ) : crew.map(a => (
                 <div key={a.id} style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-3)', padding: 'var(--sp-2) 0', borderBottom: '1px solid var(--border-l)' }}>
-                  <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 'var(--fs-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     {getInitials(a.crew_name)}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 600 }}>{a.crew_name}</div>
-                    <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-3)' }}>{a.role}</div>
+                    <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{a.crew_name}</div>
+                    <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{a.role}</div>
                   </div>
                 </div>
               ))}
@@ -189,8 +189,8 @@ function JobPanel({ project, assignments, onClose, onSave }) {
             {/* Notes */}
             {project.notes && (
               <div style={{ marginBottom: 'var(--sp-4)' }}>
-                <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', marginBottom: 'var(--sp-2)' }}>Notes</div>
-                <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-2)', lineHeight: 1.6, background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 'var(--sp-3)' }}>
+                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--sp-2)' }}>Notes</div>
+                <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6, background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 'var(--sp-3)' }}>
                   {project.notes}
                 </div>
               </div>
@@ -203,7 +203,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
       {!editing && (
         <div style={{ padding: 'var(--sp-4)', borderTop: '1px solid var(--border-l)' }}>
           <button onClick={() => navigate(`/installations/${project.id}`)}
-            style={{ width: '100%', padding: 'var(--sp-3)', borderRadius: 'var(--r-lg)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--fs-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)' }}>
+            style={{ width: '100%', padding: 'var(--sp-3)', borderRadius: 'var(--r-l)', border: 'none', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--sp-2)' }}>
             Open Job Page <ArrowSquareOut size={14} />
           </button>
         </div>
@@ -221,7 +221,7 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
       <div style={{ minWidth: 160 + days.length * 38 }}>
         {/* Header row */}
         <div style={{ display: 'flex', borderBottom: '2px solid var(--border-l)', position: 'sticky', top: 0, zIndex: 10, background: '#fff' }}>
-          <div style={{ width: 160, flexShrink: 0, padding: '8px 12px', fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', borderRight: '1px solid var(--border-l)' }}>
+          <div style={{ width: 160, flexShrink: 0, padding: '8px 12px', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', textTransform: 'uppercase', borderRight: '1px solid var(--border-l)' }}>
             JOB
           </div>
           {days.map(d => {
@@ -233,10 +233,10 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
                 background: isToday ? 'var(--navy)' : isSun ? 'var(--surface-raised)' : 'transparent',
                 borderRight: '1px solid var(--border-l)',
               }}>
-                <div style={{ fontSize: 'var(--fs-2xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--text-2)' }}>
+                <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--black)' }}>
                   {DAY_NAMES[d.getDay()]}
                 </div>
-                <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: isToday ? '#fff' : isSun ? 'var(--text-3)' : 'var(--text-2)' }}>
+                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: isToday ? '#fff' : isSun ? 'var(--text-3)' : 'var(--black)' }}>
                   {d.getDate()}
                 </div>
               </div>
@@ -256,7 +256,7 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
               {/* Job name column */}
               <div style={{ width: 160, flexShrink: 0, padding: '6px 12px', borderRight: '1px solid var(--border-l)', cursor: 'pointer' }}
                 onClick={() => onSelectProject(proj)}>
-                <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--text-1)' }}>
+                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--black)' }}>
                   {proj.name.split(' — ')[0]}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: 2 }}>
@@ -301,7 +301,7 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
                                 width: 16, height: 16, borderRadius: '50%',
                                 background: 'rgba(255,255,255,0.3)',
                                 border: '1px solid rgba(255,255,255,0.6)',
-                                fontSize: 'var(--fs-2xs)', fontWeight: 700, color: '#fff',
+                                fontSize: 'var(--text-2xs)', fontWeight: 700, color: '#fff',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                 flexShrink: 0,
                               }}>
@@ -355,7 +355,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
       <div style={{ minWidth: 140 + days.length * 80 }}>
         {/* Header */}
         <div style={{ display: 'flex', borderBottom: '2px solid var(--border-l)', position: 'sticky', top: 0, zIndex: 10, background: '#fff' }}>
-          <div style={{ width: 140, flexShrink: 0, padding: '8px 12px', fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase', borderRight: '1px solid var(--border-l)' }}>
+          <div style={{ width: 140, flexShrink: 0, padding: '8px 12px', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', textTransform: 'uppercase', borderRight: '1px solid var(--border-l)' }}>
             CREW
           </div>
           {days.map(d => {
@@ -367,10 +367,10 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
                 background: isToday ? 'var(--navy)' : isSun ? 'var(--surface-raised)' : 'transparent',
                 borderRight: '1px solid var(--border-l)',
               }}>
-                <div style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--text-2)' }}>
+                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--black)' }}>
                   {DAY_NAMES[d.getDay()]} {d.getDate()}
                 </div>
-                <div style={{ fontSize: 'var(--fs-2xs)', color: isToday ? 'rgba(255,255,255,0.5)' : 'var(--text-4)' }}>
+                <div style={{ fontSize: 'var(--text-2xs)', color: isToday ? 'rgba(255,255,255,0.5)' : 'var(--text-4)' }}>
                   {MON_NAMES[d.getMonth()]}
                 </div>
               </div>
@@ -383,10 +383,10 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
           <div key={c.name} style={{ display: 'flex', borderBottom: '1px solid var(--border-l)', minHeight: 52, alignItems: 'stretch', background: ci % 2 === 0 ? 'transparent' : 'var(--surface-raised)' }}>
             {/* Crew name */}
             <div style={{ width: 140, flexShrink: 0, padding: '8px 12px', borderRight: '1px solid var(--border-l)', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 'var(--fs-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 {getInitials(c.name)}
               </div>
-              <div style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {c.name.split(' ')[0]}
               </div>
             </div>
@@ -416,7 +416,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
                         style={{
                           padding: '2px 5px', borderRadius: 4, cursor: 'pointer',
                           background: stage.color, color: '#fff',
-                          fontSize: 'var(--fs-xs)', fontWeight: 700,
+                          fontSize: 'var(--text-xs)', fontWeight: 700,
                           overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                           border: conflict ? '2px solid #DC2626' : 'none',
                         }}>
@@ -477,7 +477,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
       {/* Day headers */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', marginBottom: 1 }}>
         {DAY_NAMES.map(d => (
-          <div key={d} style={{ textAlign: 'center', padding: '6px 4px', fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-2)', textTransform: 'uppercase' }}>{d}</div>
+          <div key={d} style={{ textAlign: 'center', padding: '6px 4px', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', textTransform: 'uppercase' }}>{d}</div>
         ))}
       </div>
 
@@ -498,7 +498,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
                 background: isToday ? 'var(--navy)' : 'transparent',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
-                <span style={{ fontSize: 'var(--fs-xs)', fontWeight: isToday ? 700 : 400, color: isToday ? '#fff' : inMonth ? 'var(--text-2)' : 'var(--text-4)' }}>
+                <span style={{ fontSize: 'var(--text-xs)', fontWeight: isToday ? 700 : 400, color: isToday ? '#fff' : inMonth ? 'var(--black)' : 'var(--text-4)' }}>
                   {d.getDate()}
                 </span>
               </div>
@@ -511,7 +511,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
                     style={{
                       padding: '2px 5px', borderRadius: 3, marginBottom: 2,
                       background: stage.color, color: '#fff',
-                      fontSize: 'var(--fs-2xs)', fontWeight: 700, cursor: 'pointer',
+                      fontSize: 'var(--text-2xs)', fontWeight: 700, cursor: 'pointer',
                       overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                     }}>
                     {proj.customer_account?.split(' ')[0] || proj.name.split(' ')[0]}
@@ -519,7 +519,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
                 )
               })}
               {jobs.length > 3 && (
-                <div style={{ fontSize: 'var(--fs-2xs)', color: 'var(--text-3)', fontWeight: 600 }}>+{jobs.length - 3} more</div>
+                <div style={{ fontSize: 'var(--text-2xs)', color: 'var(--text-3)', fontWeight: 600 }}>+{jobs.length - 3} more</div>
               )}
             </div>
           )
@@ -613,14 +613,14 @@ export default function OpsBoard() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', marginBottom: 'var(--sp-2)', flexWrap: 'wrap' }}>
 
           {/* View toggles */}
-          <div style={{ display: 'flex', background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 2, gap: 1, flexShrink: 0 }}>
+          <div style={{ display: 'flex', background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 2, gap: 1, flexShrink: 0 }}>
             {[
               { key: 'gantt', Icon: Rows, label: 'Gantt' },
               { key: 'crew',  Icon: Users, label: 'Crew'  },
               { key: 'month', Icon: CalendarBlank, label: 'Month' },
             ].map(({ key, Icon, label }) => (
               <button key={key} onClick={() => setView(key)}
-                style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 'var(--r-md)', border: 'none', background: view === key ? 'var(--navy)' : 'transparent', color: view === key ? '#fff' : 'var(--text-2)', fontWeight: 700, fontSize: 'var(--fs-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 'var(--r-m)', border: 'none', background: view === key ? 'var(--navy)' : 'transparent', color: view === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
                 <Icon size={12} weight={view === key ? 'fill' : 'regular'} />
                 {label}
               </button>
@@ -629,10 +629,10 @@ export default function OpsBoard() {
 
           {/* Span toggles — hidden on month view */}
           {view !== 'month' && (
-            <div style={{ display: 'flex', background: 'var(--surface-raised)', borderRadius: 'var(--r-lg)', padding: 2, gap: 1, flexShrink: 0 }}>
+            <div style={{ display: 'flex', background: 'var(--surface-raised)', borderRadius: 'var(--r-l)', padding: 2, gap: 1, flexShrink: 0 }}>
               {[['week','1W'],['2week','2W'],['month','4W']].map(([key, lbl]) => (
                 <button key={key} onClick={() => setSpan(key)}
-                  style={{ padding: '4px 8px', borderRadius: 'var(--r-md)', border: 'none', background: span === key ? 'var(--navy)' : 'transparent', color: span === key ? '#fff' : 'var(--text-2)', fontWeight: 700, fontSize: 'var(--fs-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
+                  style={{ padding: '4px 8px', borderRadius: 'var(--r-m)', border: 'none', background: span === key ? 'var(--navy)' : 'transparent', color: span === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
                   {lbl}
                 </button>
               ))}
@@ -641,19 +641,19 @@ export default function OpsBoard() {
 
           {/* Date navigation */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-1)', flexShrink: 0 }}>
-            <button onClick={() => go(-1)} style={{ width: 26, height: 26, borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <button onClick={() => go(-1)} style={{ width: 26, height: 26, borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <CaretLeft size={12} />
             </button>
-            <button onClick={() => setCurrentDate(today())} style={{ padding: '3px 8px', borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'transparent', fontSize: 'var(--fs-xs)', fontWeight: 600, cursor: 'pointer', color: 'var(--navy)' }}>
+            <button onClick={() => setCurrentDate(today())} style={{ padding: '3px 8px', borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'transparent', fontSize: 'var(--text-xs)', fontWeight: 600, cursor: 'pointer', color: 'var(--navy)' }}>
               Today
             </button>
-            <span style={{ fontSize: 'var(--fs-xs)', fontWeight: 700, color: 'var(--text-1)', whiteSpace: 'nowrap' }}>
+            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', whiteSpace: 'nowrap' }}>
 
               {view === 'month'
                 ? `${MON_NAMES[currentDate.getMonth()]} ${currentDate.getFullYear()}`
                 : `${startLabel} – ${endLabel}`}
             </span>
-            <button onClick={() => go(1)} style={{ width: 26, height: 26, borderRadius: 'var(--r-md)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <button onClick={() => go(1)} style={{ width: 26, height: 26, borderRadius: 'var(--r-m)', border: '1px solid var(--border-l)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <CaretRight size={12} />
             </button>
           </div>
@@ -666,19 +666,19 @@ export default function OpsBoard() {
           <div style={{ position: 'relative', flex: 1 }}>
             <MagnifyingGlass size={12} style={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search jobs…"
-              style={{ paddingLeft: 24, paddingRight: 8, width: '100%', height: 28, fontSize: 'var(--fs-xs)' }} />
+              style={{ paddingLeft: 24, paddingRight: 8, width: '100%', height: 28, fontSize: 'var(--text-xs)' }} />
           </div>
 
           {/* Stage filter */}
           <select value={stageFilter} onChange={e => setStageFilter(e.target.value)}
-            style={{ height: 28, fontSize: 'var(--fs-xs)', paddingLeft: 6, paddingRight: 6, width: 110, flexShrink: 0 }}>
+            style={{ height: 28, fontSize: 'var(--text-xs)', paddingLeft: 6, paddingRight: 6, width: 110, flexShrink: 0 }}>
             <option value="all">All Stages</option>
             {STAGES_LIST.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
 
           {/* Conflict badge */}
           {conflicts.length > 0 && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 'var(--r-lg)', background: '#FEF2F2', color: '#B91C1C', fontSize: 'var(--fs-xs)', fontWeight: 700, flexShrink: 0, whiteSpace: 'nowrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 'var(--r-l)', background: '#FEF2F2', color: '#B91C1C', fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, whiteSpace: 'nowrap' }}>
               <Warning size={12} weight="fill" />
               {conflicts.length}
             </div>
@@ -691,7 +691,7 @@ export default function OpsBoard() {
         {loading ? (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 'var(--sp-3)' }}>
             <div className="spinner" />
-            <span style={{ color: 'var(--text-3)', fontSize: 'var(--fs-sm)' }}>Loading operations board…</span>
+            <span style={{ color: 'var(--text-3)', fontSize: 'var(--text-sm)' }}>Loading operations board…</span>
           </div>
         ) : filteredProjects.length === 0 ? (
           <div className="empty">

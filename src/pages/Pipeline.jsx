@@ -61,7 +61,7 @@ export default function Pipeline({ leads, onEdit }) {
                   </div>
                   <div className="kanban-cards">
                     {cards.length === 0 ? (
-                      <div style={{ color: 'var(--text-4)', fontSize: 'var(--fs-xs)', textAlign: 'center', padding: '16px 8px' }}>Empty</div>
+                      <div style={{ color: 'var(--text-4)', fontSize: 'var(--text-xs)', textAlign: 'center', padding: '16px 8px' }}>Empty</div>
                     ) : cards.map(l => (
                       <div key={l.id} className={`k-card ${prioClass(l.priority)}`} onClick={() => onEdit(l)}>
                         <div className="k-title">{l.project_name}</div>
