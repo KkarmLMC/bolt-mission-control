@@ -11,16 +11,16 @@ import { logActivity } from '../lib/logActivity.js'
 // ─── QB column name aliases ────────────────────────────────────────────────────
 // QB Desktop exports column names inconsistently across versions — map them all
 const COL = {
-  invoiceNum:   ['Num', 'Invoice No', 'Invoice Number', 'Transaction No', 'DocNumber', 'Ref No'],
-  date:         ['Date', 'Invoice Date', 'TxnDate', 'Transaction Date'],
+  invoiceNum:   ['Num', 'Invoice No', 'Invoice Number', 'Transaction No', 'DocNumber', 'Ref No', 'SO No', 'Sales Order No'],
+  date:         ['Date', 'Invoice Date', 'TxnDate', 'Transaction Date', 'Order Date'],
   customer:     ['Name', 'Customer', 'Customer:Job', 'Customer Name', 'Bill To'],
-  dueDate:      ['Due Date', 'DueDate'],
-  amount:       ['Balance', 'Amount', 'Total', 'Grand Total', 'TotalAmt', 'Original Amount'],
+  dueDate:      ['Due Date', 'DueDate', 'Ship Date', 'Expected Date'],
+  amount:       ['Balance', 'Amount', 'Total', 'Grand Total', 'TotalAmt', 'Original Amount', 'Open Balance'],
   itemDesc:     ['Item', 'Description', 'Item Description', 'Product/Service', 'Service Description'],
   itemQty:      ['Qty', 'Quantity', 'Qty/hr Rate'],
   itemRate:     ['Sales Price', 'Rate', 'Unit Price', 'UnitPrice', 'Price Each'],
   itemAmount:   ['Amount', 'Item Amount', 'Line Amount', 'Ext. Price'],
-  jobName:      ['Memo', 'Job Name', 'Ship To', 'Project Name', 'Customer Memo', 'P.O. No.'],
+  jobName:      ['Memo', 'Job Name', 'Ship To', 'Project Name', 'Customer Memo', 'P.O. No.', 'P.O. #', 'PO Number'],
   address:      ['Bill To', 'Address', 'Billing Address'] }
 
 function findCol(headers, aliases) {
@@ -93,9 +93,10 @@ function groupByInvoice(rows, headers) {
 
     const invoiceNum = get(invoiceIdx)
     if (!invoiceNum) return // skip blank rows
-    // Skip non-Invoice rows (QB exports include subtotal/total rows)
-    const rowType = Object.values(row)[0] || ''
-    if (rowType && rowType !== 'Invoice') return
+    // Skip rows that aren't Invoices or Sales Orders (QB exports include subtotal/total rows)
+    const rowType = (Object.values(row)[0] || '').trim()
+    const VALID_TYPES = ['Invoice', 'Sales Order', 'SalesOrder']
+    if (rowType && !VALID_TYPES.includes(rowType)) return
 
     // QB Desktop uses "Customer:Job" notation — split it
     const rawName = get(custIdx)
@@ -214,7 +215,7 @@ export default function QBImport() {
       if (!headers.length) { setError('Could not parse CSV. Make sure it is a valid QuickBooks export.'); return }
       const fmt = detectFormat(headers)
       const invoices = groupByInvoice(rows, headers)
-      if (!invoices.length) { setError('No invoices found in this file. Make sure you exported an Invoice or Transaction report.'); return }
+      if (!invoices.length) { setError('No records found. Make sure you exported an Invoice, Sales Order, or Transaction report from QuickBooks.'); return }
       setFormat(fmt)
       setParsed(invoices)
       setSelected(new Set(invoices.map(i => i.invoiceNum)))
@@ -329,7 +330,7 @@ export default function QBImport() {
         <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>QUICKBOOKS</div>
         <div style={{ fontSize: 'var(--text-base)', fontWeight: 800 }}>Import Sales Orders</div>
         <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 4 }}>
-          Import invoices exported from QuickBooks Desktop as CSV
+          Import invoices or sales orders exported from QuickBooks Desktop as CSV
         </div>
       </div>
 
@@ -338,11 +339,11 @@ export default function QBImport() {
         <div className="card-header"><span className="card-title">How to export from QuickBooks Desktop</span></div>
         <div style={{ padding: 'var(--pad-l)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-m)' }}>
           {[
-            ['1', 'Open QuickBooks Desktop and go to Reports → Sales → Sales by Customer Detail'],
-            ['2', 'Set the date range to the period you want to import'],
-            ['3', 'Click "Excel" or "Export" at the top of the report'],
-            ['4', 'Choose "Create a comma-separated values (.csv) file"'],
-            ['5', 'Save the file and upload it below'],
+            ['1', 'Open QuickBooks Desktop and go to Reports → Sales'],
+            ['2', 'Choose either Open Sales Orders Detail or Sales by Customer Detail'],
+            ['3', 'Set the date range and click OK to run the report'],
+            ['4', 'Click "Excel" or "Export" at the top of the report'],
+            ['5', 'Choose "Create a comma-separated values (.csv) file" and upload below'],
           ].map(([n, text]) => (
             <div key={n} style={{ display: 'flex', gap: 'var(--gap-m)', alignItems: 'flex-start' }}>
               <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{n}</div>
@@ -350,7 +351,7 @@ export default function QBImport() {
             </div>
           ))}
           <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', marginTop: 'var(--mar-xs)' }}>
-            💡 Tip: The <strong>Invoice Detail</strong> report is best — it includes line items. The <strong>Transaction List</strong> report also works but won't import individual line items.
+            💡 Tip: Use <strong>Open Sales Orders Detail</strong> or <strong>Sales by Customer Detail</strong> for best results — both include line items. Summary reports work too but won't import individual line items.
           </div>
         </div>
       </div>
@@ -412,14 +413,14 @@ export default function QBImport() {
         <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>QUICKBOOKS IMPORT</div>
         <div style={{ fontSize: 'var(--text-base)', fontWeight: 800 }}>Review & Confirm</div>
         <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 4 }}>
-          {fileName} · {parsed.length} invoice{parsed.length !== 1 ? 's' : ''} found · {format === 'detail' ? 'Detail format (with line items)' : 'Summary format'}
+          {fileName} · {parsed.length} record{parsed.length !== 1 ? 's' : ''} found · {format === 'detail' ? 'Detail format (with line items)' : 'Summary format'}
         </div>
       </div>
 
       {/* Stats */}
       <div className="stat-grid" style={{ marginBottom: 'var(--mar-l)' }}>
         <div className="stat-card">
-          <div className="stat-label">Total Invoices</div>
+          <div className="stat-label">Total Records</div>
           <div className="stat-value">{parsed.length}</div>
         </div>
         <div className="stat-card">
@@ -441,7 +442,7 @@ export default function QBImport() {
       {/* Search */}
       <div style={{ position: 'relative', marginBottom: 'var(--mar-m)' }}>
         <MagnifyingGlass size={14} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
-        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by customer, invoice #, or job…"
+        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by customer, SO #, or job…"
           style={{ width: '100%', paddingLeft: 30 }} />
         {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)', display: 'flex' }}><X size={13} /></button>}
       </div>
@@ -456,7 +457,7 @@ export default function QBImport() {
                   checked={selected.size === filtered.length && filtered.length > 0}
                   onChange={toggleAll} />
               </th>
-              {['Invoice #', 'Customer / Job', 'Date', 'Amount', 'Lines', ''].map(h => (
+              {['SO / Inv #', 'Customer / Job', 'Date', 'Amount', 'Lines', ''].map(h => (
                 <th key={h} style={{ padding: '10px 12px', textAlign: 'left', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
               ))}
             </tr>
@@ -482,7 +483,7 @@ export default function QBImport() {
         }
       </button>
       <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--mar-s)' }}>
-        Each selected invoice will create a Sales Order and a linked Project in your system.
+        Each selected record will create a Sales Order and a linked Project in your system.
       </div>
     </div>
   )
