@@ -223,9 +223,7 @@ export default function ChangeOrders() {
         <div className="card-header">
           <span className="card-title">Change Orders</span>
           {pendingCount > 0 && (
-            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 10px', borderRadius: 'var(--r-m)', background: 'var(--orange-soft)', color: 'var(--orange-shade-20)' }}>
-              {pendingCount} need review
-            </span>
+            <span className="card-header__meta">{pendingCount} need review</span>
           )}
         </div>
 
