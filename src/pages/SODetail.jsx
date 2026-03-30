@@ -4,8 +4,9 @@ import {
   Receipt, Buildings, MapPin, Phone, Envelope,
   CalendarBlank, CheckCircle, PaperPlaneTilt,
   Clock, CaretDown, ArrowRight, Lightning, ClipboardText,
-  Truck, ArrowSquareOut, Warning, X, PencilSimple } from '@phosphor-icons/react'
+  Truck, ArrowSquareOut, Warning, X, PencilSimple, Prohibit, ArrowCounterClockwise } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import { useAuth } from '../lib/useAuth.jsx'
 import { soStatus } from '../lib/statusColors.js'
 
 // Local icon map — color/bg come from soStatus() in statusColors.js
@@ -23,23 +24,11 @@ const ACTIONS = {
         await db.from('sales_orders').update({ status: 'queued', queued_at: new Date().toISOString() }).eq('id', id)
         setPo(p => ({ ...p, status: 'queued', queued_at: new Date().toISOString() }))
       }},
-    secondary: { label: 'Cancel SO', icon: X, color: 'var(--error)',
-      action: async (id, navigate) => {
-        if (!window.confirm('Cancel this sales order?')) return
-        await db.from('sales_orders').update({ status: 'cancelled' }).eq('id', id)
-        navigate('/sales-orders')
-      }},
     hint: 'Submit to send this SO to the Warehouse IQ fulfillment queue.'
   },
   queued: {
     primary: { label: 'Start Sales Order', icon: ArrowSquareOut, color: 'var(--navy)',
       action: (id) => window.open(`${WIQ_URL}/warehouse-hq/queue/${id}`, '_blank') },
-    secondary: { label: 'Cancel SO', icon: X, color: 'var(--error)',
-      action: async (id, navigate) => {
-        if (!window.confirm('Cancel this sales order?')) return
-        await db.from('sales_orders').update({ status: 'cancelled' }).eq('id', id)
-        navigate('/sales-orders')
-      }},
     hint: 'Opens Warehouse IQ to run inventory allocation and push to fulfillment.'
   },
   running: {
@@ -76,6 +65,9 @@ const ACTIONS = {
     hint: 'Order in fulfillment.'
   },
 }
+
+// Statuses where cancellation is allowed (anything before the order leaves the building)
+const CANCELLABLE = ['draft', 'queued', 'running', 'submitted', 'fulfillment', 'published', 'shipment', 'back_ordered']
 
 function SectionGroup({ label, items }) {
   const [open, setOpen] = useState(true)
@@ -121,10 +113,41 @@ function SectionGroup({ label, items }) {
 export default function SODetail() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { profile } = useAuth()
   const [po, setPo] = useState(null)
   const [lines, setLines] = useState([])
   const [loading, setLoading] = useState(true)
   const [acting, setActing] = useState(false)
+  const [cancelModal, setCancelModal] = useState(false)
+  const [cancelReason, setCancelReason] = useState('')
+  const [cancelling, setCancelling] = useState(false)
+  const [cancelResult, setCancelResult] = useState(null)
+
+  const canCancel = po && CANCELLABLE.includes(po.status) && ['admin', 'manager'].includes(profile?.role)
+
+  const handleCancel = async () => {
+    if (!cancelReason.trim()) return
+    setCancelling(true)
+    try {
+      const { data, error } = await db.rpc('cancel_sales_order', {
+        p_so_id: id,
+        p_cancelled_by: profile?.full_name || profile?.email || 'Unknown',
+        p_cancel_reason: cancelReason.trim(),
+      })
+      if (error) throw error
+      if (data?.success) {
+        setCancelResult(data)
+        // Update local state after a moment so user sees the result
+        setTimeout(() => { navigate('/sales-orders') }, 2500)
+      } else {
+        setCancelResult({ success: false, error: data?.error || 'Unknown error' })
+      }
+    } catch (err) {
+      setCancelResult({ success: false, error: err.message })
+    } finally {
+      setCancelling(false)
+    }
+  }
 
   const load = () => Promise.all([
     db.from('sales_orders').select('*').eq('id', id).single(),
@@ -239,8 +262,8 @@ export default function SODetail() {
               {actionCfg.hint}
             </div>
           )}
-          {(actionCfg.primary || actionCfg.secondary) && (
-            <div style={{ display: 'flex', gap: 'var(--gap-m)', flexWrap: 'wrap' }}>
+          {(actionCfg.primary || canCancel) && (
+            <div style={{ display: 'flex', gap: 'var(--gap-m)', flexWrap: 'wrap', alignItems: 'center' }}>
               {actionCfg.primary && (() => {
                 const { label, icon: Icon, color, action } = actionCfg.primary
                 return (
@@ -253,18 +276,14 @@ export default function SODetail() {
                   </button>
                 )
               })()}
-              {actionCfg.secondary && (() => {
-                const { label, icon: Icon, color, action } = actionCfg.secondary
-                return (
-                  <button
-                    onClick={() => handleAction(action)}
-                    disabled={acting}
-                    style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'none', color, fontSize: 'var(--text-sm)', fontWeight: 600, cursor: acting ? 'not-allowed' : 'pointer', opacity: acting ? 0.7 : 1 }}>
-                    <Icon size={14} />
-                    {label}
-                  </button>
-                )
-              })()}
+              {canCancel && (
+                <button
+                  onClick={() => setCancelModal(true)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'none', color: 'var(--error)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer' }}>
+                  <Prohibit size={14} />
+                  Cancel Order
+                </button>
+              )}
             </div>
           )}
         </div>
@@ -352,6 +371,109 @@ export default function SODetail() {
         <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-s)' }}>Notes</div>
           <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6 }}>{po.notes}</div>
+        </div>
+      )}
+
+      {/* ── CANCELLED BANNER ──────────────────────────────────────────────── */}
+      {po.status === 'cancelled' && (po.cancelled_at || po.cancel_reason) && (
+        <div style={{ background: 'var(--error-soft)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)', border: '1px solid var(--error)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', marginBottom: 'var(--mar-s)' }}>
+            <Prohibit size={16} style={{ color: 'var(--error)' }} />
+            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--error-dark)' }}>Order Cancelled</span>
+          </div>
+          {po.cancel_reason && (
+            <div style={{ fontSize: 'var(--text-sm)', color: 'var(--error-dark)', marginBottom: 'var(--mar-xs)', lineHeight: 1.6 }}>
+              <strong>Reason:</strong> {po.cancel_reason}
+            </div>
+          )}
+          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>
+            {po.cancelled_by && <span>Cancelled by {po.cancelled_by}</span>}
+            {po.cancelled_at && <span> · {new Date(po.cancelled_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}</span>}
+          </div>
+        </div>
+      )}
+
+      {/* ── CANCEL MODAL ──────────────────────────────────────────────────── */}
+      {cancelModal && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.5)', padding: 'var(--pad-l)' }}
+          onClick={e => { if (e.target === e.currentTarget && !cancelling) setCancelModal(false) }}>
+          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', width: '100%', maxWidth: 480, overflow: 'hidden' }}>
+
+            {/* Modal header */}
+            <div style={{ background: 'var(--error)', padding: 'var(--pad-l) var(--pad-xl)', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
+              <Prohibit size={20} style={{ color: '#fff' }} />
+              <div>
+                <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: '#fff' }}>Cancel Sales Order</div>
+                <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.8)' }}>{po.so_number} · {po.customer_name}</div>
+              </div>
+            </div>
+
+            {/* Modal body */}
+            <div style={{ padding: 'var(--pad-xl)' }}>
+              {!cancelResult ? (
+                <>
+                  <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginBottom: 'var(--mar-m)', lineHeight: 1.6 }}>
+                    This will cancel the order and return all allocated inventory to stock. This action cannot be undone.
+                  </div>
+
+                  {/* What will happen summary */}
+                  <div style={{ background: 'var(--hover)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', marginBottom: 'var(--mar-l)', fontSize: 'var(--text-xs)', color: 'var(--black)', lineHeight: 1.8 }}>
+                    <div style={{ fontWeight: 700, marginBottom: 4 }}>This will:</div>
+                    <div><ArrowCounterClockwise size={12} style={{ marginRight: 4 }} /> Return all allocated inventory to stock</div>
+                    <div><X size={12} style={{ marginRight: 4 }} /> Remove fulfillment sheets and pending shipments</div>
+                    <div><Prohibit size={12} style={{ marginRight: 4 }} /> Mark this SO as cancelled (preserved for audit)</div>
+                  </div>
+
+                  <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>Reason for cancellation *</label>
+                  <textarea
+                    value={cancelReason}
+                    onChange={e => setCancelReason(e.target.value)}
+                    placeholder="e.g., Customer requested change — will re-create with updated quantities"
+                    rows={3}
+                    style={{ width: '100%', resize: 'vertical', fontSize: 'var(--text-sm)' }}
+                  />
+
+                  <div style={{ display: 'flex', gap: 'var(--gap-m)', justifyContent: 'flex-end', marginTop: 'var(--mar-l)' }}>
+                    <button
+                      onClick={() => { setCancelModal(false); setCancelReason(''); setCancelResult(null) }}
+                      disabled={cancelling}
+                      style={{ padding: 'var(--pad-s) var(--pad-xl)', borderRadius: 'var(--r-m)', background: 'none', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer' }}>
+                      Go Back
+                    </button>
+                    <button
+                      onClick={handleCancel}
+                      disabled={!cancelReason.trim() || cancelling}
+                      style={{ padding: 'var(--pad-s) var(--pad-xl)', borderRadius: 'var(--r-m)', background: !cancelReason.trim() ? 'var(--text-3)' : 'var(--error)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: !cancelReason.trim() ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
+                      {cancelling ? <><div className="spinner" style={{ width: 14, height: 14, borderWidth: 2, borderTopColor: '#fff' }} /> Cancelling…</> : <><Prohibit size={14} /> Cancel Order</>}
+                    </button>
+                  </div>
+                </>
+              ) : cancelResult.success ? (
+                <div style={{ textAlign: 'center', padding: 'var(--pad-l) 0' }}>
+                  <CheckCircle size={44} weight="fill" style={{ color: 'var(--success)', marginBottom: 'var(--mar-m)' }} />
+                  <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, marginBottom: 'var(--mar-s)' }}>Order Cancelled</div>
+                  <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', lineHeight: 1.6 }}>
+                    {cancelResult.inventory_reversed > 0 && <div>{cancelResult.inventory_reversed} inventory allocation(s) returned to stock</div>}
+                    {cancelResult.fulfillment_lines_deleted > 0 && <div>{cancelResult.fulfillment_lines_deleted} fulfillment line(s) removed</div>}
+                    {cancelResult.shipments_deleted > 0 && <div>{cancelResult.shipments_deleted} pending shipment(s) removed</div>}
+                    {cancelResult.inventory_reversed === 0 && cancelResult.fulfillment_lines_deleted === 0 && <div>No downstream data to reverse — order was cancelled cleanly.</div>}
+                  </div>
+                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 'var(--mar-m)' }}>Redirecting to Sales Orders…</div>
+                </div>
+              ) : (
+                <div style={{ textAlign: 'center', padding: 'var(--pad-l) 0' }}>
+                  <Warning size={44} weight="fill" style={{ color: 'var(--error)', marginBottom: 'var(--mar-m)' }} />
+                  <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--error-dark)', marginBottom: 'var(--mar-s)' }}>Cancel Failed</div>
+                  <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>{cancelResult.error}</div>
+                  <button
+                    onClick={() => setCancelResult(null)}
+                    style={{ marginTop: 'var(--mar-l)', padding: 'var(--pad-s) var(--pad-xl)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: 'pointer' }}>
+                    Try Again
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
 
