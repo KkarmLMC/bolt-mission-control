@@ -381,7 +381,17 @@ body {
    ============================================================ */
 .app { display: flex; height: 100%; overflow: hidden; }
 .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
-.page, .page-content { flex: 1; overflow-y: auto; padding: var(--content-pad) var(--content-pad) var(--pad-xxl); background: var(--bg); }
+.page, .page-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--content-pad) var(--content-pad) var(--pad-xxl);
+  background: var(--bg);
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 100%;
+}
 
 /* ============================================================
    SIDEBAR — matches Field Ops design system
@@ -736,7 +746,9 @@ textarea { resize: vertical; min-height: 70px; }
   .sidebar { display: none; }
   .app { flex-direction: column; }
   .main { width: 100%; height: 100%; overflow: hidden; display: flex; flex-direction: column; padding-bottom: 64px; }
-  .page, .page-content { padding: 12px 12px 80px; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .page, .page-content {
+    padding: var(--pad-l) var(--pad-m) calc(var(--bottom-nav-h) + env(safe-area-inset-bottom) + var(--pad-l));
+  }
   .header { padding: 0 16px; height: 56px; }
   .header-title { font-size: 15px; }
   .header-sub { display: none; }

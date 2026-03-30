@@ -21,7 +21,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
     uncontacted: leads.filter(l => l.status === 'NEW LEAD').length }
 
   return (
-    <div className="page fade-in">
+    <div className="page-content fade-in">
 
       {/* Flat stat cards — no icons */}
       <div className="stat-grid">

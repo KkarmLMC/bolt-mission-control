@@ -15,7 +15,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
   const score = r => [r.linkedin_done, r.meeting_done, r.preq_submitted, r.on_bid_list, r.spec_sent].filter(Boolean).length
 
   return (
-    <div className="page fade-in">
+    <div className="page-content fade-in">
 
       {/* Flat stat cards — no icons */}
       <div className="stat-grid">

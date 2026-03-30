@@ -16,7 +16,7 @@ export default function Pipeline({ leads, onEdit }) {
   const wonVal      = leads.filter(l => l.status === 'WON ✓').reduce((s, l) => s + (l.value_int || 0), 0)
 
   return (
-    <div className="page fade-in">
+    <div className="page-content fade-in">
       <div className="stat-grid">
         <div className="stat-card">
           <div className="stat-card-top"><span className="stat-label">Pipeline Value</span><div className="stat-icon amber">💰</div></div>

@@ -43,7 +43,7 @@ export default function Opportunities({ leads, loading }) {
   ]
 
   return (
-    <div className="page fade-in">
+    <div className="page-content fade-in">
 
       {/* Change Orders alert */}
       {pendingCOs.length > 0 && (

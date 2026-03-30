@@ -194,7 +194,7 @@ export default function ChangeOrders() {
   }
 
   return (
-    <div className="page fade-in">
+    <div className="page-content fade-in">
       {/* Flat stat cards */}
       <div className="stat-grid">
         <div className="stat-card">

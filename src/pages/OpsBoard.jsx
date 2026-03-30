@@ -586,7 +586,7 @@ export default function OpsBoard() {
   const endLabel   = `${MON_NAMES[days[days.length-1].getMonth()]} ${days[days.length-1].getDate()}, ${days[days.length-1].getFullYear()}`
 
   return (
-    <div className="page fade-in" style={{ padding: 0, display: 'flex', flexDirection: 'column', minHeight: 0, flex: 1 }}>
+    <div className="page-content fade-in" style={{ padding: 0, display: 'flex', flexDirection: 'column', minHeight: 0, flex: 1 }}>
 
       {/* Header bar */}
       <div style={{ padding: 'var(--pad-s) var(--pad-m)', background: '#fff', borderBottom: '1px solid var(--border-l)', flexShrink: 0 }}>

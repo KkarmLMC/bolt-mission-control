@@ -23,7 +23,7 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
   const dueToday = tasks.filter(t => !t.done && t.due_date === t0).length
 
   return (
-    <div className="page fade-in">
+    <div className="page-content fade-in">
 
       {/* Flat stat cards — no icons */}
       <div className="stat-grid">

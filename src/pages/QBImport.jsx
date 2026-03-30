@@ -320,7 +320,7 @@ export default function QBImport() {
 
   // ── Upload screen ──
   if (step === 'upload') return (
-    <div className="page fade-in">
+    <div className="page-content fade-in">
       <div style={{ marginBottom: 'var(--mar-xl)' }}>
         <button onClick={() => navigate(-1)}
           style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
@@ -403,7 +403,7 @@ export default function QBImport() {
 
   // ── Preview screen ──
   if (step === 'preview') return (
-    <div className="page fade-in">
+    <div className="page-content fade-in">
       <div style={{ marginBottom: 'var(--mar-l)' }}>
         <button onClick={() => setStep('upload')}
           style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
@@ -493,7 +493,7 @@ export default function QBImport() {
     const skipped = results.filter(r => r.action === 'skipped').length
     const errors  = results.filter(r => r.action === 'error').length
     return (
-      <div className="page fade-in">
+      <div className="page-content fade-in">
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: 'var(--pad-xxl) 0', gap: 'var(--gap-l)' }}>
           <CheckCircle size={52} weight="fill" style={{ color: 'var(--success)' }} />
           <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Import Complete</div>
