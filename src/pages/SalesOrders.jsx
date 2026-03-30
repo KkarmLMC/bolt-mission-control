@@ -5,11 +5,11 @@ import { db } from '../lib/supabase.js'
 
 const STATUS_COLOR = {
   queued:       { bg: 'var(--purple-soft)', color: 'var(--purple-tint-20)' },
-  running:      { bg: 'var(--warning-soft)', color: 'var(--black)' },
-  fulfillment:  { bg: 'var(--blue-soft)', color: 'var(--black)' },
-  shipment:     { bg: 'var(--blue-tint-80)', color: 'var(--black)' },
-  back_ordered: { bg: 'var(--blue-tint-80)', color: 'var(--black)' },
-  complete:     { bg: 'var(--success-soft)', color: 'var(--black)' },
+  running:      { bg: 'var(--warning-soft)', color: 'var(--warning)' },
+  fulfillment:  { bg: 'var(--blue-soft)', color: 'var(--blue-shade-40)' },
+  shipment:     { bg: 'var(--blue-tint-80)', color: 'var(--blue-shade-20)' },
+  back_ordered: { bg: 'var(--blue-tint-80)', color: 'var(--blue-shade-20)' },
+  complete:     { bg: 'var(--success-soft)', color: 'var(--success-text)' },
   cancelled:    { bg: 'var(--grey-tint-80)', color: 'var(--grey-base)' } }
 
 const STATUS_LABELS = ['All', 'queued', 'running', 'fulfillment', 'shipment', 'back_ordered', 'complete', 'cancelled']

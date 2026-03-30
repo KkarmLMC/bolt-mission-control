@@ -7,9 +7,9 @@ import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
 
 const STATUS = {
-  pending:  { label: 'Pending Review', bg: 'var(--orange-soft)', color: 'var(--black)' },
-  approved: { label: 'Approved',       bg: 'var(--success-soft)', color: 'var(--black)' },
-  rejected: { label: 'Rejected',       bg: 'var(--error-soft)', color: 'var(--black)' } }
+  pending:  { label: 'Pending Review', bg: 'var(--orange-soft)', color: 'var(--orange-shade-20)' },
+  approved: { label: 'Approved',       bg: 'var(--success-soft)', color: 'var(--success-text)' },
+  rejected: { label: 'Rejected',       bg: 'var(--error-soft)', color: 'var(--error-dark)' } }
 
 function StatusBadge({ status }) {
   const s = STATUS[status] || STATUS.pending
@@ -139,11 +139,11 @@ function COModal({ co, onClose, onAction }) {
                 style={{ width: '100%', padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', fontSize: 'var(--text-sm)', fontFamily: 'var(--font)', resize: 'vertical' }} />
             </div>
 
-            {error && <div style={{ padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--bg)', color: 'var(--black)', fontSize: 'var(--text-xs)', marginBottom: 'var(--mar-m)' }}>{error}</div>}
+            {error && <div style={{ padding: 'var(--pad-s) var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-xs)', marginBottom: 'var(--mar-m)' }}>{error}</div>}
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)' }}>
               <button onClick={() => handleAction('rejected')} disabled={saving}
-                style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--error)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                 <XCircle size={16} /> Reject
               </button>
               <button onClick={() => handleAction('approved')} disabled={saving}
@@ -223,7 +223,7 @@ export default function ChangeOrders() {
         <div className="card-header">
           <span className="card-title">Change Orders</span>
           {pendingCount > 0 && (
-            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 10px', borderRadius: 20, background: 'var(--bg)', color: 'var(--black)' }}>
+            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 10px', borderRadius: 20, background: 'var(--orange-soft)', color: 'var(--orange-shade-20)' }}>
               {pendingCount} need review
             </span>
           )}

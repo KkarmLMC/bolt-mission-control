@@ -196,8 +196,8 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
             )}
             {overdueTasks > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 6, marginBottom: 4, background: 'rgba(245,158,11,0.15)' }}>
-                <Warning size={13} weight="fill" style={{ color: 'var(--black)', flexShrink: 0 }} />
-                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--black)' }}>
+                <Warning size={13} weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
+                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--warning)' }}>
                   {overdueTasks} overdue task{overdueTasks > 1 ? 's' : ''}
                 </span>
               </div>

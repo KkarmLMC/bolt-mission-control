@@ -11,11 +11,11 @@ import { db } from '../lib/supabase.js'
 // ─── Stage config ──────────────────────────────────────────────────────────────
 const STAGES = {
   'Awarded':     { color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)', label: 'Awarded'     },
-  'Scheduled':   { color: 'var(--black)', bg: 'var(--blue-tint-80)', label: 'Scheduled'   },
-  'In Progress': { color: 'var(--black)', bg: 'var(--success-soft)', label: 'In Progress' },
-  'Inspection':  { color: 'var(--black)', bg: 'var(--warning-soft)', label: 'Inspection'  },
+  'Scheduled':   { color: 'var(--blue-shade-20)', bg: 'var(--blue-tint-80)', label: 'Scheduled'   },
+  'In Progress': { color: 'var(--success)', bg: 'var(--success-soft)', label: 'In Progress' },
+  'Inspection':  { color: 'var(--warning)', bg: 'var(--warning-soft)', label: 'Inspection'  },
   'Complete':    { color: 'var(--grey-base)', bg: 'var(--grey-tint-80)', label: 'Complete'    },
-  'On Hold':     { color: 'var(--black)', bg: 'var(--error-soft)', label: 'On Hold'     },
+  'On Hold':     { color: 'var(--error-alt)', bg: 'var(--error-soft)', label: 'On Hold'     },
   'Cancelled':   { color: 'var(--grey-tint-20)', bg: 'var(--white)', label: 'Cancelled'   } }
 
 const STAGES_LIST = ['Awarded','Scheduled','In Progress','Inspection','Complete','On Hold']
@@ -660,7 +660,7 @@ export default function OpsBoard() {
 
           {/* Conflict badge */}
           {conflicts.length > 0 && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 'var(--r-l)', background: 'var(--bg)', color: 'var(--black)', fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, whiteSpace: 'nowrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-dark)', fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, whiteSpace: 'nowrap' }}>
               <Warning size={12} weight="fill" />
               {conflicts.length}
             </div>

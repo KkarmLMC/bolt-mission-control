@@ -2,12 +2,12 @@ import { fmt$, prioClass } from '../lib/utils'
 
 const STAGES = [
   { key: 'NEW LEAD',       label: 'New Leads',    color: 'var(--red)'    },
-  { key: 'CONTACTED',      label: 'Contacted',    color: 'var(--black)'   },
-  { key: 'MEETING SET',    label: 'Meeting Set',  color: 'var(--black)'  },
-  { key: 'PROPOSAL SENT',  label: 'Proposal Out', color: 'var(--black)' },
-  { key: 'ON BID LIST',    label: 'On Bid List',  color: 'var(--black)'   },
-  { key: 'BID SUBMITTED',  label: 'Bid Submitted',color: 'var(--black)'       },
-  { key: 'WON ✓',          label: 'Won',          color: 'var(--black)'  },
+  { key: 'CONTACTED',      label: 'Contacted',    color: 'var(--blue)'   },
+  { key: 'MEETING SET',    label: 'Meeting Set',  color: 'var(--warning)'  },
+  { key: 'PROPOSAL SENT',  label: 'Proposal Out', color: 'var(--purple)' },
+  { key: 'ON BID LIST',    label: 'On Bid List',  color: 'var(--teal)'   },
+  { key: 'BID SUBMITTED',  label: 'Bid Submitted',color: 'var(--blue-shade-20)'       },
+  { key: 'WON ✓',          label: 'Won',          color: 'var(--success)'  },
   { key: 'LOST ✗',         label: 'Lost',         color: 'var(--text-3)' },
 ]
 

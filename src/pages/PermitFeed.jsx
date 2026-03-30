@@ -90,7 +90,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
                         <div className="cell-primary">{l.project_name}</div>
                         <div className="cell-sub">{l.address || l.permit_number || '—'}</div>
                       </td>
-                      <td><span className="cell-mono" style={{ color: 'var(--black)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
+                      <td><span className="cell-mono" style={{ color: 'var(--warning)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
                       <td><span className="badge" style={{ background: 'var(--white)', color: 'var(--black)' }}>{l.county}</span></td>
                       <td><span className={`badge ${statusBadge(l.status)}`}>{l.status}</span></td>
                       <td><span style={{ fontSize: 'var(--text-sm)' }}>{l.contractor || '—'}</span></td>
