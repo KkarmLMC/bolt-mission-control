@@ -53,7 +53,7 @@ export default function SalesOrders() {
 
       {/* Header */}
       <div style={{ marginBottom: 'var(--sp-4)' }}>
-        <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: 'var(--text-3)', marginBottom: 4 }}>MISSION CONTROL</div>
+        <div style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: 'var(--text-3)', marginBottom: 4 }}>MISSION CONTROL</div>
         <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Sales Orders</div>
         <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 2 }}>All orders across Bolt LP and Lightning Master</div>
       </div>

@@ -233,7 +233,7 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
                 background: isToday ? 'var(--navy)' : isSun ? 'var(--surface-raised)' : 'transparent',
                 borderRight: '1px solid var(--border-l)',
               }}>
-                <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--black)' }}>
+                <div style={{ fontSize: 'var(--blackxs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--black)' }}>
                   {DAY_NAMES[d.getDay()]}
                 </div>
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: isToday ? '#fff' : isSun ? 'var(--text-3)' : 'var(--black)' }}>
@@ -301,7 +301,7 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
                                 width: 16, height: 16, borderRadius: '50%',
                                 background: 'rgba(255,255,255,0.3)',
                                 border: '1px solid rgba(255,255,255,0.6)',
-                                fontSize: 'var(--text-2xs)', fontWeight: 700, color: '#fff',
+                                fontSize: 'var(--blackxs)', fontWeight: 700, color: '#fff',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                 flexShrink: 0,
                               }}>
@@ -370,7 +370,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--black)' }}>
                   {DAY_NAMES[d.getDay()]} {d.getDate()}
                 </div>
-                <div style={{ fontSize: 'var(--text-2xs)', color: isToday ? 'rgba(255,255,255,0.5)' : 'var(--text-4)' }}>
+                <div style={{ fontSize: 'var(--blackxs)', color: isToday ? 'rgba(255,255,255,0.5)' : 'var(--text-4)' }}>
                   {MON_NAMES[d.getMonth()]}
                 </div>
               </div>
@@ -511,7 +511,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
                     style={{
                       padding: '2px 5px', borderRadius: 3, marginBottom: 2,
                       background: stage.color, color: '#fff',
-                      fontSize: 'var(--text-2xs)', fontWeight: 700, cursor: 'pointer',
+                      fontSize: 'var(--blackxs)', fontWeight: 700, cursor: 'pointer',
                       overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                     }}>
                     {proj.customer_account?.split(' ')[0] || proj.name.split(' ')[0]}
@@ -519,7 +519,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
                 )
               })}
               {jobs.length > 3 && (
-                <div style={{ fontSize: 'var(--text-2xs)', color: 'var(--text-3)', fontWeight: 600 }}>+{jobs.length - 3} more</div>
+                <div style={{ fontSize: 'var(--blackxs)', color: 'var(--text-3)', fontWeight: 600 }}>+{jobs.length - 3} more</div>
               )}
             </div>
           )

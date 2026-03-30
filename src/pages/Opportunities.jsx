@@ -24,11 +24,11 @@ export default function Opportunities({ leads, loading }) {
   const stages = [
     { key: 'NEW LEAD',      label: 'New',      color: 'var(--red)'    },
     { key: 'CONTACTED',     label: 'Contacted',color: 'var(--blue)'   },
-    { key: 'MEETING SET',   label: 'Meeting',  color: 'var(--amber)'  },
+    { key: 'MEETING SET',   label: 'Meeting',  color: 'var(--warning)'  },
     { key: 'PROPOSAL SENT', label: 'Proposal', color: 'var(--purple)' },
-    { key: 'ON BID LIST',   label: 'Bid List', color: 'var(--teal)'   },
+    { key: 'ON BID LIST',   label: 'Bid List', color: '#0d9488'   },
     { key: 'BID SUBMITTED', label: 'Bid Out',  color: '#0891B2'       },
-    { key: 'WON ✓',         label: 'Won',      color: 'var(--green)'  },
+    { key: 'WON ✓',         label: 'Won',      color: 'var(--success)'  },
     { key: 'LOST ✗',        label: 'Lost',     color: 'var(--text-4)' },
   ]
 
@@ -169,7 +169,7 @@ export default function Opportunities({ leads, loading }) {
                       <div className="cell-primary">{l.project_name}</div>
                       <div className="cell-sub">{l.contractor || '—'}</div>
                     </td>
-                    <td><span className="cell-mono" style={{ color: 'var(--amber)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
+                    <td><span className="cell-mono" style={{ color: 'var(--warning)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
                     <td><span className={`badge ${statusBadge(l.status)}`}>{l.status}</span></td>
                     <td><span className={`badge ${prioBadge(l.priority)}`}>{l.priority?.replace(/[🔴🟠🟡🟢]/, '').trim()}</span></td>
                     <td><span style={{ fontSize: 'var(--text-sm)' }}>{l.county}</span></td>

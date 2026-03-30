@@ -3,11 +3,11 @@ import { fmt$, prioClass } from '../lib/utils'
 const STAGES = [
   { key: 'NEW LEAD',       label: 'New Leads',    color: 'var(--red)'    },
   { key: 'CONTACTED',      label: 'Contacted',    color: 'var(--blue)'   },
-  { key: 'MEETING SET',    label: 'Meeting Set',  color: 'var(--amber)'  },
+  { key: 'MEETING SET',    label: 'Meeting Set',  color: 'var(--warning)'  },
   { key: 'PROPOSAL SENT',  label: 'Proposal Out', color: 'var(--purple)' },
-  { key: 'ON BID LIST',    label: 'On Bid List',  color: 'var(--teal)'   },
+  { key: 'ON BID LIST',    label: 'On Bid List',  color: '#0d9488'   },
   { key: 'BID SUBMITTED',  label: 'Bid Submitted',color: '#0891B2'       },
-  { key: 'WON ✓',          label: 'Won',          color: 'var(--green)'  },
+  { key: 'WON ✓',          label: 'Won',          color: 'var(--success)'  },
   { key: 'LOST ✗',         label: 'Lost',         color: 'var(--text-3)' },
 ]
 

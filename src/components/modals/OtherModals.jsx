@@ -118,7 +118,7 @@ export function RelModal({ rel, onClose, onSave }) {
                 ['spec_sent', 'Spec Sent'],
               ].map(([k, label]) => (
                 <label key={k} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, cursor: 'pointer', color: 'var(--black)', fontWeight: 500 }}>
-                  <input type="checkbox" checked={f[k] || false} onChange={() => t(k)} style={{ accentColor: 'var(--green)', width: 15, height: 15 }} />
+                  <input type="checkbox" checked={f[k] || false} onChange={() => t(k)} style={{ accentColor: 'var(--success)', width: 15, height: 15 }} />
                   {label}
                 </label>
               ))}

@@ -202,8 +202,8 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
             )}
             {overdueTasks > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 6, marginBottom: 4, background: 'rgba(245,158,11,0.15)' }}>
-                <Warning size={13} weight="fill" style={{ color: 'var(--amber)', flexShrink: 0 }} />
-                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--amber)' }}>
+                <Warning size={13} weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
+                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--warning)' }}>
                   {overdueTasks} overdue task{overdueTasks > 1 ? 's' : ''}
                 </span>
               </div>
@@ -217,7 +217,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--sp-2) 0.625rem var(--sp-1)' }}>
               <span className="sidebar-section-label" style={{ padding: 0 }}>ACCOUNT</span>
               <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--green)', animation: 'livepulse 2s infinite', flexShrink: 0 }} />
+                <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--success)', animation: 'livepulse 2s infinite', flexShrink: 0 }} />
                 <Clock />
               </div>
             </div>

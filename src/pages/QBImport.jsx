@@ -154,7 +154,7 @@ function InvoiceRow({ inv, selected, onToggle }) {
           {inv.jobName && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>{inv.jobName}</div>}
         </td>
         <td style={{ padding: '10px 12px', fontSize: 'var(--text-sm)' }}>{inv.date}</td>
-        <td style={{ padding: '10px 12px', fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--amber)', fontFamily: 'var(--mono)' }}>
+        <td style={{ padding: '10px 12px', fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--warning)', fontFamily: 'var(--mono)' }}>
           ${inv.total.toLocaleString('en-US', { minimumFractionDigits: 2 })}
         </td>
         <td style={{ padding: '10px 12px' }}>
@@ -511,7 +511,7 @@ export default function QBImport() {
               <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)' }}>Created</div>
             </div>
             {skipped > 0 && <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: 'var(--amber)' }}>{skipped}</div>
+              <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: 'var(--warning)' }}>{skipped}</div>
               <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)' }}>Skipped</div>
             </div>}
             {errors > 0 && <div style={{ textAlign: 'center' }}>
