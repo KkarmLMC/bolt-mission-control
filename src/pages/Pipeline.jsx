@@ -41,7 +41,6 @@ export default function Pipeline({ leads, onEdit }) {
       <div className="card">
         <div className="card-header">
           <span className="card-title">
-            <span className="card-title-dot" style={{ background: 'var(--blue)' }} />
             Pipeline Board
           </span>
         </div>

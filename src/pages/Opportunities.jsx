@@ -137,7 +137,7 @@ export default function Opportunities({ leads, loading }) {
               ) : c.soon ? (
                 <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--black)', flexShrink: 0 }}>Soon</span>
               ) : null}
-              {c.path && <CaretRight size={14} style={{ color: 'var(--black)', flexShrink: 0 }} />}
+              {c.path && <CaretRight size={16} style={{ color: 'var(--black)', flexShrink: 0 }} />}
             </div>
           ))}
         </div>
@@ -147,7 +147,7 @@ export default function Opportunities({ leads, loading }) {
       <div className="card">
         <div className="card-header">
           <span className="card-title">Top Active Leads</span>
-          <button className="btn btn-ghost btn-sm" onClick={() => navigate('/opportunities/permits')}>View all →</button>
+          <button className="card-header__action" onClick={() => navigate('/opportunities/permits')}>View all →</button>
         </div>
         {loading ? (
           <div className="loading"><div className="spinner" /></div>

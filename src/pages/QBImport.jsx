@@ -395,7 +395,7 @@ export default function QBImport() {
 
       {error && (
         <div style={{ marginTop: 'var(--mar-m)', padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', display: 'flex', gap: 'var(--gap-s)', alignItems: 'center' }}>
-          <Warning size={15} style={{ flexShrink: 0 }} /> {error}
+          <Warning size={16} style={{ flexShrink: 0 }} /> {error}
         </div>
       )}
     </div>

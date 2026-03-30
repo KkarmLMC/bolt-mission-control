@@ -353,8 +353,6 @@
   --tab-h:       4rem;
   --content-pad: var(--pad-xl);
 
-
-
 /* ═══════════════════════════════════════════════════════════════════════════
    GLOBAL STATUS / STAGE / ROLE COLOR TOKENS
    
@@ -438,8 +436,6 @@
 
 }
 
-
-
 /* ============================================================
    RESET
    ============================================================ */
@@ -487,7 +483,6 @@ body {
   min-height: 100%;
   padding-bottom: calc(var(--content-pad) + 4.5rem);
 }
-
 
 /* ============================================================
    SIDEBAR — matches Field Ops design system
@@ -679,9 +674,54 @@ body {
    CARDS
    ============================================================ */
 .card { background: var(--white);  border-radius: var(--r-m); overflow: hidden; margin-bottom: var(--mar-l); }
-.card-header { padding: var(--pad-m) var(--pad-l); background: var(--navy); border-bottom: none; display: flex; align-items: center; justify-content: space-between; gap: var(--gap-s); }
-.card-title { font-size: var(--text-base); font-weight: 700; color: #fff; display: flex; align-items: center; gap: var(--gap-s); }
-.card-title-dot { width: 8px; height: 8px; border-radius: 2px; }
+.card-header {
+  padding: var(--pad-m) var(--pad-l);
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-m);
+  flex-shrink: 0;
+}
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-s);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--white);
+  min-width: 0;
+}
+.card-title svg { color: var(--white); flex-shrink: 0; }
+.card-header__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: rgba(255,255,255,0.55);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.card-header__action {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--white);
+  flex-shrink: 0;
+  white-space: nowrap;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font);
+  opacity: 0.85;
+  transition: opacity var(--ease-fast);
+}
+.card-header__action:hover { opacity: 1; }
+
 .card-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
 
 /* ============================================================

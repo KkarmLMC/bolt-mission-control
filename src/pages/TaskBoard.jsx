@@ -48,7 +48,7 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
       <div className="card">
         <div className="card-header">
           <span className="card-title">Task Board</span>
-          <button className="btn btn-primary btn-sm" onClick={onAdd}>+ Add Task</button>
+          <button className="card-header__action" onClick={onAdd}>+ Add Task</button>
         </div>
 
         <div style={{ padding: 'var(--pad-s) var(--pad-l) 0' }}>

@@ -40,7 +40,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
       <div className="card">
         <div className="card-header">
           <span className="card-title">Companies & Relationships</span>
-          <button className="btn btn-primary btn-sm" onClick={onAdd}>+ Add Company</button>
+          <button className="card-header__action" onClick={onAdd}>+ Add Company</button>
         </div>
 
         <div style={{ padding: 'var(--pad-s) var(--pad-l) 0' }}>
@@ -50,7 +50,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
             ))}
           </div>
           <div className="search-box" style={{ marginBottom: 8 }}>
-            <MagnifyingGlass size={14} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+            <MagnifyingGlass size={16} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
             <input placeholder="Search companies..." value={search} onChange={e => setSearch(e.target.value)} />
             {search && <button onClick={() => setSearch('')} style={{ background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}><X size={13} /></button>}
           </div>

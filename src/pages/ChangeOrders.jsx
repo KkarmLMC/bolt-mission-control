@@ -270,7 +270,7 @@ export default function ChangeOrders() {
                     <td><span style={{ fontSize: 'var(--text-sm)' }}>{co.submitted_by}</span></td>
                     <td><span className="cell-mono" style={{ fontSize: 'var(--text-xs)' }}>{new Date(co.created_at).toLocaleDateString()}</span></td>
                     <td><StatusBadge status={co.status} /></td>
-                    <td><ArrowRight size={14} style={{ color: 'var(--black)' }} /></td>
+                    <td><ArrowRight size={16} style={{ color: 'var(--black)' }} /></td>
                   </tr>
                 ))}
               </tbody>
