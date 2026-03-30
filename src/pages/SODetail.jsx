@@ -3,22 +3,86 @@ import { useParams, useNavigate } from 'react-router-dom'
 import {
   Receipt, Buildings, MapPin, Phone, Envelope,
   CalendarBlank, CheckCircle, PaperPlaneTilt,
-  Clock, CaretDown, ArrowRight, Lightning, ClipboardText, Truck } from '@phosphor-icons/react'
+  Clock, CaretDown, ArrowRight, Lightning, ClipboardText,
+  Truck, ArrowSquareOut, Warning, X, PencilSimple } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 
-const STATUS_DISPLAY = {
-  draft:        { label: 'Draft',        icon: Clock,          color: 'var(--grey-base)', bg: 'var(--grey-tint-80)' },
-  queued:       { label: 'Queued',       icon: Clock,          color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)' },
-  running:      { label: 'Running',      icon: PaperPlaneTilt, color: 'var(--warning)', bg: 'var(--warning-soft)' },
-  submitted:    { label: 'Submitted',    icon: PaperPlaneTilt, color: 'var(--warning)', bg: 'var(--warning-soft)' },
-  fulfillment:  { label: 'Fulfillment',  icon: Receipt,        color: 'var(--blue-shade-40)', bg: 'var(--blue-soft)' },
-  published:    { label: 'Published',    icon: Receipt,        color: 'var(--blue-shade-40)', bg: 'var(--blue-soft)' },
-  shipment:     { label: 'Shipment',     icon: Receipt,        color: 'var(--blue-shade-20)', bg: 'var(--blue-tint-80)' },
-  back_ordered: { label: 'Back Order',   icon: Clock,          color: 'var(--blue-shade-20)', bg: 'var(--blue-tint-80)' },
-  complete:     { label: 'Complete',     icon: CheckCircle,    color: 'var(--success-text)', bg: 'var(--success-soft)' },
-  fulfilled:    { label: 'Complete',     icon: CheckCircle,    color: 'var(--success-text)', bg: 'var(--success-soft)' },
-  cancelled:    { label: 'Cancelled',    icon: Clock,          color: 'var(--grey-tint-20)', bg: 'var(--grey-tint-80)' } }
+const WIQ_URL = 'https://warehouse-iq.vercel.app'
 
+const STATUS_DISPLAY = {
+  draft:        { label: 'Draft',           icon: Clock,          color: 'var(--grey-base)',      bg: 'var(--grey-tint-80)' },
+  queued:       { label: 'Queued',          icon: Clock,          color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)' },
+  running:      { label: 'Running',         icon: PaperPlaneTilt, color: 'var(--warning)',         bg: 'var(--warning-soft)' },
+  submitted:    { label: 'Submitted',       icon: PaperPlaneTilt, color: 'var(--warning)',         bg: 'var(--warning-soft)' },
+  fulfillment:  { label: 'In Fulfillment',  icon: Receipt,        color: 'var(--blue-shade-40)',   bg: 'var(--blue-soft)' },
+  published:    { label: 'Published',       icon: Receipt,        color: 'var(--blue-shade-40)',   bg: 'var(--blue-soft)' },
+  shipment:     { label: 'Shipment',        icon: Truck,          color: 'var(--blue-shade-20)',   bg: 'var(--blue-tint-80)' },
+  back_ordered: { label: 'Awaiting Stock',  icon: Warning,        color: 'var(--warning-text)',    bg: 'var(--warning-soft)' },
+  complete:     { label: 'Complete',        icon: CheckCircle,    color: 'var(--success-text)',    bg: 'var(--success-soft)' },
+  fulfilled:    { label: 'Complete',        icon: CheckCircle,    color: 'var(--success-text)',    bg: 'var(--success-soft)' },
+  cancelled:    { label: 'Cancelled',       icon: X,              color: 'var(--grey-base)',       bg: 'var(--grey-tint-80)' } }
+
+// Contextual action config per status
+const ACTIONS = {
+  draft: {
+    primary: { label: 'Submit to Queue', icon: ArrowRight, color: 'var(--navy)',
+      action: async (id, navigate, setPo) => {
+        await db.from('sales_orders').update({ status: 'queued', queued_at: new Date().toISOString() }).eq('id', id)
+        setPo(p => ({ ...p, status: 'queued', queued_at: new Date().toISOString() }))
+      }},
+    secondary: { label: 'Cancel SO', icon: X, color: 'var(--error)',
+      action: async (id, navigate, setPo) => {
+        if (!window.confirm('Cancel this sales order?')) return
+        await db.from('sales_orders').update({ status: 'cancelled' }).eq('id', id)
+        navigate('/sales-orders')
+      }},
+    hint: 'Submit to send this SO to the Warehouse IQ fulfillment queue.'
+  },
+  queued: {
+    primary: { label: 'Start Sales Order', icon: ArrowSquareOut, color: 'var(--navy)',
+      action: (id) => window.open(`${WIQ_URL}/warehouse-hq/queue/${id}`, '_blank') },
+    secondary: { label: 'Cancel SO', icon: X, color: 'var(--error)',
+      action: async (id, navigate) => {
+        if (!window.confirm('Cancel this sales order?')) return
+        await db.from('sales_orders').update({ status: 'cancelled' }).eq('id', id)
+        navigate('/sales-orders')
+      }},
+    hint: 'Opens Warehouse IQ to run inventory allocation and push to fulfillment.'
+  },
+  running: {
+    primary: { label: 'View in Warehouse IQ', icon: ArrowSquareOut, color: 'var(--navy)',
+      action: (id) => window.open(`${WIQ_URL}/warehouse-hq/queue/${id}`, '_blank') },
+    hint: 'This order is currently being processed in Warehouse IQ.'
+  },
+  fulfillment: {
+    primary: { label: 'View Fulfillment', icon: ArrowSquareOut, color: 'var(--blue)',
+      action: (id) => window.open(`${WIQ_URL}/warehouse-hq/fulfillment/${id}`, '_blank') },
+    hint: 'Warehouse team is picking and packing this order.'
+  },
+  shipment: {
+    primary: { label: 'View Shipment', icon: ArrowSquareOut, color: 'var(--blue)',
+      action: (id) => window.open(`${WIQ_URL}/warehouse-hq/shipment/${id}`, '_blank') },
+    hint: 'Order is packed and ready to ship. Carrier and tracking will be set in Warehouse IQ.'
+  },
+  back_ordered: {
+    primary: { label: 'Re-run Back Order', icon: ArrowSquareOut, color: 'var(--warning-text)',
+      action: (id) => window.open(`${WIQ_URL}/warehouse-hq/queue/${id}`, '_blank') },
+    hint: 'First shipment sent. Remaining back-ordered items can be re-run in Warehouse IQ once stock arrives.'
+  },
+  complete:    { hint: 'This order has been fully shipped and completed.' },
+  fulfilled:   { hint: 'This order has been fully shipped and completed.' },
+  cancelled:   { hint: 'This order has been cancelled.' },
+  submitted:   {
+    primary: { label: 'Open in Warehouse IQ', icon: ArrowSquareOut, color: 'var(--navy)',
+      action: (id) => window.open(`${WIQ_URL}/warehouse-hq/queue/${id}`, '_blank') },
+    hint: 'Order submitted — open Warehouse IQ to process.'
+  },
+  published:   {
+    primary: { label: 'View Fulfillment', icon: ArrowSquareOut, color: 'var(--blue)',
+      action: (id) => window.open(`${WIQ_URL}/warehouse-hq/fulfillment/${id}`, '_blank') },
+    hint: 'Order in fulfillment.'
+  },
+}
 
 function SectionGroup({ label, items }) {
   const [open, setOpen] = useState(true)
@@ -57,7 +121,6 @@ function SectionGroup({ label, items }) {
           </div>
         </div>
       ))}
-
     </div>
   )
 }
@@ -68,6 +131,7 @@ export default function SODetail() {
   const [po, setPo] = useState(null)
   const [lines, setLines] = useState([])
   const [loading, setLoading] = useState(true)
+  const [acting, setActing] = useState(false)
 
   const load = () => Promise.all([
     db.from('sales_orders').select('*').eq('id', id).single(),
@@ -80,20 +144,17 @@ export default function SODetail() {
 
   useEffect(() => { load() }, [id])
 
-
-
   if (loading) return <div className="page-content fade-in" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
   if (!po) return <div className="page-content fade-in"><div className="empty"><div className="empty-title">Sales Order not found</div></div></div>
 
   const statusDisplay = STATUS_DISPLAY[po.status] || STATUS_DISPLAY.draft
+  const actionCfg = ACTIONS[po.status] || {}
   const materialLines = lines.filter(l => l.line_type === 'material')
   const laborLines = lines.filter(l => l.line_type === 'labor')
-
   const materialsTotal = materialLines.reduce((s, l) => s + (l.quantity * l.unit_cost), 0)
   const laborTotal = laborLines.reduce((s, l) => s + (l.quantity * l.unit_cost), 0)
   const grandTotal = materialsTotal + laborTotal
 
-  // Group material lines by section
   const sections = []
   const seen = new Set()
   for (const line of materialLines) {
@@ -101,7 +162,6 @@ export default function SODetail() {
     if (!seen.has(sec)) { seen.add(sec); sections.push(sec) }
   }
 
-  // Inventory impact summary
   const warehouseImpact = {}
   for (const line of materialLines.filter(l => l.warehouse_id)) {
     const wName = line.warehouses?.name || 'Unknown'
@@ -111,6 +171,13 @@ export default function SODetail() {
   }
 
   const StatusIcon = statusDisplay.icon || CheckCircle
+
+  const handleAction = async (actionFn) => {
+    if (!actionFn || acting) return
+    setActing(true)
+    try { await actionFn(id, navigate, setPo) }
+    finally { setActing(false) }
+  }
 
   return (
     <div className="page-content fade-in">
@@ -130,15 +197,14 @@ export default function SODetail() {
           <div style={{
             display: 'flex', alignItems: 'center', gap: 4,
             padding: '4px 12px', borderRadius: 'var(--r-xxl)',
-            background: statusDisplay.bg,
-            color: statusDisplay.color }}>
+            background: statusDisplay.bg, color: statusDisplay.color }}>
             <StatusIcon size={12} weight="fill" />
-            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, textTransform: 'capitalize' }}>{po.status}</span>
+            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700 }}>{statusDisplay.label}</span>
           </div>
         </div>
 
         {/* Customer details */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--gap-l)',  paddingTop: 'var(--pad-m)' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--gap-l)', paddingTop: 'var(--pad-m)' }}>
           {(po.customer_city || po.customer_state) && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)' }}>
               <MapPin size={12} />
@@ -169,7 +235,49 @@ export default function SODetail() {
         </div>
       </div>
 
-      {/* Inventory impact (when not yet published) */}
+      {/* ── CONTEXTUAL ACTION BAR ──────────────────────────────────────────── */}
+      {(actionCfg.primary || actionCfg.hint) && (
+        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: actionCfg.hint ? 'var(--mar-s)' : 0 }}>
+            Next Action
+          </div>
+          {actionCfg.hint && (
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginBottom: actionCfg.primary ? 'var(--mar-m)' : 0, lineHeight: 1.6 }}>
+              {actionCfg.hint}
+            </div>
+          )}
+          {(actionCfg.primary || actionCfg.secondary) && (
+            <div style={{ display: 'flex', gap: 'var(--gap-m)', flexWrap: 'wrap' }}>
+              {actionCfg.primary && (() => {
+                const { label, icon: Icon, color, action } = actionCfg.primary
+                return (
+                  <button
+                    onClick={() => handleAction(action)}
+                    disabled={acting}
+                    style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: color, color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: acting ? 'not-allowed' : 'pointer', opacity: acting ? 0.7 : 1 }}>
+                    {acting ? <div className="spinner" style={{ width: 14, height: 14, borderWidth: 2 }} /> : <Icon size={15} weight="bold" />}
+                    {label}
+                  </button>
+                )
+              })()}
+              {actionCfg.secondary && (() => {
+                const { label, icon: Icon, color, action } = actionCfg.secondary
+                return (
+                  <button
+                    onClick={() => handleAction(action)}
+                    disabled={acting}
+                    style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'none', color, fontSize: 'var(--text-sm)', fontWeight: 600, cursor: acting ? 'not-allowed' : 'pointer', opacity: acting ? 0.7 : 1 }}>
+                    <Icon size={14} />
+                    {label}
+                  </button>
+                )
+              })()}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Inventory impact */}
       {!['complete','fulfilled','cancelled'].includes(po.status) && Object.keys(warehouseImpact).length > 0 && (
         <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-m)' }}>
@@ -189,12 +297,9 @@ export default function SODetail() {
         </div>
       )}
 
-
-
       {/* Line items — materials by section */}
       {sections.length > 0 && (
         <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)', maxWidth: '100%' }}>
-          {/* Column headers */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 40px 56px 64px', gap: 6, padding: 'var(--pad-s) var(--pad-m)', background: 'var(--hover)', borderBottom: '1px solid var(--border-l)' }}>
             {['Item / Description', 'Qty', 'Unit', 'Amount'].map(h => (
               <div key={h} style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', textAlign: h !== 'Item / Description' ? 'right' : 'left', whiteSpace: 'nowrap', overflow: 'hidden' }}>{h}</div>
@@ -207,7 +312,6 @@ export default function SODetail() {
               items={materialLines.filter(l => (l.section_label || 'General') === sec)}
             />
           ))}
-          {/* Materials subtotal */}
           <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderTop: '2px solid var(--border-l)', background: 'var(--hover)' }}>
             <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>Materials Subtotal</span>
             <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>
