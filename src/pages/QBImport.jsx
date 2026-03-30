@@ -6,6 +6,7 @@ import {
   Table, X, FileXls } from '@phosphor-icons/react'
 import { read as xlsxRead, utils as xlsxUtils } from 'xlsx'
 import { db } from '../lib/supabase.js'
+import PageHeader from '../components/ui/PageHeader'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
 
@@ -410,17 +411,11 @@ export default function QBImport() {
   // ── Upload screen ──
   if (step === 'upload') return (
     <div className="page-content fade-in">
-      <div style={{ marginBottom: 'var(--mar-xl)' }}>
-        <button onClick={() => navigate(-1)}
-          style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
-          <ArrowLeft size={14} /> Back
-        </button>
-        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>QUICKBOOKS</div>
-        <div style={{ fontSize: 'var(--text-base)', fontWeight: 800 }}>Import Sales Orders</div>
-        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 4 }}>
-          Import invoices or sales orders exported from QuickBooks Desktop
-        </div>
-      </div>
+      <button onClick={() => navigate(-1)}
+        style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
+        <ArrowLeft size={14} /> Back
+      </button>
+      <PageHeader eyebrow="QUICKBOOKS" title="Import Sales Orders" subtitle="Import invoices or sales orders exported from QuickBooks Desktop" />
 
       {/* How to export instructions */}
       <div className="card" style={{ marginBottom: 'var(--mar-l)' }}>
@@ -493,17 +488,13 @@ export default function QBImport() {
   // ── Preview screen ──
   if (step === 'preview') return (
     <div className="page-content fade-in">
-      <div style={{ marginBottom: 'var(--mar-l)' }}>
-        <button onClick={() => setStep('upload')}
-          style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
-          <ArrowLeft size={14} /> Change file
-        </button>
-        <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 4 }}>QUICKBOOKS IMPORT</div>
-        <div style={{ fontSize: 'var(--text-base)', fontWeight: 800 }}>Review & Confirm</div>
-        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 4 }}>
-          {fileName} · {parsed.length} record{parsed.length !== 1 ? 's' : ''} found · {format === 'detail' ? 'Detail format (with line items)' : 'Summary format'}
-        </div>
-      </div>
+      <button onClick={() => setStep('upload')}
+        style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
+        <ArrowLeft size={14} /> Change file
+      </button>
+      <PageHeader eyebrow="QUICKBOOKS IMPORT" title="Review & Confirm"
+        subtitle={`${fileName} · ${parsed.length} record${parsed.length !== 1 ? 's' : ''} found · ${format === 'detail' ? 'Detail format (with line items)' : 'Summary format'}`}
+      />
 
       {/* Stats */}
       <div className="stat-grid" style={{ marginBottom: 'var(--mar-l)' }}>
