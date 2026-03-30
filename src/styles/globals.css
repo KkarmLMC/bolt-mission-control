@@ -650,7 +650,7 @@ textarea { resize: vertical; min-height: 70px; }
 .form-group { display: flex; flex-direction: column; gap: 5px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .form-label { font-size: var(--text-xs); font-weight: 600; color: var(--black); }
-.form-input, .form-select, .form-textarea { padding: 9px 12px; background: var(--bg); border: 1px solid var(--border-l); border-radius: var(--r-s); font-family: var(--font); font-size: var(--text-sm); color: var(--black); outline: none; width: 100%; transition: border-color var(--ease-base); }
+.form-input, .form-select, .form-textarea { padding: 9px 12px; background: var(--white); border: 1px solid var(--border-l); border-radius: var(--r-s); font-family: var(--font); font-size: var(--text-sm); color: var(--black); outline: none; width: 100%; transition: border-color var(--ease-base); }
 .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--navy); background: var(--white); }
 .form-textarea { resize: vertical; min-height: 70px; }
 
