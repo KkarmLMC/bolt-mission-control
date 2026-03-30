@@ -52,7 +52,7 @@ export default function Pipeline({ leads, onEdit }) {
               const val   = cards.reduce((s, l) => s + (l.value_int || 0), 0)
               return (
                 <div className="kanban-col" key={stage.key}>
-                  <div className="kanban-header" style={{ borderTop: `3px solid ${stage.color}` }}>
+                  <div className="kanban-header" style={{ border: '3px solid var(--border)' }}>
                     <div className="kanban-title" style={{ color: stage.color }}>
                       {stage.label}
                       <span className="kanban-count">{cards.length}</span>

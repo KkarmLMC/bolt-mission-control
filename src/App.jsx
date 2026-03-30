@@ -49,7 +49,7 @@ function Header() {
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         {meta.parent && (
           <button onClick={() => navigate(meta.parent)}
-            style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 6, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+            style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 'var(--r-s)', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
             <ArrowLeft size={18} color="#fff" />
           </button>
         )}
@@ -62,7 +62,7 @@ function Header() {
           <div className="dot-live" />LIVE
         </div>
         <button onClick={handleSignOut}
-          style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 6, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 'var(--r-s)', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
           <SignOut size={16} color="rgba(255,255,255,0.7)" />
         </button>
       </div>

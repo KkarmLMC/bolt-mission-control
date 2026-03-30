@@ -39,7 +39,7 @@ function SubNav({ children, collapsed, goTo, currentPath }) {
       <div style={{ position: 'relative', paddingLeft: 4 }}>
         <div style={{
           position: 'absolute', left: '1.375rem', top: 4, bottom: 4,
-          width: 1, background: 'var(--border-l)', borderRadius: 1 }} />
+          width: 1, background: 'var(--border-l)', borderRadius: 'var(--r-xs)' }} />
         {children.map(child => {
           const active = pathMatch(child.path, currentPath)
           return (
@@ -57,7 +57,7 @@ function SubNav({ children, collapsed, goTo, currentPath }) {
                   {child.count > 0 && (
                     <span style={{
                       marginLeft: 6, fontSize: 'var(--text-xs)', fontWeight: 700,
-                      padding: '1px 6px', borderRadius: 10,
+                      padding: '1px 6px', borderRadius: 'var(--r-m)',
                       background: active ? 'var(--red)' : 'rgba(255,255,255,0.15)',
                       color: active ? '#fff' : 'rgba(255,255,255,0.6)',
                       fontFamily: 'var(--mono)' }}>{child.count}</span>
@@ -91,7 +91,7 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
             {item.count > 0 && (
               <span style={{
                 marginLeft: 'auto', fontSize: 'var(--text-xs)', fontWeight: 700,
-                padding: '1px 6px', borderRadius: 10,
+                padding: '1px 6px', borderRadius: 'var(--r-m)',
                 background: active ? 'rgba(255,255,255,0.2)' : 'var(--hover)',
                 color: active ? 'var(--white)' : 'var(--black)',
                 fontFamily: 'var(--font)' }}>{item.count}</span>
@@ -187,7 +187,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
           <div style={{ padding: 'var(--pad-s)', borderTop: '1px solid var(--border)', flexShrink: 0 }}>
             <div className="sidebar-section-label">ALERTS</div>
             {criticalLeads > 0 && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 6, marginBottom: 4, background: 'rgba(245,51,63,0.15)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 'var(--r-s)', marginBottom: 4, background: 'rgba(245,51,63,0.15)' }}>
                 <Warning size={13} weight="fill" style={{ color: 'var(--red)', flexShrink: 0 }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--red)' }}>
                   {criticalLeads} critical lead{criticalLeads > 1 ? 's' : ''}
@@ -195,7 +195,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
               </div>
             )}
             {overdueTasks > 0 && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 6, marginBottom: 4, background: 'rgba(245,158,11,0.15)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 'var(--r-s)', marginBottom: 4, background: 'rgba(245,158,11,0.15)' }}>
                 <Warning size={13} weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--warning)' }}>
                   {overdueTasks} overdue task{overdueTasks > 1 ? 's' : ''}

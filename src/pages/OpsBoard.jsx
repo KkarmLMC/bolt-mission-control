@@ -80,7 +80,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
 
   return (
     <div style={{
-      position: 'fixed', top: 0, right: 0, bottom: 0,
+      position: 'fixed', top: 0, right: 0, bottom: 'env(safe-area-inset-bottom, 0px)',
       width: 360, background: '#fff',
       zIndex: 200, display: 'flex', flexDirection: 'column',
       animation: 'slideInRight 0.2s ease' }}>
@@ -89,10 +89,10 @@ function JobPanel({ project, assignments, onClose, onSave }) {
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--mar-m)' }}>
           <StageBadge stage={project.stage} />
           <div style={{ display: 'flex', gap: 8 }}>
-            <button onClick={() => setEditing(e => !e)} style={{ background: 'rgba(255,255,255,0.15)', borderRadius: 6, width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
+            <button onClick={() => setEditing(e => !e)} style={{ background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--r-s)', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
               <PencilSimple size={13} />
             </button>
-            <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.15)', borderRadius: 6, width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
+            <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--r-s)', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
               <X size={13} />
             </button>
           </div>
@@ -487,7 +487,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
                   <div key={proj.id}
                     onClick={() => onSelectProject(proj)}
                     style={{
-                      padding: '2px 5px', borderRadius: 3, marginBottom: 2,
+                      padding: '2px 5px', borderRadius: 'var(--r-xs)', marginBottom: 2,
                       background: stage.color, color: '#fff',
                       fontSize: 'var(--text-2xs)', fontWeight: 700, cursor: 'pointer',
                       overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
