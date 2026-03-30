@@ -7,33 +7,9 @@ import {
   CaretLeft, CaretRight, X, PencilSimple,
   Plus, ArrowSquareOut } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import { projectStage } from '../lib/statusColors.js'
 
 // ─── Stage config ──────────────────────────────────────────────────────────────
-const STAGES = {
-  'Awarded':     { color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)', label: 'Awarded'     },
-  'Scheduled':   { color: 'var(--blue-shade-20)', bg: 'var(--blue-tint-80)', label: 'Scheduled'   },
-  'In Progress': { color: 'var(--success)', bg: 'var(--success-soft)', label: 'In Progress' },
-  'Inspection':  { color: 'var(--warning)', bg: 'var(--warning-soft)', label: 'Inspection'  },
-  'Complete':    { color: 'var(--grey-base)', bg: 'var(--grey-tint-80)', label: 'Complete'    },
-  'On Hold':     { color: 'var(--error-alt)', bg: 'var(--error-soft)', label: 'On Hold'     },
-  'Cancelled':   { color: 'var(--grey-tint-20)', bg: 'var(--white)', label: 'Cancelled'   } }
-
-const STAGES_LIST = ['Awarded','Scheduled','In Progress','Inspection','Complete','On Hold']
-
-// ─── Date helpers ──────────────────────────────────────────────────────────────
-const addDays   = (d, n) => { const r = new Date(d); r.setDate(r.getDate() + n); return r }
-const fmtDate   = d => d.toISOString().split('T')[0]
-const parseDate = s => s ? new Date(s + 'T00:00:00') : null
-const today     = () => new Date(new Date().toDateString())
-const isSameDay = (a, b) => fmtDate(a) === fmtDate(b)
-const isWeekend = d => d.getDay() === 0 || d.getDay() === 6
-
-const DAY_NAMES = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
-const MON_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-
-function getDaysInRange(start, count) {
-  return Array.from({ length: count }, (_, i) => addDays(start, i))
-}
 
 function getInitials(name) {
   return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()

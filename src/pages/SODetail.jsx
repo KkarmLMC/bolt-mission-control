@@ -6,23 +6,16 @@ import {
   Clock, CaretDown, ArrowRight, Lightning, ClipboardText,
   Truck, ArrowSquareOut, Warning, X, PencilSimple } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
+import { soStatus } from '../lib/statusColors.js'
+
+// Local icon map — color/bg come from soStatus() in statusColors.js
+const SO_STATUS_ICON = {
+  draft: Clock, queued: Clock, running: PaperPlaneTilt, submitted: PaperPlaneTilt,
+  fulfillment: Receipt, published: Receipt, shipment: Truck,
+  back_ordered: Warning, complete: CheckCircle, fulfilled: CheckCircle, cancelled: X }
 
 const WIQ_URL = 'https://warehouse-iq.vercel.app'
 
-const STATUS_DISPLAY = {
-  draft:        { label: 'Draft',           icon: Clock,          color: 'var(--grey-base)',      bg: 'var(--grey-tint-80)' },
-  queued:       { label: 'Queued',          icon: Clock,          color: 'var(--purple-tint-20)', bg: 'var(--purple-soft)' },
-  running:      { label: 'Running',         icon: PaperPlaneTilt, color: 'var(--warning)',         bg: 'var(--warning-soft)' },
-  submitted:    { label: 'Submitted',       icon: PaperPlaneTilt, color: 'var(--warning)',         bg: 'var(--warning-soft)' },
-  fulfillment:  { label: 'In Fulfillment',  icon: Receipt,        color: 'var(--blue-shade-40)',   bg: 'var(--blue-soft)' },
-  published:    { label: 'Published',       icon: Receipt,        color: 'var(--blue-shade-40)',   bg: 'var(--blue-soft)' },
-  shipment:     { label: 'Shipment',        icon: Truck,          color: 'var(--blue-shade-20)',   bg: 'var(--blue-tint-80)' },
-  back_ordered: { label: 'Awaiting Stock',  icon: Warning,        color: 'var(--warning-text)',    bg: 'var(--warning-soft)' },
-  complete:     { label: 'Complete',        icon: CheckCircle,    color: 'var(--success-text)',    bg: 'var(--success-soft)' },
-  fulfilled:    { label: 'Complete',        icon: CheckCircle,    color: 'var(--success-text)',    bg: 'var(--success-soft)' },
-  cancelled:    { label: 'Cancelled',       icon: X,              color: 'var(--grey-base)',       bg: 'var(--grey-tint-80)' } }
-
-// Contextual action config per status
 const ACTIONS = {
   draft: {
     primary: { label: 'Submit to Queue', icon: ArrowRight, color: 'var(--navy)',
@@ -31,7 +24,7 @@ const ACTIONS = {
         setPo(p => ({ ...p, status: 'queued', queued_at: new Date().toISOString() }))
       }},
     secondary: { label: 'Cancel SO', icon: X, color: 'var(--error)',
-      action: async (id, navigate, setPo) => {
+      action: async (id, navigate) => {
         if (!window.confirm('Cancel this sales order?')) return
         await db.from('sales_orders').update({ status: 'cancelled' }).eq('id', id)
         navigate('/sales-orders')
@@ -147,7 +140,7 @@ export default function SODetail() {
   if (loading) return <div className="page-content fade-in" style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
   if (!po) return <div className="page-content fade-in"><div className="empty"><div className="empty-title">Sales Order not found</div></div></div>
 
-  const statusDisplay = STATUS_DISPLAY[po.status] || STATUS_DISPLAY.draft
+  const statusDisplay = soStatus(po.status)
   const actionCfg = ACTIONS[po.status] || {}
   const materialLines = lines.filter(l => l.line_type === 'material')
   const laborLines = lines.filter(l => l.line_type === 'labor')
@@ -170,7 +163,7 @@ export default function SODetail() {
     warehouseImpact[wName].qty += line.quantity
   }
 
-  const StatusIcon = statusDisplay.icon || CheckCircle
+  const StatusIcon = SO_STATUS_ICON[po.status] || SO_STATUS_ICON[order?.status] || CheckCircle
 
   const handleAction = async (actionFn) => {
     if (!actionFn || acting) return
