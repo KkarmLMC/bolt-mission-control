@@ -381,7 +381,7 @@ body {
    ============================================================ */
 .app { display: flex; height: 100%; overflow: hidden; }
 .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
-.page, .page-content {
+.page-content {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
@@ -746,7 +746,7 @@ textarea { resize: vertical; min-height: 70px; }
   .sidebar { display: none; }
   .app { flex-direction: column; }
   .main { width: 100%; height: 100%; overflow: hidden; display: flex; flex-direction: column; padding-bottom: 64px; }
-    .page, .page-content {
+    .page-content {
     padding: var(--pad-l) var(--pad-m) calc(var(--bottom-nav-h) + env(safe-area-inset-bottom) + var(--pad-l));
   }
   .header { padding: 0 16px; height: 56px; }
