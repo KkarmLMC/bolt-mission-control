@@ -4,7 +4,7 @@ import {
   UploadSimple, FileCsv, CheckCircle, Warning,
   ArrowLeft, MagnifyingGlass, Trash, ArrowRight,
   Table, X, FileXls } from '@phosphor-icons/react'
-import * as XLSX from 'xlsx'
+import { read as xlsxRead, utils as xlsxUtils } from 'xlsx'
 import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
@@ -63,38 +63,45 @@ function parseCSV(text) {
 }
 
 function parseXLSX(buffer) {
-  const wb = XLSX.read(buffer, { type: 'array', cellDates: true })
-  const ws = wb.Sheets[wb.SheetNames[0]]
-  const raw = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' })
-  if (!raw.length) return { headers: [], rows: [] }
+  try {
+    const wb = xlsxRead(buffer, { type: 'array', cellDates: true })
+    if (!wb.SheetNames.length) return { headers: [], rows: [], error: 'No sheets found in workbook' }
+    const ws = wb.Sheets[wb.SheetNames[0]]
+    const raw = xlsxUtils.sheet_to_json(ws, { header: 1, defval: '' })
+    if (!raw.length) return { headers: [], rows: [], error: 'Sheet is empty' }
 
-  // QB Desktop Excel exports have spacer columns (blanks between real columns).
-  // Find the row that contains real headers (Type, Num, Date, Name, etc.)
-  let headerRowIdx = 0
-  for (let i = 0; i < Math.min(raw.length, 5); i++) {
-    const rowStr = raw[i].map(c => String(c || '')).join(' ').toLowerCase()
-    if (rowStr.includes('type') || rowStr.includes('num') || rowStr.includes('name')) {
-      headerRowIdx = i; break
+    // QB Desktop Excel exports have spacer columns (blanks between real columns).
+    // Find the row that contains real headers (Type, Num, Date, Name, etc.)
+    let headerRowIdx = 0
+    for (let i = 0; i < Math.min(raw.length, 5); i++) {
+      const rowStr = raw[i].map(c => String(c || '')).join(' ').toLowerCase()
+      if (rowStr.includes('type') || rowStr.includes('num') || rowStr.includes('date')) {
+        headerRowIdx = i; break
+      }
     }
-  }
 
-  const rawHeaders = raw[headerRowIdx].map(c => String(c || '').trim())
-  // Filter out blank spacer columns — keep only columns that have a header
-  const realCols = rawHeaders.map((h, i) => ({ h, i })).filter(x => x.h.length > 0)
-  const headers = realCols.map(x => x.h)
+    const rawHeaders = raw[headerRowIdx].map(c => String(c || '').trim())
+    // Filter out blank spacer columns — keep only columns that have a header
+    const realCols = rawHeaders.map((h, i) => ({ h, i })).filter(x => x.h.length > 0)
+    if (!realCols.length) return { headers: [], rows: [], error: 'No column headers found in first 5 rows' }
+    const headers = realCols.map(x => x.h)
 
-  const rows = raw.slice(headerRowIdx + 1).map(rawRow => {
-    const row = {}
-    realCols.forEach(({ h, i }) => {
-      let val = rawRow[i] ?? ''
-      // Convert Date objects to string
-      if (val instanceof Date) val = val.toISOString().split('T')[0]
-      row[h] = String(val)
+    const rows = raw.slice(headerRowIdx + 1).map(rawRow => {
+      const row = {}
+      realCols.forEach(({ h, i }) => {
+        let val = (i < rawRow.length) ? rawRow[i] ?? '' : ''
+        // Convert Date objects to string
+        if (val instanceof Date) val = val.toISOString().split('T')[0]
+        row[h] = String(val)
+      })
+      return row
     })
-    return row
-  })
 
-  return { headers, rows }
+    return { headers, rows }
+  } catch (err) {
+    console.error('parseXLSX error:', err)
+    return { headers: [], rows: [], error: err.message }
+  }
 }
 
 function detectFormat(headers) {
@@ -247,22 +254,30 @@ export default function QBImport() {
     setFileName(file.name)
     const reader = new FileReader()
     reader.onload = e => {
-      let headers, rows
-      if (ext === 'csv') {
-        const text = e.target.result
-        ;({ headers, rows } = parseCSV(text))
-      } else {
-        const buffer = new Uint8Array(e.target.result)
-        ;({ headers, rows } = parseXLSX(buffer))
+      try {
+        let headers, rows, parseError
+        if (ext === 'csv') {
+          const text = e.target.result
+          ;({ headers, rows } = parseCSV(text))
+        } else {
+          const buffer = new Uint8Array(e.target.result)
+          ;({ headers, rows, error: parseError } = parseXLSX(buffer))
+        }
+        if (!headers || !headers.length) {
+          setError(parseError || 'Could not parse file. Make sure it is a valid QuickBooks export.')
+          return
+        }
+        const fmt = detectFormat(headers)
+        const invoices = groupByInvoice(rows, headers)
+        if (!invoices.length) { setError('No records found. Make sure you exported an Invoice, Sales Order, or Transaction report from QuickBooks.'); return }
+        setFormat(fmt)
+        setParsed(invoices)
+        setSelected(new Set(invoices.map(i => i.invoiceNum)))
+        setStep('preview')
+      } catch (err) {
+        console.error('QB Import parse error:', err)
+        setError(`Parse error: ${err.message}`)
       }
-      if (!headers.length) { setError('Could not parse file. Make sure it is a valid QuickBooks export.'); return }
-      const fmt = detectFormat(headers)
-      const invoices = groupByInvoice(rows, headers)
-      if (!invoices.length) { setError('No records found. Make sure you exported an Invoice, Sales Order, or Transaction report from QuickBooks.'); return }
-      setFormat(fmt)
-      setParsed(invoices)
-      setSelected(new Set(invoices.map(i => i.invoiceNum)))
-      setStep('preview')
     }
     if (ext === 'csv') reader.readAsText(file)
     else reader.readAsArrayBuffer(file)
