@@ -151,7 +151,7 @@ function InvoiceRow({ inv, selected, onToggle }) {
           {inv.jobName && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>{inv.jobName}</div>}
         </td>
         <td style={{ padding: '10px 12px', fontSize: 'var(--text-sm)' }}>{inv.date}</td>
-        <td style={{ padding: '10px 12px', fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--warning)', fontFamily: 'var(--mono)' }}>
+        <td style={{ padding: '10px 12px', fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)', fontFamily: 'var(--mono)' }}>
           ${inv.total.toLocaleString('en-US', { minimumFractionDigits: 2 })}
         </td>
         <td style={{ padding: '10px 12px' }}>
@@ -394,7 +394,7 @@ export default function QBImport() {
       </div>
 
       {error && (
-        <div style={{ marginTop: 'var(--mar-m)', padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', display: 'flex', gap: 'var(--gap-s)', alignItems: 'center' }}>
+        <div style={{ marginTop: 'var(--mar-m)', padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--bg)', color: 'var(--black)', fontSize: 'var(--text-sm)', display: 'flex', gap: 'var(--gap-s)', alignItems: 'center' }}>
           <Warning size={15} style={{ flexShrink: 0 }} /> {error}
         </div>
       )}
@@ -495,26 +495,26 @@ export default function QBImport() {
     return (
       <div className="page-content fade-in">
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: 'var(--pad-xxl) 0', gap: 'var(--gap-l)' }}>
-          <CheckCircle size={52} weight="fill" style={{ color: 'var(--success)' }} />
+          <CheckCircle size={52} weight="fill" style={{ color: 'var(--black)' }} />
           <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Import Complete</div>
           <div style={{ display: 'flex', gap: 'var(--gap-l)', flexWrap: 'wrap', justifyContent: 'center' }}>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: 'var(--success)' }}>{created}</div>
+              <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: 'var(--black)' }}>{created}</div>
               <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)' }}>Created</div>
             </div>
             {skipped > 0 && <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: 'var(--warning)' }}>{skipped}</div>
+              <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: 'var(--black)' }}>{skipped}</div>
               <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)' }}>Skipped</div>
             </div>}
             {errors > 0 && <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: 'var(--error)' }}>{errors}</div>
+              <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: 'var(--black)' }}>{errors}</div>
               <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)' }}>Errors</div>
             </div>}
           </div>
           {errors > 0 && (
-            <div style={{ width: '100%', maxWidth: 480, background: 'var(--error-soft)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', textAlign: 'left' }}>
+            <div style={{ width: '100%', maxWidth: 480, background: 'var(--bg)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', textAlign: 'left' }}>
               {results.filter(r => r.action === 'error').map(r => (
-                <div key={r.invoiceNum} style={{ fontSize: 'var(--text-xs)', color: 'var(--error-alt)', marginBottom: 4 }}>
+                <div key={r.invoiceNum} style={{ fontSize: 'var(--text-xs)', color: 'var(--black)', marginBottom: 4 }}>
                   {r.invoiceNum}: {r.reason}
                 </div>
               ))}

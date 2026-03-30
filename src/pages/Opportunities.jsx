@@ -23,12 +23,12 @@ export default function Opportunities({ leads, loading }) {
 
   const stages = [
     { key: 'NEW LEAD',      label: 'New',      color: 'var(--red)'    },
-    { key: 'CONTACTED',     label: 'Contacted',color: 'var(--blue)'   },
-    { key: 'MEETING SET',   label: 'Meeting',  color: 'var(--warning)'  },
-    { key: 'PROPOSAL SENT', label: 'Proposal', color: 'var(--purple)' },
-    { key: 'ON BID LIST',   label: 'Bid List', color: 'var(--teal)'   },
-    { key: 'BID SUBMITTED', label: 'Bid Out',  color: 'var(--blue-shade-20)'       },
-    { key: 'WON ✓',         label: 'Won',      color: 'var(--success)'  },
+    { key: 'CONTACTED',     label: 'Contacted',color: 'var(--black)'   },
+    { key: 'MEETING SET',   label: 'Meeting',  color: 'var(--black)'  },
+    { key: 'PROPOSAL SENT', label: 'Proposal', color: 'var(--black)' },
+    { key: 'ON BID LIST',   label: 'Bid List', color: 'var(--black)'   },
+    { key: 'BID SUBMITTED', label: 'Bid Out',  color: 'var(--black)'       },
+    { key: 'WON ✓',         label: 'Won',      color: 'var(--black)'  },
     { key: 'LOST ✗',        label: 'Lost',     color: 'var(--text-4)' },
   ]
 
@@ -38,8 +38,8 @@ export default function Opportunities({ leads, loading }) {
 
   const children = [
     { path: '/opportunities/permits', Icon: Lightning, label: 'Permit Feed',    description: 'Live commercial permit leads from Tampa Bay counties', count: newLeads, color: 'var(--red)'    },
-    { path: null, Icon: Hammer,    label: 'Bid Board',      description: 'Active bids, RFPs, and quote requests',               color: 'var(--blue)',  soon: true },
-    { path: null, Icon: Radio,     label: 'Scraped Sources', description: 'Aggregated leads from county portals and scraper pipelines', color: 'var(--purple)', soon: true },
+    { path: null, Icon: Hammer,    label: 'Bid Board',      description: 'Active bids, RFPs, and quote requests',               color: 'var(--black)',  soon: true },
+    { path: null, Icon: Radio,     label: 'Scraped Sources', description: 'Aggregated leads from county portals and scraper pipelines', color: 'var(--black)', soon: true },
   ]
 
   return (
@@ -47,17 +47,17 @@ export default function Opportunities({ leads, loading }) {
 
       {/* Change Orders alert */}
       {pendingCOs.length > 0 && (
-        <div onClick={() => navigate('/change-orders')} style={{ background: 'var(--orange-soft)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
-          <ClipboardText size={20} style={{ color: 'var(--orange-shade-20)', flexShrink: 0 }} />
+        <div onClick={() => navigate('/change-orders')} style={{ background: 'var(--bg)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
+          <ClipboardText size={20} style={{ color: 'var(--black)', flexShrink: 0 }} />
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--orange-shade-20)' }}>
+            <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>
               {pendingCOs.length} Part Request{pendingCOs.length !== 1 ? 's' : ''} Pending Review
             </div>
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--orange-shade-40)', marginTop: 2 }}>
               {pendingCOs[0]?.job_reference}{pendingCOs.length > 1 ? ` + ${pendingCOs.length - 1} more` : ''}
             </div>
           </div>
-          <ArrowRight size={16} style={{ color: 'var(--orange-shade-20)', flexShrink: 0 }} />
+          <ArrowRight size={16} style={{ color: 'var(--black)', flexShrink: 0 }} />
         </div>
       )}
 
@@ -133,7 +133,7 @@ export default function Opportunities({ leads, loading }) {
                 <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>{c.description}</div>
               </div>
               {c.count !== null && c.count !== undefined ? (
-                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-xxl)', background: 'var(--red-soft)', color: 'var(--red)', flexShrink: 0 }}>{c.count} new</span>
+                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-xxl)', background: 'var(--bg)', color: 'var(--red)', flexShrink: 0 }}>{c.count} new</span>
               ) : c.soon ? (
                 <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--black)', flexShrink: 0 }}>Soon</span>
               ) : null}
@@ -168,7 +168,7 @@ export default function Opportunities({ leads, loading }) {
                       <div className="cell-primary">{l.project_name}</div>
                       <div className="cell-sub">{l.contractor || '—'}</div>
                     </td>
-                    <td><span className="cell-mono" style={{ color: 'var(--warning)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
+                    <td><span className="cell-mono" style={{ color: 'var(--black)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
                     <td><span className={`badge ${statusBadge(l.status)}`}>{l.status}</span></td>
                     <td><span className={`badge ${prioBadge(l.priority)}`}>{l.priority?.replace(/[🔴🟠🟡🟢]/, '').trim()}</span></td>
                     <td><span style={{ fontSize: 'var(--text-sm)' }}>{l.county}</span></td>
