@@ -92,8 +92,8 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
               <span style={{
                 marginLeft: 'auto', fontSize: 'var(--text-xs)', fontWeight: 700,
                 padding: '1px 6px', borderRadius: 10,
-                background: active ? 'var(--navy)' : 'var(--hover)',
-                color: active ? '#fff' : 'var(--black)',
+                background: active ? 'rgba(255,255,255,0.2)' : 'var(--hover)',
+                color: active ? 'var(--white)' : 'var(--black)',
                 fontFamily: 'var(--font)' }}>{item.count}</span>
             )}
           </span>
@@ -101,7 +101,7 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
         {collapsed && active && (
           <div style={{
             position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)',
-            width: '0.25rem', height: '0.25rem', borderRadius: '50%', background: 'var(--navy)' }} />
+            width: '0.25rem', height: '0.25rem', borderRadius: '50%', background: 'var(--white)' }} />
         )}
       </button>
 
