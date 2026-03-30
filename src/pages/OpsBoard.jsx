@@ -578,7 +578,7 @@ export default function OpsBoard() {
               { key: 'month', Icon: CalendarBlank, label: 'Month' },
             ].map(({ key, Icon, label }) => (
               <button key={key} onClick={() => setView(key)}
-                style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 'var(--r-m)', background: view === key ? 'var(--navy)' : 'var(--hover)', color: view === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 'var(--r-s)', background: view === key ? 'var(--navy)' : 'var(--hover)', color: view === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
                 <Icon size={12} weight={view === key ? 'fill' : 'regular'} />
                 {label}
               </button>
@@ -590,7 +590,7 @@ export default function OpsBoard() {
             <div style={{ display: 'flex', background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 2, gap: 1, flexShrink: 0 }}>
               {[['week','1W'],['2week','2W'],['month','4W']].map(([key, lbl]) => (
                 <button key={key} onClick={() => setSpan(key)}
-                  style={{ padding: '4px 8px', borderRadius: 'var(--r-m)', background: span === key ? 'var(--navy)' : 'var(--hover)', color: span === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
+                  style={{ padding: '4px 8px', borderRadius: 'var(--r-s)', background: span === key ? 'var(--navy)' : 'var(--hover)', color: span === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
                   {lbl}
                 </button>
               ))}
@@ -602,7 +602,7 @@ export default function OpsBoard() {
             <button onClick={() => go(-1)} style={{ width: 26, height: 26, borderRadius: 'var(--r-m)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <CaretLeft size={12} />
             </button>
-            <button onClick={() => setCurrentDate(today())} style={{ padding: '3px 8px', borderRadius: 'var(--r-m)', background: 'transparent', fontSize: 'var(--text-xs)', fontWeight: 600, cursor: 'pointer', color: 'var(--navy)' }}>
+            <button onClick={() => setCurrentDate(today())} style={{ padding: '3px 8px', borderRadius: 'var(--r-s)', background: 'transparent', fontSize: 'var(--text-xs)', fontWeight: 600, cursor: 'pointer', color: 'var(--navy)' }}>
               Today
             </button>
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', whiteSpace: 'nowrap' }}>
@@ -636,7 +636,7 @@ export default function OpsBoard() {
 
           {/* Conflict badge */}
           {conflicts.length > 0 && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-dark)', fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, whiteSpace: 'nowrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 'var(--r-s)', background: 'var(--error-soft)', color: 'var(--error-dark)', fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, whiteSpace: 'nowrap' }}>
               <Warning size={12} weight="fill" />
               {conflicts.length}
             </div>

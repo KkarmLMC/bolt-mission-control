@@ -133,7 +133,7 @@ export default function Opportunities({ leads, loading }) {
                 <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>{c.description}</div>
               </div>
               {c.count !== null && c.count !== undefined ? (
-                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-xxl)', background: 'var(--red-soft)', color: 'var(--red)', flexShrink: 0 }}>{c.count} new</span>
+                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-s)', background: 'var(--red-soft)', color: 'var(--red)', flexShrink: 0 }}>{c.count} new</span>
               ) : c.soon ? (
                 <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--black)', flexShrink: 0 }}>Soon</span>
               ) : null}
