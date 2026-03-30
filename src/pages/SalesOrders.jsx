@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Receipt, MagnifyingGlass, CaretRight, Plus } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 import { soStatus } from '../lib/statusColors.js'
+import PageHeader from '../components/ui/PageHeader'
 
 const STATUS_LABELS = ['All', 'queued', 'running', 'fulfillment', 'shipment', 'back_ordered', 'complete', 'cancelled']
 
@@ -42,18 +43,17 @@ export default function SalesOrders() {
   return (
     <div className="page-content fade-in">
 
-      {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--mar-l)', gap: 'var(--gap-m)' }}>
-        <div>
-          <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: 'var(--text-3)', marginBottom: 4 }}>MISSION CONTROL</div>
-          <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Sales Orders</div>
-          <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginTop: 2 }}>All orders across Bolt LP and Lightning Master</div>
-        </div>
-        <button onClick={() => navigate('/sales-orders/new')}
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: 'pointer', flexShrink: 0 }}>
-          <Plus size={15} weight="bold" /> New SO
-        </button>
-      </div>
+      <PageHeader
+        eyebrow="MISSION CONTROL"
+        title="Sales Orders"
+        subtitle="All orders across Bolt LP and Lightning Master"
+        action={
+          <button onClick={() => navigate('/sales-orders/new')}
+            style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', cursor: 'pointer', flexShrink: 0 }}>
+            <Plus size={15} weight="bold" /> New SO
+          </button>
+        }
+      />
 
       {/* Stats */}
       <div className="stat-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 'var(--mar-l)' }}>
