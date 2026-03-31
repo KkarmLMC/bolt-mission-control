@@ -23,17 +23,19 @@
 
 // ── Sales Order statuses ──────────────────────────────────────────────────────
 const SO_STATUS = {
-  draft:        { color: 'var(--status-draft)',        bg: 'var(--status-draft-bg)',        label: 'Draft' },
-  queued:       { color: 'var(--status-queued)',       bg: 'var(--status-queued-bg)',       label: 'Queued' },
-  running:      { color: 'var(--status-running)',      bg: 'var(--status-running-bg)',      label: 'Running' },
-  submitted:    { color: 'var(--status-submitted)',    bg: 'var(--status-submitted-bg)',    label: 'Submitted' },
-  fulfillment:  { color: 'var(--status-fulfillment)',  bg: 'var(--status-fulfillment-bg)',  label: 'Fulfillment' },
-  published:    { color: 'var(--status-published)',    bg: 'var(--status-published-bg)',    label: 'Published' },
-  shipment:     { color: 'var(--status-shipment)',     bg: 'var(--status-shipment-bg)',     label: 'Shipment' },
-  back_ordered: { color: 'var(--status-back-ordered)', bg: 'var(--status-back-ordered-bg)', label: 'Awaiting Stock' },
-  complete:     { color: 'var(--status-complete)',     bg: 'var(--status-complete-bg)',     label: 'Complete' },
-  fulfilled:    { color: 'var(--status-fulfilled)',    bg: 'var(--status-fulfilled-bg)',    label: 'Complete' },
-  cancelled:    { color: 'var(--status-cancelled)',    bg: 'var(--status-cancelled-bg)',    label: 'Cancelled' },
+  draft:                { color: 'var(--status-draft)',        bg: 'var(--status-draft-bg)',        label: 'Draft' },
+  queued:               { color: 'var(--status-queued)',       bg: 'var(--status-queued-bg)',       label: 'Queued' },
+  running:              { color: 'var(--status-running)',      bg: 'var(--status-running-bg)',      label: 'Running' },
+  submitted:            { color: 'var(--status-submitted)',    bg: 'var(--status-submitted-bg)',    label: 'Submitted' },
+  fulfillment:          { color: 'var(--status-fulfillment)',  bg: 'var(--status-fulfillment-bg)',  label: 'Fulfillment' },
+  partial_fulfillment:  { color: 'var(--status-fulfillment)',  bg: 'var(--status-fulfillment-bg)',  label: 'Partial Fulfillment' },
+  published:            { color: 'var(--status-published)',    bg: 'var(--status-published-bg)',    label: 'Published' },
+  shipment:             { color: 'var(--status-shipment)',     bg: 'var(--status-shipment-bg)',     label: 'Shipment' },
+  partial_shipment:     { color: 'var(--status-shipment)',     bg: 'var(--status-shipment-bg)',     label: 'Partial Shipment' },
+  back_ordered:         { color: 'var(--status-back-ordered)', bg: 'var(--status-back-ordered-bg)', label: 'Awaiting Stock' },
+  complete:             { color: 'var(--status-complete)',     bg: 'var(--status-complete-bg)',     label: 'Complete' },
+  fulfilled:            { color: 'var(--status-fulfilled)',    bg: 'var(--status-fulfilled-bg)',    label: 'Complete' },
+  cancelled:            { color: 'var(--status-cancelled)',    bg: 'var(--status-cancelled-bg)',    label: 'Cancelled' },
 }
 
 /**

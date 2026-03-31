@@ -4,7 +4,8 @@ import {
   Receipt, Buildings, MapPin, Phone, Envelope,
   CalendarBlank, CheckCircle, PaperPlaneTilt,
   Clock, ArrowRight, Lightning, ClipboardText,
-  Truck, ArrowSquareOut, Warning, X, PencilSimple, Prohibit, ArrowCounterClockwise } from '@phosphor-icons/react'
+  Truck, ArrowSquareOut, Warning, X, PencilSimple, Prohibit, ArrowCounterClockwise,
+  AirplaneTilt } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { soStatus } from '../lib/statusColors.js'
@@ -16,8 +17,9 @@ const APP_SOURCE = (import.meta.env.VITE_APP_NAME || 'lmc_platform').toLowerCase
 // Local icon map — color/bg come from soStatus() in statusColors.js
 const SO_STATUS_ICON = {
   draft: Clock, queued: Clock, running: PaperPlaneTilt, submitted: PaperPlaneTilt,
-  fulfillment: Receipt, published: Receipt, shipment: Truck,
-  back_ordered: Warning, complete: CheckCircle, fulfilled: CheckCircle, cancelled: X }
+  fulfillment: Receipt, partial_fulfillment: Receipt, published: Receipt, shipment: Truck,
+  partial_shipment: AirplaneTilt, back_ordered: Warning, complete: CheckCircle,
+  fulfilled: CheckCircle, cancelled: X }
 
 const WIQ_URL = 'https://warehouse-iq.vercel.app'
 
@@ -58,6 +60,16 @@ const ACTIONS = {
   complete:    { hint: 'This order has been fully shipped and completed.' },
   fulfilled:   { hint: 'This order has been fully shipped and completed.' },
   cancelled:   { hint: 'This order has been cancelled.' },
+  partial_fulfillment: {
+    primary: { label: 'View Fulfillment', icon: ArrowSquareOut, color: 'var(--blue)',
+      action: (id) => window.open(`${WIQ_URL}/warehouse-hq/fulfillment/${id}`, '_blank') },
+    hint: 'Warehouse lines in fulfillment. Drop ship and/or back order tracks are also active.'
+  },
+  partial_shipment: {
+    primary: { label: 'View Drop Ship Queue', icon: ArrowSquareOut, color: 'var(--warning-text)',
+      action: (id) => window.open(`${WIQ_URL}/warehouse-hq/dropship/${id}`, '_blank') },
+    hint: 'Warehouse shipment sent. Drop ship from PLP and/or back order still pending.'
+  },
   submitted:   {
     primary: { label: 'Open in Warehouse IQ', icon: ArrowSquareOut, color: 'var(--navy)',
       action: (id) => window.open(`${WIQ_URL}/warehouse-hq/queue/${id}`, '_blank') },
@@ -71,7 +83,7 @@ const ACTIONS = {
 }
 
 // Statuses where cancellation is allowed (anything before the order leaves the building)
-const CANCELLABLE = ['draft', 'queued', 'running', 'submitted', 'fulfillment', 'published', 'shipment', 'back_ordered']
+const CANCELLABLE = ['draft', 'queued', 'running', 'submitted', 'fulfillment', 'partial_fulfillment', 'published', 'shipment', 'partial_shipment', 'back_ordered']
 
 function SectionGroup({ label, items }) {
   const [open, setOpen] = useState(true)
