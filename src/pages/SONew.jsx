@@ -13,7 +13,7 @@ import ProjectPicker from '../components/ProjectPicker.jsx'
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function Label({ children, required }) {
   return (
-    <label className="text-xs font-bold text-black block mb-1">
+    <label className="text-xs font-bold text-text-primary block mb-1">
       {children}{required && <span className="text-red ml-0.5">*</span>}
     </label>
   )
@@ -22,7 +22,7 @@ function Label({ children, required }) {
 function SectionDivider({ label }) {
   return (
     <div className="mt-4 pt-3">
-      <div className="text-xs font-bold text-black">{label}</div>
+      <div className="text-xs font-bold text-text-primary">{label}</div>
     </div>
   )
 }
@@ -79,7 +79,7 @@ function PartSearch({ onSelect, warehouseId }) {
   return (
     <div ref={ref} className="relative">
       <div className="relative">
-        <MagnifyingGlass size="0.875rem" className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-3" />
+        <MagnifyingGlass size="0.875rem" className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-muted" />
         <input
           value={query}
           onChange={e => setQuery(e.target.value)}
@@ -89,24 +89,24 @@ function PartSearch({ onSelect, warehouseId }) {
         />
         {query && (
           <button onClick={() => { setQuery(''); setResults([]); setOpen(false) }}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-none cursor-pointer text-text-3 p-0">
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-none cursor-pointer text-text-muted p-0">
             <X size="0.8125rem" />
           </button>
         )}
       </div>
       {open && results.length > 0 && (
-        <div className="absolute top-full left-0 right-0 z-50 bg-white rounded-lg mt-1 max-h-64 overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 z-50 bg-surface-base rounded-lg mt-1 max-h-64 overflow-y-auto">
           {loading ? (
-            <div className="p-3 text-center text-text-3 text-sm">Searching…</div>
+            <div className="p-3 text-center text-text-muted text-sm">Searching…</div>
           ) : results.map(part => (
             <button key={part.id} onMouseDown={() => handleSelect(part)}
               className="w-full flex items-center justify-between p-2 px-3 bg-none cursor-pointer text-left border-b border-border-l">
               <div className="min-w-0">
                 <div className="text-sm font-semibold">{part.name}</div>
-                <div className="text-xs font-mono text-text-3">{part.sku}</div>
+                <div className="text-xs font-mono text-text-muted">{part.sku}</div>
               </div>
               <div className="flex-shrink-0 text-right ml-3">
-                <div className="text-xs font-bold text-black">
+                <div className="text-xs font-bold text-text-primary">
                   ${part.unit_cost?.toFixed(2) || '—'}
                 </div>
                 {part.stock !== null && (
@@ -130,13 +130,13 @@ function LineItemRow({ item, warehouses, onUpdate, onRemove }) {
   return (
     <div className="grid grid-cols-[1fr_70px_90px_80px_36px] gap-2 items-center py-2 border-b border-border-l">
       <div className="min-w-0">
-        {item.sku && <div className="text-xs font-mono text-text-3 mb-0.5">{item.sku}</div>}
+        {item.sku && <div className="text-xs font-mono text-text-muted mb-0.5">{item.sku}</div>}
         <div className="text-sm font-semibold truncate">{item.description}</div>
         {warehouses.length > 1 && (
           <select
             value={item.warehouse_id || ''}
             onChange={e => onUpdate({ ...item, warehouse_id: e.target.value })}
-            className="text-xs mt-1 p-0.5 rounded border-border-l bg-white text-text-3 w-full">
+            className="text-xs mt-1 p-0.5 rounded border-border-subtle bg-surface-base text-text-muted w-full">
             <option value="">No warehouse</option>
             {warehouses.map(w => <option key={w.id} value={w.id}>{w.name.replace(' Warehouse','')}</option>)}
           </select>
@@ -154,11 +154,11 @@ function LineItemRow({ item, warehouses, onUpdate, onRemove }) {
         onChange={e => onUpdate({ ...item, unit_cost: e.target.value })}
         className="w-full text-right text-xs"
       />
-      <div className={`text-right text-xs font-bold ${lineTotal > 0 ? 'text-black' : 'text-text-3'}`}>
+      <div className={`text-right text-xs font-bold ${lineTotal > 0 ? 'text-text-primary' : 'text-text-muted'}`}>
         ${lineTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </div>
       <button onClick={onRemove}
-        className="w-8 h-8 flex items-center justify-center bg-hover rounded-md cursor-pointer text-error-dark">
+        className="w-8 h-8 flex items-center justify-center bg-surface-hover rounded-md cursor-pointer text-error-dark">
         <Trash size="0.8125rem" />
       </button>
     </div>
@@ -202,19 +202,19 @@ function ScopeSection({ section, warehouses, defaultWarehouseId, onUpdate, onRem
   return (
     <Card className="mb-4">
       {/* Section header */}
-      <div className="bg-navy p-3 pl-5 flex items-center gap-2">
+      <div className="bg-brand-primary p-3 pl-5 flex items-center gap-2">
         <button onClick={() => setExpanded(e => !e)}
-          className="bg-none cursor-pointer p-0 text-white/50 flex">
+          className="bg-none cursor-pointer p-0 text-surface-base/50 flex">
           <CaretDown size="0.875rem" style={{ transform: expanded ? 'none' : 'rotate(-90deg)', transition: 'transform 0.15s' }} />
         </button>
         <input
           value={section.title}
           onChange={e => onUpdate({ ...section, title: e.target.value })}
           placeholder="Section name (e.g. Green House Ground Ring)"
-          className="flex-1 bg-transparent outline-none text-white font-bold text-sm"
+          className="flex-1 bg-transparent outline-none text-surface-base font-bold text-sm"
         />
         {subtotal > 0 && (
-          <span className="text-xs font-bold text-white/60 whitespace-nowrap">
+          <span className="text-xs font-bold text-surface-base/60 whitespace-nowrap">
             ${subtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </span>
         )}
@@ -230,7 +230,7 @@ function ScopeSection({ section, warehouses, defaultWarehouseId, onUpdate, onRem
           {section.items.length > 0 && (
             <div className="grid grid-cols-[1fr_70px_90px_80px_36px] gap-2 mb-2">
               {['Item / SKU', 'Qty', 'Unit Cost', 'Amount', ''].map((h, i) => (
-                <div key={i} className={`text-xs font-bold text-black ${i > 0 && i < 4 ? 'text-right' : 'text-left'}`}>{h}</div>
+                <div key={i} className={`text-xs font-bold text-text-primary ${i > 0 && i < 4 ? 'text-right' : 'text-left'}`}>{h}</div>
               ))}
             </div>
           )}
@@ -247,7 +247,7 @@ function ScopeSection({ section, warehouses, defaultWarehouseId, onUpdate, onRem
           ))}
 
           {section.items.length === 0 && (
-            <div className="text-center p-5 text-text-3 text-sm">
+            <div className="text-center p-5 text-text-muted text-sm">
               No items yet. Search for a part or add manually.
             </div>
           )}
@@ -257,7 +257,7 @@ function ScopeSection({ section, warehouses, defaultWarehouseId, onUpdate, onRem
             <PartSearch onSelect={addPart} warehouseId={defaultWarehouseId} />
           </div>
           <button onClick={addManual}
-            className="mt-2 flex items-center gap-1 text-xs font-semibold text-text-3 bg-none cursor-pointer p-0">
+            className="mt-2 flex items-center gap-1 text-xs font-semibold text-text-muted bg-none cursor-pointer p-0">
             <Plus size="0.75rem" /> Add custom line item
           </button>
         </div>
@@ -277,14 +277,14 @@ function LaborSection({ items, onUpdate }) {
 
   return (
     <Card className="mb-4">
-      <div className="bg-navy p-3 pl-5 flex items-center gap-2">
+      <div className="bg-brand-primary p-3 pl-5 flex items-center gap-2">
         <button onClick={() => setExpanded(e => !e)}
-          className="bg-none cursor-pointer p-0 text-white/50 flex">
+          className="bg-none cursor-pointer p-0 text-surface-base/50 flex">
           <CaretDown size="0.875rem" style={{ transform: expanded ? 'none' : 'rotate(-90deg)', transition: 'transform 0.15s' }} />
         </button>
         <div className="flex-1 flex items-center gap-2">
-          <Wrench size="0.875rem" className="text-white/70" />
-          <span className="font-bold text-sm text-white">Installation / Labor</span>
+          <Wrench size="0.875rem" className="text-surface-base/70" />
+          <span className="font-bold text-sm text-surface-base">Installation / Labor</span>
         </div>
         {total > 0 && (
           <span className="text-xs font-bold text-white/60">
@@ -306,7 +306,7 @@ function LaborSection({ items, onUpdate }) {
                 ${((parseFloat(item.quantity)||0)*(parseFloat(item.unit_cost)||0)).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
               </div>
               <button onClick={() => removeItem(item._key)}
-                className="w-8 h-8 flex items-center justify-center bg-hover rounded-md cursor-pointer text-error-dark">
+                className="w-8 h-8 flex items-center justify-center bg-surface-hover rounded-md cursor-pointer text-error-dark">
                 <Trash size="0.8125rem" />
               </button>
             </div>
@@ -331,14 +331,14 @@ function TotalsBar({ sections, laborItems }) {
   if (grandTotal === 0) return null
 
   return (
-    <StatCard className="mb-6 bg-navy text-white">
+    <StatCard className="mb-6 bg-brand-primary text-surface-base">
       <div className="flex justify-between mb-2">
-        <span className="text-sm text-white/60">Materials</span>
+        <span className="text-sm text-surface-base/60">Materials</span>
         <span className="text-sm font-semibold">${materialsTotal.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
       </div>
       {laborTotal > 0 && (
         <div className="flex justify-between mb-2">
-          <span className="text-sm text-white/60">Installation</span>
+          <span className="text-sm text-surface-base/60">Installation</span>
           <span className="text-sm font-semibold">${laborTotal.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
         </div>
       )}
@@ -513,8 +513,8 @@ export default function PONew() {
           <button key={val} onClick={() => setDivision(val)}
             className={`p-3 rounded-md cursor-pointer border-2 font-bold text-sm transition-all ${
               division === val
-                ? 'border-navy bg-navy text-white'
-                : 'border-border-l bg-white text-black'
+                ? 'border-brand-primary bg-brand-primary text-surface-base'
+                : 'border-border-subtle bg-surface-base text-text-primary'
             }`}>
             {lbl}
           </button>
@@ -589,7 +589,7 @@ export default function PONew() {
           <select value={defaultWarehouseId} onChange={e => setDefaultWarehouseId(e.target.value)} className="w-full">
             {warehouses.map(w => <option key={w.id} value={w.id}>{w.name}</option>)}
           </select>
-          <div className="text-xs text-text-3 mt-1">New line items will default to this warehouse. You can change per line.</div>
+          <div className="text-xs text-text-muted mt-1">New line items will default to this warehouse. You can change per line.</div>
         </div>
       </Card>
 
@@ -608,7 +608,7 @@ export default function PONew() {
       ))}
 
       <button onClick={addSection}
-        className="flex items-center justify-center gap-2 w-full p-3 rounded-md border-2 border-dashed border-border-l bg-transparent text-text-3 font-bold text-sm cursor-pointer mb-4">
+        className="flex items-center justify-center gap-2 w-full p-3 rounded-md border-2 border-dashed border-border-subtle bg-transparent text-text-muted font-bold text-sm cursor-pointer mb-4">
         <Plus size="0.9375rem" /> Add Scope Section
       </button>
 

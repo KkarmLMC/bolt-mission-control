@@ -53,16 +53,16 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
           <button className="list-card__action" onClick={onAdd}>+ Add Lead</button>
         </div>
 
-        <div style={{ padding: 'var(--pad-m) var(--pad-l) 0' }}>
+        <div style={{ padding: 'var(--space-m) var(--space-lg) 0' }}>
           <div className="filter-bar">
             {['ALL','CRITICAL','HIGH','MEDIUM','NEW LEAD','CONTACTED','WON ✓'].map(f => (
               <button key={f} className={`filter-pill ${filter === f ? 'active' : ''}`} onClick={() => setFilter(f)}>{f}</button>
             ))}
           </div>
           <div className="search-box" style={{ marginBottom: 8 }}>
-            <MagnifyingGlass size="1rem" style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+            <MagnifyingGlass size="1rem" style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
             <input placeholder="Search leads..." value={search} onChange={e => setSearch(e.target.value)} />
-            {search && <button onClick={() => setSearch('')} style={{ background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}><X size="0.8125rem" /></button>}
+            {search && <button onClick={() => setSearch('')} style={{ background: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0, display: 'flex' }}><X size="0.8125rem" /></button>}
           </div>
         </div>
 
@@ -71,7 +71,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
             <div className="loading"><div className="spinner" /><span>Loading leads...</span></div>
           ) : filtered.length === 0 ? (
             <div className="empty">
-              <Lightning size="2.25rem" style={{ color: 'var(--text-3)', marginBottom: 8 }} />
+              <Lightning size="2.25rem" style={{ color: 'var(--text-muted)', marginBottom: 8 }} />
               <div className="empty-title">No leads yet</div>
               <div className="empty-desc">Add leads manually or run the permit scraper.</div>
               <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Lead</button>
@@ -90,11 +90,11 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
                         <div className="cell-primary">{l.project_name}</div>
                         <div className="cell-sub">{l.address || l.permit_number || '—'}</div>
                       </td>
-                      <td><span className="cell-mono" style={{ color: 'var(--warning)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
-                      <td><span className="badge" style={{ background: 'var(--white)', color: 'var(--black)' }}>{l.county}</span></td>
+                      <td><span className="cell-mono" style={{ color: 'var(--state-warning)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
+                      <td><span className="badge" style={{ background: 'var(--surface-base)', color: 'var(--text-primary)' }}>{l.county}</span></td>
                       <td><span className={`badge ${statusBadge(l.status)}`}>{l.status}</span></td>
                       <td><span style={{ fontSize: 'var(--text-sm)' }}>{l.contractor || '—'}</span></td>
-                      <td><span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', maxWidth: 180, display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.next_action || '—'}</span></td>
+                      <td><span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', maxWidth: 180, display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.next_action || '—'}</span></td>
                       <td onClick={e => e.stopPropagation()}><button className="btn btn-ghost btn-sm" onClick={() => onEdit(l)}>Edit</button></td>
                     </tr>
                   ))}

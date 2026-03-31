@@ -210,7 +210,7 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
       <div style={{ minWidth: 160 + days.length * 38 }}>
         {/* Header row */}
         <div style={{ display: 'flex', borderBottom: '2px solid var(--border-l)', position: 'sticky', top: 0, zIndex: 10, background: '#fff' }}>
-          <div style={{ width: 160, flexShrink: 0, padding: '8px 12px', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', textTransform: 'uppercase', borderRight: '1px solid var(--border-l)' }}>
+          <div style={{ width: 160, flexShrink: 0, padding: '8px 12px', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase', borderRight: '1px solid var(--border-subtle)' }}>
             JOB
           </div>
           {days.map(d => {
@@ -221,10 +221,10 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
                 width: 38, flexShrink: 0, padding: '4px 2px', textAlign: 'center',
                 background: isToday ? 'var(--navy)' : isSun ? 'var(--white)' : 'transparent',
                 borderRight: '1px solid var(--border-l)' }}>
-                <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--black)' }}>
+                <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--text-primary)' }}>
                   {DAY_NAMES[d.getDay()]}
                 </div>
-                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: isToday ? '#fff' : isSun ? 'var(--text-3)' : 'var(--black)' }}>
+                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: isToday ? '#fff' : isSun ? 'var(--text-muted)' : 'var(--text-primary)' }}>
                   {d.getDate()}
                 </div>
               </div>
@@ -240,11 +240,11 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
           const crew  = assignments.filter(a => a.project_id === proj.id)
 
           return (
-            <div key={proj.id} style={{ display: 'flex', borderBottom: '1px solid var(--border-l)', minHeight: 44, alignItems: 'center', background: pi % 2 === 0 ? 'transparent' : 'var(--white)' }}>
+            <div key={proj.id} style={{ display: 'flex', borderBottom: '1px solid var(--border-subtle)', minHeight: 44, alignItems: 'center', background: pi % 2 === 0 ? 'transparent' : 'var(--surface-base)' }}>
               {/* Job name column */}
-              <div style={{ width: 160, flexShrink: 0, padding: '6px 12px', borderRight: '1px solid var(--border-l)', cursor: 'pointer' }}
+              <div style={{ width: 160, flexShrink: 0, padding: '6px 12px', borderRight: '1px solid var(--border-subtle)', cursor: 'pointer' }}
                 onClick={() => onSelectProject(proj)}>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--black)' }}>
+                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--text-primary)' }}>
                   {proj.name.split(' — ')[0]}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: 2 }}>
@@ -338,8 +338,8 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
     <div style={{ overflowX: 'auto', overflowY: 'auto', maxHeight: 'calc(100vh - 220px - 64px)', WebkitOverflowScrolling: 'touch' }}>
       <div style={{ minWidth: 140 + days.length * 80 }}>
         {/* Header */}
-        <div style={{ display: 'flex', borderBottom: '2px solid var(--border-l)', position: 'sticky', top: 0, zIndex: 10, background: '#fff' }}>
-          <div style={{ width: 140, flexShrink: 0, padding: '8px 12px', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', textTransform: 'uppercase', borderRight: '1px solid var(--border-l)' }}>
+        <div style={{ display: 'flex', borderBottom: '2px solid var(--border-subtle)', position: 'sticky', top: 0, zIndex: 10, background: 'var(--text-inverse)' }}>
+          <div style={{ width: 140, flexShrink: 0, padding: '8px 12px', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase', borderRight: '1px solid var(--border-subtle)' }}>
             CREW
           </div>
           {days.map(d => {
@@ -348,9 +348,9 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
             return (
               <div key={fmtDate(d)} style={{
                 width: 80, flexShrink: 0, padding: '4px 8px', textAlign: 'center',
-                background: isToday ? 'var(--navy)' : isSun ? 'var(--white)' : 'transparent',
-                borderRight: '1px solid var(--border-l)' }}>
-                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--black)' }}>
+                background: isToday ? 'var(--brand-primary)' : isSun ? 'var(--surface-base)' : 'transparent',
+                borderRight: '1px solid var(--border-subtle)' }}>
+                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--text-primary)' }}>
                   {DAY_NAMES[d.getDay()]} {d.getDate()}
                 </div>
                 <div style={{ fontSize: 'var(--text-2xs)', color: isToday ? 'rgba(255,255,255,0.5)' : 'var(--text-4)' }}>
@@ -363,10 +363,10 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
 
         {/* Crew rows */}
         {crew.map((c, ci) => (
-          <div key={c.name} style={{ display: 'flex', borderBottom: '1px solid var(--border-l)', minHeight: 52, alignItems: 'stretch', background: ci % 2 === 0 ? 'transparent' : 'var(--white)' }}>
+          <div key={c.name} style={{ display: 'flex', borderBottom: '1px solid var(--border-subtle)', minHeight: 52, alignItems: 'stretch', background: ci % 2 === 0 ? 'transparent' : 'var(--surface-base)' }}>
             {/* Crew name */}
-            <div style={{ width: 140, flexShrink: 0, padding: '8px 12px', borderRight: '1px solid var(--border-l)', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <div style={{ width: 140, flexShrink: 0, padding: '8px 12px', borderRight: '1px solid var(--border-subtle)', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--brand-primary)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 {getInitials(c.name)}
               </div>
               <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -386,8 +386,8 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
                 <div key={fmtDate(d)} style={{
                   width: 80, flexShrink: 0,
                   background: isSun ? 'rgba(0,0,0,0.02)' : 'transparent',
-                  borderRight: '1px solid var(--border-l)',
-                  borderLeft: isToday ? '2px solid var(--navy)' : 'none',
+                  borderRight: '1px solid var(--border-subtle)',
+                  borderLeft: isToday ? '2px solid var(--brand-primary)' : 'none',
                   padding: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
                   {assigned.map(proj => {
                     const stage = STAGES[proj.stage] || STAGES['Awarded']
@@ -413,7 +413,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
 
                   {assigned.length === 0 && !isSun && (
                     <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <div style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--border-l)' }} />
+                      <div style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--border-subtle)' }} />
                     </div>
                   )}
                 </div>
@@ -458,12 +458,12 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
       {/* Day headers */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', marginBottom: 1 }}>
         {DAY_NAMES.map(d => (
-          <div key={d} style={{ textAlign: 'center', padding: '6px 4px', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', textTransform: 'uppercase' }}>{d}</div>
+          <div key={d} style={{ textAlign: 'center', padding: '6px 4px', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase' }}>{d}</div>
         ))}
       </div>
 
       {/* Cells */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 1, background: 'var(--border-l)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 1, background: 'var(--border-subtle)' }}>
         {cells.map((d, i) => {
           const inMonth = d.getMonth() === month
           const isToday = isSameDay(d, tod)
@@ -471,7 +471,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
 
           return (
             <div key={i} style={{
-              background: isToday ? 'var(--blue-soft)' : inMonth ? '#fff' : 'var(--white)',
+              background: isToday ? 'var(--state-info-soft)' : inMonth ? '#fff' : 'var(--surface-base)',
               minHeight: 72, padding: '4px 4px 2px' }}>
               <div style={{
                 width: 22, height: 22, borderRadius: '50%', marginBottom: 3,
@@ -497,7 +497,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
                 )
               })}
               {jobs.length > 3 && (
-                <div style={{ fontSize: 'var(--text-2xs)', color: 'var(--text-3)', fontWeight: 600 }}>+{jobs.length - 3} more</div>
+                <div style={{ fontSize: 'var(--text-2xs)', color: 'var(--text-muted)', fontWeight: 600 }}>+{jobs.length - 3} more</div>
               )}
             </div>
           )
@@ -673,7 +673,7 @@ export default function OpsBoard() {
           </div>
         ) : filteredProjects.length === 0 ? (
           <div className="empty">
-            <CalendarBlank size="2.5rem" style={{ color: 'var(--text-3)', marginBottom: 8 }} />
+            <CalendarBlank size="2.5rem" style={{ color: 'var(--text-muted)', marginBottom: 8 }} />
             <div className="empty-title">No jobs to display</div>
             <div className="empty-desc">Adjust your filters or schedule some projects.</div>
           </div>

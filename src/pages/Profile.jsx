@@ -31,7 +31,7 @@ function PinPad({ onComplete }) {
     <div>
       <div className="flex justify-center gap-2 mb-6">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} style={{ width: 14, height: 14, borderRadius: '50%', background: i < digits.length ? 'var(--navy)' : 'var(--border-l)', transition: 'background 0.1s' }} />
+          <div key={i} style={{ width: 14, height: 14, borderRadius: '50%', background: i < digits.length ? 'var(--brand-primary)' : 'var(--border-subtle)', transition: 'background 0.1s' }} />
         ))}
       </div>
       <div className="grid grid-cols-3 gap-3 max-w-xs mx-auto">
@@ -53,7 +53,7 @@ function PinPad({ onComplete }) {
 }
 
 // ─── Badge components ───────────────────────────────────────────────────────
-function RoleBadge({ label, color = 'var(--navy)', bg = 'rgba(4,36,92,0.08)' }) {
+function RoleBadge({ label, color = 'var(--brand-primary)', bg = 'rgba(4,36,92,0.08)' }) {
   return (
     <Badge style={{ color, background: bg }}>
       {label}
@@ -65,8 +65,8 @@ function RoleBadge({ label, color = 'var(--navy)', bg = 'rgba(4,36,92,0.08)' }) 
 function Section({ icon: Icon, title, children, action }) {
   return (
     <Card className="mb-6">
-      <div className="flex items-center justify-between p-4 pl-5 bg-navy rounded-none">
-        <div className="flex items-center gap-2 text-white text-sm font-bold">
+      <div className="flex items-center justify-between p-4 pl-5 bg-brand-primary rounded-none">
+        <div className="flex items-center gap-2 text-surface-base text-sm font-bold">
           {Icon && <Icon size="0.9375rem" />} {title}
         </div>
         {action}
@@ -78,9 +78,9 @@ function Section({ icon: Icon, title, children, action }) {
 
 function Row({ label, children }) {
   return (
-    <div className="flex items-center justify-between pb-3 mb-3 border-b border-border-l">
-      <div className="text-xs font-bold text-black">{label}</div>
-      <div className="text-sm font-semibold text-black text-right">{children}</div>
+    <div className="flex items-center justify-between pb-3 mb-3 border-b border-border-subtle">
+      <div className="text-xs font-bold text-text-primary">{label}</div>
+      <div className="text-sm font-semibold text-text-primary text-right">{children}</div>
     </div>
   )
 }
@@ -123,13 +123,13 @@ function ActivityLog({ userId }) {
   const APP_LABELS = { field_ops: 'Field Ops', warehouse_iq: 'Warehouse IQ', mission_control: 'Mission Control' }
 
   const CATEGORY_COLOR = {
-    sales_order: 'var(--blue)', fulfillment: 'var(--purple)', shipment: 'var(--blue-shade-20)',
+    sales_order: 'var(--state-info)', fulfillment: 'var(--purple)', shipment: 'var(--state-info)',
     import: 'var(--warning-text)',      profile: 'var(--grey-shade-20)',     auth: 'var(--grey-base)',
     parts: 'var(--success-dark)',       inventory: 'var(--success-dark)',   transfer: 'var(--warning-text)' }
 
   return (
     <Card className="mb-6">
-      <div className="p-4 pl-5 bg-navy text-white text-sm font-bold">
+      <div className="p-4 pl-5 bg-brand-primary text-surface-base text-sm font-bold">
         Activity Log
       </div>
       <div className="py-0">
@@ -138,25 +138,25 @@ function ActivityLog({ userId }) {
             <Spinner />
           </div>
         ) : logs.length === 0 ? (
-          <div className="p-12 text-center text-text-3 text-sm">
+          <div className="p-12 text-center text-text-muted text-sm">
             No activity recorded yet
           </div>
         ) : (
           <>
             {logs.map((log, i) => (
-              <div key={log.id} className={`flex items-start gap-3 p-4 pl-5 ${i < logs.length - 1 ? 'border-b border-border-l' : ''}`}>
+              <div key={log.id} className={`flex items-start gap-3 p-4 pl-5 ${i < logs.length - 1 ? 'border-b border-border-subtle' : ''}`}>
                 {/* Category dot */}
                 <div style={{
-                  width: 8, height: 8, borderRadius: '50%', flexShrink: 0, marginTop: 'var(--mar-xs)',
-                  background: CATEGORY_COLOR[log.category] || 'var(--text-3)' }} />
+                  width: 8, height: 8, borderRadius: '50%', flexShrink: 0, marginTop: 'var(--space-xs)',
+                  background: CATEGORY_COLOR[log.category] || 'var(--text-muted)' }} />
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm text-black font-medium leading-relaxed">
+                  <div className="text-sm text-text-primary font-medium leading-relaxed">
                     {log.label}
                   </div>
                   <div className="flex gap-2 mt-1 flex-wrap items-center">
-                    <span className="text-xs text-text-3">{fmtTime(log.created_at)}</span>
-                    <span className="text-xs text-text-3">·</span>
-                    <span className="text-xs font-semibold" style={{ color: CATEGORY_COLOR[log.category] || 'var(--text-3)' }}>
+                    <span className="text-xs text-text-muted">{fmtTime(log.created_at)}</span>
+                    <span className="text-xs text-text-muted">·</span>
+                    <span className="text-xs font-semibold" style={{ color: CATEGORY_COLOR[log.category] || 'var(--text-muted)' }}>
                       {APP_LABELS[log.app] || log.app}
                     </span>
                   </div>
@@ -166,12 +166,12 @@ function ActivityLog({ userId }) {
             {/* Pagination */}
             <div className="flex justify-between items-center p-4 pl-5">
               <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0}
-                className="text-xs font-semibold text-navy disabled:text-text-3 bg-none cursor-pointer disabled:cursor-default p-0">
+                className="text-xs font-semibold text-brand-primary disabled:text-text-muted bg-none cursor-pointer disabled:cursor-default p-0">
                 ← Previous
               </button>
-              <span className="text-xs text-text-3">Page {page + 1}</span>
+              <span className="text-xs text-text-muted">Page {page + 1}</span>
               <button onClick={() => setPage(p => p + 1)} disabled={logs.length < PER_PAGE}
-                className="text-xs font-semibold text-navy disabled:text-text-3 bg-none cursor-pointer disabled:cursor-default p-0">
+                className="text-xs font-semibold text-brand-primary disabled:text-text-muted bg-none cursor-pointer disabled:cursor-default p-0">
                 Next →
               </button>
             </div>
@@ -270,14 +270,14 @@ export default function Profile() {
     'confirm-new': 'Confirm your PIN' }
 
   const roleColors = {
-    admin:   { color: 'var(--error-shade-40)', bg: 'var(--error-soft)' },
-    manager: { color: 'var(--blue)', bg: 'var(--blue-soft)' },
-    user:    { color: 'var(--success-dark)', bg: 'var(--success-soft)' } }
+    admin:   { color: 'var(--state-error-text)', bg: 'var(--state-error-soft)' },
+    manager: { color: 'var(--state-info)', bg: 'var(--state-info-soft)' },
+    user:    { color: 'var(--state-success-text)', bg: 'var(--state-success-soft)' } }
   const roleStyle = roleColors[profile?.role] || roleColors.user
 
   const pipelineRoleColors = {
     warehouse_manager: { color: 'var(--purple-shade-20)', bg: 'var(--purple-soft)' },
-    fulfillment:       { color: 'var(--blue-shade-40)', bg: 'var(--blue-soft)' },
+    fulfillment:       { color: 'var(--state-info)', bg: 'var(--state-info-soft)' },
     shipping:          { color: 'var(--blue-shade-20)', bg: 'var(--blue-tint-80)' } }
   const pipelineStyle = pipelineRoleColors[profile?.pipeline_role] || null
 
@@ -295,18 +295,18 @@ export default function Profile() {
       {/* Header */}
       <div className="mb-12">
         <button onClick={() => navigate(-1)}
-          className="flex items-center gap-1 bg-none text-text-3 text-xs cursor-pointer p-0 mb-3">
+          className="flex items-center gap-1 bg-none text-text-muted text-xs cursor-pointer p-0 mb-3">
           <ArrowLeft size="0.875rem" /> Back
         </button>
         <div className="flex items-center gap-4">
           {/* Avatar */}
-          <div className="w-14 h-14 rounded-full bg-navy flex items-center justify-center text-white text-xl font-black flex-shrink-0">
+          <div className="w-14 h-14 rounded-full bg-brand-primary flex items-center justify-center text-surface-base text-xl font-black flex-shrink-0">
             {initials}
           </div>
           <div>
-            <div className="text-xs font-bold text-black mb-1">ACCOUNT</div>
+            <div className="text-xs font-bold text-text-primary mb-1">ACCOUNT</div>
             <div className="text-base font-black leading-tight">{profile?.full_name || 'My Profile'}</div>
-            <div className="text-xs text-text-3 mt-0.5">{user?.email}</div>
+            <div className="text-xs text-text-muted mt-0.5">{user?.email}</div>
           </div>
         </div>
       </div>
@@ -330,14 +330,14 @@ export default function Profile() {
             size="sm"
             variant="secondary"
             onClick={() => setEditingName(true)}
-            className="flex items-center gap-1 text-white bg-white/15">
+            className="flex items-center gap-1 text-surface-base bg-white/15">
             <PencilSimple size="0.75rem" /> Edit Name
           </Button>
         )}>
 
         {editingName ? (
           <div className="mb-3">
-            <label className="text-xs font-bold text-black block mb-1">Full Name</label>
+            <label className="text-xs font-bold text-text-primary block mb-1">Full Name</label>
             <div className="flex gap-2">
               <input value={nameVal} onChange={e => setNameVal(e.target.value)} autoFocus className="flex-1" onKeyDown={e => e.key === 'Enter' && saveName()} />
               <Button onClick={saveName} disabled={nameSaving}>
@@ -357,15 +357,15 @@ export default function Profile() {
         {profile?.division && (
           <Row label="Division">
             <span className="flex items-center gap-1">
-              <Buildings size="0.8125rem" className="text-black" />
+              <Buildings size="0.8125rem" className="text-text-primary" />
               {profile.division}
             </span>
           </Row>
         )}
 
         <div className="flex items-center justify-between pb-3 mb-1 border-b border-border-l">
-          <div className="text-xs font-bold text-black">Member Since</div>
-          <div className="text-sm font-semibold text-black">
+          <div className="text-xs font-bold text-text-primary">Member Since</div>
+          <div className="text-sm font-semibold text-text-primary">
             {profile?.created_at ? new Date(profile.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : '—'}
           </div>
         </div>
@@ -375,23 +375,23 @@ export default function Profile() {
       <Section icon={Shield} title="Access & Roles">
 
         <div className="flex items-center justify-between pb-3 mb-3 border-b border-border-l">
-          <div className="text-xs font-bold text-black">App Role</div>
+          <div className="text-xs font-bold text-text-primary">App Role</div>
           <RoleBadge label={profile?.role || 'user'} color={roleStyle.color} bg={roleStyle.bg} />
         </div>
 
         {profile?.pipeline_role && pipelineStyle && (
           <div className="flex items-center justify-between pb-3 mb-3 border-b border-border-l">
-            <div className="text-xs font-bold text-black">Pipeline Role</div>
+            <div className="text-xs font-bold text-text-primary">Pipeline Role</div>
             <RoleBadge label={profile.pipeline_role.replace('_', ' ')} color={pipelineStyle.color} bg={pipelineStyle.bg} />
           </div>
         )}
 
         {profile?.app_access?.length > 0 && (
           <div className="mb-3">
-            <div className="text-xs font-bold text-black mb-2">App Access</div>
+            <div className="text-xs font-bold text-text-primary mb-2">App Access</div>
             <div className="flex flex-wrap gap-1">
               {profile.app_access.map(app => (
-                <span key={app} className="inline-flex items-center gap-1 p-1 px-2.5 rounded-sm bg-hover text-black text-xs font-semibold">
+                <span key={app} className="inline-flex items-center gap-1 p-1 px-2.5 rounded-sm bg-surface-hover text-text-primary text-xs font-semibold">
                   <AppWindow size="0.75rem" />
                   {appLabels[app] || app}
                 </span>
@@ -400,7 +400,7 @@ export default function Profile() {
           </div>
         )}
 
-        <div className="p-3 bg-hover rounded-lg text-xs text-text-3 leading-relaxed">
+        <div className="p-3 bg-surface-hover rounded-lg text-xs text-text-muted leading-relaxed">
           Role assignments are managed by your administrator. Contact admin to request changes.
         </div>
       </Section>
@@ -412,17 +412,17 @@ export default function Profile() {
             size="sm"
             variant="secondary"
             onClick={() => { setPinSection('idle'); setPinError(''); setNewPin('') }}
-            className="text-white bg-white/15">
+            className="text-surface-base bg-white/15">
             Cancel
           </Button>
         )}>
 
         {pinSection === 'idle' ? (
           <div>
-            <div className="flex items-center justify-between pb-3 mb-3 border-b border-border-l">
+            <div className="flex items-center justify-between pb-3 mb-3 border-b border-border-subtle">
               <div>
                 <div className="text-sm font-semibold">{hasPin ? '6-digit PIN is set ✓' : 'No PIN set'}</div>
-                <div className="text-xs text-text-3 mt-0.5">
+                <div className="text-xs text-text-muted mt-0.5">
                   {hasPin
                     ? `Last set: ${profile?.pin_set_at ? new Date(profile.pin_set_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'unknown'}`
                     : 'Set a PIN to log in faster — no password needed'}
@@ -464,7 +464,7 @@ export default function Profile() {
             size="sm"
             variant="secondary"
             onClick={() => setShowPwForm(true)}
-            className="flex items-center gap-1 text-white bg-white/15">
+            className="flex items-center gap-1 text-surface-base bg-white/15">
             <PencilSimple size="0.75rem" /> Change
           </Button>
         )}>
@@ -472,15 +472,15 @@ export default function Profile() {
         {showPwForm ? (
           <div className="flex flex-col gap-3">
             <div>
-              <label className="text-xs font-bold text-black block mb-1">New Email (optional)</label>
+              <label className="text-xs font-bold text-text-primary block mb-1">New Email (optional)</label>
               <input type="email" value={newEmail} onChange={e => setNewEmail(e.target.value)} placeholder="Leave blank to keep current" />
             </div>
             <div>
-              <label className="text-xs font-bold text-black block mb-1">New Password</label>
+              <label className="text-xs font-bold text-text-primary block mb-1">New Password</label>
               <div className="relative">
                 <input type={showPw ? 'text' : 'password'} value={newPw} onChange={e => setNewPw(e.target.value)} placeholder="Minimum 8 characters" style={{ paddingRight: 'var(--sp-10)' }} />
                 <button onClick={() => setShowPw(v => !v)}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-none cursor-pointer text-text-3 p-0 flex">
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-none cursor-pointer text-text-muted p-0 flex">
                   {showPw ? <EyeSlash size="1rem" /> : <Eye size="1rem" />}
                 </button>
               </div>
@@ -499,14 +499,14 @@ export default function Profile() {
           </div>
         ) : (
           <Row label="Password">
-            <span className="text-text-3">••••••••</span>
+            <span className="text-text-muted">••••••••</span>
           </Row>
         )}
       </Section>
 
       {/* ── Sign out ── */}
       <Card className="mb-20">
-        <div className="p-4 pl-5 bg-navy text-white text-sm font-bold">Session</div>
+        <div className="p-4 pl-5 bg-brand-primary text-surface-base text-sm font-bold">Session</div>
         <div className="p-5">
           <button onClick={() => { signOut(); navigate('/login', { replace: true }) }}
             className="flex items-center gap-2 bg-none text-error-alt font-bold text-sm cursor-pointer p-0">
