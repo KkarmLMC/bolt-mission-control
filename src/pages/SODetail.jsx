@@ -92,7 +92,7 @@ function SectionGroup({ label, items }) {
       {open && items.map((item, idx) => (
         <div key={item.id} style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 40px 56px 64px',
+          gridTemplateColumns: '1fr 2.5rem 3.5rem 4.5rem',
           gap: 6,
           padding: 'var(--pad-s) var(--pad-m)',
           borderBottom: idx < items.length - 1 ? '1px solid var(--border-l)' : 'none',
@@ -335,9 +335,9 @@ export default function SODetail() {
       {/* Line items — materials by section */}
       {sections.length > 0 && (
         <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)', maxWidth: '100%' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 40px 56px 64px', gap: 6, padding: 'var(--pad-s) var(--pad-m)', background: 'var(--hover)', borderBottom: '1px solid var(--border-l)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2.5rem 3.5rem 4.5rem', gap: 'var(--gap-s)', padding: 'var(--pad-l)', background: 'var(--white)', borderBottom: '1px solid var(--border-l)', borderRadius: 'var(--r-m) var(--r-m) 0 0' }}>
             {['Item / Description', 'Qty', 'Unit', 'Amount'].map(h => (
-              <div key={h} style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', textAlign: h !== 'Item / Description' ? 'right' : 'left', whiteSpace: 'nowrap', overflow: 'hidden' }}>{h}</div>
+              <div key={h} style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)', textAlign: h !== 'Item / Description' ? 'right' : 'left', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{h}</div>
             ))}
           </div>
           {sections.map(sec => (
