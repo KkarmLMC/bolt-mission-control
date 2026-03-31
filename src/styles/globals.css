@@ -760,6 +760,7 @@ body {
   font-weight: var(--fw-bold);
   color: var(--white);
   min-width: 0;
+  text-transform: capitalize;
   line-height: 1;
 }
 .list-card__title svg { color: var(--white); flex-shrink: 0; }
