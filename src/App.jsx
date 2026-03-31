@@ -48,9 +48,8 @@ function Header() {
     <div className="page-header">
       <div className="page-header__actions">
         {meta.parent && (
-          <button onClick={() => navigate(meta.parent)}
-            style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 'var(--r-s)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
-            <ArrowLeft size="1.125rem" color="var(--white)" />
+          <button className="page-header__icon-btn" onClick={() => navigate(meta.parent)}>
+            <ArrowLeft size="1.125rem" color="var(--color-white)" />
           </button>
         )}
         <div className="page-header__title">{meta.title}</div>
@@ -59,8 +58,7 @@ function Header() {
         <div className="status-live">
           <div className="dot-live" />LIVE
         </div>
-        <button onClick={handleSignOut}
-          style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 'var(--r-s)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+        <button className="page-header__icon-btn" onClick={handleSignOut}>
           <SignOut size="1rem" color="rgba(255,255,255,0.7)" />
         </button>
       </div>
@@ -80,7 +78,7 @@ export default function App() {
 
   // Auth loading spinner
   if (authLoading) return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100dvh' }}>
+    <div className="spinner-page">
       <div className="spinner" />
     </div>
   )
@@ -112,7 +110,7 @@ export default function App() {
 
       <div className="main">
         <Header />
-        <div style={{ flex: 1, overflow: 'hidden', overflowY: 'auto' }}>
+        <div className="main-content">
           <Routes>
             <Route path="/" element={<Navigate to="/opportunities" replace />} />
             <Route path="/opportunities" element={
