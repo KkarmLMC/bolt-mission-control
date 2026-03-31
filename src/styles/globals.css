@@ -482,6 +482,12 @@ body {
   background: var(--bg);
   width: 100%;
   box-sizing: border-box;
+
+  /* Container query context — child components respond to this width.
+     Breakpoints: sm(480px) md(640px) lg(900px)                      */
+  container-type: inline-size;
+  container-name: content;
+}
   min-height: 100%;
   padding-bottom: calc(var(--content-pad) + 4.5rem);
 }
