@@ -220,10 +220,10 @@ export default function ChangeOrders() {
       </div>
 
       <div className="card">
-        <div className="card-header">
-          <span className="card-title">Change Orders</span>
+        <div className="list-card__header">
+          <span className="list-card__title">Change Orders</span>
           {pendingCount > 0 && (
-            <span className="card-header__meta">{pendingCount} need review</span>
+            <span className="list-card__meta">{pendingCount} need review</span>
           )}
         </div>
 

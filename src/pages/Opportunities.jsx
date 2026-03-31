@@ -98,8 +98,8 @@ export default function Opportunities({ leads, loading }) {
 
       {/* Stage breakdown */}
       <div className="card">
-        <div className="card-header">
-          <span className="card-title">Stage Breakdown</span>
+        <div className="list-card__header">
+          <span className="list-card__title">Stage Breakdown</span>
         </div>
         <div className="stage-breakdown-scroll">
           {stages.map(s => {
@@ -120,8 +120,8 @@ export default function Opportunities({ leads, loading }) {
 
       {/* Opportunity sources */}
       <div className="card">
-        <div className="card-header">
-          <span className="card-title">Opportunity Sources</span>
+        <div className="list-card__header">
+          <span className="list-card__title">Opportunity Sources</span>
         </div>
         <div style={{ padding: 'var(--pad-l)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-s)' }}>
           {children.map(c => (
@@ -145,9 +145,9 @@ export default function Opportunities({ leads, loading }) {
 
       {/* Top leads */}
       <div className="card">
-        <div className="card-header">
-          <span className="card-title">Top Active Leads</span>
-          <button className="card-header__action" onClick={() => navigate('/opportunities/permits')}>View all →</button>
+        <div className="list-card__header">
+          <span className="list-card__title">Top Active Leads</span>
+          <button className="list-card__action" onClick={() => navigate('/opportunities/permits')}>View all →</button>
         </div>
         {loading ? (
           <div className="loading"><div className="spinner" /></div>

@@ -46,9 +46,9 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
       </div>
 
       <div className="card">
-        <div className="card-header">
-          <span className="card-title">Task Board</span>
-          <button className="card-header__action" onClick={onAdd}>+ Add Task</button>
+        <div className="list-card__header">
+          <span className="list-card__title">Task Board</span>
+          <button className="list-card__action" onClick={onAdd}>+ Add Task</button>
         </div>
 
         <div style={{ padding: 'var(--pad-s) var(--pad-l) 0' }}>
@@ -64,7 +64,7 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
           </div>
         </div>
 
-        <div className="card-body" style={{ paddingTop: 4 }}>
+        <div className="list-card__body" style={{ paddingTop: 4 }}>
           {loading ? (
             <div className="loading"><div className="spinner" /></div>
           ) : filtered.length === 0 ? (

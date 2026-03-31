@@ -48,9 +48,9 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
       </div>
 
       <div className="card">
-        <div className="card-header">
-          <span className="card-title">Permit Leads</span>
-          <button className="card-header__action" onClick={onAdd}>+ Add Lead</button>
+        <div className="list-card__header">
+          <span className="list-card__title">Permit Leads</span>
+          <button className="list-card__action" onClick={onAdd}>+ Add Lead</button>
         </div>
 
         <div style={{ padding: 'var(--pad-m) var(--pad-l) 0' }}>
@@ -66,7 +66,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
           </div>
         </div>
 
-        <div className="card-body">
+        <div className="list-card__body">
           {loading ? (
             <div className="loading"><div className="spinner" /><span>Loading leads...</span></div>
           ) : filtered.length === 0 ? (

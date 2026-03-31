@@ -419,7 +419,7 @@ export default function QBImport() {
 
       {/* How to export instructions */}
       <div className="card" style={{ marginBottom: 'var(--mar-l)' }}>
-        <div className="card-header"><span className="card-title">How to export from QuickBooks Desktop</span></div>
+        <div className="list-card__header"><span className="list-card__title">How to export from QuickBooks Desktop</span></div>
         <div style={{ padding: 'var(--pad-l)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-m)' }}>
           {[
             ['1', 'Open QuickBooks Desktop and go to Reports → Sales'],
@@ -441,7 +441,7 @@ export default function QBImport() {
 
       {/* Division selector */}
       <div className="card" style={{ marginBottom: 'var(--mar-l)' }}>
-        <div className="card-header"><span className="card-title">Import Settings</span></div>
+        <div className="list-card__header"><span className="list-card__title">Import Settings</span></div>
         <div style={{ padding: 'var(--pad-l)' }}>
           <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>Division</label>
           <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>

@@ -702,7 +702,11 @@ body {
   overflow: hidden;
   margin-bottom: var(--mar-m);
 }
-.card-header {
+
+/* ── List Card ── navy-header card with item rows ───────────── */
+.list-card { margin-bottom: 0; display: flex; flex-direction: column; }
+
+.list-card__header {
   padding: var(--pad-m) var(--pad-l);
   background: var(--navy);
   display: flex;
@@ -711,7 +715,7 @@ body {
   gap: var(--gap-m);
   flex-shrink: 0;
 }
-.card-title {
+.list-card__title {
   display: flex;
   align-items: center;
   gap: var(--gap-s);
@@ -720,8 +724,8 @@ body {
   color: var(--white);
   min-width: 0;
 }
-.card-title svg { color: var(--white); flex-shrink: 0; }
-.card-header__meta {
+.list-card__title svg { color: var(--white); flex-shrink: 0; }
+.list-card__meta {
   display: flex;
   align-items: center;
   gap: var(--gap-xs);
@@ -732,7 +736,7 @@ body {
   white-space: nowrap;
   opacity: 0.8;
 }
-.card-header__action {
+.list-card__action {
   display: flex;
   align-items: center;
   gap: var(--gap-xs);
@@ -749,9 +753,8 @@ body {
   opacity: 0.85;
   transition: opacity var(--ease-fast);
 }
-.card-header__action:hover { opacity: 1; }
-
-.card-body { padding: 0; }
+.list-card__action:hover { opacity: 1; }
+.list-card__body { padding: 0; }
 
 /* ============================================================
    TABLE
@@ -972,7 +975,7 @@ textarea { resize: vertical; min-height: 70px; }
   .stat-value { font-size: 20px; }
   .stat-icon { width: 26px; height: 26px; border-radius: 6px; }
   .card { border-radius: var(--r-m); margin-bottom: 10px; }
-  .card-header { padding: 11px 12px; }
+  .list-card__header { padding: 11px 12px; }
   .filter-bar { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 10px; gap: 6px; scrollbar-width: none; }
   .filter-bar::-webkit-scrollbar { display: none; }
   .filter-pill { flex-shrink: 0; padding: 5px 10px; font-size: 11.5px; }
@@ -1048,7 +1051,7 @@ textarea { resize: vertical; min-height: 70px; }
   .mobile-opps-item.active .mobile-opps-label { color: var(--red); }
   .fab { position: fixed; bottom: 80px; right: 16px; width: 52px; height: 52px; border-radius: 26px; background: var(--red); color: white; font-size: 24px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 90; transition: transform var(--ease-base); }
   .fab:active { transform: scale(0.93); }
-  .card-header .btn-primary { display: none; }
+  .list-card__header .btn-primary { display: none; }
 }
 
 @media (min-width: 769px) {
