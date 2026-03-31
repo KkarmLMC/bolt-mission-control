@@ -86,7 +86,7 @@ function SectionGroup({ label, items }) {
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>
             ${subtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </span>
-          <CaretDown size={13} style={{ color: 'rgba(255,255,255,0.5)', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+          <CaretDown size="0.8125rem" style={{ color: 'rgba(255,255,255,0.5)', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
         </div>
       </button>
       {open && items.map((item, idx) => (
@@ -232,7 +232,7 @@ export default function SODetail() {
             display: 'flex', alignItems: 'center', gap: 4,
             padding: '4px 12px', borderRadius: 'var(--r-s)',
             background: statusDisplay.bg, color: statusDisplay.color }}>
-            <StatusIcon size={12} weight="fill" />
+            <StatusIcon size="0.75rem" weight="fill" />
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700 }}>{statusDisplay.label}</span>
           </div>
         </div>
@@ -241,23 +241,23 @@ export default function SODetail() {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--gap-l)', paddingTop: 'var(--pad-m)' }}>
           {(po.customer_city || po.customer_state) && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)' }}>
-              <MapPin size={12} />
+              <MapPin size="0.75rem" />
               {[po.customer_city, po.customer_state].filter(Boolean).join(', ')}
             </div>
           )}
           {po.customer_phone && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)' }}>
-              <Phone size={12} /> {po.customer_phone}
+              <Phone size="0.75rem" /> {po.customer_phone}
             </div>
           )}
           {po.customer_email && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)' }}>
-              <Envelope size={12} /> {po.customer_email}
+              <Envelope size="0.75rem" /> {po.customer_email}
             </div>
           )}
           {po.so_date && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)' }}>
-              <CalendarBlank size={12} />
+              <CalendarBlank size="0.75rem" />
               {new Date(po.so_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
             </div>
           )}
@@ -289,7 +289,7 @@ export default function SODetail() {
                     onClick={() => handleAction(action)}
                     disabled={acting}
                     style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: color, color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: acting ? 'not-allowed' : 'pointer', opacity: acting ? 0.7 : 1 }}>
-                    {acting ? <div className="spinner" style={{ width: 14, height: 14, borderWidth: 2 }} /> : <Icon size={15} weight="bold" />}
+                    {acting ? <div className="spinner" style={{ width: 14, height: 14, borderWidth: 2 }} /> : <Icon size="0.9375rem" weight="bold" />}
                     {label}
                   </button>
                 )
@@ -298,7 +298,7 @@ export default function SODetail() {
                 <button
                   onClick={() => setCancelModal(true)}
                   style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'none', color: 'var(--error)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer' }}>
-                  <Prohibit size={14} />
+                  <Prohibit size="0.875rem" />
                   Cancel Order
                 </button>
               )}
@@ -316,7 +316,7 @@ export default function SODetail() {
           {Object.entries(warehouseImpact).map(([wName, impact]) => (
             <div key={wName} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--mar-s)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', fontSize: 'var(--text-sm)' }}>
-                <Buildings size={14} style={{ color: 'var(--black)' }} />
+                <Buildings size="0.875rem" style={{ color: 'var(--black)' }} />
                 {wName}
               </div>
               <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--error-dark)', background: 'var(--error-soft)', padding: '2px 8px', borderRadius: 'var(--r-s)' }}>
@@ -396,7 +396,7 @@ export default function SODetail() {
       {po.status === 'cancelled' && (po.cancelled_at || po.cancel_reason) && (
         <div style={{ background: 'var(--error-soft)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)', border: '1px solid var(--error)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', marginBottom: 'var(--mar-s)' }}>
-            <Prohibit size={16} style={{ color: 'var(--error)' }} />
+            <Prohibit size="1rem" style={{ color: 'var(--error)' }} />
             <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--error-dark)' }}>Order Cancelled</span>
           </div>
           {po.cancel_reason && (
@@ -419,7 +419,7 @@ export default function SODetail() {
 
             {/* Modal header */}
             <div style={{ background: 'var(--error)', padding: 'var(--pad-l) var(--pad-xl)', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
-              <Prohibit size={20} style={{ color: '#fff' }} />
+              <Prohibit size="1.25rem" style={{ color: '#fff' }} />
               <div>
                 <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: '#fff' }}>Cancel Sales Order</div>
                 <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.8)' }}>{po.so_number} · {po.customer_name}</div>
@@ -437,9 +437,9 @@ export default function SODetail() {
                   {/* What will happen summary */}
                   <div style={{ background: 'var(--hover)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', marginBottom: 'var(--mar-l)', fontSize: 'var(--text-xs)', color: 'var(--black)', lineHeight: 1.8 }}>
                     <div style={{ fontWeight: 700, marginBottom: 4 }}>This will:</div>
-                    <div><ArrowCounterClockwise size={12} style={{ marginRight: 4 }} /> Return all allocated inventory to stock</div>
-                    <div><X size={12} style={{ marginRight: 4 }} /> Remove fulfillment sheets and pending shipments</div>
-                    <div><Prohibit size={12} style={{ marginRight: 4 }} /> Mark this SO as cancelled (preserved for audit)</div>
+                    <div><ArrowCounterClockwise size="0.75rem" style={{ marginRight: 4 }} /> Return all allocated inventory to stock</div>
+                    <div><X size="0.75rem" style={{ marginRight: 4 }} /> Remove fulfillment sheets and pending shipments</div>
+                    <div><Prohibit size="0.75rem" style={{ marginRight: 4 }} /> Mark this SO as cancelled (preserved for audit)</div>
                   </div>
 
                   <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>Reason for cancellation *</label>
@@ -462,13 +462,13 @@ export default function SODetail() {
                       onClick={handleCancel}
                       disabled={!cancelReason.trim() || cancelling}
                       style={{ padding: 'var(--pad-s) var(--pad-xl)', borderRadius: 'var(--r-m)', background: !cancelReason.trim() ? 'var(--text-3)' : 'var(--error)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: !cancelReason.trim() ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
-                      {cancelling ? <><div className="spinner" style={{ width: 14, height: 14, borderWidth: 2, borderTopColor: '#fff' }} /> Cancelling…</> : <><Prohibit size={14} /> Cancel Order</>}
+                      {cancelling ? <><div className="spinner" style={{ width: 14, height: 14, borderWidth: 2, borderTopColor: '#fff' }} /> Cancelling…</> : <><Prohibit size="0.875rem" /> Cancel Order</>}
                     </button>
                   </div>
                 </>
               ) : cancelResult.success ? (
                 <div style={{ textAlign: 'center', padding: 'var(--pad-l) 0' }}>
-                  <CheckCircle size={44} weight="fill" style={{ color: 'var(--success)', marginBottom: 'var(--mar-m)' }} />
+                  <CheckCircle size="2.75rem" weight="fill" style={{ color: 'var(--success)', marginBottom: 'var(--mar-m)' }} />
                   <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, marginBottom: 'var(--mar-s)' }}>Order Cancelled</div>
                   <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', lineHeight: 1.6 }}>
                     {cancelResult.inventory_reversed > 0 && <div>{cancelResult.inventory_reversed} inventory allocation(s) returned to stock</div>}
@@ -480,7 +480,7 @@ export default function SODetail() {
                 </div>
               ) : (
                 <div style={{ textAlign: 'center', padding: 'var(--pad-l) 0' }}>
-                  <Warning size={44} weight="fill" style={{ color: 'var(--error)', marginBottom: 'var(--mar-m)' }} />
+                  <Warning size="2.75rem" weight="fill" style={{ color: 'var(--error)', marginBottom: 'var(--mar-m)' }} />
                   <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--error-dark)', marginBottom: 'var(--mar-s)' }}>Cancel Failed</div>
                   <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>{cancelResult.error}</div>
                   <button

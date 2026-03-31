@@ -50,7 +50,7 @@ function SubNav({ children, collapsed, goTo, currentPath }) {
               title={collapsed ? child.label : undefined}
               style={{ marginBottom: 1 }}
             >
-              <child.Icon size={14} style={{ flexShrink: 0 }} />
+              <child.Icon size="0.875rem" style={{ flexShrink: 0 }} />
               {!collapsed && (
                 <span className="sidebar-item-label">
                   {child.label}
@@ -84,7 +84,7 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
         onClick={() => goTo(item.path)}
         title={collapsed ? item.label : undefined}
       >
-        <item.Icon size={17} weight={active ? 'fill' : 'regular'} style={{ flexShrink: 0 }} />
+        <item.Icon size="1.0625rem" weight={active ? 'fill' : 'regular'} style={{ flexShrink: 0 }} />
         {!collapsed && (
           <span className="sidebar-item-label" style={{ display: 'flex', alignItems: 'center', gap: 6, flex: 1 }}>
             {item.label}
@@ -153,7 +153,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
         {/* Logo */}
         <div className="sidebar-brand-row">
           {collapsed
-            ? <Lightning size={22} weight="fill" style={{ color: 'var(--navy)' }} />
+            ? <Lightning size="1.375rem" weight="fill" style={{ color: 'var(--navy)' }} />
             : (
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)', letterSpacing: '-0.01em' }}>
@@ -188,7 +188,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
             <div className="sidebar-section-label">ALERTS</div>
             {criticalLeads > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 'var(--r-s)', marginBottom: 4, background: 'rgba(245,51,63,0.15)' }}>
-                <Warning size={13} weight="fill" style={{ color: 'var(--red)', flexShrink: 0 }} />
+                <Warning size="0.8125rem" weight="fill" style={{ color: 'var(--red)', flexShrink: 0 }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--red)' }}>
                   {criticalLeads} critical lead{criticalLeads > 1 ? 's' : ''}
                 </span>
@@ -196,7 +196,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
             )}
             {overdueTasks > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 'var(--r-s)', marginBottom: 4, background: 'rgba(245,158,11,0.15)' }}>
-                <Warning size={13} weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
+                <Warning size="0.8125rem" weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
                 <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--warning)' }}>
                   {overdueTasks} overdue task{overdueTasks > 1 ? 's' : ''}
                 </span>
@@ -220,7 +220,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
 
           {/* Profile */}
           <button onClick={() => navigate('/profile')} className={`sidebar-item ${location.pathname === '/profile' ? 'sidebar-item--active' : ''}`} title={collapsed ? 'View Profile' : undefined}>
-            <User size={17} style={{ flexShrink: 0 }} />
+            <User size="1.0625rem" style={{ flexShrink: 0 }} />
             {!collapsed && <span className="sidebar-item-label">View Profile</span>}
           </button>
 
@@ -228,7 +228,7 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
           <button onClick={handleSignOut} className="sidebar-item"
             title={collapsed ? 'Sign Out' : undefined}
             >
-            <SignOut size={17} style={{ flexShrink: 0 }} />
+            <SignOut size="1.0625rem" style={{ flexShrink: 0 }} />
             {!collapsed && <span className="sidebar-item-label">Sign Out</span>}
           </button>
 
@@ -236,8 +236,8 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
           <button className="sidebar-item sidebar-collapse-btn" onClick={onToggle}
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
             {collapsed
-              ? <ArrowLineRight size={17} style={{ flexShrink: 0 }} />
-              : <ArrowLineLeft  size={17} style={{ flexShrink: 0 }} />}
+              ? <ArrowLineRight size="1.0625rem" style={{ flexShrink: 0 }} />
+              : <ArrowLineLeft  size="1.0625rem" style={{ flexShrink: 0 }} />}
             {!collapsed && <span className="sidebar-item-label">Collapse</span>}
           </button>
         </div>

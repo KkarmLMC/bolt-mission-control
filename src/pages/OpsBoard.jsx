@@ -90,10 +90,10 @@ function JobPanel({ project, assignments, onClose, onSave }) {
           <StageBadge stage={project.stage} />
           <div style={{ display: 'flex', gap: 8 }}>
             <button onClick={() => setEditing(e => !e)} style={{ background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--r-s)', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
-              <PencilSimple size={13} />
+              <PencilSimple size="0.8125rem" />
             </button>
             <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--r-s)', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
-              <X size={13} />
+              <X size="0.8125rem" />
             </button>
           </div>
         </div>
@@ -192,7 +192,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
         <div style={{ padding: 'var(--pad-l)' }}>
           <button onClick={() => navigate(`/installations/${project.id}`)}
             style={{ width: '100%', padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
-            Open Job Page <ArrowSquareOut size={14} />
+            Open Job Page <ArrowSquareOut size="0.875rem" />
           </button>
         </div>
       )}
@@ -598,7 +598,7 @@ export default function OpsBoard() {
             ].map(({ key, Icon, label }) => (
               <button key={key} onClick={() => setView(key)}
                 style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 'var(--r-s)', background: view === key ? 'var(--navy)' : 'var(--hover)', color: view === key ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
-                <Icon size={12} weight={view === key ? 'fill' : 'regular'} />
+                <Icon size="0.75rem" weight={view === key ? 'fill' : 'regular'} />
                 {label}
               </button>
             ))}
@@ -619,7 +619,7 @@ export default function OpsBoard() {
           {/* Date navigation */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-xs)', flexShrink: 0 }}>
             <button onClick={() => go(-1)} style={{ width: 26, height: 26, borderRadius: 'var(--r-m)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <CaretLeft size={12} />
+              <CaretLeft size="0.75rem" />
             </button>
             <button onClick={() => setCurrentDate(today())} style={{ padding: '3px 8px', borderRadius: 'var(--r-s)', background: 'transparent', fontSize: 'var(--text-xs)', fontWeight: 600, cursor: 'pointer', color: 'var(--navy)' }}>
               Today
@@ -631,7 +631,7 @@ export default function OpsBoard() {
                 : `${startLabel} – ${endLabel}`}
             </span>
             <button onClick={() => go(1)} style={{ width: 26, height: 26, borderRadius: 'var(--r-m)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <CaretRight size={12} />
+              <CaretRight size="0.75rem" />
             </button>
           </div>
         </div>
@@ -641,7 +641,7 @@ export default function OpsBoard() {
 
           {/* Search */}
           <div style={{ position: 'relative', flex: 1 }}>
-            <MagnifyingGlass size={12} style={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
+            <MagnifyingGlass size="0.75rem" style={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search jobs…"
               style={{ paddingLeft: 24, paddingRight: 8, width: '100%', height: 28, fontSize: 'var(--text-xs)' }} />
           </div>
@@ -656,7 +656,7 @@ export default function OpsBoard() {
           {/* Conflict badge */}
           {conflicts.length > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 'var(--r-s)', background: 'var(--error-soft)', color: 'var(--error-dark)', fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, whiteSpace: 'nowrap' }}>
-              <Warning size={12} weight="fill" />
+              <Warning size="0.75rem" weight="fill" />
               {conflicts.length}
             </div>
           )}
@@ -672,7 +672,7 @@ export default function OpsBoard() {
           </div>
         ) : filteredProjects.length === 0 ? (
           <div className="empty">
-            <CalendarBlank size={40} style={{ color: 'var(--text-3)', marginBottom: 8 }} />
+            <CalendarBlank size="2.5rem" style={{ color: 'var(--text-3)', marginBottom: 8 }} />
             <div className="empty-title">No jobs to display</div>
             <div className="empty-desc">Adjust your filters or schedule some projects.</div>
           </div>

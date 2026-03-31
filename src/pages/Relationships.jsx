@@ -39,7 +39,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
 
       <div className="card">
         <div className="list-card__header">
-          <span className="list-card__title"><Handshake size={14} /> Companies & Relationships</span>
+          <span className="list-card__title"><Handshake size="0.875rem" /> Companies & Relationships</span>
           <button className="list-card__action" onClick={onAdd}>+ Add Company</button>
         </div>
 
@@ -50,9 +50,9 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
             ))}
           </div>
           <div className="search-box" style={{ marginBottom: 8 }}>
-            <MagnifyingGlass size={16} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+            <MagnifyingGlass size="1rem" style={{ color: 'var(--text-3)', flexShrink: 0 }} />
             <input placeholder="Search companies..." value={search} onChange={e => setSearch(e.target.value)} />
-            {search && <button onClick={() => setSearch('')} style={{ background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}><X size={13} /></button>}
+            {search && <button onClick={() => setSearch('')} style={{ background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}><X size="0.8125rem" /></button>}
           </div>
         </div>
 
@@ -61,7 +61,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
             <div className="loading"><div className="spinner" /><span>Loading...</span></div>
           ) : filtered.length === 0 ? (
             <div className="empty">
-              <Handshake size={36} style={{ color: 'var(--text-3)', marginBottom: 8 }} />
+              <Handshake size="2.25rem" style={{ color: 'var(--text-3)', marginBottom: 8 }} />
               <div className="empty-title">No companies yet</div>
               <div className="empty-desc">Add your GC and MEP engineer relationships.</div>
               <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Company</button>

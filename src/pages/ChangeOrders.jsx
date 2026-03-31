@@ -144,11 +144,11 @@ function COModal({ co, onClose, onAction }) {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)' }}>
               <button onClick={() => handleAction('rejected')} disabled={saving}
                 style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--error)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                <XCircle size={16} /> Reject
+                <XCircle size="1rem" /> Reject
               </button>
               <button onClick={() => handleAction('approved')} disabled={saving}
                 style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                {saving ? <div className="spinner" style={{ borderTopColor: '#fff' }} /> : <><CheckCircle size={16} /> Approve → SO</>}
+                {saving ? <div className="spinner" style={{ borderTopColor: '#fff' }} /> : <><CheckCircle size="1rem" /> Approve → SO</>}
               </button>
             </div>
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--mar-s)' }}>
@@ -221,7 +221,7 @@ export default function ChangeOrders() {
 
       <div className="card">
         <div className="list-card__header">
-          <span className="list-card__title"><ArrowsClockwise size={14} /> Change Orders</span>
+          <span className="list-card__title"><ArrowsClockwise size="0.875rem" /> Change Orders</span>
           {pendingCount > 0 && (
             <span className="list-card__meta">{pendingCount} need review</span>
           )}
@@ -241,7 +241,7 @@ export default function ChangeOrders() {
           <div className="loading"><div className="spinner" /></div>
         ) : filtered.length === 0 ? (
           <div className="empty">
-            <ClipboardText size={36} style={{ color: 'var(--text-3)', marginBottom: 8 }} />
+            <ClipboardText size="2.25rem" style={{ color: 'var(--text-3)', marginBottom: 8 }} />
             <div className="empty-title">{filter === 'pending' ? 'No pending requests' : 'Nothing here'}</div>
             <div className="empty-desc">Field part requests will appear here for review.</div>
           </div>
@@ -261,14 +261,14 @@ export default function ChangeOrders() {
                     </td>
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                        <Package size={13} style={{ color: 'var(--black)' }} />
+                        <Package size="0.8125rem" style={{ color: 'var(--black)' }} />
                         <span style={{ fontSize: 'var(--text-sm)' }}>{co.change_order_items?.length || 0} part{co.change_order_items?.length !== 1 ? 's' : ''}</span>
                       </div>
                     </td>
                     <td><span style={{ fontSize: 'var(--text-sm)' }}>{co.submitted_by}</span></td>
                     <td><span className="cell-mono" style={{ fontSize: 'var(--text-xs)' }}>{new Date(co.created_at).toLocaleDateString()}</span></td>
                     <td><StatusBadge status={co.status} /></td>
-                    <td><ArrowRight size={16} style={{ color: 'var(--black)' }} /></td>
+                    <td><ArrowRight size="1rem" style={{ color: 'var(--black)' }} /></td>
                   </tr>
                 ))}
               </tbody>

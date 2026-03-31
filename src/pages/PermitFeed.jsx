@@ -49,7 +49,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
 
       <div className="card">
         <div className="list-card__header">
-          <span className="list-card__title"><Newspaper size={14} /> Permit Leads</span>
+          <span className="list-card__title"><Newspaper size="0.875rem" /> Permit Leads</span>
           <button className="list-card__action" onClick={onAdd}>+ Add Lead</button>
         </div>
 
@@ -60,9 +60,9 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
             ))}
           </div>
           <div className="search-box" style={{ marginBottom: 8 }}>
-            <MagnifyingGlass size={16} style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+            <MagnifyingGlass size="1rem" style={{ color: 'var(--text-3)', flexShrink: 0 }} />
             <input placeholder="Search leads..." value={search} onChange={e => setSearch(e.target.value)} />
-            {search && <button onClick={() => setSearch('')} style={{ background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}><X size={13} /></button>}
+            {search && <button onClick={() => setSearch('')} style={{ background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}><X size="0.8125rem" /></button>}
           </div>
         </div>
 
@@ -71,7 +71,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
             <div className="loading"><div className="spinner" /><span>Loading leads...</span></div>
           ) : filtered.length === 0 ? (
             <div className="empty">
-              <Lightning size={36} style={{ color: 'var(--text-3)', marginBottom: 8 }} />
+              <Lightning size="2.25rem" style={{ color: 'var(--text-3)', marginBottom: 8 }} />
               <div className="empty-title">No leads yet</div>
               <div className="empty-desc">Add leads manually or run the permit scraper.</div>
               <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Lead</button>

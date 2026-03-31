@@ -48,7 +48,7 @@ export default function Opportunities({ leads, loading }) {
       {/* Change Orders alert */}
       {pendingCOs.length > 0 && (
         <div onClick={() => navigate('/change-orders')} style={{ background: 'var(--orange-soft)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
-          <ClipboardText size={20} style={{ color: 'var(--orange-shade-20)', flexShrink: 0 }} />
+          <ClipboardText size="1.25rem" style={{ color: 'var(--orange-shade-20)', flexShrink: 0 }} />
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--orange-shade-20)' }}>
               {pendingCOs.length} Part Request{pendingCOs.length !== 1 ? 's' : ''} Pending Review
@@ -57,19 +57,19 @@ export default function Opportunities({ leads, loading }) {
               {pendingCOs[0]?.job_reference}{pendingCOs.length > 1 ? ` + ${pendingCOs.length - 1} more` : ''}
             </div>
           </div>
-          <ArrowRight size={16} style={{ color: 'var(--orange-shade-20)', flexShrink: 0 }} />
+          <ArrowRight size="1rem" style={{ color: 'var(--orange-shade-20)', flexShrink: 0 }} />
         </div>
       )}
 
       {/* QB Import shortcut */}
       <div onClick={() => navigate('/qb-import')}
         style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
-        <DownloadSimple size={18} style={{ color: 'var(--navy)', flexShrink: 0 }} />
+        <DownloadSimple size="1.125rem" style={{ color: 'var(--navy)', flexShrink: 0 }} />
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Import from QuickBooks</div>
           <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>Upload a QB Desktop CSV to create Sales Orders</div>
         </div>
-        <ArrowRight size={14} style={{ color: 'var(--black)', flexShrink: 0 }} />
+        <ArrowRight size="0.875rem" style={{ color: 'var(--black)', flexShrink: 0 }} />
       </div>
 
       {/* Stat cards — flat, no icons, Field Ops style */}
@@ -99,7 +99,7 @@ export default function Opportunities({ leads, loading }) {
       {/* Stage breakdown */}
       <div className="card">
         <div className="list-card__header">
-          <span className="list-card__title"><ChartBar size={14} /> Stage Breakdown</span>
+          <span className="list-card__title"><ChartBar size="0.875rem" /> Stage Breakdown</span>
         </div>
         <div className="stage-breakdown-scroll">
           {stages.map(s => {
@@ -121,13 +121,13 @@ export default function Opportunities({ leads, loading }) {
       {/* Opportunity sources */}
       <div className="card">
         <div className="list-card__header">
-          <span className="list-card__title"><Target size={14} /> Opportunity Sources</span>
+          <span className="list-card__title"><Target size="0.875rem" /> Opportunity Sources</span>
         </div>
         <div style={{ padding: 'var(--pad-l)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-s)' }}>
           {children.map(c => (
             <div key={c.label} onClick={() => c.path && navigate(c.path)}
               style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-l)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-l)', background: 'var(--white)', cursor: c.path ? 'pointer' : 'default', opacity: c.soon ? 0.5 : 1 }}>
-              <c.Icon size={18} style={{ color: 'var(--black)', flexShrink: 0 }} />
+              <c.Icon size="1.125rem" style={{ color: 'var(--black)', flexShrink: 0 }} />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--black)' }}>{c.label}</div>
                 <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>{c.description}</div>
@@ -137,7 +137,7 @@ export default function Opportunities({ leads, loading }) {
               ) : c.soon ? (
                 <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--black)', flexShrink: 0 }}>Soon</span>
               ) : null}
-              {c.path && <CaretRight size={16} style={{ color: 'var(--black)', flexShrink: 0 }} />}
+              {c.path && <CaretRight size="1rem" style={{ color: 'var(--black)', flexShrink: 0 }} />}
             </div>
           ))}
         </div>
@@ -146,14 +146,14 @@ export default function Opportunities({ leads, loading }) {
       {/* Top leads */}
       <div className="card">
         <div className="list-card__header">
-          <span className="list-card__title"><TrendUp size={14} /> Top Active Leads</span>
+          <span className="list-card__title"><TrendUp size="0.875rem" /> Top Active Leads</span>
           <button className="list-card__action" onClick={() => navigate('/opportunities/permits')}>View all →</button>
         </div>
         {loading ? (
           <div className="loading"><div className="spinner" /></div>
         ) : topLeads.length === 0 ? (
           <div className="empty">
-            <Lightning size={36} style={{ color: 'var(--text-3)', marginBottom: 8 }} />
+            <Lightning size="2.25rem" style={{ color: 'var(--text-3)', marginBottom: 8 }} />
             <div className="empty-title">No active leads</div>
             <div className="empty-desc">Add leads via Permit Feed to see them here.</div>
           </div>

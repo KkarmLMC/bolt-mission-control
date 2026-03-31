@@ -50,7 +50,7 @@ export default function SalesOrders() {
         action={
           <button onClick={() => navigate('/sales-orders/new')}
             style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', cursor: 'pointer', flexShrink: 0 }}>
-            <Plus size={15} weight="bold" /> New SO
+            <Plus size="0.9375rem" weight="bold" /> New SO
           </button>
         }
       />
@@ -75,7 +75,7 @@ export default function SalesOrders() {
 
       {/* Search */}
       <div style={{ position: 'relative', marginBottom: 'var(--mar-m)' }}>
-        <MagnifyingGlass size={15} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
+        <MagnifyingGlass size="0.9375rem" style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
         <input
           value={query}
           onChange={e => setQuery(e.target.value)}
@@ -108,7 +108,7 @@ export default function SalesOrders() {
         <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
       ) : visible.length === 0 ? (
         <div className="empty">
-          <Receipt size={36} style={{ color: 'var(--text-3)', marginBottom: 8 }} />
+          <Receipt size="2.25rem" style={{ color: 'var(--text-3)', marginBottom: 8 }} />
           <div className="empty-title">No sales orders found</div>
           <div className="empty-desc">Try adjusting your search or filter.</div>
         </div>
@@ -120,7 +120,7 @@ export default function SalesOrders() {
               <div key={o.id}
                 onClick={() => navigate(`/sales-orders/${o.id}`)}
                 style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', borderBottom: idx < visible.length - 1 ? '1px solid var(--border-l)' : 'none', cursor: 'pointer' }}>
-                <Receipt size={16} style={{ color: 'var(--navy)' }} />
+                <Receipt size="1rem" style={{ color: 'var(--navy)' }} />
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
                     <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--navy)' }}>{o.so_number}</span>
@@ -134,7 +134,7 @@ export default function SalesOrders() {
                 <div style={{ textAlign: 'right', flexShrink: 0 }}>
                   <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>{fmt(o.grand_total)}</div>
                 </div>
-                <CaretRight size={14} style={{ color: 'var(--black)', flexShrink: 0 }} />
+                <CaretRight size="0.875rem" style={{ color: 'var(--black)', flexShrink: 0 }} />
               </div>
             )
           })}

@@ -413,13 +413,13 @@ export default function QBImport() {
     <div className="page-content fade-in">
       <button onClick={() => navigate(-1)}
         style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
-        <ArrowLeft size={14} /> Back
+        <ArrowLeft size="0.875rem" /> Back
       </button>
       <PageHeader eyebrow="QUICKBOOKS" title="Import Sales Orders" subtitle="Import invoices or sales orders exported from QuickBooks Desktop" />
 
       {/* How to export instructions */}
       <div className="card" style={{ marginBottom: 'var(--mar-l)' }}>
-        <div className="list-card__header"><span className="list-card__title"><Question size={14} /> How to export from QuickBooks Desktop</span></div>
+        <div className="list-card__header"><span className="list-card__title"><Question size="0.875rem" /> How to export from QuickBooks Desktop</span></div>
         <div style={{ padding: 'var(--pad-l)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-m)' }}>
           {[
             ['1', 'Open QuickBooks Desktop and go to Reports → Sales'],
@@ -441,7 +441,7 @@ export default function QBImport() {
 
       {/* Division selector */}
       <div className="card" style={{ marginBottom: 'var(--mar-l)' }}>
-        <div className="list-card__header"><span className="list-card__title"><GearSix size={14} /> Import Settings</span></div>
+        <div className="list-card__header"><span className="list-card__title"><GearSix size="0.875rem" /> Import Settings</span></div>
         <div style={{ padding: 'var(--pad-l)' }}>
           <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>Division</label>
           <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
@@ -468,7 +468,7 @@ export default function QBImport() {
           padding: 'var(--pad-xxl)',
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
           gap: 'var(--gap-m)', cursor: 'pointer', transition: 'all 0.15s' }}>
-        <FileXls size={44} style={{ color: dragOver ? 'var(--navy)' : 'var(--text-3)' }} />
+        <FileXls size="2.75rem" style={{ color: dragOver ? 'var(--navy)' : 'var(--text-3)' }} />
         <div style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: dragOver ? 'var(--navy)' : 'var(--black)' }}>
           Drop your QB export here
         </div>
@@ -479,7 +479,7 @@ export default function QBImport() {
 
       {error && (
         <div style={{ marginTop: 'var(--mar-m)', padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', display: 'flex', gap: 'var(--gap-s)', alignItems: 'center' }}>
-          <Warning size={16} style={{ flexShrink: 0 }} /> {error}
+          <Warning size="1rem" style={{ flexShrink: 0 }} /> {error}
         </div>
       )}
     </div>
@@ -490,7 +490,7 @@ export default function QBImport() {
     <div className="page-content fade-in">
       <button onClick={() => setStep('upload')}
         style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
-        <ArrowLeft size={14} /> Change file
+        <ArrowLeft size="0.875rem" /> Change file
       </button>
       <PageHeader eyebrow="QUICKBOOKS IMPORT" title="Review & Confirm"
         subtitle={`${fileName} · ${parsed.length} record${parsed.length !== 1 ? 's' : ''} found · ${format === 'detail' ? 'Detail format (with line items)' : 'Summary format'}`}
@@ -520,10 +520,10 @@ export default function QBImport() {
 
       {/* Search */}
       <div style={{ position: 'relative', marginBottom: 'var(--mar-m)' }}>
-        <MagnifyingGlass size={14} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
+        <MagnifyingGlass size="0.875rem" style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by customer, SO #, or job…"
           style={{ width: '100%', paddingLeft: 30 }} />
-        {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)', display: 'flex' }}><X size={13} /></button>}
+        {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)', display: 'flex' }}><X size="0.8125rem" /></button>}
       </div>
 
       {/* Table */}
@@ -558,7 +558,7 @@ export default function QBImport() {
         style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-m)', background: selected.size === 0 ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--text-md)', cursor: selected.size === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
         {importing
           ? <><div className="spinner" style={{ borderTopColor: '#fff' }} /> Importing…</>
-          : <>Import {selected.size} Sales Order{selected.size !== 1 ? 's' : ''} <ArrowRight size={16} /></>
+          : <>Import {selected.size} Sales Order{selected.size !== 1 ? 's' : ''} <ArrowRight size="1rem" /></>
         }
       </button>
       <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--mar-s)' }}>
@@ -575,7 +575,7 @@ export default function QBImport() {
     return (
       <div className="page-content fade-in">
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: 'var(--pad-xxl) 0', gap: 'var(--gap-l)' }}>
-          <CheckCircle size={52} weight="fill" style={{ color: 'var(--success)' }} />
+          <CheckCircle size="3.25rem" weight="fill" style={{ color: 'var(--success)' }} />
           <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Import Complete</div>
           <div style={{ display: 'flex', gap: 'var(--gap-l)', flexWrap: 'wrap', justifyContent: 'center' }}>
             <div style={{ textAlign: 'center' }}>
@@ -607,7 +607,7 @@ export default function QBImport() {
             </button>
             <button onClick={() => navigate('/change-orders')}
               style={{ padding: 'var(--pad-m) var(--pad-xl)', borderRadius: 'var(--r-l)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
-              View Change Orders <ArrowRight size={14} />
+              View Change Orders <ArrowRight size="0.875rem" />
             </button>
           </div>
         </div>

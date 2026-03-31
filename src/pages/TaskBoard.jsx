@@ -47,7 +47,7 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
 
       <div className="card">
         <div className="list-card__header">
-          <span className="list-card__title"><ListChecks size={14} /> Task Board</span>
+          <span className="list-card__title"><ListChecks size="0.875rem" /> Task Board</span>
           <button className="list-card__action" onClick={onAdd}>+ Add Task</button>
         </div>
 
@@ -69,7 +69,7 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
             <div className="loading"><div className="spinner" /></div>
           ) : filtered.length === 0 ? (
             <div className="empty">
-              <CheckCircle size={36} style={{ color: 'var(--text-3)', marginBottom: 8 }} />
+              <CheckCircle size="2.25rem" style={{ color: 'var(--text-3)', marginBottom: 8 }} />
               <div className="empty-title">No tasks here</div>
               <div className="empty-desc">Add tasks to track follow-ups, calls, and actions.</div>
               <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Task</button>
@@ -77,7 +77,7 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
           ) : filtered.map(t => (
             <div key={t.id} className="task-row" style={{ opacity: t.done ? 0.55 : 1 }} onClick={() => onEdit(t)}>
               <div className={`checkbox ${t.done ? 'checked' : ''}`} onClick={e => { e.stopPropagation(); onToggle(t) }}>
-                {t.done && <Check size={10} weight="bold" style={{ color: 'white' }} />}
+                {t.done && <Check size="0.625rem" weight="bold" style={{ color: 'white' }} />}
               </div>
               <div className="task-body">
                 <div className={`task-title ${t.done ? 'done' : ''}`}>{t.title}</div>
