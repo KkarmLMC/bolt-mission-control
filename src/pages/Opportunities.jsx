@@ -110,7 +110,7 @@ export default function Opportunities({ leads, loading }) {
                 background: 'var(--white)',
                 borderTop: `3px solid ${s.color}`, borderRadius: 'var(--r-m)', padding: '12px 14px' }}>
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: s.color, marginBottom: 4 }}>{s.label}</div>
-                <div style={{ fontSize: 'var(--text-display)', fontWeight: 700, color: 'var(--black)', lineHeight: 1 }}>{count}</div>
+                <div style={{ fontSize: 'calc(var(--text-xxl) * 1.2)', fontWeight: 700, color: 'var(--black)', lineHeight: 1 }}>{count}</div>
                 <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 4 }}>{val > 0 ? fmt$(val) : '—'}</div>
               </div>
             )
