@@ -665,9 +665,9 @@ body {
 .divider { height: 1px; background: rgba(255,255,255,0.08); margin:: 0.25rem 0; }
 
 /* ============================================================
-   HEADER
+   PAGE HEADER
    ============================================================ */
-.header {
+.page-header {
   background: var(--navy);
   padding: 0 var(--pad-l);
   height: 3.25rem;
@@ -676,8 +676,17 @@ body {
   justify-content: space-between;
   flex-shrink: 0;
 }
-.header-title { font-size: var(--text-md); font-weight: var(--fw-bold); color: var(--white); letter-spacing: -0.02em; }
-.header-sub { font-size: var(--text-xs); color: rgba(255,255,255,0.5); }
+.page-header__title {
+  font-size: var(--text-md);
+  font-weight: var(--fw-bold);
+  color: var(--white);
+  letter-spacing: -0.02em;
+}
+.page-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-s);
+}
 
 /* ── Sync / LIVE badge ─────────────────────────────────────────────────────── */
 .status-live {
@@ -1059,9 +1068,9 @@ textarea { resize: vertical; min-height: 4.375rem; }
     padding-bottom: calc(var(--content-pad) + 4.5rem);
   }
 
-  .header { padding: 0 var(--pad-m); height: 3.25rem; }
-  .header-title { font-size: var(--text-base); }
-  .header-sub { display: none; }
+  .page-header { padding: 0 var(--pad-m); height: 3.25rem; }
+  .page-header__title { font-size: var(--text-base); }
+  
   .stat-grid { grid-template-columns: repeat(2,1fr); gap: 0.5rem; margin-bottom: 0.75rem; }
   .stat-card { padding: var(--pad-m) var(--pad-m) var(--pad-xl); border-radius: var(--r-m); }
   .stat-value { font-size: 1.25rem; }
