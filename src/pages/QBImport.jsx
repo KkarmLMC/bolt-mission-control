@@ -578,15 +578,15 @@ export default function QBImport() {
           <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Import Complete</div>
           <div style={{ display: 'flex', gap: 'var(--gap-l)', flexWrap: 'wrap', justifyContent: 'center' }}>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: 'var(--success)' }}>{created}</div>
+              <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--success)' }}>{created}</div>
               <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)' }}>Created</div>
             </div>
             {skipped > 0 && <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: 'var(--warning)' }}>{skipped}</div>
+              <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--warning)' }}>{skipped}</div>
               <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)' }}>Skipped</div>
             </div>}
             {errors > 0 && <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 'var(--text-base)', fontWeight: 800, color: 'var(--error)' }}>{errors}</div>
+              <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--error)' }}>{errors}</div>
               <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)' }}>Errors</div>
             </div>}
           </div>
