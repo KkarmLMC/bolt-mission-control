@@ -45,24 +45,22 @@ function Header() {
   }
 
   return (
-    <div className="header" style={{ background: 'var(--navy)', borderBottom: 'none' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+    <div className="header">
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
         {meta.parent && (
           <button onClick={() => navigate(meta.parent)}
-            style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 'var(--r-s)', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
-            <ArrowLeft size="1.125rem" color="#fff" />
+            style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 'var(--r-s)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+            <ArrowLeft size="1.125rem" color="var(--white)" />
           </button>
         )}
-        <div>
-          <div className="header-title" style={{ color: '#fff' }}>{meta.title}</div>
-        </div>
+        <div className="header-title">{meta.title}</div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <div className="status-live" style={{ fontSize: 10 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
+        <div className="status-live">
           <div className="dot-live" />LIVE
         </div>
         <button onClick={handleSignOut}
-          style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 'var(--r-s)', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 'var(--r-s)', width: '2rem', height: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
           <SignOut size="1rem" color="rgba(255,255,255,0.7)" />
         </button>
       </div>

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { Receipt, MagnifyingGlass, CaretRight, Plus } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 import { soStatus } from '../lib/statusColors.js'
-import PageHeader from '../components/ui/PageHeader'
 
 const STATUS_LABELS = ['All', 'queued', 'running', 'fulfillment', 'shipment', 'back_ordered', 'complete', 'cancelled']
 
@@ -43,17 +42,13 @@ export default function SalesOrders() {
   return (
     <div className="page-content fade-in">
 
-      <PageHeader
-        eyebrow="MISSION CONTROL"
-        title="Sales Orders"
-        subtitle="All orders across Bolt LP and Lightning Master"
-        action={
-          <button onClick={() => navigate('/sales-orders/new')}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: 'var(--white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', cursor: 'pointer', flexShrink: 0 }}>
-            <Plus size="0.9375rem" weight="bold" /> New SO
-          </button>
-        }
-      />
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 'var(--mar-m)' }}>
+        <button onClick={() => navigate('/sales-orders/new')}
+          className="btn btn-navy"
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
+          <Plus size="0.9375rem" weight="bold" /> New SO
+        </button>
+      </div>
 
       {/* Stats */}
       <div className="stat-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 'var(--mar-l)' }}>

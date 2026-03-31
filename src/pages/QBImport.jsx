@@ -6,7 +6,6 @@ import {
   Table, X, FileXls, Question, GearSix } from '@phosphor-icons/react'
 import { read as xlsxRead, utils as xlsxUtils } from 'xlsx'
 import { db } from '../lib/supabase.js'
-import PageHeader from '../components/ui/PageHeader'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
 
@@ -415,7 +414,7 @@ export default function QBImport() {
         style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
         <ArrowLeft size="0.875rem" /> Back
       </button>
-      <PageHeader eyebrow="QUICKBOOKS" title="Import Sales Orders" subtitle="Import invoices or sales orders exported from QuickBooks Desktop" />
+
 
       {/* How to export instructions */}
       <div className="card" style={{ marginBottom: 'var(--mar-l)' }}>
@@ -492,9 +491,9 @@ export default function QBImport() {
         style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
         <ArrowLeft size="0.875rem" /> Change file
       </button>
-      <PageHeader eyebrow="QUICKBOOKS IMPORT" title="Review & Confirm"
-        subtitle={`${fileName} · ${parsed.length} record${parsed.length !== 1 ? 's' : ''} found · ${format === 'detail' ? 'Detail format (with line items)' : 'Summary format'}`}
-      />
+      <div style={{ fontSize: "var(--text-sm)", color: "var(--text-3)", marginBottom: "var(--mar-m)" }}>
+        {`${fileName} · ${parsed.length} record${parsed.length !== 1 ? 's' : ''} found · ${format === 'detail' ? 'Detail format (with line items)' : 'Summary format'}`}
+      </div>
 
       {/* Stats */}
       <div className="stat-grid" style={{ marginBottom: 'var(--mar-l)' }}>
