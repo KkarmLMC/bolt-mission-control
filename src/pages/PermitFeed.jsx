@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { MagnifyingGlass, Lightning, X } from '@phosphor-icons/react'
+import { MagnifyingGlass, Lightning, X, Newspaper } from '@phosphor-icons/react'
 import { fmt$, prioBadge, statusBadge } from '../lib/utils'
 import FAB from '../components/FAB'
 
@@ -49,7 +49,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
 
       <div className="card">
         <div className="list-card__header">
-          <span className="list-card__title">Permit Leads</span>
+          <span className="list-card__title"><Newspaper size={14} /> Permit Leads</span>
           <button className="list-card__action" onClick={onAdd}>+ Add Lead</button>
         </div>
 

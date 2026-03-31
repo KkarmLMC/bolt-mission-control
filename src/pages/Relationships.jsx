@@ -39,7 +39,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
 
       <div className="card">
         <div className="list-card__header">
-          <span className="list-card__title">Companies & Relationships</span>
+          <span className="list-card__title"><Handshake size={14} /> Companies & Relationships</span>
           <button className="list-card__action" onClick={onAdd}>+ Add Company</button>
         </div>
 

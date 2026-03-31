@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import {
   ClipboardText, Clock, CheckCircle, XCircle,
-  ArrowRight, Package, Warning } from '@phosphor-icons/react'
+  ArrowRight, Package, Warning, ArrowsClockwise } from '@phosphor-icons/react'
 import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
@@ -221,7 +221,7 @@ export default function ChangeOrders() {
 
       <div className="card">
         <div className="list-card__header">
-          <span className="list-card__title">Change Orders</span>
+          <span className="list-card__title"><ArrowsClockwise size={14} /> Change Orders</span>
           {pendingCount > 0 && (
             <span className="list-card__meta">{pendingCount} need review</span>
           )}

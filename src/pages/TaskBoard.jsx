@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Check, CheckCircle } from '@phosphor-icons/react'
+import { Check, CheckCircle, ListChecks } from '@phosphor-icons/react'
 import { today, dueClass, dueLabel } from '../lib/utils'
 import FAB from '../components/FAB'
 
@@ -47,7 +47,7 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
 
       <div className="card">
         <div className="list-card__header">
-          <span className="list-card__title">Task Board</span>
+          <span className="list-card__title"><ListChecks size={14} /> Task Board</span>
           <button className="list-card__action" onClick={onAdd}>+ Add Task</button>
         </div>
 
