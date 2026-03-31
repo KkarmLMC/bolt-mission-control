@@ -157,14 +157,19 @@ export default function SODetail() {
     }
   }
 
-  const load = () => Promise.all([
-    db.from('sales_orders').select('*').eq('id', id).single(),
-    db.from('so_line_items').select('*, parts(sku, name), warehouses(name)').eq('so_id', id).order('sort_order'),
-  ]).then(([{ data: poData }, { data: lineData }]) => {
-    setPo(poData)
-    setLines(lineData || [])
-    setLoading(false)
-  })
+  const load = () => {
+    const timeout = ms => new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))
+    return Promise.race([
+      Promise.all([
+        db.from('sales_orders').select('*').eq('id', id).maybeSingle(),
+        db.from('so_line_items').select('*, parts(sku, name), warehouses(name)').eq('so_id', id).order('sort_order'),
+      ]),
+      timeout(5000),
+    ]).then(([{ data: poData }, { data: lineData }]) => {
+      setPo(poData)
+      setLines(lineData || [])
+    }).catch(() => {}).finally(() => setLoading(false))
+  }
 
   useEffect(() => { load() }, [id])
 
