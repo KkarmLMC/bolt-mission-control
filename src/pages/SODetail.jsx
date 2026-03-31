@@ -9,6 +9,7 @@ import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { soStatus } from '../lib/statusColors.js'
 import { logActivity } from '../lib/logActivity.js'
+import { Card, Button, Badge } from '../components/ui'
 
 const APP_SOURCE = (import.meta.env.VITE_APP_NAME || 'lmc_platform').toLowerCase().replace(/ /g, '_')
 
@@ -77,33 +78,24 @@ function SectionGroup({ label, items }) {
   const subtotal = items.reduce((s, i) => s + (i.quantity * i.unit_cost), 0)
 
   return (
-    <div style={{ marginBottom: 0 }}>
-      <button onClick={() => setOpen(o => !o)} style={{
-        width: '100%', display: 'grid', gridTemplateColumns: '1fr 4.5rem 5.5rem 7.5rem',
-        gap: 'var(--gap-s)', padding: 'var(--pad-m) var(--pad-l)', background: 'var(--navy)', cursor: 'pointer', alignItems: 'center' }}>
-        <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--white)', textTransform: 'uppercase', letterSpacing: '0.04em', textAlign: 'left' }}>{label}</span>
+    <div className="line-item">
+      <button onClick={() => setOpen(o => !o)} className="line-item__header">
+        <span className="line-item__label">{label}</span>
         <span />
         <span />
-        <span style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--white)', textAlign: 'right' }}>
+        <span className="line-item__total">
           ${subtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </span>
       </button>
       {open && items.map((item, idx) => (
-        <div key={item.id} style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 4.5rem 5.5rem 7.5rem',
-          gap: 6,
-          padding: 'var(--pad-s) var(--pad-m)',
-          borderBottom: idx < items.length - 1 ? '1px solid var(--border-l)' : 'none',
-          alignItems: 'center',
-          background: 'var(--white)' }}>
-          <div style={{ minWidth: 0, overflow: 'hidden' }}>
-            {item.sku && <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)', marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.sku}</div>}
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 500, color: 'var(--black)', lineHeight: 1.4 }}>{item.description}</div>
+        <div key={item.id} className="line-item__row" style={{ borderBottom: idx < items.length - 1 ? '1px solid var(--border-subtle)' : 'none' }}>
+          <div className="line-item__description">
+            {item.sku && <div className="line-item__sku">{item.sku}</div>}
+            <div className="line-item__name">{item.description}</div>
           </div>
-          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--black)', textAlign: 'right' }}>{item.quantity}</div>
-          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--black)', textAlign: 'right' }}>${item.unit_cost.toFixed(2)}</div>
-          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--black)', textAlign: 'right' }}>
+          <div className="line-item__cell">{item.quantity}</div>
+          <div className="line-item__cell">${item.unit_cost.toFixed(2)}</div>
+          <div className="line-item__cell">
             ${(item.quantity * item.unit_cost).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </div>
         </div>
@@ -221,20 +213,20 @@ export default function SODetail() {
     <div className="page-content fade-in">
 
       {/* SO Header card */}
-      <div style={{ background: 'var(--navy)', borderRadius: 'var(--r-m)', padding: 'var(--pad-xl)', marginBottom: 'var(--mar-l)', color: '#fff' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--mar-m)' }}>
+      <div className="so-detail-header">
+        <div className="so-detail-header__top">
           <div>
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>
               {po.division === 'Bolt' ? 'Bolt Lightning' : 'Lightning Master'} · {po.so_number}
             </div>
-            <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, lineHeight: 1.1 }}>{po.customer_name}</div>
+            <div className="so-detail-header__title">{po.customer_name}</div>
             {po.project_name && (
-              <div style={{ fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,0.65)', marginTop: 4 }}>{po.project_name}</div>
+              <div className="so-detail-header__meta">{po.project_name}</div>
             )}
           </div>
           <div style={{
             display: 'flex', alignItems: 'center', gap: 4,
-            padding: '4px 12px', borderRadius: 'var(--r-s)',
+            padding: '4px 12px', borderRadius: 'var(--radius-s)',
             background: statusDisplay.bg, color: statusDisplay.color }}>
             <StatusIcon size="0.75rem" weight="fill" />
             <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700 }}>{statusDisplay.label}</span>
@@ -242,7 +234,7 @@ export default function SODetail() {
         </div>
 
         {/* Customer details */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--gap-l)', paddingTop: 'var(--pad-m)' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-l)', paddingTop: 'var(--space-m)' }}>
           {(po.customer_city || po.customer_state) && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)' }}>
               <MapPin size="0.75rem" />
@@ -275,12 +267,12 @@ export default function SODetail() {
 
       {/* ── CONTEXTUAL ACTION BAR ──────────────────────────────────────────── */}
       {(actionCfg.primary || actionCfg.hint) && (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: actionCfg.hint ? 'var(--mar-s)' : 0 }}>
+        <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', padding: 'var(--space-l)', marginBottom: 'var(--space-l)' }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: actionCfg.hint ? 'var(--space-s)' : 0 }}>
             Next Action
           </div>
           {actionCfg.hint && (
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginBottom: actionCfg.primary ? 'var(--mar-m)' : 0, lineHeight: 1.6 }}>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginBottom: actionCfg.primary ? 'var(--space-m)' : 0, lineHeight: 1.6 }}>
               {actionCfg.hint}
             </div>
           )}
@@ -292,7 +284,7 @@ export default function SODetail() {
                   <button
                     onClick={() => handleAction(action)}
                     disabled={acting}
-                    style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: color, color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: acting ? 'not-allowed' : 'pointer', opacity: acting ? 0.7 : 1 }}>
+                    style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-s) var(--space-l)', borderRadius: 'var(--radius-m)', background: color, color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: acting ? 'not-allowed' : 'pointer', opacity: acting ? 0.7 : 1 }}>
                     {acting ? <div className="spinner" style={{ width: 14, height: 14, borderWidth: 2 }} /> : <Icon size="0.9375rem" weight="bold" />}
                     {label}
                   </button>
@@ -313,17 +305,17 @@ export default function SODetail() {
 
       {/* Inventory impact */}
       {!['complete','fulfilled','cancelled'].includes(po.status) && Object.keys(warehouseImpact).length > 0 && (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-m)' }}>
+        <div className="so-detail__inventory-impact">
+          <div className="so-detail__inventory-impact-title">
             Inventory Impact {['fulfillment','shipment','complete','fulfilled'].includes(po.status) ? '(Applied)' : '(On Fulfillment)'}
           </div>
           {Object.entries(warehouseImpact).map(([wName, impact]) => (
-            <div key={wName} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--mar-s)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', fontSize: 'var(--text-sm)' }}>
-                <Buildings size="0.875rem" style={{ color: 'var(--black)' }} />
+            <div key={wName} className="so-detail__inventory-item">
+              <div className="so-detail__inventory-warehouse">
+                <Buildings size="0.875rem" style={{ color: 'var(--text-primary)' }} />
                 {wName}
               </div>
-              <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--error-dark)', background: 'var(--error-soft)', padding: '2px 8px', borderRadius: 'var(--r-s)' }}>
+              <span className="so-detail__inventory-badge">
                 -{impact.qty} units ({impact.parts} SKUs)
               </span>
             </div>
@@ -333,10 +325,10 @@ export default function SODetail() {
 
       {/* Line items — materials by section */}
       {sections.length > 0 && (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)', maxWidth: '100%' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 4.5rem 5.5rem 7.5rem', gap: 'var(--gap-s)', padding: 'var(--pad-l)', background: 'var(--white)', borderBottom: '1px solid var(--border-l)', borderRadius: 'var(--r-m) var(--r-m) 0 0' }}>
+        <div className="so-detail__materials-section">
+          <div className="line-item__table-header">
             {['Item / Description', 'Quantity', 'Unit', 'Amount'].map(h => (
-              <div key={h} style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--black)', textAlign: h !== 'Item / Description' ? 'right' : 'left', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{h}</div>
+              <div key={h} className="line-item__table-cell" style={{ textAlign: h !== 'Item / Description' ? 'right' : 'left' }}>{h}</div>
             ))}
           </div>
           {sections.map(sec => (
@@ -346,9 +338,9 @@ export default function SODetail() {
               items={materialLines.filter(l => (l.section_label || 'General') === sec)}
             />
           ))}
-          <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderTop: '2px solid var(--border-l)', background: 'var(--hover)' }}>
-            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>Materials Subtotal</span>
-            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>
+          <div className="so-detail__subtotal">
+            <span>Materials Subtotal</span>
+            <span>
               ${materialsTotal.toLocaleString('en-US', { minimumFractionDigits: 2 })}
             </span>
           </div>
@@ -357,32 +349,32 @@ export default function SODetail() {
 
       {/* Labor lines */}
       {laborLines.length > 0 && (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)', maxWidth: '100%' }}>
-          <div style={{ padding: 'var(--pad-m) var(--pad-l)', background: 'var(--navy)' }}>
-            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: '#fff' }}>Installation / Labor</span>
+        <div className="so-detail__labor-section">
+          <div className="so-detail__labor-header">
+            <span>Installation / Labor</span>
           </div>
           {laborLines.map((line, idx) => (
-            <div key={line.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto auto auto', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', borderBottom: idx < laborLines.length - 1 ? '1px solid var(--border-l)' : 'none', alignItems: 'center', background: 'var(--white)' }}>
+            <div key={line.id} className="so-detail__labor-row" style={{ borderBottom: idx < laborLines.length - 1 ? '1px solid var(--border-subtle)' : 'none' }}>
               <div>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 500 }}>{line.description}</div>
+                <div className="so-detail__labor-description">{line.description}</div>
               </div>
-              <div style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--black)', textAlign: 'right' }}>{line.quantity}</div>
-              <div style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--black)', textAlign: 'right' }}>${line.unit_cost.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
-              <div style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--black)', textAlign: 'right' }}>${(line.quantity * line.unit_cost).toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
+              <div className="so-detail__labor-cell">{line.quantity}</div>
+              <div className="so-detail__labor-cell">${line.unit_cost.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
+              <div className="so-detail__labor-cell">${(line.quantity * line.unit_cost).toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
             </div>
           ))}
-          <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--pad-m) var(--pad-l)', borderTop: '2px solid var(--border-l)', background: 'var(--hover)' }}>
-            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>Labor Subtotal</span>
-            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>${laborTotal.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
+          <div className="so-detail__subtotal">
+            <span>Labor Subtotal</span>
+            <span>${laborTotal.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
           </div>
         </div>
       )}
 
       {/* Grand total */}
       {grandTotal > 0 && (
-        <div style={{ background: 'var(--navy)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l) var(--pad-xl)', marginBottom: 'var(--mar-xl)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: '#fff' }}>Total</span>
-          <span style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: '#fff' }}>
+        <div className="so-detail__grand-total">
+          <span>Total</span>
+          <span>
             ${grandTotal.toLocaleString('en-US', { minimumFractionDigits: 2 })}
           </span>
         </div>
@@ -390,25 +382,25 @@ export default function SODetail() {
 
       {/* Notes */}
       {po.notes && (
-        <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', marginBottom: 'var(--mar-s)' }}>Notes</div>
-          <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', lineHeight: 1.6 }}>{po.notes}</div>
+        <div className="so-detail__notes">
+          <div className="so-detail__notes-title">Notes</div>
+          <div className="so-detail__notes-content">{po.notes}</div>
         </div>
       )}
 
       {/* ── CANCELLED BANNER ──────────────────────────────────────────────── */}
       {po.status === 'cancelled' && (po.cancelled_at || po.cancel_reason) && (
-        <div style={{ background: 'var(--error-soft)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)', border: '1px solid var(--error)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', marginBottom: 'var(--mar-s)' }}>
-            <Prohibit size="1rem" style={{ color: 'var(--error)' }} />
-            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--error-dark)' }}>Order Cancelled</span>
+        <div className="so-detail__cancelled-banner">
+          <div className="so-detail__cancelled-header">
+            <Prohibit size="1rem" style={{ color: 'var(--state-error-text)' }} />
+            <span>Order Cancelled</span>
           </div>
           {po.cancel_reason && (
-            <div style={{ fontSize: 'var(--text-sm)', color: 'var(--error-dark)', marginBottom: 'var(--mar-xs)', lineHeight: 1.6 }}>
+            <div className="so-detail__cancelled-reason">
               <strong>Reason:</strong> {po.cancel_reason}
             </div>
           )}
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>
+          <div className="so-detail__cancelled-footer">
             {po.cancelled_by && <span>Cancelled by {po.cancelled_by}</span>}
             {po.cancelled_at && <span> · {new Date(po.cancelled_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}</span>}
           </div>
@@ -417,79 +409,79 @@ export default function SODetail() {
 
       {/* ── CANCEL MODAL ──────────────────────────────────────────────────── */}
       {cancelModal && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.5)', padding: 'var(--pad-l)' }}
+        <div className="so-detail__modal-overlay"
           onClick={e => { if (e.target === e.currentTarget && !cancelling) setCancelModal(false) }}>
-          <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', width: '100%', maxWidth: 480, overflow: 'hidden' }}>
+          <div className="so-detail__modal">
 
             {/* Modal header */}
-            <div style={{ background: 'var(--error)', padding: 'var(--pad-l) var(--pad-xl)', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
+            <div className="so-detail__modal-header">
               <Prohibit size="1.25rem" style={{ color: '#fff' }} />
               <div>
-                <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: '#fff' }}>Cancel Sales Order</div>
-                <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.8)' }}>{po.so_number} · {po.customer_name}</div>
+                <div className="so-detail__modal-title">Cancel Sales Order</div>
+                <div className="so-detail__modal-subtitle">{po.so_number} · {po.customer_name}</div>
               </div>
             </div>
 
             {/* Modal body */}
-            <div style={{ padding: 'var(--pad-xl)' }}>
+            <div className="so-detail__modal-body">
               {!cancelResult ? (
                 <>
-                  <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', marginBottom: 'var(--mar-m)', lineHeight: 1.6 }}>
+                  <div className="so-detail__modal-description">
                     This will cancel the order and return all allocated inventory to stock. This action cannot be undone.
                   </div>
 
                   {/* What will happen summary */}
-                  <div style={{ background: 'var(--hover)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', marginBottom: 'var(--mar-l)', fontSize: 'var(--text-xs)', color: 'var(--black)', lineHeight: 1.8 }}>
+                  <div className="so-detail__modal-summary">
                     <div style={{ fontWeight: 700, marginBottom: 4 }}>This will:</div>
                     <div><ArrowCounterClockwise size="0.75rem" style={{ marginRight: 4 }} /> Return all allocated inventory to stock</div>
                     <div><X size="0.75rem" style={{ marginRight: 4 }} /> Remove fulfillment sheets and pending shipments</div>
                     <div><Prohibit size="0.75rem" style={{ marginRight: 4 }} /> Mark this SO as cancelled (preserved for audit)</div>
                   </div>
 
-                  <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>Reason for cancellation *</label>
+                  <label className="so-detail__modal-label">Reason for cancellation *</label>
                   <textarea
                     value={cancelReason}
                     onChange={e => setCancelReason(e.target.value)}
                     placeholder="e.g., Customer requested change — will re-create with updated quantities"
                     rows={3}
-                    style={{ width: '100%', resize: 'vertical', fontSize: 'var(--text-sm)' }}
+                    className="so-detail__modal-textarea"
                   />
 
-                  <div style={{ display: 'flex', gap: 'var(--gap-m)', justifyContent: 'flex-end', marginTop: 'var(--mar-l)' }}>
+                  <div className="so-detail__modal-actions">
                     <button
                       onClick={() => { setCancelModal(false); setCancelReason(''); setCancelResult(null) }}
                       disabled={cancelling}
-                      style={{ padding: 'var(--pad-s) var(--pad-xl)', borderRadius: 'var(--r-m)', background: 'none', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer' }}>
+                      className="so-detail__modal-btn-secondary">
                       Go Back
                     </button>
                     <button
                       onClick={handleCancel}
                       disabled={!cancelReason.trim() || cancelling}
-                      style={{ padding: 'var(--pad-s) var(--pad-xl)', borderRadius: 'var(--r-m)', background: !cancelReason.trim() ? 'var(--text-3)' : 'var(--error)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: !cancelReason.trim() ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
+                      className="so-detail__modal-btn-primary" style={{ background: !cancelReason.trim() ? 'var(--text-muted)' : 'var(--state-error)' }}>
                       {cancelling ? <><div className="spinner" style={{ width: 14, height: 14, borderWidth: 2, borderTopColor: '#fff' }} /> Cancelling…</> : <><Prohibit size="0.875rem" /> Cancel Order</>}
                     </button>
                   </div>
                 </>
               ) : cancelResult.success ? (
-                <div style={{ textAlign: 'center', padding: 'var(--pad-l) 0' }}>
-                  <CheckCircle size="2.75rem" weight="fill" style={{ color: 'var(--success)', marginBottom: 'var(--mar-m)' }} />
-                  <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, marginBottom: 'var(--mar-s)' }}>Order Cancelled</div>
-                  <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)', lineHeight: 1.6 }}>
+                <div className="so-detail__modal-result-success">
+                  <CheckCircle size="2.75rem" weight="fill" style={{ color: 'var(--state-success)' }} />
+                  <div className="so-detail__modal-result-title">Order Cancelled</div>
+                  <div className="so-detail__modal-result-details">
                     {cancelResult.inventory_reversed > 0 && <div>{cancelResult.inventory_reversed} inventory allocation(s) returned to stock</div>}
                     {cancelResult.fulfillment_lines_deleted > 0 && <div>{cancelResult.fulfillment_lines_deleted} fulfillment line(s) removed</div>}
                     {cancelResult.shipments_deleted > 0 && <div>{cancelResult.shipments_deleted} pending shipment(s) removed</div>}
                     {cancelResult.inventory_reversed === 0 && cancelResult.fulfillment_lines_deleted === 0 && <div>No downstream data to reverse — order was cancelled cleanly.</div>}
                   </div>
-                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 'var(--mar-m)' }}>Redirecting to Sales Orders…</div>
+                  <div className="so-detail__modal-result-footer">Redirecting to Sales Orders…</div>
                 </div>
               ) : (
-                <div style={{ textAlign: 'center', padding: 'var(--pad-l) 0' }}>
-                  <Warning size="2.75rem" weight="fill" style={{ color: 'var(--error)', marginBottom: 'var(--mar-m)' }} />
-                  <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--error-dark)', marginBottom: 'var(--mar-s)' }}>Cancel Failed</div>
-                  <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>{cancelResult.error}</div>
+                <div className="so-detail__modal-result-error">
+                  <Warning size="2.75rem" weight="fill" style={{ color: 'var(--state-error)' }} />
+                  <div className="so-detail__modal-result-title-error">Cancel Failed</div>
+                  <div className="so-detail__modal-result-error-msg">{cancelResult.error}</div>
                   <button
                     onClick={() => setCancelResult(null)}
-                    style={{ marginTop: 'var(--mar-l)', padding: 'var(--pad-s) var(--pad-xl)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: 'pointer' }}>
+                    className="so-detail__modal-result-retry-btn">
                     Try Again
                   </button>
                 </div>

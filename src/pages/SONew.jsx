@@ -7,21 +7,22 @@ import {
 import { db } from '../lib/supabase.js'
 import { useAuth } from '../lib/useAuth.jsx'
 import { logActivity } from '../lib/logActivity.js'
+import { Button, Card, StatCard } from '../components/ui'
 import ProjectPicker from '../components/ProjectPicker.jsx'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function Label({ children, required }) {
   return (
-    <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 'var(--mar-xs)' }}>
-      {children}{required && <span style={{ color: 'var(--red)', marginLeft: 3 }}>*</span>}
+    <label className="text-xs font-bold text-black block mb-1">
+      {children}{required && <span className="text-red ml-0.5">*</span>}
     </label>
   )
 }
 
 function SectionDivider({ label }) {
   return (
-    <div style={{ margin: 'var(--mar-l) 0', paddingTop: 'var(--pad-m)' }}>
-      <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>{label}</div>
+    <div className="mt-4 pt-3">
+      <div className="text-xs font-bold text-black">{label}</div>
     </div>
   )
 }
@@ -76,47 +77,40 @@ function PartSearch({ onSelect, warehouseId }) {
   }
 
   return (
-    <div ref={ref} style={{ position: 'relative' }}>
-      <div style={{ position: 'relative' }}>
-        <MagnifyingGlass size="0.875rem" style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
+    <div ref={ref} className="relative">
+      <div className="relative">
+        <MagnifyingGlass size="0.875rem" className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-3" />
         <input
           value={query}
           onChange={e => setQuery(e.target.value)}
           onFocus={() => query && setOpen(true)}
           placeholder="Search parts by name or SKU…"
-          style={{ width: '100%', paddingLeft: 30, paddingRight: 30 }}
+          className="w-full pl-7 pr-7"
         />
         {query && (
           <button onClick={() => { setQuery(''); setResults([]); setOpen(false) }}
-            style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0 }}>
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-none cursor-pointer text-text-3 p-0">
             <X size="0.8125rem" />
           </button>
         )}
       </div>
       {open && results.length > 0 && (
-        <div style={{
-          position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 200,
-          background: 'var(--white)', borderRadius: 'var(--r-l)', marginTop: 4,
-          maxHeight: '16rem', overflowY: 'auto' }}>
+        <div className="absolute top-full left-0 right-0 z-50 bg-white rounded-lg mt-1 max-h-64 overflow-y-auto">
           {loading ? (
-            <div style={{ padding: 'var(--pad-m)', textAlign: 'center', color: 'var(--text-3)', fontSize: 'var(--text-sm)' }}>Searching…</div>
+            <div className="p-3 text-center text-text-3 text-sm">Searching…</div>
           ) : results.map(part => (
             <button key={part.id} onMouseDown={() => handleSelect(part)}
-              style={{
-                width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                padding: 'var(--pad-s) var(--pad-m)', background: 'none',
-                cursor: 'pointer', textAlign: 'left', borderBottom: '1px solid var(--border-l)' }}
-            >
-              <div style={{ minWidth: 0 }}>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{part.name}</div>
-                <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>{part.sku}</div>
+              className="w-full flex items-center justify-between p-2 px-3 bg-none cursor-pointer text-left border-b border-border-l">
+              <div className="min-w-0">
+                <div className="text-sm font-semibold">{part.name}</div>
+                <div className="text-xs font-mono text-text-3">{part.sku}</div>
               </div>
-              <div style={{ flexShrink: 0, textAlign: 'right', marginLeft: 'var(--mar-m)' }}>
-                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)' }}>
+              <div className="flex-shrink-0 text-right ml-3">
+                <div className="text-xs font-bold text-black">
                   ${part.unit_cost?.toFixed(2) || '—'}
                 </div>
                 {part.stock !== null && (
-                  <div style={{ fontSize: 'var(--text-xs)', color: part.stock > 0 ? 'var(--success-text)' : 'var(--error-dark)', fontWeight: 600 }}>
+                  <div className={`text-xs font-semibold ${part.stock > 0 ? 'text-success-text' : 'text-error-dark'}`}>
                     {part.stock} in stock
                   </div>
                 )}
@@ -134,16 +128,15 @@ function LineItemRow({ item, warehouses, onUpdate, onRemove }) {
   const lineTotal = (parseFloat(item.quantity) || 0) * (parseFloat(item.unit_cost) || 0)
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 90px 80px 36px', gap: 'var(--gap-s)', alignItems: 'center', padding: 'var(--pad-s) 0', borderBottom: '1px solid var(--border-l)' }}>
-      <div style={{ minWidth: 0 }}>
-        {item.sku && <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)', marginBottom: 2 }}>{item.sku}</div>}
-        <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.description}</div>
+    <div className="grid grid-cols-[1fr_70px_90px_80px_36px] gap-2 items-center py-2 border-b border-border-l">
+      <div className="min-w-0">
+        {item.sku && <div className="text-xs font-mono text-text-3 mb-0.5">{item.sku}</div>}
+        <div className="text-sm font-semibold truncate">{item.description}</div>
         {warehouses.length > 1 && (
           <select
             value={item.warehouse_id || ''}
             onChange={e => onUpdate({ ...item, warehouse_id: e.target.value })}
-            style={{ fontSize: 'var(--text-xs)', marginTop: 4, padding: '2px 4px', borderRadius: 4, background: 'var(--white)', color: 'var(--text-3)', width: '100%' }}
-          >
+            className="text-xs mt-1 p-0.5 rounded border-border-l bg-white text-text-3 w-full">
             <option value="">No warehouse</option>
             {warehouses.map(w => <option key={w.id} value={w.id}>{w.name.replace(' Warehouse','')}</option>)}
           </select>
@@ -153,19 +146,19 @@ function LineItemRow({ item, warehouses, onUpdate, onRemove }) {
         type="number" min="0" step="1"
         value={item.quantity}
         onChange={e => onUpdate({ ...item, quantity: e.target.value })}
-        style={{ width: '100%', textAlign: 'right', fontSize: 'var(--text-xs)' }}
+        className="w-full text-right text-xs"
       />
       <input
         type="number" min="0" step="0.01"
         value={item.unit_cost}
         onChange={e => onUpdate({ ...item, unit_cost: e.target.value })}
-        style={{ width: '100%', textAlign: 'right', fontSize: 'var(--text-xs)' }}
+        className="w-full text-right text-xs"
       />
-      <div style={{ textAlign: 'right', fontSize: 'var(--text-xs)', fontWeight: 700, color: lineTotal > 0 ? 'var(--black)' : 'var(--text-3)' }}>
+      <div className={`text-right text-xs font-bold ${lineTotal > 0 ? 'text-black' : 'text-text-3'}`}>
         ${lineTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </div>
       <button onClick={onRemove}
-        style={{ width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--hover)', borderRadius: 'var(--r-m)', cursor: 'pointer', color: 'var(--error-dark)' }}>
+        className="w-8 h-8 flex items-center justify-center bg-hover rounded-md cursor-pointer text-error-dark">
         <Trash size="0.8125rem" />
       </button>
     </div>
@@ -207,37 +200,37 @@ function ScopeSection({ section, warehouses, defaultWarehouseId, onUpdate, onRem
   }
 
   return (
-    <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
+    <Card className="mb-4">
       {/* Section header */}
-      <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
+      <div className="bg-navy p-3 pl-5 flex items-center gap-2">
         <button onClick={() => setExpanded(e => !e)}
-          style={{ background: 'none', cursor: 'pointer', padding: 0, color: 'rgba(255,255,255,0.5)', display: 'flex' }}>
+          className="bg-none cursor-pointer p-0 text-white/50 flex">
           <CaretDown size="0.875rem" style={{ transform: expanded ? 'none' : 'rotate(-90deg)', transition: 'transform 0.15s' }} />
         </button>
         <input
           value={section.title}
           onChange={e => onUpdate({ ...section, title: e.target.value })}
           placeholder="Section name (e.g. Green House Ground Ring)"
-          style={{ flex: 1, background: 'transparent', outline: 'none', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', fontFamily: 'var(--font)' }}
+          className="flex-1 bg-transparent outline-none text-white font-bold text-sm"
         />
         {subtotal > 0 && (
-          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>
+          <span className="text-xs font-bold text-white/60 whitespace-nowrap">
             ${subtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </span>
         )}
         <button onClick={onRemove}
-          style={{ background: 'none', cursor: 'pointer', padding: 0, color: 'rgba(255,0,0,0.5)', display: 'flex' }}>
+          className="bg-none cursor-pointer p-0 text-red/50 flex">
           <Trash size="0.8125rem" />
         </button>
       </div>
 
       {expanded && (
-        <div style={{ padding: 'var(--pad-m) var(--pad-l)' }}>
+        <div className="p-3 pl-5">
           {/* Column headers */}
           {section.items.length > 0 && (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 70px 90px 80px 36px', gap: 'var(--gap-s)', marginBottom: 'var(--mar-s)' }}>
+            <div className="grid grid-cols-[1fr_70px_90px_80px_36px] gap-2 mb-2">
               {['Item / SKU', 'Qty', 'Unit Cost', 'Amount', ''].map((h, i) => (
-                <div key={i} style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', textAlign: i > 0 && i < 4 ? 'right' : 'left' }}>{h}</div>
+                <div key={i} className={`text-xs font-bold text-black ${i > 0 && i < 4 ? 'text-right' : 'text-left'}`}>{h}</div>
               ))}
             </div>
           )}
@@ -254,22 +247,22 @@ function ScopeSection({ section, warehouses, defaultWarehouseId, onUpdate, onRem
           ))}
 
           {section.items.length === 0 && (
-            <div style={{ textAlign: 'center', padding: 'var(--pad-l)', color: 'var(--text-3)', fontSize: 'var(--text-sm)' }}>
+            <div className="text-center p-5 text-text-3 text-sm">
               No items yet. Search for a part or add manually.
             </div>
           )}
 
           {/* Part search */}
-          <div style={{ marginTop: 'var(--mar-m)' }}>
+          <div className="mt-3">
             <PartSearch onSelect={addPart} warehouseId={defaultWarehouseId} />
           </div>
           <button onClick={addManual}
-            style={{ marginTop: 'var(--mar-s)', display: 'flex', alignItems: 'center', gap: 'var(--gap-xs)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)', background: 'none', cursor: 'pointer', padding: 0 }}>
+            className="mt-2 flex items-center gap-1 text-xs font-semibold text-text-3 bg-none cursor-pointer p-0">
             <Plus size="0.75rem" /> Add custom line item
           </button>
         </div>
       )}
-    </div>
+    </Card>
   )
 }
 
@@ -283,48 +276,48 @@ function LaborSection({ items, onUpdate }) {
   const removeItem = (key) => onUpdate(items.filter(i => i._key !== key))
 
   return (
-    <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
-      <div style={{ background: 'var(--navy)', padding: 'var(--pad-m) var(--pad-l)', display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
+    <Card className="mb-4">
+      <div className="bg-navy p-3 pl-5 flex items-center gap-2">
         <button onClick={() => setExpanded(e => !e)}
-          style={{ background: 'none', cursor: 'pointer', padding: 0, color: 'rgba(255,255,255,0.5)', display: 'flex' }}>
+          className="bg-none cursor-pointer p-0 text-white/50 flex">
           <CaretDown size="0.875rem" style={{ transform: expanded ? 'none' : 'rotate(-90deg)', transition: 'transform 0.15s' }} />
         </button>
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
-          <Wrench size="0.875rem" style={{ color: 'rgba(255,255,255,0.7)' }} />
-          <span style={{ fontWeight: 700, fontSize: 'var(--text-sm)', color: '#fff' }}>Installation / Labor</span>
+        <div className="flex-1 flex items-center gap-2">
+          <Wrench size="0.875rem" className="text-white/70" />
+          <span className="font-bold text-sm text-white">Installation / Labor</span>
         </div>
         {total > 0 && (
-          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.6)' }}>
+          <span className="text-xs font-bold text-white/60">
             ${total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </span>
         )}
       </div>
       {expanded && (
-        <div style={{ padding: 'var(--pad-m) var(--pad-l)' }}>
+        <div className="p-3 pl-5">
           {items.map(item => (
-            <div key={item._key} style={{ display: 'grid', gridTemplateColumns: '1fr 70px 100px 80px 36px', gap: 'var(--gap-s)', alignItems: 'center', marginBottom: 'var(--mar-s)' }}>
+            <div key={item._key} className="grid grid-cols-[1fr_70px_100px_80px_36px] gap-2 items-center mb-2">
               <input value={item.description} onChange={e => updateItem(item._key, { ...item, description: e.target.value })}
-                placeholder="Description (e.g. Bolt Install Crew)" style={{ width: '100%', fontSize: 'var(--text-xs)' }} />
+                placeholder="Description (e.g. Bolt Install Crew)" className="w-full text-xs" />
               <input type="number" min="0" value={item.quantity} onChange={e => updateItem(item._key, { ...item, quantity: e.target.value })}
-                style={{ width: '100%', textAlign: 'right', fontSize: 'var(--text-xs)' }} />
+                className="w-full text-right text-xs" />
               <input type="number" min="0" step="0.01" value={item.unit_cost} onChange={e => updateItem(item._key, { ...item, unit_cost: e.target.value })}
-                placeholder="0.00" style={{ width: '100%', textAlign: 'right', fontSize: 'var(--text-xs)' }} />
-              <div style={{ textAlign: 'right', fontSize: 'var(--text-xs)', fontWeight: 700 }}>
+                placeholder="0.00" className="w-full text-right text-xs" />
+              <div className="text-right text-xs font-bold">
                 ${((parseFloat(item.quantity)||0)*(parseFloat(item.unit_cost)||0)).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
               </div>
               <button onClick={() => removeItem(item._key)}
-                style={{ width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--hover)', borderRadius: 'var(--r-m)', cursor: 'pointer', color: 'var(--error-dark)' }}>
+                className="w-8 h-8 flex items-center justify-center bg-hover rounded-md cursor-pointer text-error-dark">
                 <Trash size="0.8125rem" />
               </button>
             </div>
           ))}
           <button onClick={addLine}
-            style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-xs)', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-3)', background: 'none', cursor: 'pointer', padding: 0, marginTop: 'var(--mar-s)' }}>
+            className="flex items-center gap-1 text-xs font-semibold text-text-3 bg-none cursor-pointer p-0 mt-2">
             <Plus size="0.75rem" /> Add labor line
           </button>
         </div>
       )}
-    </div>
+    </Card>
   )
 }
 
@@ -338,22 +331,22 @@ function TotalsBar({ sections, laborItems }) {
   if (grandTotal === 0) return null
 
   return (
-    <div style={{ background: 'var(--navy)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l) var(--pad-xl)', marginBottom: 'var(--mar-xl)', color: '#fff' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--mar-s)' }}>
-        <span style={{ fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,0.6)' }}>Materials</span>
-        <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>${materialsTotal.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
+    <StatCard className="mb-6 bg-navy text-white">
+      <div className="flex justify-between mb-2">
+        <span className="text-sm text-white/60">Materials</span>
+        <span className="text-sm font-semibold">${materialsTotal.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
       </div>
       {laborTotal > 0 && (
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--mar-s)' }}>
-          <span style={{ fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,0.6)' }}>Installation</span>
-          <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>${laborTotal.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
+        <div className="flex justify-between mb-2">
+          <span className="text-sm text-white/60">Installation</span>
+          <span className="text-sm font-semibold">${laborTotal.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
         </div>
       )}
-      <div style={{ display: 'flex', justifyContent: 'space-between',  paddingTop: 'var(--pad-s)', marginTop: 'var(--mar-xs)' }}>
-        <span style={{ fontSize: 'var(--text-lg)', fontWeight: 800 }}>Total</span>
-        <span style={{ fontSize: 'var(--text-lg)', fontWeight: 800 }}>${grandTotal.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
+      <div className="flex justify-between pt-2 mt-1">
+        <span className="text-lg font-black">Total</span>
+        <span className="text-lg font-black">${grandTotal.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
       </div>
-    </div>
+    </StatCard>
   )
 }
 
@@ -514,65 +507,62 @@ export default function PONew() {
   return (
     <div className="page-content fade-in">
 
-
       {/* Division selector */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xl)' }}>
+      <div className="grid grid-cols-2 gap-3 mb-12">
         {[['LM', 'Lightning Master'], ['Bolt', 'Bolt Lightning']].map(([val, lbl]) => (
           <button key={val} onClick={() => setDivision(val)}
-            style={{
-              padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', cursor: 'pointer',
-              border: `2px solid ${division === val ? 'var(--navy)' : 'var(--border-l)'}`,
-              background: division === val ? 'var(--navy)' : 'var(--white)',
-              color: division === val ? '#fff' : 'var(--black)',
-              fontWeight: 700, fontSize: 'var(--text-sm)',
-              transition: 'all 0.15s' }}>
+            className={`p-3 rounded-md cursor-pointer border-2 font-bold text-sm transition-all ${
+              division === val
+                ? 'border-navy bg-navy text-white'
+                : 'border-border-l bg-white text-black'
+            }`}>
             {lbl}
           </button>
         ))}
       </div>
 
       {/* Customer info */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
-        <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, marginBottom: 'var(--mar-m)' }}>Customer</div>
+      <Card className="p-5 mb-4">
+        <div className="text-sm font-bold mb-3">Customer</div>
 
-        <div style={{ marginBottom: 'var(--mar-m)' }}>
+        <div className="mb-3">
           <Label required>Customer Name</Label>
-          <input value={customerName} onChange={e => setCustomerName(e.target.value)} placeholder="e.g. GNS Electric Inc" style={{ width: '100%' }} />
+          <input value={customerName} onChange={e => setCustomerName(e.target.value)} placeholder="e.g. GNS Electric Inc" className="w-full" />
         </div>
 
-        <div style={{ marginBottom: 'var(--mar-m)' }}>
+        <div className="mb-3">
           <Label>Street Address</Label>
-          <input value={customerAddress} onChange={e => setCustomerAddress(e.target.value)} placeholder="123 Main St" style={{ width: '100%' }} />
+          <input value={customerAddress} onChange={e => setCustomerAddress(e.target.value)} placeholder="123 Main St" className="w-full" />
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 64px 88px', gap: 'var(--gap-s)', marginBottom: 'var(--mar-m)' }}>
-          <div><Label>City</Label><input value={customerCity} onChange={e => setCustomerCity(e.target.value)} placeholder="Dallas" style={{ width: '100%' }} /></div>
-          <div><Label>State</Label><input value={customerState} onChange={e => setCustomerState(e.target.value)} placeholder="TX" style={{ width: '100%' }} /></div>
-          <div><Label>ZIP</Label><input value={customerZip} onChange={e => setCustomerZip(e.target.value)} placeholder="75001" style={{ width: '100%' }} /></div>
+        <div className="grid grid-cols-[1fr_64px_88px] gap-2 mb-3">
+          <div><Label>City</Label><input value={customerCity} onChange={e => setCustomerCity(e.target.value)} placeholder="Dallas" className="w-full" /></div>
+          <div><Label>State</Label><input value={customerState} onChange={e => setCustomerState(e.target.value)} placeholder="TX" className="w-full" /></div>
+          <div><Label>ZIP</Label><input value={customerZip} onChange={e => setCustomerZip(e.target.value)} placeholder="75001" className="w-full" /></div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-s)' }}>
-          <div><Label>Phone</Label><input value={customerPhone} onChange={e => setCustomerPhone(e.target.value)} placeholder="(555) 000-0000" style={{ width: '100%' }} /></div>
-          <div><Label>Email</Label><input value={customerEmail} onChange={e => setCustomerEmail(e.target.value)} placeholder="name@company.com" style={{ width: '100%' }} /></div>
+        <div className="grid grid-cols-2 gap-2">
+          <div><Label>Phone</Label><input value={customerPhone} onChange={e => setCustomerPhone(e.target.value)} placeholder="(555) 000-0000" className="w-full" /></div>
+          <div><Label>Email</Label><input value={customerEmail} onChange={e => setCustomerEmail(e.target.value)} placeholder="name@company.com" className="w-full" /></div>
         </div>
-      </div>
+      </Card>
 
       {/* Project info */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
-        <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, marginBottom: 'var(--mar-m)' }}>Project Details</div>
+      <Card className="p-5 mb-4">
+        <div className="text-sm font-bold mb-3">Project Details</div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-s)', marginBottom: 'var(--mar-m)' }}>
+        <div className="grid grid-cols-2 gap-2 mb-3">
           <div>
             <Label>Quote Number</Label>
-            <input value={quoteNumber} onChange={e => setQuoteNumber(e.target.value)} placeholder="W9-10-16699" style={{ width: '100%' }} />
+            <input value={quoteNumber} onChange={e => setQuoteNumber(e.target.value)} placeholder="W9-10-16699" className="w-full" />
           </div>
           <div>
             <Label>Date</Label>
-            <input type="date" value={poDate} onChange={e => setPoDate(e.target.value)} style={{ width: '100%' }} />
+            <input type="date" value={poDate} onChange={e => setPoDate(e.target.value)} className="w-full" />
           </div>
         </div>
 
-        <div style={{ marginBottom: 'var(--mar-m)' }}>
+        <div className="mb-3">
           <ProjectPicker
             value={selectedProject}
             onChange={handleProjectSelect}
@@ -582,29 +572,29 @@ export default function PONew() {
         </div>
 
         {selectedProject && (
-          <div style={{ marginBottom: 'var(--mar-m)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)' }}>
+          <div className="mb-3 grid grid-cols-2 gap-3">
             <div>
               <Label>Project Name</Label>
-              <input value={projectName} onChange={e => setProjectName(e.target.value)} style={{ width: '100%' }} />
+              <input value={projectName} onChange={e => setProjectName(e.target.value)} className="w-full" />
             </div>
             <div>
               <Label>Job #</Label>
-              <input value={projectRef} onChange={e => setProjectRef(e.target.value)} style={{ width: '100%' }} />
+              <input value={projectRef} onChange={e => setProjectRef(e.target.value)} className="w-full" />
             </div>
           </div>
         )}
 
         <div>
           <Label>Default Warehouse</Label>
-          <select value={defaultWarehouseId} onChange={e => setDefaultWarehouseId(e.target.value)} style={{ width: '100%' }}>
+          <select value={defaultWarehouseId} onChange={e => setDefaultWarehouseId(e.target.value)} className="w-full">
             {warehouses.map(w => <option key={w.id} value={w.id}>{w.name}</option>)}
           </select>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 4 }}>New line items will default to this warehouse. You can change per line.</div>
+          <div className="text-xs text-text-3 mt-1">New line items will default to this warehouse. You can change per line.</div>
         </div>
-      </div>
+      </Card>
 
       {/* Scope sections */}
-      <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, marginBottom: 'var(--mar-m)' }}>Line Items</div>
+      <div className="text-sm font-bold mb-3">Line Items</div>
 
       {sections.map(sec => (
         <ScopeSection
@@ -618,7 +608,7 @@ export default function PONew() {
       ))}
 
       <button onClick={addSection}
-        style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', width: '100%', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', border: '2px dashed var(--border-l)', background: 'transparent', color: 'var(--text-3)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', justifyContent: 'center', marginBottom: 'var(--mar-l)' }}>
+        className="flex items-center justify-center gap-2 w-full p-3 rounded-md border-2 border-dashed border-border-l bg-transparent text-text-3 font-bold text-sm cursor-pointer mb-4">
         <Plus size="0.9375rem" /> Add Scope Section
       </button>
 
@@ -626,32 +616,30 @@ export default function PONew() {
       <LaborSection items={laborItems} onUpdate={setLaborItems} />
 
       {/* Notes */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-l)', marginBottom: 'var(--mar-l)' }}>
+      <Card className="p-5 mb-4">
         <Label>Notes</Label>
-        <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Any additional notes for this Sales Order…" rows={3} style={{ width: '100%', resize: 'vertical' }} />
-      </div>
+        <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Any additional notes for this Sales Order…" rows={3} className="w-full resize-vertical" />
+      </Card>
 
       {/* Running total */}
       <TotalsBar sections={sections} laborItems={laborItems} />
 
       {/* Error */}
       {error && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', background: 'var(--error-soft)', borderRadius: 'var(--r-l)', marginBottom: 'var(--mar-l)', color: 'var(--error-dark)', fontSize: 'var(--text-sm)' }}>
+        <div className="flex items-center gap-2 p-3 bg-error-soft rounded-lg mb-4 text-error-dark text-sm">
           <Warning size="0.9375rem" />
           {error}
         </div>
       )}
 
       {/* Save actions */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gap-m)', marginBottom: 'var(--mar-xxl)' }}>
-        <button onClick={() => handleSave(false)} disabled={saving}
-          style={{ padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--white)', color: 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+      <div className="grid grid-cols-2 gap-3 mb-20">
+        <Button variant="outline" onClick={() => handleSave(false)} disabled={saving}>
           {saving ? 'Saving…' : 'Save as Draft'}
-        </button>
-        <button onClick={() => handleSave(true)} disabled={saving}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-m)', borderRadius: 'var(--r-m)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+        </Button>
+        <Button onClick={() => handleSave(true)} disabled={saving} className="flex items-center justify-center gap-2">
           {saving ? 'Saving…' : <><ArrowRight size="0.9375rem" /> Save & Submit</>}
-        </button>
+        </Button>
       </div>
     </div>
   )

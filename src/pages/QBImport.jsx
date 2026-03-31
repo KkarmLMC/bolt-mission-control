@@ -212,41 +212,41 @@ function InvoiceRow({ inv, selected, onToggle }) {
   const [expanded, setExpanded] = useState(false)
   return (
     <>
-      <tr style={{ background: selected ? 'var(--blue-soft)' : 'transparent', cursor: 'pointer' }}
+      <tr className="qb-import__row" style={{ background: selected ? 'var(--state-info-soft)' : 'transparent' }}
         onClick={() => onToggle(inv.invoiceNum)}>
-        <td style={{ padding: '10px 12px' }}>
+        <td className="qb-import__cell-checkbox">
           <input type="checkbox" checked={selected} onChange={() => onToggle(inv.invoiceNum)}
             onClick={e => e.stopPropagation()} />
         </td>
-        <td style={{ padding: '10px 12px', fontFamily: 'var(--mono)', fontSize: 'var(--text-sm)' }}>{inv.invoiceNum}</td>
-        <td style={{ padding: '10px 12px' }}>
-          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{inv.customer}</div>
-          {inv.jobName && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>{inv.jobName}</div>}
+        <td className="qb-import__cell-mono">{inv.invoiceNum}</td>
+        <td className="qb-import__cell-customer">
+          <div className="qb-import__customer-name">{inv.customer}</div>
+          {inv.jobName && <div className="qb-import__customer-job">{inv.jobName}</div>}
         </td>
-        <td style={{ padding: '10px 12px', fontSize: 'var(--text-sm)' }}>{inv.date}</td>
-        <td style={{ padding: '10px 12px', fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--warning)', fontFamily: 'var(--mono)' }}>
+        <td className="qb-import__cell-date">{inv.date}</td>
+        <td className="qb-import__cell-amount">
           ${inv.total.toLocaleString('en-US', { minimumFractionDigits: 2 })}
         </td>
-        <td style={{ padding: '10px 12px' }}>
-          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{inv.lineItems.length} lines</span>
+        <td className="qb-import__cell-lines">
+          <span>{inv.lineItems.length} lines</span>
         </td>
-        <td style={{ padding: '10px 12px' }}>
+        <td className="qb-import__cell-expand">
           {inv.lineItems.length > 0 && (
             <button onClick={e => { e.stopPropagation(); setExpanded(x => !x) }}
-              style={{ background: 'none', cursor: 'pointer', color: 'var(--text-3)', fontSize: 'var(--text-xs)' }}>
+              className="qb-import__expand-btn">
               {expanded ? '▲ Hide' : '▼ Show'}
             </button>
           )}
         </td>
       </tr>
       {expanded && inv.lineItems.map((li, i) => (
-        <tr key={i} style={{ background: 'var(--white)' }}>
+        <tr key={i} className="qb-import__detail-row">
           <td />
           <td />
-          <td colSpan={2} style={{ padding: '6px 12px 6px 24px', fontSize: 'var(--text-sm)', color: 'var(--black)' }}>
+          <td colSpan={2} className="qb-import__detail-description">
             {li.description}
           </td>
-          <td style={{ padding: '6px 12px', fontSize: 'var(--text-sm)', fontFamily: 'var(--mono)' }}>
+          <td className="qb-import__detail-amount">
             {li.quantity > 1 ? `${li.quantity} × $${li.unit_cost}` : `$${li.amount.toLocaleString()}`}
           </td>
           <td colSpan={2} />
@@ -410,16 +410,14 @@ export default function QBImport() {
   // ── Upload screen ──
   if (step === 'upload') return (
     <div className="page-content fade-in">
-      <button onClick={() => navigate(-1)}
-        style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
+      <button onClick={() => navigate(-1)} className="qb-import__back-btn">
         <ArrowLeft size="0.875rem" /> Back
       </button>
 
-
       {/* How to export instructions */}
-      <div className="card" style={{ marginBottom: 'var(--mar-l)' }}>
+      <div className="card qb-import__instructions">
         <div className="list-card__header"><span className="list-card__title"><Question size="0.875rem" /> How to export from QuickBooks Desktop</span></div>
-        <div style={{ padding: 'var(--pad-l)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-m)' }}>
+        <div className="qb-import__instructions-content">
           {[
             ['1', 'Open QuickBooks Desktop and go to Reports → Sales'],
             ['2', 'Choose either Open Sales Orders Detail or Sales by Customer Detail'],
@@ -427,26 +425,26 @@ export default function QBImport() {
             ['4', 'Click "Excel" or "Export" at the top — save as Excel (.xlsx) or CSV'],
             ['5', 'Upload the file below — both formats are supported'],
           ].map(([n, text]) => (
-            <div key={n} style={{ display: 'flex', gap: 'var(--gap-m)', alignItems: 'flex-start' }}>
-              <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'var(--navy)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{n}</div>
-              <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', paddingTop: 2 }}>{text}</div>
+            <div key={n} className="qb-import__instruction-item">
+              <div className="qb-import__instruction-number">{n}</div>
+              <div className="qb-import__instruction-text">{text}</div>
             </div>
           ))}
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', background: 'var(--white)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', marginTop: 'var(--mar-xs)' }}>
+          <div className="qb-import__instructions-tip">
             💡 Tip: Use <strong>Open Sales Orders Detail</strong> or <strong>Sales by Customer Detail</strong> for best results — both include line items. Summary reports work too but won't import individual line items.
           </div>
         </div>
       </div>
 
       {/* Division selector */}
-      <div className="card" style={{ marginBottom: 'var(--mar-l)' }}>
+      <div className="card qb-import__settings">
         <div className="list-card__header"><span className="list-card__title"><GearSix size="0.875rem" /> Import Settings</span></div>
-        <div style={{ padding: 'var(--pad-l)' }}>
-          <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>Division</label>
-          <div style={{ display: 'flex', gap: 'var(--gap-s)' }}>
+        <div className="qb-import__settings-content">
+          <label className="qb-import__label">Division</label>
+          <div className="qb-import__division-buttons">
             {['LM', 'Bolt'].map(d => (
               <button key={d} onClick={() => setDivision(d)}
-                style={{ padding: 'var(--pad-s) var(--pad-xl)', borderRadius: 'var(--r-l)', border: `1px solid ${division === d ? 'var(--navy)' : 'var(--border-l)'}`, background: division === d ? 'var(--navy)' : 'var(--hover)', color: division === d ? '#fff' : 'var(--black)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+                className="qb-import__division-btn" style={{ borderColor: division === d ? 'var(--brand-primary)' : 'var(--border-subtle)', background: division === d ? 'var(--brand-primary)' : 'var(--surface-hover)', color: division === d ? '#fff' : 'var(--text-primary)' }}>
                 {d === 'LM' ? 'Lightning Master' : 'Bolt Lightning'}
               </button>
             ))}
@@ -455,29 +453,23 @@ export default function QBImport() {
       </div>
 
       {/* Drop zone */}
-      <div
+      <div className="qb-import__drop-zone"
         onDragOver={e => { e.preventDefault(); setDragOver(true) }}
         onDragLeave={() => setDragOver(false)}
         onDrop={onDrop}
         onClick={() => fileRef.current?.click()}
-        style={{
-          border: `2px dashed ${dragOver ? 'var(--navy)' : 'var(--border-l)'}`,
-          borderRadius: 'var(--r-m)',
-          background: dragOver ? 'var(--blue-soft)' : 'var(--white)',
-          padding: 'var(--pad-xxl)',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-          gap: 'var(--gap-m)', cursor: 'pointer', transition: 'all 0.15s' }}>
-        <FileXls size="2.75rem" style={{ color: dragOver ? 'var(--navy)' : 'var(--text-3)' }} />
-        <div style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: dragOver ? 'var(--navy)' : 'var(--black)' }}>
+        style={{ borderColor: dragOver ? 'var(--brand-primary)' : 'var(--border-subtle)', background: dragOver ? 'var(--state-info-soft)' : 'var(--surface-base)' }}>
+        <FileXls size="2.75rem" style={{ color: dragOver ? 'var(--brand-primary)' : 'var(--text-muted)' }} />
+        <div className="qb-import__drop-zone-title" style={{ color: dragOver ? 'var(--brand-primary)' : 'var(--text-primary)' }}>
           Drop your QB export here
         </div>
-        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-3)' }}>CSV or Excel (.xlsx) · click to browse</div>
+        <div className="qb-import__drop-zone-subtitle">CSV or Excel (.xlsx) · click to browse</div>
         <input ref={fileRef} type="file" accept=".csv,.xlsx,.xls" style={{ display: 'none' }}
           onChange={e => handleFile(e.target.files[0])} />
       </div>
 
       {error && (
-        <div style={{ marginTop: 'var(--mar-m)', padding: 'var(--pad-m)', borderRadius: 'var(--r-l)', background: 'var(--error-soft)', color: 'var(--error-alt)', fontSize: 'var(--text-sm)', display: 'flex', gap: 'var(--gap-s)', alignItems: 'center' }}>
+        <div className="qb-import__error">
           <Warning size="1rem" style={{ flexShrink: 0 }} /> {error}
         </div>
       )}
@@ -487,16 +479,15 @@ export default function QBImport() {
   // ── Preview screen ──
   if (step === 'preview') return (
     <div className="page-content fade-in">
-      <button onClick={() => setStep('upload')}
-        style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', color: 'var(--text-3)', fontSize: 'var(--text-xs)', cursor: 'pointer', padding: 0, marginBottom: 'var(--mar-m)' }}>
+      <button onClick={() => setStep('upload')} className="qb-import__back-btn">
         <ArrowLeft size="0.875rem" /> Change file
       </button>
-      <div style={{ fontSize: "var(--text-sm)", color: "var(--text-3)", marginBottom: "var(--mar-m)" }}>
+      <div className="qb-import__preview-meta">
         {`${fileName} · ${parsed.length} record${parsed.length !== 1 ? 's' : ''} found · ${format === 'detail' ? 'Detail format (with line items)' : 'Summary format'}`}
       </div>
 
       {/* Stats */}
-      <div className="stat-grid" style={{ marginBottom: 'var(--mar-l)' }}>
+      <div className="stat-grid qb-import__stats">
         <div className="stat-card">
           <div className="stat-label">Total Records</div>
           <div className="stat-value">{parsed.length}</div>
@@ -513,30 +504,30 @@ export default function QBImport() {
         </div>
         <div className="stat-card">
           <div className="stat-label">Division</div>
-          <div className="stat-value" style={{ fontSize: 'var(--text-lg)' }}>{division}</div>
+          <div className="stat-value">{division}</div>
         </div>
       </div>
 
       {/* Search */}
-      <div style={{ position: 'relative', marginBottom: 'var(--mar-m)' }}>
-        <MagnifyingGlass size="0.875rem" style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
+      <div className="qb-import__search">
+        <MagnifyingGlass size="0.875rem" className="qb-import__search-icon" />
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by customer, SO #, or job…"
-          style={{ width: '100%', paddingLeft: 30 }} />
-        {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', cursor: 'pointer', color: 'var(--text-3)', display: 'flex' }}><X size="0.8125rem" /></button>}
+          className="qb-import__search-input" />
+        {search && <button onClick={() => setSearch('')} className="qb-import__search-clear"><X size="0.8125rem" /></button>}
       </div>
 
       {/* Table */}
-      <div style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', overflow: 'hidden', marginBottom: 'var(--mar-l)' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      <div className="qb-import__table-container">
+        <table className="qb-import__table">
           <thead>
-            <tr style={{ background: 'var(--navy)' }}>
-              <th style={{ padding: '10px 12px', textAlign: 'left', width: 36 }}>
+            <tr className="qb-import__table-header">
+              <th className="qb-import__table-header-checkbox">
                 <input type="checkbox"
                   checked={selected.size === filtered.length && filtered.length > 0}
                   onChange={toggleAll} />
               </th>
               {['SO / Inv #', 'Customer / Job', 'Date', 'Amount', 'Lines', ''].map(h => (
-                <th key={h} style={{ padding: '10px 12px', textAlign: 'left', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
+                <th key={h} className="qb-import__table-header-cell">{h}</th>
               ))}
             </tr>
           </thead>
@@ -554,13 +545,13 @@ export default function QBImport() {
 
       {/* Confirm button */}
       <button onClick={runImport} disabled={selected.size === 0 || importing}
-        style={{ width: '100%', padding: 'var(--pad-l)', borderRadius: 'var(--r-m)', background: selected.size === 0 ? 'var(--text-3)' : 'var(--navy)', color: '#fff', fontWeight: 800, fontSize: 'var(--text-md)', cursor: selected.size === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--gap-s)' }}>
+        className="qb-import__import-btn" style={{ background: selected.size === 0 ? 'var(--text-muted)' : 'var(--brand-primary)' }}>
         {importing
           ? <><div className="spinner" style={{ borderTopColor: '#fff' }} /> Importing…</>
           : <>Import {selected.size} Sales Order{selected.size !== 1 ? 's' : ''} <ArrowRight size="1rem" /></>
         }
       </button>
-      <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', textAlign: 'center', marginTop: 'var(--mar-s)' }}>
+      <div className="qb-import__import-note">
         Each selected record will create a Sales Order and a linked Project in your system.
       </div>
     </div>
@@ -573,39 +564,39 @@ export default function QBImport() {
     const errors  = results.filter(r => r.action === 'error').length
     return (
       <div className="page-content fade-in">
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: 'var(--pad-xxl) 0', gap: 'var(--gap-l)' }}>
-          <CheckCircle size="3.25rem" weight="fill" style={{ color: 'var(--success)' }} />
-          <div style={{ fontSize: 'var(--text-xl)', fontWeight: 800 }}>Import Complete</div>
-          <div style={{ display: 'flex', gap: 'var(--gap-l)', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--success)' }}>{created}</div>
-              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)' }}>Created</div>
+        <div className="qb-import__result-container">
+          <CheckCircle size="3.25rem" weight="fill" style={{ color: 'var(--state-success)' }} />
+          <div className="qb-import__result-title">Import Complete</div>
+          <div className="qb-import__result-stats">
+            <div className="qb-import__result-stat">
+              <div className="qb-import__result-stat-value" style={{ color: 'var(--state-success)' }}>{created}</div>
+              <div className="qb-import__result-stat-label">Created</div>
             </div>
-            {skipped > 0 && <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--warning)' }}>{skipped}</div>
-              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)' }}>Skipped</div>
+            {skipped > 0 && <div className="qb-import__result-stat">
+              <div className="qb-import__result-stat-value" style={{ color: 'var(--state-warning)' }}>{skipped}</div>
+              <div className="qb-import__result-stat-label">Skipped</div>
             </div>}
-            {errors > 0 && <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: 'var(--error)' }}>{errors}</div>
-              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--black)' }}>Errors</div>
+            {errors > 0 && <div className="qb-import__result-stat">
+              <div className="qb-import__result-stat-value" style={{ color: 'var(--state-error)' }}>{errors}</div>
+              <div className="qb-import__result-stat-label">Errors</div>
             </div>}
           </div>
           {errors > 0 && (
-            <div style={{ width: '100%', maxWidth: 480, background: 'var(--error-soft)', borderRadius: 'var(--r-l)', padding: 'var(--pad-m)', textAlign: 'left' }}>
+            <div className="qb-import__result-errors">
               {results.filter(r => r.action === 'error').map(r => (
-                <div key={r.invoiceNum} style={{ fontSize: 'var(--text-xs)', color: 'var(--error-alt)', marginBottom: 4 }}>
+                <div key={r.invoiceNum} className="qb-import__result-error-item">
                   {r.invoiceNum}: {r.reason}
                 </div>
               ))}
             </div>
           )}
-          <div style={{ display: 'flex', gap: 'var(--gap-m)', marginTop: 'var(--mar-s)' }}>
+          <div className="qb-import__result-actions">
             <button onClick={() => { setStep('upload'); setParsed([]); setResults([]); setFileName('') }}
-              style={{ padding: 'var(--pad-m) var(--pad-xl)', borderRadius: 'var(--r-l)', background: 'transparent', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer' }}>
+              className="qb-import__result-btn-secondary">
               Import Another File
             </button>
             <button onClick={() => navigate('/change-orders')}
-              style={{ padding: 'var(--pad-m) var(--pad-xl)', borderRadius: 'var(--r-l)', background: 'var(--navy)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
+              className="qb-import__result-btn-primary">
               View Change Orders <ArrowRight size="0.875rem" />
             </button>
           </div>

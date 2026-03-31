@@ -5,6 +5,7 @@ import {
   Warning, SignOut, ClipboardText, DownloadSimple,
   CalendarBlank, ArrowLineLeft, ArrowLineRight, User, UserGear, Receipt } from '@phosphor-icons/react'
 import { useAuth } from '../lib/useAuth.jsx'
+import { Sidebar as SharedSidebar } from '../components/ui'
 
 // ── Live clock ────────────────────────────────────────────────────────────────
 function Clock() {
@@ -14,7 +15,7 @@ function Clock() {
     return () => clearInterval(i)
   }, [])
   return (
-    <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', fontFamily: 'var(--font)' }}>
+    <span className="sidebar-clock__text">
       {t.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
       {' · '}
       {t.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
@@ -39,7 +40,7 @@ function SubNav({ children, collapsed, goTo, currentPath }) {
       <div style={{ position: 'relative', paddingLeft: 4 }}>
         <div style={{
           position: 'absolute', left: '1.375rem', top: 4, bottom: 4,
-          width: 1, background: 'var(--border-l)', borderRadius: 'var(--r-xs)' }} />
+          width: 1, background: 'var(--border-subtle)', borderRadius: 'var(--radius-xs)' }} />
         {children.map(child => {
           const active = pathMatch(child.path, currentPath)
           return (
@@ -57,8 +58,8 @@ function SubNav({ children, collapsed, goTo, currentPath }) {
                   {child.count > 0 && (
                     <span style={{
                       marginLeft: 6, fontSize: 'var(--text-xs)', fontWeight: 700,
-                      padding: '1px 6px', borderRadius: 'var(--r-m)',
-                      background: active ? 'var(--red)' : 'rgba(255,255,255,0.15)',
+                      padding: '1px 6px', borderRadius: 'var(--radius-m)',
+                      background: active ? 'var(--state-error)' : 'rgba(255,255,255,0.15)',
                       color: active ? '#fff' : 'rgba(255,255,255,0.6)',
                       fontFamily: 'var(--mono)' }}>{child.count}</span>
                   )}
@@ -91,9 +92,9 @@ function NavGroup({ item, collapsed, goTo, currentPath }) {
             {item.count > 0 && (
               <span style={{
                 marginLeft: 'auto', fontSize: 'var(--text-xs)', fontWeight: 700,
-                padding: '1px 6px', borderRadius: 'var(--r-m)',
-                background: active ? 'rgba(255,255,255,0.2)' : 'var(--hover)',
-                color: active ? 'var(--white)' : 'var(--black)',
+                padding: '1px 6px', borderRadius: 'var(--radius-m)',
+                background: active ? 'rgba(255,255,255,0.2)' : 'var(--surface-hover)',
+                color: active ? 'var(--surface-base)' : 'var(--text-primary)',
                 fontFamily: 'var(--font)' }}>{item.count}</span>
             )}
           </span>
@@ -153,13 +154,13 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
         {/* Logo */}
         <div className="sidebar-brand-row">
           {collapsed
-            ? <Lightning size="1.375rem" weight="fill" style={{ color: 'var(--navy)' }} />
+            ? <Lightning size="1.375rem" weight="fill" style={{ color: 'var(--brand-primary)' }} />
             : (
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)', letterSpacing: '-0.01em' }}>
+                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
                   Mission Control
                 </div>
-                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 500, color: 'var(--text-3)' }}>
+                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 500, color: 'var(--text-muted)' }}>
                   Bolt LP · LMC
                 </div>
               </div>
@@ -184,20 +185,20 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
 
         {/* Alerts — only show when not collapsed and there are alerts */}
         {!collapsed && (criticalLeads > 0 || overdueTasks > 0) && (
-          <div style={{ padding: 'var(--pad-s)', borderTop: '1px solid var(--border)', flexShrink: 0 }}>
+          <div style={{ padding: 'var(--space-s)', borderTop: '1px solid var(--border-subtle)', flexShrink: 0 }}>
             <div className="sidebar-section-label">ALERTS</div>
             {criticalLeads > 0 && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 'var(--r-s)', marginBottom: 4, background: 'rgba(245,51,63,0.15)' }}>
-                <Warning size="0.8125rem" weight="fill" style={{ color: 'var(--red)', flexShrink: 0 }} />
-                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--red)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 'var(--radius-s)', marginBottom: 4, background: 'var(--state-error-soft)' }}>
+                <Warning size="0.8125rem" weight="fill" style={{ color: 'var(--state-error-text)', flexShrink: 0 }} />
+                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--state-error-text)' }}>
                   {criticalLeads} critical lead{criticalLeads > 1 ? 's' : ''}
                 </span>
               </div>
             )}
             {overdueTasks > 0 && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 'var(--r-s)', marginBottom: 4, background: 'rgba(245,158,11,0.15)' }}>
-                <Warning size="0.8125rem" weight="fill" style={{ color: 'var(--warning)', flexShrink: 0 }} />
-                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--warning)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 'var(--radius-s)', marginBottom: 4, background: 'var(--state-warning-soft)' }}>
+                <Warning size="0.8125rem" weight="fill" style={{ color: 'var(--state-warning-text)', flexShrink: 0 }} />
+                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--state-warning-text)' }}>
                   {overdueTasks} overdue task{overdueTasks > 1 ? 's' : ''}
                 </span>
               </div>
@@ -208,10 +209,10 @@ export default function Sidebar({ collapsed, onToggle, leads = [], rels = [], ta
         {/* Footer */}
         <div className="sidebar-footer-nav">
           {!collapsed && (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--pad-s) 0.625rem var(--pad-xs)' }}>
+            <div className="sidebar-footer-header">
               <span className="sidebar-section-label" style={{ padding: 0 }}>ACCOUNT</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                <div style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--success)', animation: 'livepulse 2s infinite', flexShrink: 0 }} />
+              <div className="sidebar-clock">
+                <div className="sidebar-clock__dot" />
                 <Clock />
               </div>
             </div>
