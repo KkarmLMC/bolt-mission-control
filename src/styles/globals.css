@@ -382,6 +382,7 @@
   /* ── Layout ───────────────────────────────────────────────────────────────── */
   --sidebar-w:   13.75rem;
   --sidebar-wc:  3.75rem;
+  --header-h:    3.25rem;
   --tab-h:       4rem;
   --content-pad: var(--pad-xl);
 
@@ -662,7 +663,7 @@ body {
 @keyframes livepulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.4 } }
 
 /* Legacy classes — kept for any remaining references */
-.divider { height: 1px; background: rgba(255,255,255,0.08); margin:: 0.25rem 0; }
+.divider { height: 1px; background: rgba(255,255,255,0.08); margin: 0.25rem 0; }
 
 /* ============================================================
    PAGE HEADER
@@ -670,7 +671,7 @@ body {
 .page-header {
   background: var(--navy);
   padding: 0 var(--pad-l);
-  height: 3.25rem;
+  height: var(--header-h);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -987,7 +988,7 @@ textarea { resize: vertical; min-height: 4.375rem; }
 .task-row { display: flex; align-items: flex-start; gap: 0.75rem; padding: 13px 1.25rem; border-bottom: 1px solid var(--border-l); transition: background var(--ease-fast); }
 .task-row:last-child { border-bottom: none; }
 .task-row:hover { background: var(--hover); }
-.checkbox { width: 10.4375rem; height: 10.4375rem; flex-shrink: 0; margin-top: 1px; border: 1.0.3125rem solid var(--border-l); border-radius: 0.25rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all var(--ease-base); background: var(--white); }
+.checkbox { width: 1.0625rem; height: 1.0625rem; flex-shrink: 0; margin-top: 1px; border: 1px solid var(--border-l); border-radius: 0.25rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all var(--ease-base); background: var(--white); }
 .checkbox:hover { border-color: var(--red); }
 .checkbox.checked { background: var(--success); border-color: var(--success); }
 .task-body { flex: 1; min-width: 0; }
@@ -1020,7 +1021,7 @@ textarea { resize: vertical; min-height: 4.375rem; }
    ============================================================ */
 .empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40.5rem 1.5rem; gap: 0.625rem; color: var(--text-3); }
 .empty-icon { font-size: 2.25rem; opacity: 0.4; }
-.empty-title { font-size: 10.3125rem; font-weight: 600; color: var(--black); }
+.empty-title { font-size: 0.9375rem; font-weight: 600; color: var(--black); }
 .empty-desc { font-size: var(--text-sm); text-align: center; max-width: 25rem; line-height: 1.6; }
 .spinner { width: 1.125rem; height: 1.125rem; border: 0.125rem solid var(--border-l); border-top-color: var(--red); border-radius: 50%; animation: spin 0.7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg) } }
@@ -1068,7 +1069,7 @@ textarea { resize: vertical; min-height: 4.375rem; }
     padding-bottom: calc(var(--content-pad) + 4.5rem);
   }
 
-  .page-header { padding: 0 var(--pad-m); height: 3.25rem; }
+  .page-header { padding: 0 var(--pad-m); height: var(--header-h); }
   .page-header__title { font-size: var(--text-base); }
   
   .stat-grid { grid-template-columns: repeat(2,1fr); gap: 0.5rem; margin-bottom: 0.75rem; }
@@ -1096,7 +1097,7 @@ textarea { resize: vertical; min-height: 4.375rem; }
   .task-row { padding: 0.75rem; gap: 0.625rem; }
   .task-meta { flex-wrap: wrap; gap: 0.3125rem; margin-top: 0.3125rem; }
   .stage-breakdown-scroll { padding:: 0.5rem: 0.75rem 0.75rem; gap: 0.625rem; scroll-snap-type: x mandatory; }
-  .stage-breakdown-card { flex: 0 0 calc(50% - 10.4375rem); min-width: calc(50% - 10.4375rem); scroll-snap-align: start; }
+  .stage-breakdown-card { flex: 0 0 calc(50% - 1.0625rem); min-width: calc(50% - 1.0625rem); scroll-snap-align: start; }
 
   /* Table → mobile cards */
   .table-wrap { overflow-x: visible; }
