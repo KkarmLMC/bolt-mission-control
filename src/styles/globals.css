@@ -871,7 +871,6 @@ textarea,
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  width: 100%;
   min-height: 100%;
   background: var(--surface-page);
   padding: var(--content-pad) var(--content-pad) calc(var(--content-pad) + 4.5rem);
@@ -1680,7 +1679,6 @@ textarea,
 }
 
 .login-card {
-  width: 100%;
   max-width: 23.75rem;
   background: var(--login-card-bg);
   padding: var(--space-3xl);
@@ -2338,7 +2336,6 @@ textarea,
 }
 
 .sheet {
-  width: 100%;
   max-height: 92vh;
   overflow-y: auto;
   animation: anim-sheet-up 0.25s var(--ease-emphasized);
@@ -3142,7 +3139,6 @@ textarea,
 .so-detail__modal {
   background: var(--surface-base);
   border-radius: var(--radius-m);
-  width: 100%;
   max-width: 480px;
   overflow: hidden;
 }
@@ -3442,7 +3438,6 @@ textarea,
 }
 
 .qb-import__search-input {
-  width: 100%;
   padding-left: 30px;
   padding: var(--space-s);
   border: 1px solid var(--border-subtle);
@@ -3473,7 +3468,6 @@ textarea,
 }
 
 .qb-import__table {
-  width: 100%;
   border-collapse: collapse;
 }
 
@@ -3642,7 +3636,6 @@ textarea,
 }
 
 .qb-import__result-errors {
-  width: 100%;
   max-width: 480px;
   background: var(--state-error-soft);
   border-radius: var(--radius-l);
@@ -3707,7 +3700,6 @@ textarea,
 .change-orders-4297 {
   background: #fff;
   border-radius: 20px 20px 0 0;
-  width: 100%;
   max-height: 88vh;
   overflow-y: auto;
   padding: var(--space-xxl) var(--space-xl);
@@ -3740,7 +3732,6 @@ textarea,
 }
 
 .change-orders-ce75 {
-  width: 100%;
   padding: var(--space-m);
   border-radius: var(--radius-lg);
   font-size: var(--text-sm);
@@ -4187,7 +4178,6 @@ textarea,
 .ops-board-ccc9 {
   padding-left: 24px;
   padding-right: 8px;
-  width: 100%;
   height: var(--icon-size-sm);
   font-size: var(--text-xs);
 }
