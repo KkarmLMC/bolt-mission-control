@@ -72,7 +72,7 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
               <CheckCircle size="2.25rem" className="empty-icon" />
               <div className="empty-title">No tasks here</div>
               <div className="empty-desc">Add tasks to track follow-ups, calls, and actions.</div>
-              <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Task</button>
+              <button className="btn btn-primary" style={{ marginTop: 'var(--space-s)' }} onClick={onAdd}>+ Add First Task</button>
             </div>
           ) : filtered.map(t => (
             <div key={t.id} className="task-row" style={{ opacity: t.done ? 0.55 : 1 }} onClick={() => onEdit(t)}>
@@ -85,7 +85,7 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
                 <div className="task-meta">
                   <span className="assignee-chip">{t.assigned_to}</span>
                   <span className={`due-tag ${dueClass(t.due_date)}`}>{dueLabel(t.due_date)}</span>
-                  <span style={{ fontSize: 10.5, fontWeight: 600, color: t.priority === 'CRITICAL' ? 'var(--red)' : t.priority === 'HIGH' ? 'var(--warning)' : 'var(--text-3)' }}>
+                  <span style={{ fontSize: 10.5, fontWeight: 'var(--fw-semibold)', color: t.priority === 'CRITICAL' ? 'var(--red)' : t.priority === 'HIGH' ? 'var(--warning)' : 'var(--text-3)' }}>
                     {t.priority}
                   </span>
                 </div>

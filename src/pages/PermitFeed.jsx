@@ -59,7 +59,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
               <button key={f} className={`filter-pill ${filter === f ? 'active' : ''}`} onClick={() => setFilter(f)}>{f}</button>
             ))}
           </div>
-          <div className="search-box" style={{ marginBottom: 8 }}>
+          <div className="search-box" style={{ marginBottom: 'var(--space-s)' }}>
             <MagnifyingGlass size="1rem" className="row-item__caret" />
             <input placeholder="Search leads..." value={search} onChange={e => setSearch(e.target.value)} />
             {search && <button onClick={() => setSearch('')} className="permit-feed-28e6"><X size="0.8125rem" /></button>}
@@ -74,7 +74,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
               <Lightning size="2.25rem" className="empty-icon" />
               <div className="empty-title">No leads yet</div>
               <div className="empty-desc">Add leads manually or run the permit scraper.</div>
-              <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Lead</button>
+              <button className="btn btn-primary" style={{ marginTop: 'var(--space-s)' }} onClick={onAdd}>+ Add First Lead</button>
             </div>
           ) : (
             <div className="table-wrap">

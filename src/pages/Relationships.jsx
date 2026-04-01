@@ -49,7 +49,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
               <button key={t} className={`filter-pill ${typeF === t ? 'active' : ''}`} onClick={() => setTypeF(t)}>{t}</button>
             ))}
           </div>
-          <div className="search-box" style={{ marginBottom: 8 }}>
+          <div className="search-box" style={{ marginBottom: 'var(--space-s)' }}>
             <MagnifyingGlass size="1rem" className="relationships-0d77" />
             <input placeholder="Search companies..." value={search} onChange={e => setSearch(e.target.value)} />
             {search && <button onClick={() => setSearch('')} className="relationships-52f0"><X size="0.8125rem" /></button>}
@@ -64,7 +64,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
               <Handshake size="2.25rem" className="empty-icon" />
               <div className="empty-title">No companies yet</div>
               <div className="empty-desc">Add your GC and MEP engineer relationships.</div>
-              <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Company</button>
+              <button className="btn btn-primary" style={{ marginTop: 'var(--space-s)' }} onClick={onAdd}>+ Add First Company</button>
             </div>
           ) : (
             <div className="table-wrap">

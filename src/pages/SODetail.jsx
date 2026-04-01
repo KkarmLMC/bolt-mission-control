@@ -237,7 +237,7 @@ export default function SODetail() {
             )}
           </div>
           <div style={{
-            display: 'flex', alignItems: 'center', gap: 4,
+            display: 'flex', alignItems: 'center', gap: 'var(--space-2xs)',
             padding: '4px 12px', borderRadius: 'var(--radius-s)',
             background: statusDisplay.bg, color: statusDisplay.color }}>
             <StatusIcon size="0.75rem" weight="fill" />
@@ -280,11 +280,11 @@ export default function SODetail() {
       {/* ── CONTEXTUAL ACTION BAR ──────────────────────────────────────────── */}
       {(actionCfg.primary || actionCfg.hint) && (
         <div className="card-section">
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: actionCfg.hint ? 'var(--space-s)' : 0 }}>
+          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', marginBottom: actionCfg.hint ? 'var(--space-s)' : 0 }}>
             Next Action
           </div>
           {actionCfg.hint && (
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginBottom: actionCfg.primary ? 'var(--space-m)' : 0, lineHeight: 1.6 }}>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginBottom: actionCfg.primary ? 'var(--space-m)' : 0, lineHeight: 'var(--leading-loose)' }}>
               {actionCfg.hint}
             </div>
           )}
@@ -296,7 +296,7 @@ export default function SODetail() {
                   <button
                     onClick={() => handleAction(action)}
                     disabled={acting}
-                    style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-s) var(--space-l)', borderRadius: 'var(--radius-m)', background: color, color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: acting ? 'not-allowed' : 'pointer', opacity: acting ? 0.7 : 1 }}>
+                    style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-s) var(--space-l)', borderRadius: 'var(--radius-m)', background: color, color: 'var(--color-white)', fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', cursor: acting ? 'not-allowed' : 'pointer', opacity: acting ? 0.7 : 1 }}>
                     {acting ? <div className="spinner s-o-detail-2ee7" /> : <Icon size="0.9375rem" weight="bold" />}
                     {label}
                   </button>
@@ -427,7 +427,7 @@ export default function SODetail() {
 
             {/* Modal header */}
             <div className="so-detail__modal-header">
-              <Prohibit size="1.25rem" style={{ color: '#fff' }} />
+              <Prohibit size="1.25rem" style={{ color: 'var(--color-white)' }} />
               <div>
                 <div className="so-detail__modal-title">Cancel Sales Order</div>
                 <div className="so-detail__modal-subtitle">{po.so_number} · {po.customer_name}</div>
@@ -445,9 +445,9 @@ export default function SODetail() {
                   {/* What will happen summary */}
                   <div className="so-detail__modal-summary">
                     <div className="s-o-detail-224f">This will:</div>
-                    <div><ArrowCounterClockwise size="0.75rem" style={{ marginRight: 4 }} /> Return all allocated inventory to stock</div>
-                    <div><X size="0.75rem" style={{ marginRight: 4 }} /> Remove fulfillment sheets and pending shipments</div>
-                    <div><Prohibit size="0.75rem" style={{ marginRight: 4 }} /> Mark this SO as cancelled (preserved for audit)</div>
+                    <div><ArrowCounterClockwise size="0.75rem" style={{ marginRight: 'var(--space-2xs)' }} /> Return all allocated inventory to stock</div>
+                    <div><X size="0.75rem" style={{ marginRight: 'var(--space-2xs)' }} /> Remove fulfillment sheets and pending shipments</div>
+                    <div><Prohibit size="0.75rem" style={{ marginRight: 'var(--space-2xs)' }} /> Mark this SO as cancelled (preserved for audit)</div>
                   </div>
 
                   <label className="so-detail__modal-label">Reason for cancellation *</label>

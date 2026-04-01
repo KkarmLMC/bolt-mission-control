@@ -109,7 +109,7 @@ export default function Opportunities({ leads, loading }) {
               <div key={s.key} className="stage-breakdown-card" style={{
                 background: 'var(--white)',
                 borderTop: `3px solid ${s.color}`, borderRadius: 'var(--r-m)', padding: '12px 14px' }}>
-                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: s.color, marginBottom: 4 }}>{s.label}</div>
+                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-semibold)', color: s.color, marginBottom: 'var(--space-2xs)' }}>{s.label}</div>
                 <div className="opportunities-7380">{count}</div>
                 <div className="opportunities-7efa">{val > 0 ? fmt$(val) : '—'}</div>
               </div>

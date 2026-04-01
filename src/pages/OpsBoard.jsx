@@ -43,7 +43,7 @@ function StageBadge({ stage, small }) {
       padding: small ? '1px 6px' : '2px 8px',
       borderRadius: 'var(--radius-xs)',
       fontSize: small ? 'var(--text-2xs)' : 'var(--text-xs)',
-      fontWeight: 700,
+      fontWeight: 'var(--fw-bold)',
       background: s.bg,
       color: s.color,
       whiteSpace: 'nowrap' }}>{s.label}</span>
@@ -98,7 +98,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
             </button>
           </div>
         </div>
-        <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: '#fff', lineHeight: 1.3, marginBottom: 4 }}>
+        <div style={{ fontSize: 'var(--text-md)', fontWeight: 'var(--fw-black)', color: 'var(--color-white)', lineHeight: 'var(--leading-snug)', marginBottom: 'var(--space-2xs)' }}>
           {project.name}
         </div>
         <div className="ops-board-17b3">
@@ -150,7 +150,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
               ].map(([lbl, val]) => (
                 <div key={lbl} className="card-section">
                   <div className="text-label">{lbl}</div>
-                  <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)', fontFamily: lbl === 'Contract' || lbl === 'SO Number' ? 'var(--mono)' : 'var(--font)' }}>{val}</div>
+                  <div style={{ fontSize: 'var(--text-sm)', fontWeight: 'var(--fw-bold)', color: 'var(--text-primary)', fontFamily: lbl === 'Contract' || lbl === 'SO Number' ? 'var(--mono)' : 'var(--font)' }}>{val}</div>
                 </div>
               ))}
             </div>
@@ -221,10 +221,10 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
                 width: 38, flexShrink: 0, padding: '4px 2px', textAlign: 'center',
                 background: isToday ? 'var(--navy)' : isSun ? 'var(--white)' : 'transparent',
                 borderRight: '1px solid var(--border-l)' }}>
-                <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--text-primary)' }}>
+                <div style={{ fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-bold)', color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--text-primary)' }}>
                   {DAY_NAMES[d.getDay()]}
                 </div>
-                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: isToday ? '#fff' : isSun ? 'var(--text-muted)' : 'var(--text-primary)' }}>
+                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: isToday ? '#fff' : isSun ? 'var(--text-muted)' : 'var(--text-primary)' }}>
                   {d.getDate()}
                 </div>
               </div>
@@ -240,7 +240,7 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
           const crew  = assignments.filter(a => a.project_id === proj.id)
 
           return (
-            <div key={proj.id} style={{ display: 'flex', borderBottom: '1px solid var(--border-subtle)', minHeight: 44, alignItems: 'center', background: pi % 2 === 0 ? 'transparent' : 'var(--surface-base)' }}>
+            <div key={proj.id} style={{ display: 'flex', borderBottom: '1px solid var(--border-subtle)', minHeight: 'var(--touch-target)', alignItems: 'center', background: pi % 2 === 0 ? 'transparent' : 'var(--surface-base)' }}>
               {/* Job name column */}
               <div className="ops-board-09d7"
                 onClick={() => onSelectProject(proj)}>
@@ -345,7 +345,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
                 width: 80, flexShrink: 0, padding: '4px 8px', textAlign: 'center',
                 background: isToday ? 'var(--brand-primary)' : isSun ? 'var(--surface-base)' : 'transparent',
                 borderRight: '1px solid var(--border-subtle)' }}>
-                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--text-primary)' }}>
+                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--text-primary)' }}>
                   {DAY_NAMES[d.getDay()]} {d.getDate()}
                 </div>
                 <div style={{ fontSize: 'var(--text-2xs)', color: isToday ? 'rgba(255,255,255,0.5)' : 'var(--text-4)' }}>
@@ -358,7 +358,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
 
         {/* Crew rows */}
         {crew.map((c, ci) => (
-          <div key={c.name} style={{ display: 'flex', borderBottom: '1px solid var(--border-subtle)', minHeight: 52, alignItems: 'stretch', background: ci % 2 === 0 ? 'transparent' : 'var(--surface-base)' }}>
+          <div key={c.name} style={{ display: 'flex', borderBottom: '1px solid var(--border-subtle)', minHeight: 'var(--touch-target-lg)', alignItems: 'stretch', background: ci % 2 === 0 ? 'transparent' : 'var(--surface-base)' }}>
             {/* Crew name */}
             <div className="ops-board-81e5">
               <div className="ops-board-4dda">
@@ -391,9 +391,9 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
                         onClick={() => onSelectProject(proj)}
                         title={proj.name}
                         style={{
-                          padding: '2px 5px', borderRadius: 4, cursor: 'pointer',
-                          background: stage.color, color: '#fff',
-                          fontSize: 'var(--text-xs)', fontWeight: 700,
+                          padding: '2px 5px', borderRadius: 'var(--radius-xs)', cursor: 'pointer',
+                          background: stage.color, color: 'var(--color-white)',
+                          fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)',
                           overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                           border: conflict ? '2px solid #DC2626' : 'none' }}>
                         {proj.customer_account?.split(' ')[0] || proj.name.split(' ')[0]}
@@ -469,7 +469,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
               background: isToday ? 'var(--state-info-soft)' : inMonth ? '#fff' : 'var(--surface-base)',
               minHeight: 72, padding: '4px 4px 2px' }}>
               <div style={{
-                width: 22, height: 22, borderRadius: '50%', marginBottom: 3,
+                width: 22, height: 22, borderRadius: 'var(--radius-round)', marginBottom: 3,
                 background: isToday ? 'var(--navy)' : 'transparent',
                 display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <span style={{ fontSize: 'var(--text-xs)', fontWeight: isToday ? 700 : 400, color: isToday ? '#fff' : inMonth ? 'var(--black)' : 'var(--text-4)' }}>
@@ -483,9 +483,9 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
                   <div key={proj.id}
                     onClick={() => onSelectProject(proj)}
                     style={{
-                      padding: '2px 5px', borderRadius: 'var(--r-xs)', marginBottom: 2,
-                      background: stage.color, color: '#fff',
-                      fontSize: 'var(--text-2xs)', fontWeight: 700, cursor: 'pointer',
+                      padding: '2px 5px', borderRadius: 'var(--r-xs)', marginBottom: 'var(--space-3xs)',
+                      background: stage.color, color: 'var(--color-white)',
+                      fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-bold)', cursor: 'pointer',
                       overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {proj.customer_account?.split(' ')[0] || proj.name.split(' ')[0]}
                   </div>
@@ -593,7 +593,7 @@ export default function OpsBoard() {
               { key: 'month', Icon: CalendarBlank, label: 'Month' },
             ].map(({ key, Icon, label }) => (
               <button key={key} onClick={() => setView(key)}
-                style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 'var(--radius-s)', background: view === key ? 'var(--brand-primary)' : 'var(--surface-hover)', color: view === key ? '#fff' : 'var(--text-primary)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2xs)', padding: '4px 8px', borderRadius: 'var(--radius-s)', background: view === key ? 'var(--brand-primary)' : 'var(--surface-hover)', color: view === key ? '#fff' : 'var(--text-primary)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
                 <Icon size="0.75rem" weight={view === key ? 'fill' : 'regular'} />
                 {label}
               </button>
@@ -605,7 +605,7 @@ export default function OpsBoard() {
             <div className="card-section">
               {[['week','1W'],['2week','2W'],['month','4W']].map(([key, lbl]) => (
                 <button key={key} onClick={() => setSpan(key)}
-                  style={{ padding: '4px 8px', borderRadius: 'var(--radius-s)', background: span === key ? 'var(--brand-primary)' : 'var(--surface-hover)', color: span === key ? '#fff' : 'var(--text-primary)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
+                  style={{ padding: '4px 8px', borderRadius: 'var(--radius-s)', background: span === key ? 'var(--brand-primary)' : 'var(--surface-hover)', color: span === key ? '#fff' : 'var(--text-primary)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
                   {lbl}
                 </button>
               ))}

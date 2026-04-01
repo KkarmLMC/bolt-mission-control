@@ -547,7 +547,7 @@ export default function QBImport() {
       <button onClick={runImport} disabled={selected.size === 0 || importing}
         className="qb-import__import-btn" style={{ background: selected.size === 0 ? 'var(--text-muted)' : 'var(--brand-primary)' }}>
         {importing
-          ? <><div className="spinner" style={{ borderTopColor: '#fff' }} /> Importing…</>
+          ? <><div className="spinner" style={{ borderTopColor: 'var(--color-white)' }} /> Importing…</>
           : <>Import {selected.size} Sales Order{selected.size !== 1 ? 's' : ''} <ArrowRight size="1rem" /></>
         }
       </button>

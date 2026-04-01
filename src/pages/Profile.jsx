@@ -31,7 +31,7 @@ function PinPad({ onComplete }) {
     <div>
       <div className="flex justify-center gap-2 mb-6">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} style={{ width: 14, height: 14, borderRadius: '50%', background: i < digits.length ? 'var(--brand-primary)' : 'var(--border-subtle)', transition: 'background 0.1s' }} />
+          <div key={i} style={{ width: 14, height: 14, borderRadius: 'var(--radius-round)', background: i < digits.length ? 'var(--brand-primary)' : 'var(--border-subtle)', transition: 'background 0.1s' }} />
         ))}
       </div>
       <div className="grid grid-cols-3 gap-3 max-w-xs mx-auto">
@@ -147,7 +147,7 @@ function ActivityLog({ userId }) {
               <div key={log.id} className={`flex items-start gap-3 p-4 pl-5 ${i < logs.length - 1 ? 'border-b border-border-subtle' : ''}`}>
                 {/* Category dot */}
                 <div style={{
-                  width: 8, height: 8, borderRadius: '50%', flexShrink: 0, marginTop: 'var(--space-xs)',
+                  width: 8, height: 8, borderRadius: 'var(--radius-round)', flexShrink: 0, marginTop: 'var(--space-xs)',
                   background: CATEGORY_COLOR[log.category] || 'var(--text-muted)' }} />
                 <div className="flex-1 min-w-0">
                   <div className="text-sm text-text-primary font-medium leading-relaxed">

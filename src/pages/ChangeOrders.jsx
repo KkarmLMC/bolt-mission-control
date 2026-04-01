@@ -13,7 +13,7 @@ const STATUS = {
 
 function StatusBadge({ status }) {
   const s = STATUS[status] || STATUS.pending
-  return <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: 'var(--text-xs)', fontWeight: 700, background: s.bg, color: s.color }}>{s.label}</span>
+  return <span style={{ padding: '2px 8px', borderRadius: 'var(--radius-xs)', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', background: s.bg, color: s.color }}>{s.label}</span>
 }
 
 function COModal({ co, onClose, onAction }) {
@@ -143,12 +143,12 @@ function COModal({ co, onClose, onAction }) {
 
             <div className="grid-2col">
               <button onClick={() => handleAction('rejected')} disabled={saving}
-                style={{ padding: 'var(--space-m)', borderRadius: 'var(--radius-md)', background: 'var(--surface-base)', color: 'var(--state-error)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                style={{ padding: 'var(--space-m)', borderRadius: 'var(--radius-md)', background: 'var(--surface-base)', color: 'var(--state-error)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-xs)' }}>
                 <XCircle size="1rem" /> Reject
               </button>
               <button onClick={() => handleAction('approved')} disabled={saving}
-                style={{ padding: 'var(--space-m)', borderRadius: 'var(--radius-md)', background: 'var(--brand-primary)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                {saving ? <div className="spinner" style={{ borderTopColor: '#fff' }} /> : <><CheckCircle size="1rem" /> Approve → SO</>}
+                style={{ padding: 'var(--space-m)', borderRadius: 'var(--radius-md)', background: 'var(--brand-primary)', color: 'var(--color-white)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-xs)' }}>
+                {saving ? <div className="spinner" style={{ borderTopColor: 'var(--color-white)' }} /> : <><CheckCircle size="1rem" /> Approve → SO</>}
               </button>
             </div>
             <div className="change-orders-5b76">

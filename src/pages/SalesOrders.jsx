@@ -73,7 +73,7 @@ export default function SalesOrders() {
         <MagnifyingGlass size="0.9375rem" className="search-overlay-icon" />
         <input value={query} onChange={e => setQuery(e.target.value)}
           placeholder="Search by SO#, customer, or project…"
-          style={{ paddingLeft: 36 }} />
+          style={{ paddingLeft: 'var(--search-input-offset)' }} />
       </div>
 
       {/* Status filters */}
