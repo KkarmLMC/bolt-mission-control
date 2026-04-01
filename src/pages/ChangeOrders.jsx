@@ -241,7 +241,7 @@ export default function ChangeOrders() {
           <div className="loading"><div className="spinner" /></div>
         ) : filtered.length === 0 ? (
           <div className="empty">
-            <ClipboardText size="2.25rem" style={{ color: 'var(--text-muted)', marginBottom: 8 }} />
+            <ClipboardText size="2.25rem" className="empty-icon" />
             <div className="empty-title">{filter === 'pending' ? 'No pending requests' : 'Nothing here'}</div>
             <div className="empty-desc">Field part requests will appear here for review.</div>
           </div>

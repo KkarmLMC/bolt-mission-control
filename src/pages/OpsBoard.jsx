@@ -673,7 +673,7 @@ export default function OpsBoard() {
           </div>
         ) : filteredProjects.length === 0 ? (
           <div className="empty">
-            <CalendarBlank size="2.5rem" style={{ color: 'var(--text-muted)', marginBottom: 8 }} />
+            <CalendarBlank size="2.5rem" className="empty-icon" />
             <div className="empty-title">No jobs to display</div>
             <div className="empty-desc">Adjust your filters or schedule some projects.</div>
           </div>

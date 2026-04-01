@@ -71,7 +71,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
             <div className="loading"><div className="spinner" /><span>Loading leads...</span></div>
           ) : filtered.length === 0 ? (
             <div className="empty">
-              <Lightning size="2.25rem" style={{ color: 'var(--text-muted)', marginBottom: 8 }} />
+              <Lightning size="2.25rem" className="empty-icon" />
               <div className="empty-title">No leads yet</div>
               <div className="empty-desc">Add leads manually or run the permit scraper.</div>
               <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Lead</button>

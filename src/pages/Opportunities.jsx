@@ -153,7 +153,7 @@ export default function Opportunities({ leads, loading }) {
           <div className="loading"><div className="spinner" /></div>
         ) : topLeads.length === 0 ? (
           <div className="empty">
-            <Lightning size="2.25rem" style={{ color: 'var(--text-3)', marginBottom: 8 }} />
+            <Lightning size="2.25rem" className="empty-icon" />
             <div className="empty-title">No active leads</div>
             <div className="empty-desc">Add leads via Permit Feed to see them here.</div>
           </div>

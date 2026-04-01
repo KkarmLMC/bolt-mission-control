@@ -69,7 +69,7 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
             <div className="loading"><div className="spinner" /></div>
           ) : filtered.length === 0 ? (
             <div className="empty">
-              <CheckCircle size="2.25rem" style={{ color: 'var(--text-3)', marginBottom: 8 }} />
+              <CheckCircle size="2.25rem" className="empty-icon" />
               <div className="empty-title">No tasks here</div>
               <div className="empty-desc">Add tasks to track follow-ups, calls, and actions.</div>
               <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Task</button>

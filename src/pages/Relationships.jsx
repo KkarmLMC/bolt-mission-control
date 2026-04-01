@@ -61,7 +61,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
             <div className="loading"><div className="spinner" /><span>Loading...</span></div>
           ) : filtered.length === 0 ? (
             <div className="empty">
-              <Handshake size="2.25rem" style={{ color: 'var(--text-3)', marginBottom: 8 }} />
+              <Handshake size="2.25rem" className="empty-icon" />
               <div className="empty-title">No companies yet</div>
               <div className="empty-desc">Add your GC and MEP engineer relationships.</div>
               <button className="btn btn-primary" style={{ marginTop: 8 }} onClick={onAdd}>+ Add First Company</button>
