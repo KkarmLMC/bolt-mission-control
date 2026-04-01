@@ -95,7 +95,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
                       <td><span className={`badge ${statusBadge(l.status)}`}>{l.status}</span></td>
                       <td><span className="text-sm">{l.contractor || '—'}</span></td>
                       <td><span className="permit-feed-8a7c">{l.next_action || '—'}</span></td>
-                      <td onClick={e => e.stopPropagation()}><button className="btn btn-ghost btn-sm" onClick={() => onEdit(l)}>Edit</button></td>
+                      <td onClick={e => e.stopPropagation()}><button className="btn btn-ghost btn-s" onClick={() => onEdit(l)}>Edit</button></td>
                     </tr>
                   ))}
                 </tbody>

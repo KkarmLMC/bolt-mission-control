@@ -95,7 +95,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
                         <span className="relationships-941d">{score(r)}/5</span>
                       </td>
                       <td onClick={e => e.stopPropagation()}>
-                        <button className="btn btn-ghost btn-sm" onClick={() => onEdit(r)}>Edit</button>
+                        <button className="btn btn-ghost btn-s" onClick={() => onEdit(r)}>Edit</button>
                       </td>
                     </tr>
                   ))}
