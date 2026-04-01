@@ -95,7 +95,7 @@ function COModal({ co, onClose, onAction }) {
       <div style={{ background: '#fff', borderRadius: '20px 20px 0 0', width: '100%', maxHeight: '88vh', overflowY: 'auto', padding: 'var(--space-xxl) var(--space-xl)' }}>
 
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--space-xl)' }}>
+        <div className="modal-header">
           <div>
             <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-muted)', marginBottom: 4 }}>{co.co_number}</div>
             <div style={{ fontSize: 'var(--text-lg)', fontWeight: 800 }}>{co.projects?.name || co.job_reference}</div>
@@ -119,7 +119,7 @@ function COModal({ co, onClose, onAction }) {
             <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
               <div>
                 <div className="text-sm-semi">{item.parts?.name || '—'}</div>
-                {item.parts?.sku && <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-muted)' }}>{item.parts.sku}</div>}
+                {item.parts?.sku && <div className="text-xs-mono">{item.parts.sku}</div>}
                 {item.notes && <div className="meta-text">{item.notes}</div>}
               </div>
               <div style={{ fontSize: 'var(--text-sm)', fontWeight: 800, fontFamily: 'var(--mono)' }}>×{item.quantity}</div>
