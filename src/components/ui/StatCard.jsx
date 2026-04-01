@@ -16,12 +16,12 @@ export default function StatCard({ label, value, color, onClick, sub }) {
       onClick={onClick}
       style={{ cursor: onClick ? 'pointer' : 'default' }}
     >
-      <div className="stat-card__label">{label}</div>
+      <div className="nav-card__label">{label}</div>
       <div className="stat-card__value" style={color ? { color } : undefined}>
         {value}
       </div>
       {sub && (
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 'var(--mar-xs)' }}>
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 'var(--space-xs)' }}>
           {sub}
         </div>
       )}
