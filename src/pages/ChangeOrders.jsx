@@ -118,9 +118,9 @@ function COModal({ co, onClose, onAction }) {
           {co.change_order_items?.map((item, idx) => (
             <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
               <div>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{item.parts?.name || '—'}</div>
+                <div className="text-sm-semi">{item.parts?.name || '—'}</div>
                 {item.parts?.sku && <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-muted)' }}>{item.parts.sku}</div>}
-                {item.notes && <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 2 }}>{item.notes}</div>}
+                {item.notes && <div className="meta-text">{item.notes}</div>}
               </div>
               <div style={{ fontSize: 'var(--text-sm)', fontWeight: 800, fontFamily: 'var(--mono)' }}>×{item.quantity}</div>
             </div>

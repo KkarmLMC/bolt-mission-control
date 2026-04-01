@@ -176,7 +176,7 @@ export default function SODetail() {
 
   useEffect(() => { load() }, [id])
 
-  if (loading) return <div className="page-content fade-in" className="spinner-pad"><div className="spinner" /></div>
+  if (loading) return <div className="page-content fade-in spinner-pad"><div className="spinner" /></div>
   if (!po) return <div className="page-content fade-in"><div className="empty"><div className="empty-title">Sales Order not found</div></div></div>
 
   const statusDisplay = soStatus(po.status)
@@ -279,7 +279,7 @@ export default function SODetail() {
 
       {/* ── CONTEXTUAL ACTION BAR ──────────────────────────────────────────── */}
       {(actionCfg.primary || actionCfg.hint) && (
-        <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-m)', padding: 'var(--space-l)', marginBottom: 'var(--space-l)' }}>
+        <div className="card-section">
           <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: actionCfg.hint ? 'var(--space-s)' : 0 }}>
             Next Action
           </div>

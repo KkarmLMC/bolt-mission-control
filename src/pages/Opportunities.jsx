@@ -49,7 +49,7 @@ export default function Opportunities({ leads, loading }) {
       {pendingCOs.length > 0 && (
         <div onClick={() => navigate('/change-orders')} style={{ background: 'var(--orange-soft)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
           <ClipboardText size="1.25rem" style={{ color: 'var(--orange-shade-20)', flexShrink: 0 }} />
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="content-body">
             <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--orange-shade-20)' }}>
               {pendingCOs.length} Part Request{pendingCOs.length !== 1 ? 's' : ''} Pending Review
             </div>
@@ -66,7 +66,7 @@ export default function Opportunities({ leads, loading }) {
         style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
         <DownloadSimple size="1.125rem" style={{ color: 'var(--navy)', flexShrink: 0 }} />
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700 }}>Import from QuickBooks</div>
+          <div className="text-sm-bold">Import from QuickBooks</div>
           <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>Upload a QB Desktop CSV to create Sales Orders</div>
         </div>
         <ArrowRight size="0.875rem" style={{ color: 'var(--black)', flexShrink: 0 }} />
@@ -128,7 +128,7 @@ export default function Opportunities({ leads, loading }) {
             <div key={c.label} onClick={() => c.path && navigate(c.path)}
               style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-l)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-l)', background: 'var(--white)', cursor: c.path ? 'pointer' : 'default', opacity: c.soon ? 0.5 : 1 }}>
               <c.Icon size="1.125rem" style={{ color: 'var(--black)', flexShrink: 0 }} />
-              <div style={{ flex: 1, minWidth: 0 }}>
+              <div className="content-body">
                 <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--black)' }}>{c.label}</div>
                 <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>{c.description}</div>
               </div>

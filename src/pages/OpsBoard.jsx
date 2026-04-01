@@ -168,8 +168,8 @@ function JobPanel({ project, assignments, onClose, onSave }) {
                     {getInitials(a.crew_name)}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{a.crew_name}</div>
-                    <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{a.role}</div>
+                    <div className="text-sm-semi">{a.crew_name}</div>
+                    <div className="meta-text">{a.role}</div>
                   </div>
                 </div>
               ))}
