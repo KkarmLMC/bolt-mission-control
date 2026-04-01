@@ -107,7 +107,7 @@ export default function SalesOrders() {
             const sc = soStatus(o.status)
             return (
               <div key={o.id} onClick={() => navigate(`/sales-orders/${o.id}`)}
-                className="queue-row" style={{ borderBottom: idx < visible.length - 1 ? '1px solid var(--border-subtle)' : 'none' }}>
+                className="queue-row" style={{ borderBottom: idx < visible.length - 1 ? 'var(--border-width-1) solid var(--border-subtle)' : 'none' }}>
                 <Receipt size="1rem" style={{ color: 'var(--brand-primary)' }} />
                 <div className="queue-row__body">
                   <div className="sales-orders-faf9">

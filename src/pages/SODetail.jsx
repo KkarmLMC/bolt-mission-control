@@ -100,7 +100,7 @@ function SectionGroup({ label, items }) {
         </span>
       </button>
       {open && items.map((item, idx) => (
-        <div key={item.id} className="line-item__row" style={{ borderBottom: idx < items.length - 1 ? '1px solid var(--border-subtle)' : 'none' }}>
+        <div key={item.id} className="line-item__row" style={{ borderBottom: idx < items.length - 1 ? 'var(--border-width-1) solid var(--border-subtle)' : 'none' }}>
           <div className="line-item__description">
             {item.sku && <div className="line-item__sku">{item.sku}</div>}
             <div className="line-item__name">{item.description}</div>
@@ -366,7 +366,7 @@ export default function SODetail() {
             <span>Installation / Labor</span>
           </div>
           {laborLines.map((line, idx) => (
-            <div key={line.id} className="so-detail__labor-row" style={{ borderBottom: idx < laborLines.length - 1 ? '1px solid var(--border-subtle)' : 'none' }}>
+            <div key={line.id} className="so-detail__labor-row" style={{ borderBottom: idx < laborLines.length - 1 ? 'var(--border-width-1) solid var(--border-subtle)' : 'none' }}>
               <div>
                 <div className="so-detail__labor-description">{line.description}</div>
               </div>

@@ -82,8 +82,8 @@ function JobPanel({ project, assignments, onClose, onSave }) {
   return (
     <div style={{
       position: 'fixed', top: 0, right: 0, bottom: 'env(safe-area-inset-bottom, 0px)',
-      width: 360, background: 'var(--surface-base)',
-      zIndex: 200, display: 'flex', flexDirection: 'column',
+      width: '22.5rem', background: 'var(--surface-base)',
+      zIndex: 'var(--z-toast)', display: 'flex', flexDirection: 'column',
       animation: 'slideInRight 0.2s ease' }}>
       {/* Header */}
       <div className="ops-board-ec6b">
@@ -240,7 +240,7 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
           const crew  = assignments.filter(a => a.project_id === proj.id)
 
           return (
-            <div key={proj.id} style={{ display: 'flex', borderBottom: '1px solid var(--border-subtle)', minHeight: 'var(--touch-target)', alignItems: 'center', background: pi % 2 === 0 ? 'transparent' : 'var(--surface-base)' }}>
+            <div key={proj.id} style={{ display: 'flex', borderBottom: 'var(--border-width-1) solid var(--border-subtle)', minHeight: 'var(--touch-target)', alignItems: 'center', background: pi % 2 === 0 ? 'transparent' : 'var(--surface-base)' }}>
               {/* Job name column */}
               <div className="ops-board-09d7"
                 onClick={() => onSelectProject(proj)}>
@@ -344,7 +344,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
               <div key={fmtDate(d)} style={{
                 width: 80, flexShrink: 0, padding: 'var(--space-2xs) var(--space-s)', textAlign: 'center',
                 background: isToday ? 'var(--brand-primary)' : isSun ? 'var(--surface-base)' : 'transparent',
-                borderRight: '1px solid var(--border-subtle)' }}>
+                borderRight: 'var(--border-width-1) solid var(--border-subtle)' }}>
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--text-primary)' }}>
                   {DAY_NAMES[d.getDay()]} {d.getDate()}
                 </div>
@@ -358,7 +358,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
 
         {/* Crew rows */}
         {crew.map((c, ci) => (
-          <div key={c.name} style={{ display: 'flex', borderBottom: '1px solid var(--border-subtle)', minHeight: 'var(--touch-target-lg)', alignItems: 'stretch', background: ci % 2 === 0 ? 'transparent' : 'var(--surface-base)' }}>
+          <div key={c.name} style={{ display: 'flex', borderBottom: 'var(--border-width-1) solid var(--border-subtle)', minHeight: 'var(--touch-target-lg)', alignItems: 'stretch', background: ci % 2 === 0 ? 'transparent' : 'var(--surface-base)' }}>
             {/* Crew name */}
             <div className="ops-board-81e5">
               <div className="ops-board-4dda">
@@ -381,7 +381,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
                 <div key={fmtDate(d)} style={{
                   width: 80, flexShrink: 0,
                   background: isSun ? 'rgba(0,0,0,0.02)' : 'transparent',
-                  borderRight: '1px solid var(--border-subtle)',
+                  borderRight: 'var(--border-width-1) solid var(--border-subtle)',
                   borderLeft: isToday ? '2px solid var(--brand-primary)' : 'none',
                   padding: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
                   {assigned.map(proj => {
@@ -391,7 +391,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
                         onClick={() => onSelectProject(proj)}
                         title={proj.name}
                         style={{
-                          padding: '2px 5px', borderRadius: 'var(--radius-xs)', cursor: 'pointer',
+                          padding: 'var(--space-3xs) var(--space-xs)', borderRadius: 'var(--radius-xs)', cursor: 'pointer',
                           background: stage.color, color: 'var(--color-white)',
                           fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)',
                           overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
@@ -483,7 +483,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
                   <div key={proj.id}
                     onClick={() => onSelectProject(proj)}
                     style={{
-                      padding: '2px 5px', borderRadius: 'var(--r-xs)', marginBottom: 'var(--space-3xs)',
+                      padding: 'var(--space-3xs) var(--space-xs)', borderRadius: 'var(--r-xs)', marginBottom: 'var(--space-3xs)',
                       background: stage.color, color: 'var(--color-white)',
                       fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-bold)', cursor: 'pointer',
                       overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
