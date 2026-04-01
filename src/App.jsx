@@ -152,9 +152,8 @@ export default function App() {
             <Route path="*" element={<Navigate to="/opportunities" replace />} />
           </Routes>
         </Suspense>
+        <MobileTabBar leads={leads} tasks={tasks} />
       </div>
-
-      <MobileTabBar leads={leads} tasks={tasks} />
 
       {modal?.type === 'lead' && <LeadModal lead={modal.data} onClose={() => setModal(null)} onSave={handleSaveLead} />}
       {modal?.type === 'rel'  && <RelModal  rel={modal.data}  onClose={() => setModal(null)} onSave={handleSaveRel}  />}
