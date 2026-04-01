@@ -148,7 +148,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
                 ['Start',       project.scheduled_date || '—'],
                 ['End',         project.target_completion || '—'],
               ].map(([lbl, val]) => (
-                <div key={lbl} style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-l)', padding: 'var(--space-m)' }}>
+                <div key={lbl} className="card-section">
                   <div className="text-label">{lbl}</div>
                   <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)', fontFamily: lbl === 'Contract' || lbl === 'SO Number' ? 'var(--mono)' : 'var(--font)' }}>{val}</div>
                 </div>
@@ -591,7 +591,7 @@ export default function OpsBoard() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 'var(--space-s)', flexWrap: 'wrap' }}>
 
           {/* View toggles */}
-          <div style={{ display: 'flex', background: 'var(--surface-base)', borderRadius: 'var(--radius-l)', padding: 2, gap: 1, flexShrink: 0 }}>
+          <div className="card-section">
             {[
               { key: 'gantt', Icon: Rows, label: 'Gantt' },
               { key: 'crew',  Icon: Users, label: 'Crew'  },
@@ -607,7 +607,7 @@ export default function OpsBoard() {
 
           {/* Span toggles — hidden on month view */}
           {view !== 'month' && (
-            <div style={{ display: 'flex', background: 'var(--surface-base)', borderRadius: 'var(--radius-l)', padding: 2, gap: 1, flexShrink: 0 }}>
+            <div className="card-section">
               {[['week','1W'],['2week','2W'],['month','4W']].map(([key, lbl]) => (
                 <button key={key} onClick={() => setSpan(key)}
                   style={{ padding: '4px 8px', borderRadius: 'var(--radius-s)', background: span === key ? 'var(--brand-primary)' : 'var(--surface-hover)', color: span === key ? '#fff' : 'var(--text-primary)', fontWeight: 700, fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
