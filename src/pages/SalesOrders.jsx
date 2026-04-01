@@ -77,7 +77,7 @@ export default function SalesOrders() {
       </div>
 
       {/* Status filters */}
-      <div className="filter-pills" style={{ marginBottom: 'var(--space-l)' }}>
+      <div className="filter-pills mb-l">
         {STATUS_LABELS.map(s => {
           const active = filter === s
           const count  = s === 'All' ? orders.length : counts[s]

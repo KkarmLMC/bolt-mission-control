@@ -65,7 +65,7 @@ export default function Opportunities({ leads, loading }) {
       <div onClick={() => navigate('/qb-import')}
         style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
         <DownloadSimple size="1.125rem" style={{ color: 'var(--navy)', flexShrink: 0 }} />
-        <div style={{ flex: 1 }}>
+        <div className="content-body">
           <div className="text-sm-bold">Import from QuickBooks</div>
           <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>Upload a QB Desktop CSV to create Sales Orders</div>
         </div>

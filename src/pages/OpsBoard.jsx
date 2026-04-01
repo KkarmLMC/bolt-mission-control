@@ -156,7 +156,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
             </div>
 
             {/* Assigned crew */}
-            <div style={{ marginBottom: 'var(--space-l)' }}>
+            <div className="mb-l">
               <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-s)' }}>
                 Assigned Crew
               </div>
@@ -167,7 +167,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
                   <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--brand-primary)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     {getInitials(a.crew_name)}
                   </div>
-                  <div style={{ flex: 1 }}>
+                  <div className="content-body">
                     <div className="text-sm-semi">{a.crew_name}</div>
                     <div className="meta-text">{a.role}</div>
                   </div>
@@ -177,7 +177,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
 
             {/* Notes */}
             {project.notes && (
-              <div style={{ marginBottom: 'var(--space-l)' }}>
+              <div className="mb-l">
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-s)' }}>Notes</div>
                 <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.6, background: 'var(--surface-base)', borderRadius: 'var(--radius-l)', padding: 'var(--space-m)' }}>
                   {project.notes}
@@ -190,7 +190,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
 
       {/* Footer */}
       {!editing && (
-        <div style={{ padding: 'var(--space-l)' }}>
+        <div className="pad-l">
           <button onClick={() => navigate(`/installations/${project.id}`)}
             style={{ width: '100%', padding: 'var(--space-m)', borderRadius: 'var(--radius-l)', background: 'var(--brand-primary)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
             Open Job Page <ArrowSquareOut size="0.875rem" />
