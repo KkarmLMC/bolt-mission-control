@@ -146,9 +146,7 @@ function ActivityLog({ userId }) {
             {logs.map((log, i) => (
               <div key={log.id} className={`flex items-start gap-3 p-4 pl-5 ${i < logs.length - 1 ? 'border-b border-border-subtle' : ''}`}>
                 {/* Category dot */}
-                <div style={{
-                  width: 'var(--space-s)', height: 'var(--space-s)', borderRadius: 'var(--radius-round)', flexShrink: 0, marginTop: 'var(--space-xs)',
-                  background: CATEGORY_COLOR[log.category] || 'var(--text-muted)' }} />
+                <div className="status-dot" />
                 <div className="flex-1 min-w-0">
                   <div className="text-sm text-text-primary font-medium leading-relaxed">
                     {log.label}
