@@ -880,14 +880,7 @@ textarea,
   gap: var(--space-l);
 }
 
-.app {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-}
-
-
+/* .app removed — use .app-shell */
 /* =============================================================================
    6. SIDEBAR
    ============================================================================= */
@@ -1076,8 +1069,7 @@ textarea,
 .spinner-page { display: flex; align-items: center; justify-content: center; min-height: 100dvh; }
 
 /* ── Main content area ────────────────────────────────────────────────────── */
-.main-content { flex: 1; overflow: hidden; overflow-y: auto; }
-
+/* .main-content removed — unified to .main-area */
 .sidebar__overlay,
 .sidebar-overlay {
   display: none;

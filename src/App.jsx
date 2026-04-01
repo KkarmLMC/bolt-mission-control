@@ -105,12 +105,12 @@ export default function App() {
   )
 
   return (
-    <div className="app">
+    <div className="app-shell">
       <Sidebar leads={leads} rels={rels} tasks={tasks} collapsed={collapsed} onToggle={() => setCollapsed(c => !c)} />
 
-      <div className="main">
+      <div className="main-area">
         <Header />
-        <div className="main-content">
+        <Suspense fallback={<div className="page-content spinner-content"><div className="spinner" /></div>}>
           <Routes>
             <Route path="/" element={<Navigate to="/opportunities" replace />} />
             <Route path="/opportunities" element={
@@ -151,7 +151,7 @@ export default function App() {
             <Route path="/sales-orders/:id" element={<SODetail />} />
             <Route path="*" element={<Navigate to="/opportunities" replace />} />
           </Routes>
-        </div>
+        </Suspense>
       </div>
 
       <MobileTabBar leads={leads} tasks={tasks} />
