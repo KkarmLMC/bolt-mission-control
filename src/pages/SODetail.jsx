@@ -238,7 +238,7 @@ export default function SODetail() {
           </div>
           <div style={{
             display: 'flex', alignItems: 'center', gap: 'var(--space-2xs)',
-            padding: '4px 12px', borderRadius: 'var(--radius-s)',
+            padding: 'var(--space-2xs) var(--space-m)', borderRadius: 'var(--radius-s)',
             background: statusDisplay.bg, color: statusDisplay.color }}>
             <StatusIcon size="0.75rem" weight="fill" />
             <span className="text-label">{statusDisplay.label}</span>

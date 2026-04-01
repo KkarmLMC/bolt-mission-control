@@ -64,7 +64,7 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
           </div>
         </div>
 
-        <div className="list-card__body" style={{ paddingTop: 4 }}>
+        <div className="list-card__body" style={{ paddingTop: 'var(--space-2xs)' }}>
           {loading ? (
             <div className="loading"><div className="spinner" /></div>
           ) : filtered.length === 0 ? (
@@ -85,7 +85,7 @@ export default function TaskBoard({ tasks, loading, onAdd, onEdit, onToggle }) {
                 <div className="task-meta">
                   <span className="assignee-chip">{t.assigned_to}</span>
                   <span className={`due-tag ${dueClass(t.due_date)}`}>{dueLabel(t.due_date)}</span>
-                  <span style={{ fontSize: 10.5, fontWeight: 'var(--fw-semibold)', color: t.priority === 'CRITICAL' ? 'var(--red)' : t.priority === 'HIGH' ? 'var(--warning)' : 'var(--text-3)' }}>
+                  <span style={{ fontSize: 'var(--text-2xs)', fontWeight: 'var(--fw-semibold)', color: t.priority === 'CRITICAL' ? 'var(--red)' : t.priority === 'HIGH' ? 'var(--warning)' : 'var(--text-3)' }}>
                     {t.priority}
                   </span>
                 </div>

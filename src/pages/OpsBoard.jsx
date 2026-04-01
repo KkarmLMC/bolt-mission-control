@@ -342,7 +342,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
             const isSun = isWeekend(d)
             return (
               <div key={fmtDate(d)} style={{
-                width: 80, flexShrink: 0, padding: '4px 8px', textAlign: 'center',
+                width: 80, flexShrink: 0, padding: 'var(--space-2xs) var(--space-s)', textAlign: 'center',
                 background: isToday ? 'var(--brand-primary)' : isSun ? 'var(--surface-base)' : 'transparent',
                 borderRight: '1px solid var(--border-subtle)' }}>
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', color: isToday ? 'rgba(255,255,255,0.7)' : 'var(--text-primary)' }}>
@@ -593,7 +593,7 @@ export default function OpsBoard() {
               { key: 'month', Icon: CalendarBlank, label: 'Month' },
             ].map(({ key, Icon, label }) => (
               <button key={key} onClick={() => setView(key)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2xs)', padding: '4px 8px', borderRadius: 'var(--radius-s)', background: view === key ? 'var(--brand-primary)' : 'var(--surface-hover)', color: view === key ? '#fff' : 'var(--text-primary)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2xs)', padding: 'var(--space-2xs) var(--space-s)', borderRadius: 'var(--radius-s)', background: view === key ? 'var(--brand-primary)' : 'var(--surface-hover)', color: view === key ? '#fff' : 'var(--text-primary)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
                 <Icon size="0.75rem" weight={view === key ? 'fill' : 'regular'} />
                 {label}
               </button>
@@ -605,7 +605,7 @@ export default function OpsBoard() {
             <div className="card-section">
               {[['week','1W'],['2week','2W'],['month','4W']].map(([key, lbl]) => (
                 <button key={key} onClick={() => setSpan(key)}
-                  style={{ padding: '4px 8px', borderRadius: 'var(--radius-s)', background: span === key ? 'var(--brand-primary)' : 'var(--surface-hover)', color: span === key ? '#fff' : 'var(--text-primary)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
+                  style={{ padding: 'var(--space-2xs) var(--space-s)', borderRadius: 'var(--radius-s)', background: span === key ? 'var(--brand-primary)' : 'var(--surface-hover)', color: span === key ? '#fff' : 'var(--text-primary)', fontWeight: 'var(--fw-bold)', fontSize: 'var(--text-xs)', cursor: 'pointer', transition: 'all 0.15s' }}>
                   {lbl}
                 </button>
               ))}

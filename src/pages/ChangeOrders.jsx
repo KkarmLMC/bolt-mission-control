@@ -13,7 +13,7 @@ const STATUS = {
 
 function StatusBadge({ status }) {
   const s = STATUS[status] || STATUS.pending
-  return <span style={{ padding: '2px 8px', borderRadius: 'var(--radius-xs)', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', background: s.bg, color: s.color }}>{s.label}</span>
+  return <span style={{ padding: 'var(--space-3xs) var(--space-s)', borderRadius: 'var(--radius-xs)', fontSize: 'var(--text-xs)', fontWeight: 'var(--fw-bold)', background: s.bg, color: s.color }}>{s.label}</span>
 }
 
 function COModal({ co, onClose, onAction }) {
