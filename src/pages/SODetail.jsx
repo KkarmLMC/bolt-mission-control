@@ -241,7 +241,7 @@ export default function SODetail() {
             padding: '4px 12px', borderRadius: 'var(--radius-s)',
             background: statusDisplay.bg, color: statusDisplay.color }}>
             <StatusIcon size="0.75rem" weight="fill" />
-            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700 }}>{statusDisplay.label}</span>
+            <span className="text-label">{statusDisplay.label}</span>
           </div>
         </div>
 

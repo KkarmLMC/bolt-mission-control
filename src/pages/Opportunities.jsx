@@ -171,7 +171,7 @@ export default function Opportunities({ leads, loading }) {
                     <td><span className="cell-mono" style={{ color: 'var(--warning)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
                     <td><span className={`badge ${statusBadge(l.status)}`}>{l.status}</span></td>
                     <td><span className={`badge ${prioBadge(l.priority)}`}>{l.priority?.replace(/[🔴🟠🟡🟢]/, '').trim()}</span></td>
-                    <td><span style={{ fontSize: 'var(--text-sm)' }}>{l.county}</span></td>
+                    <td><span className="text-sm">{l.county}</span></td>
                   </tr>
                 ))}
               </tbody>

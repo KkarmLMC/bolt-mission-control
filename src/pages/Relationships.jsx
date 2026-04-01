@@ -82,10 +82,10 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
                       <td><span className={`badge ${r.type === 'GC' ? 'badge-gc' : r.type === 'MEP Engineer' ? 'badge-mep' : 'badge-dev'}`}>{r.type}</span></td>
                       <td><span className={`badge badge-t${r.tier?.replace('T', '')}`}>{r.tier}</span></td>
                       <td>
-                        <div style={{ fontSize: 'var(--text-sm)' }}>{r.key_contact || '—'}</div>
+                        <div className="text-sm">{r.key_contact || '—'}</div>
                         <div className="cell-sub">{r.contact_role || ''}</div>
                       </td>
-                      <td><span className="cell-mono" style={{ fontSize: 'var(--text-sm)' }}>{r.phone || '—'}</span></td>
+                      <td><span className="cell-mono text-sm">{r.phone || '—'}</span></td>
                       <td>
                         <div className="progress-pips">
                           {[r.linkedin_done, r.meeting_done, r.preq_submitted, r.on_bid_list, r.spec_sent].map((d, i) => (

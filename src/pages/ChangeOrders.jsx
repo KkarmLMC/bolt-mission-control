@@ -161,7 +161,7 @@ function COModal({ co, onClose, onAction }) {
         {co.status !== 'pending' && co.review_notes && (
           <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-m)', marginTop: 'var(--space-m)' }}>
             <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>Review Notes</div>
-            <div style={{ fontSize: 'var(--text-sm)' }}>{co.review_notes}</div>
+            <div className="text-sm">{co.review_notes}</div>
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 4 }}>by {co.reviewed_by} · {new Date(co.reviewed_at).toLocaleDateString()}</div>
           </div>
         )}
@@ -262,10 +262,10 @@ export default function ChangeOrders() {
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                         <Package size="0.8125rem" style={{ color: 'var(--text-primary)' }} />
-                        <span style={{ fontSize: 'var(--text-sm)' }}>{co.change_order_items?.length || 0} part{co.change_order_items?.length !== 1 ? 's' : ''}</span>
+                        <span className="text-sm">{co.change_order_items?.length || 0} part{co.change_order_items?.length !== 1 ? 's' : ''}</span>
                       </div>
                     </td>
-                    <td><span style={{ fontSize: 'var(--text-sm)' }}>{co.submitted_by}</span></td>
+                    <td><span className="text-sm">{co.submitted_by}</span></td>
                     <td><span className="cell-mono" style={{ fontSize: 'var(--text-xs)' }}>{new Date(co.created_at).toLocaleDateString()}</span></td>
                     <td><StatusBadge status={co.status} /></td>
                     <td><ArrowRight size="1rem" style={{ color: 'var(--text-primary)' }} /></td>

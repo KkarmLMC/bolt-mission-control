@@ -470,7 +470,7 @@ export default function QBImport() {
 
       {error && (
         <div className="qb-import__error">
-          <Warning size="1rem" style={{ flexShrink: 0 }} /> {error}
+          <Warning size="1rem" className="shrink-0" /> {error}
         </div>
       )}
     </div>

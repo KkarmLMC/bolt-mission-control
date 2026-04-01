@@ -93,7 +93,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
                       <td><span className="cell-mono" style={{ color: 'var(--state-warning)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
                       <td><span className="badge" style={{ background: 'var(--surface-base)', color: 'var(--text-primary)' }}>{l.county}</span></td>
                       <td><span className={`badge ${statusBadge(l.status)}`}>{l.status}</span></td>
-                      <td><span style={{ fontSize: 'var(--text-sm)' }}>{l.contractor || '—'}</span></td>
+                      <td><span className="text-sm">{l.contractor || '—'}</span></td>
                       <td><span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', maxWidth: 180, display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.next_action || '—'}</span></td>
                       <td onClick={e => e.stopPropagation()}><button className="btn btn-ghost btn-sm" onClick={() => onEdit(l)}>Edit</button></td>
                     </tr>
