@@ -108,13 +108,13 @@ function COModal({ co, onClose, onAction }) {
 
         {/* Justification */}
         <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-lg)', marginBottom: 'var(--space-lg)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-xs)' }}>Justification</div>
+          <div className="text-label">Justification</div>
           <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.6 }}>{co.justification || '—'}</div>
         </div>
 
         {/* Parts */}
         <div style={{ marginBottom: 'var(--space-lg)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-xs)' }}>Parts Requested</div>
+          <div className="text-label">Parts Requested</div>
           {co.change_order_items?.map((item, idx) => (
             <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
               <div>
@@ -141,7 +141,7 @@ function COModal({ co, onClose, onAction }) {
 
             {error && <div style={{ padding: 'var(--space-xs) var(--space-m)', borderRadius: 'var(--radius-lg)', background: 'var(--state-error-soft)', color: 'var(--state-error-text)', fontSize: 'var(--text-xs)', marginBottom: 'var(--space-m)' }}>{error}</div>}
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-m)' }}>
+            <div className="grid-2col">
               <button onClick={() => handleAction('rejected')} disabled={saving}
                 style={{ padding: 'var(--space-m)', borderRadius: 'var(--radius-md)', background: 'var(--surface-base)', color: 'var(--state-error)', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: saving ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                 <XCircle size="1rem" /> Reject

@@ -45,7 +45,7 @@ export default function SalesOrders() {
       <div className="um-invite-header">
         <button onClick={() => navigate('/sales-orders/new')}
           className="btn btn-navy"
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
+          className="flex-gap-s">
           <Plus size="0.9375rem" weight="bold" /> New SO
         </button>
       </div>

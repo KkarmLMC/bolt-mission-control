@@ -131,7 +131,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
               <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', display: 'block', marginBottom: 6 }}>Notes</label>
               <textarea value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} rows={3} />
             </div>
-            <div style={{ display: 'flex', gap: 'var(--space-s)' }}>
+            <div className="flex-gap-s">
               <button onClick={() => setEditing(false)} style={{ flex: 1, padding: 'var(--space-s)', borderRadius: 'var(--radius-l)', background: 'transparent', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 600 }}>Cancel</button>
               <button onClick={handleSave} disabled={saving} style={{ flex: 2, padding: 'var(--space-s)', borderRadius: 'var(--radius-l)', background: 'var(--brand-primary)', color: '#fff', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 700 }}>
                 {saving ? 'Saving…' : 'Save Changes'}
@@ -638,7 +638,7 @@ export default function OpsBoard() {
         </div>
 
         {/* Row 2 — Search + Filter + Conflicts */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
+        <div className="flex-gap-s">
 
           {/* Search */}
           <div style={{ position: 'relative', flex: 1 }}>
