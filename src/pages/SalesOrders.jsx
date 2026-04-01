@@ -42,56 +42,50 @@ export default function SalesOrders() {
   return (
     <div className="page-content fade-in">
 
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 'var(--mar-m)' }}>
+      <div className="um-invite-header">
         <button onClick={() => navigate('/sales-orders/new')}
           className="btn btn-navy"
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
           <Plus size="0.9375rem" weight="bold" /> New SO
         </button>
       </div>
 
       {/* Stats */}
-      <div className="stat-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 'var(--mar-l)' }}>
+      <div className="stat-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 'var(--space-l)' }}>
         <div className="stat-card">
           <div className="stat-card__label">Total Orders</div>
           <div className="stat-card__value">{orders.length}</div>
         </div>
         <div className="stat-card">
           <div className="stat-card__label">Active</div>
-          <div className="stat-card__value" style={{ color: 'var(--navy)' }}>
+          <div className="stat-card__value" style={{ color: 'var(--brand-primary)' }}>
             {orders.filter(o => !['complete','cancelled'].includes(o.status)).length}
           </div>
         </div>
         <div className="stat-card">
           <div className="stat-card__label">Total Value</div>
-          <div className="stat-card__value" style={{ color: 'var(--navy)', fontSize: 'var(--text-lg)' }}>{fmt(totalValue)}</div>
+          <div className="stat-card__value" style={{ color: 'var(--brand-primary)', fontSize: 'var(--text-lg)' }}>{fmt(totalValue)}</div>
         </div>
       </div>
 
       {/* Search */}
-      <div style={{ position: 'relative', marginBottom: 'var(--mar-m)' }}>
-        <MagnifyingGlass size="0.9375rem" style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)' }} />
-        <input
-          value={query}
-          onChange={e => setQuery(e.target.value)}
+      <div className="queue-search">
+        <MagnifyingGlass size="0.9375rem" className="search-overlay-icon" />
+        <input value={query} onChange={e => setQuery(e.target.value)}
           placeholder="Search by SO#, customer, or project…"
-          style={{ paddingLeft: 36, width: '100%', boxSizing: 'border-box' }}
-        />
+          style={{ paddingLeft: 36 }} />
       </div>
 
       {/* Status filters */}
-      <div style={{ display: 'flex', gap: 'var(--gap-s)', flexWrap: 'wrap', marginBottom: 'var(--mar-l)' }}>
+      <div className="filter-pills" style={{ marginBottom: 'var(--space-l)' }}>
         {STATUS_LABELS.map(s => {
           const active = filter === s
           const count  = s === 'All' ? orders.length : counts[s]
-          const sc     = s === 'All' ? { color: 'var(--black)', bg: 'var(--hover)' } : soStatus(s)
+          const sc     = s === 'All' ? { color: 'var(--text-primary)', bg: 'var(--surface-hover)' } : soStatus(s)
           return (
-            <button key={s} onClick={() => setFilter(s)} style={{
-              padding: '4px 12px', borderRadius: 'var(--r-s)',
-              background: active ? (s === 'All' ? 'var(--navy)' : sc.bg) : 'var(--white)',
-              color: active ? (s === 'All' ? '#fff' : sc.color) : 'var(--black)',
-              fontSize: 'var(--text-xs)', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap',
-              transition: 'all var(--ease-fast)' }}>
+            <button key={s} onClick={() => setFilter(s)}
+              className={`filter-pills__item${active ? ' filter-pills__item--active' : ''}`}
+              style={active ? { background: s === 'All' ? 'var(--brand-primary)' : sc.bg, color: s === 'All' ? '#fff' : sc.color } : undefined}>
               {s === 'All' ? 'All' : sc.label} {count > 0 && `(${count})`}
             </button>
           )
@@ -100,10 +94,10 @@ export default function SalesOrders() {
 
       {/* List */}
       {loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--pad-xxl)' }}><div className="spinner" /></div>
+        <div className="spinner-pad"><div className="spinner spinner-center" /></div>
       ) : visible.length === 0 ? (
         <div className="empty">
-          <Receipt size="2.25rem" style={{ color: 'var(--text-3)', marginBottom: 8 }} />
+          <Receipt size="2.25rem" className="empty-icon" />
           <div className="empty-title">No sales orders found</div>
           <div className="empty-desc">Try adjusting your search or filter.</div>
         </div>
@@ -112,24 +106,21 @@ export default function SalesOrders() {
           {visible.map((o, idx) => {
             const sc = soStatus(o.status)
             return (
-              <div key={o.id}
-                onClick={() => navigate(`/sales-orders/${o.id}`)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', borderBottom: idx < visible.length - 1 ? '1px solid var(--border-l)' : 'none', cursor: 'pointer' }}>
-                <Receipt size="1rem" style={{ color: 'var(--navy)' }} />
-                <div style={{ flex: 1, minWidth: 0 }}>
+              <div key={o.id} onClick={() => navigate(`/sales-orders/${o.id}`)}
+                className="queue-row" style={{ borderBottom: idx < visible.length - 1 ? '1px solid var(--border-subtle)' : 'none' }}>
+                <Receipt size="1rem" style={{ color: 'var(--brand-primary)' }} />
+                <div className="queue-row__body">
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
-                    <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--navy)' }}>{o.so_number}</span>
-                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '1px 6px', borderRadius: 4, background: sc.bg, color: sc.color }}>{sc.label}</span>
+                    <span className="so-number">{o.so_number}</span>
+                    <span className="badge" style={{ background: sc.bg, color: sc.color }}>{sc.label}</span>
                   </div>
-                  <div style={{ fontSize: 'var(--text-sm)', color: 'var(--black)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <div className="queue-row__title">
                     {o.customer_name}{o.project_name ? ` — ${o.project_name}` : ''}
                   </div>
-                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 1 }}>{fmtDate(o.created_at)}</div>
+                  <div className="queue-row__meta">{fmtDate(o.created_at)}</div>
                 </div>
-                <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                  <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--black)' }}>{fmt(o.grand_total)}</div>
-                </div>
-                <CaretRight size="0.875rem" style={{ color: 'var(--black)', flexShrink: 0 }} />
+                <div className="amount-mono">{fmt(o.grand_total)}</div>
+                <CaretRight size="0.875rem" className="row-item__caret" />
               </div>
             )
           })}
