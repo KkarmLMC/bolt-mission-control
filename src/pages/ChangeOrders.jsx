@@ -109,7 +109,7 @@ function COModal({ co, onClose, onAction }) {
         {/* Justification */}
         <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-lg)', marginBottom: 'var(--space-lg)' }}>
           <div className="text-label">Justification</div>
-          <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.6 }}>{co.justification || '—'}</div>
+          <div className="text-sm">{co.justification || '—'}</div>
         </div>
 
         {/* Parts */}

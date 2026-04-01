@@ -117,7 +117,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
                 {STAGES_LIST.map(s => <option key={s}>{s}</option>)}
               </select>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-s)' }}>
+            <div className="grid-2col">
               <div>
                 <label className="form-field__label">Start Date</label>
                 <input type="date" value={form.scheduled_date} onChange={e => setForm(f => ({ ...f, scheduled_date: e.target.value }))} />

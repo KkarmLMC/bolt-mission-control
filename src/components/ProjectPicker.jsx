@@ -92,7 +92,7 @@ export default function ProjectPicker({ value, onChange, placeholder = 'Search b
               onChange={e => setQuery(e.target.value)}
               onFocus={() => query && setOpen(true)}
               placeholder={placeholder}
-              style={{ paddingLeft: 30, width: '100%' }}
+              
             />
             {loading && (
               <div className="spinner" style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', width: 14, height: 14 }} />
