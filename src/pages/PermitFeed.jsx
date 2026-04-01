@@ -62,7 +62,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
           <div className="search-box" style={{ marginBottom: 8 }}>
             <MagnifyingGlass size="1rem" className="row-item__caret" />
             <input placeholder="Search leads..." value={search} onChange={e => setSearch(e.target.value)} />
-            {search && <button onClick={() => setSearch('')} style={{ background: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0, display: 'flex' }}><X size="0.8125rem" /></button>}
+            {search && <button onClick={() => setSearch('')} className="permit-feed-28e6"><X size="0.8125rem" /></button>}
           </div>
         </div>
 
@@ -90,11 +90,11 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
                         <div className="cell-primary">{l.project_name}</div>
                         <div className="cell-sub">{l.address || l.permit_number || '—'}</div>
                       </td>
-                      <td><span className="cell-mono" style={{ color: 'var(--state-warning)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
-                      <td><span className="badge" style={{ background: 'var(--surface-base)', color: 'var(--text-primary)' }}>{l.county}</span></td>
+                      <td><span className="cell-mono permit-feed-db11">{fmt$(l.value_int)}</span></td>
+                      <td><span className="badge permit-feed-20b9">{l.county}</span></td>
                       <td><span className={`badge ${statusBadge(l.status)}`}>{l.status}</span></td>
                       <td><span className="text-sm">{l.contractor || '—'}</span></td>
-                      <td><span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', maxWidth: 180, display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.next_action || '—'}</span></td>
+                      <td><span className="permit-feed-8a7c">{l.next_action || '—'}</span></td>
                       <td onClick={e => e.stopPropagation()}><button className="btn btn-ghost btn-sm" onClick={() => onEdit(l)}>Edit</button></td>
                     </tr>
                   ))}

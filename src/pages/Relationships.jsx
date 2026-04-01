@@ -50,9 +50,9 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
             ))}
           </div>
           <div className="search-box" style={{ marginBottom: 8 }}>
-            <MagnifyingGlass size="1rem" style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+            <MagnifyingGlass size="1rem" className="relationships-0d77" />
             <input placeholder="Search companies..." value={search} onChange={e => setSearch(e.target.value)} />
-            {search && <button onClick={() => setSearch('')} style={{ background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex' }}><X size="0.8125rem" /></button>}
+            {search && <button onClick={() => setSearch('')} className="relationships-52f0"><X size="0.8125rem" /></button>}
           </div>
         </div>
 
@@ -92,7 +92,7 @@ export default function Relationships({ rels, loading, onAdd, onEdit }) {
                             <div key={i} className={`pip ${d ? 'done' : ''}`} />
                           ))}
                         </div>
-                        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>{score(r)}/5</span>
+                        <span className="relationships-941d">{score(r)}/5</span>
                       </td>
                       <td onClick={e => e.stopPropagation()}>
                         <button className="btn btn-ghost btn-sm" onClick={() => onEdit(r)}>Edit</button>

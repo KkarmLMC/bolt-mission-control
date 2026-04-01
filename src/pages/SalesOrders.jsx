@@ -51,7 +51,7 @@ export default function SalesOrders() {
       </div>
 
       {/* Stats */}
-      <div className="stat-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 'var(--space-l)' }}>
+      <div className="stat-grid sales-orders-63ba">
         <div className="stat-card">
           <div className="stat-card__label">Total Orders</div>
           <div className="stat-card__value">{orders.length}</div>
@@ -64,7 +64,7 @@ export default function SalesOrders() {
         </div>
         <div className="stat-card">
           <div className="stat-card__label">Total Value</div>
-          <div className="stat-card__value" style={{ color: 'var(--brand-primary)', fontSize: 'var(--text-lg)' }}>{fmt(totalValue)}</div>
+          <div className="stat-card__value sales-orders-4eb6">{fmt(totalValue)}</div>
         </div>
       </div>
 
@@ -110,7 +110,7 @@ export default function SalesOrders() {
                 className="queue-row" style={{ borderBottom: idx < visible.length - 1 ? '1px solid var(--border-subtle)' : 'none' }}>
                 <Receipt size="1rem" style={{ color: 'var(--brand-primary)' }} />
                 <div className="queue-row__body">
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
+                  <div className="sales-orders-faf9">
                     <span className="so-number">{o.so_number}</span>
                     <span className="badge" style={{ background: sc.bg, color: sc.color }}>{sc.label}</span>
                   </div>

@@ -228,7 +228,7 @@ export default function SODetail() {
       <div className="so-detail-header">
         <div className="so-detail-header__top">
           <div>
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>
+            <div className="s-o-detail-e408">
               {po.division === 'Bolt' ? 'Bolt Lightning' : 'Lightning Master'} · {po.so_number}
             </div>
             <div className="so-detail-header__title">{po.customer_name}</div>
@@ -246,31 +246,31 @@ export default function SODetail() {
         </div>
 
         {/* Customer details */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-l)', paddingTop: 'var(--space-m)' }}>
+        <div className="s-o-detail-81a6">
           {(po.customer_city || po.customer_state) && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)' }}>
+            <div className="s-o-detail-cf29">
               <MapPin size="0.75rem" />
               {[po.customer_city, po.customer_state].filter(Boolean).join(', ')}
             </div>
           )}
           {po.customer_phone && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)' }}>
+            <div className="s-o-detail-cf29">
               <Phone size="0.75rem" /> {po.customer_phone}
             </div>
           )}
           {po.customer_email && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)' }}>
+            <div className="s-o-detail-cf29">
               <Envelope size="0.75rem" /> {po.customer_email}
             </div>
           )}
           {po.so_date && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)' }}>
+            <div className="s-o-detail-cf29">
               <CalendarBlank size="0.75rem" />
               {new Date(po.so_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
             </div>
           )}
           {po.job_reference && (
-            <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)', fontFamily: 'var(--mono)' }}>
+            <div className="s-o-detail-4447">
               Ref: {po.job_reference}
             </div>
           )}
@@ -289,7 +289,7 @@ export default function SODetail() {
             </div>
           )}
           {(actionCfg.primary || canCancel) && (
-            <div style={{ display: 'flex', gap: 'var(--gap-m)', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div className="s-o-detail-da4d">
               {actionCfg.primary && (() => {
                 const { label, icon: Icon, color, action } = actionCfg.primary
                 return (
@@ -297,7 +297,7 @@ export default function SODetail() {
                     onClick={() => handleAction(action)}
                     disabled={acting}
                     style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', padding: 'var(--space-s) var(--space-l)', borderRadius: 'var(--radius-m)', background: color, color: '#fff', fontSize: 'var(--text-sm)', fontWeight: 700, cursor: acting ? 'not-allowed' : 'pointer', opacity: acting ? 0.7 : 1 }}>
-                    {acting ? <div className="spinner" style={{ width: 14, height: 14, borderWidth: 2 }} /> : <Icon size="0.9375rem" weight="bold" />}
+                    {acting ? <div className="spinner s-o-detail-2ee7" /> : <Icon size="0.9375rem" weight="bold" />}
                     {label}
                   </button>
                 )
@@ -305,7 +305,7 @@ export default function SODetail() {
               {canCancel && (
                 <button
                   onClick={() => setCancelModal(true)}
-                  style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)', padding: 'var(--pad-s) var(--pad-l)', borderRadius: 'var(--r-m)', background: 'none', color: 'var(--error)', fontSize: 'var(--text-sm)', fontWeight: 600, cursor: 'pointer' }}>
+                  className="s-o-detail-bad5">
                   <Prohibit size="0.875rem" />
                   Cancel Order
                 </button>
@@ -444,7 +444,7 @@ export default function SODetail() {
 
                   {/* What will happen summary */}
                   <div className="so-detail__modal-summary">
-                    <div style={{ fontWeight: 700, marginBottom: 4 }}>This will:</div>
+                    <div className="s-o-detail-224f">This will:</div>
                     <div><ArrowCounterClockwise size="0.75rem" style={{ marginRight: 4 }} /> Return all allocated inventory to stock</div>
                     <div><X size="0.75rem" style={{ marginRight: 4 }} /> Remove fulfillment sheets and pending shipments</div>
                     <div><Prohibit size="0.75rem" style={{ marginRight: 4 }} /> Mark this SO as cancelled (preserved for audit)</div>
@@ -470,7 +470,7 @@ export default function SODetail() {
                       onClick={handleCancel}
                       disabled={!cancelReason.trim() || cancelling}
                       className="so-detail__modal-btn-primary" style={{ background: !cancelReason.trim() ? 'var(--text-muted)' : 'var(--state-error)' }}>
-                      {cancelling ? <><div className="spinner" style={{ width: 14, height: 14, borderWidth: 2, borderTopColor: '#fff' }} /> Cancelling…</> : <><Prohibit size="0.875rem" /> Cancel Order</>}
+                      {cancelling ? <><div className="spinner s-o-detail-6199" /> Cancelling…</> : <><Prohibit size="0.875rem" /> Cancel Order</>}
                     </button>
                   </div>
                 </>

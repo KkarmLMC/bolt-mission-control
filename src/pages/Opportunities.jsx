@@ -47,29 +47,29 @@ export default function Opportunities({ leads, loading }) {
 
       {/* Change Orders alert */}
       {pendingCOs.length > 0 && (
-        <div onClick={() => navigate('/change-orders')} style={{ background: 'var(--orange-soft)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
-          <ClipboardText size="1.25rem" style={{ color: 'var(--orange-shade-20)', flexShrink: 0 }} />
+        <div onClick={() => navigate('/change-orders')} className="opportunities-1081">
+          <ClipboardText size="1.25rem" className="opportunities-c612" />
           <div className="content-body">
             <div className="text-sm-bold">
               {pendingCOs.length} Part Request{pendingCOs.length !== 1 ? 's' : ''} Pending Review
             </div>
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--orange-shade-40)', marginTop: 2 }}>
+            <div className="opportunities-344d">
               {pendingCOs[0]?.job_reference}{pendingCOs.length > 1 ? ` + ${pendingCOs.length - 1} more` : ''}
             </div>
           </div>
-          <ArrowRight size="1rem" style={{ color: 'var(--orange-shade-20)', flexShrink: 0 }} />
+          <ArrowRight size="1rem" className="opportunities-c612" />
         </div>
       )}
 
       {/* QB Import shortcut */}
       <div onClick={() => navigate('/qb-import')}
-        style={{ background: 'var(--white)', borderRadius: 'var(--r-m)', padding: 'var(--pad-m) var(--pad-l)', marginBottom: 'var(--mar-l)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)' }}>
-        <DownloadSimple size="1.125rem" style={{ color: 'var(--navy)', flexShrink: 0 }} />
+        className="opportunities-1aaf">
+        <DownloadSimple size="1.125rem" className="opportunities-8597" />
         <div className="content-body">
           <div className="text-sm-bold">Import from QuickBooks</div>
-          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>Upload a QB Desktop CSV to create Sales Orders</div>
+          <div className="opportunities-941d">Upload a QB Desktop CSV to create Sales Orders</div>
         </div>
-        <ArrowRight size="0.875rem" style={{ color: 'var(--black)', flexShrink: 0 }} />
+        <ArrowRight size="0.875rem" className="opportunities-ab83" />
       </div>
 
       {/* Stat cards — flat, no icons, Field Ops style */}
@@ -110,8 +110,8 @@ export default function Opportunities({ leads, loading }) {
                 background: 'var(--white)',
                 borderTop: `3px solid ${s.color}`, borderRadius: 'var(--r-m)', padding: '12px 14px' }}>
                 <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: s.color, marginBottom: 4 }}>{s.label}</div>
-                <div style={{ fontSize: 'calc(var(--text-xxl) * 1.2)', fontWeight: 700, color: 'var(--black)', lineHeight: 1 }}>{count}</div>
-                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 4 }}>{val > 0 ? fmt$(val) : '—'}</div>
+                <div className="opportunities-7380">{count}</div>
+                <div className="opportunities-7efa">{val > 0 ? fmt$(val) : '—'}</div>
               </div>
             )
           })}
@@ -123,21 +123,21 @@ export default function Opportunities({ leads, loading }) {
         <div className="list-card__header">
           <span className="list-card__title"><Target size="0.875rem" /> Opportunity Sources</span>
         </div>
-        <div style={{ padding: 'var(--pad-l)', display: 'flex', flexDirection: 'column', gap: 'var(--gap-s)' }}>
+        <div className="opportunities-f5ad">
           {children.map(c => (
             <div key={c.label} onClick={() => c.path && navigate(c.path)}
               style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-l)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-l)', background: 'var(--white)', cursor: c.path ? 'pointer' : 'default', opacity: c.soon ? 0.5 : 1 }}>
-              <c.Icon size="1.125rem" style={{ color: 'var(--black)', flexShrink: 0 }} />
+              <c.Icon size="1.125rem" className="opportunities-ab83" />
               <div className="content-body">
                 <div className="text-sm-semi">{c.label}</div>
-                <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-3)', marginTop: 2 }}>{c.description}</div>
+                <div className="opportunities-12dd">{c.description}</div>
               </div>
               {c.count !== null && c.count !== undefined ? (
-                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, padding: '2px 8px', borderRadius: 'var(--r-s)', background: 'var(--red-soft)', color: 'var(--red)', flexShrink: 0 }}>{c.count} new</span>
+                <span className="opportunities-0cff">{c.count} new</span>
               ) : c.soon ? (
-                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--black)', flexShrink: 0 }}>Soon</span>
+                <span className="opportunities-2557">Soon</span>
               ) : null}
-              {c.path && <CaretRight size="1rem" style={{ color: 'var(--black)', flexShrink: 0 }} />}
+              {c.path && <CaretRight size="1rem" className="opportunities-ab83" />}
             </div>
           ))}
         </div>
@@ -168,7 +168,7 @@ export default function Opportunities({ leads, loading }) {
                       <div className="cell-primary">{l.project_name}</div>
                       <div className="cell-sub">{l.contractor || '—'}</div>
                     </td>
-                    <td><span className="cell-mono" style={{ color: 'var(--warning)', fontWeight: 600 }}>{fmt$(l.value_int)}</span></td>
+                    <td><span className="cell-mono opportunities-440f">{fmt$(l.value_int)}</span></td>
                     <td><span className={`badge ${statusBadge(l.status)}`}>{l.status}</span></td>
                     <td><span className={`badge ${prioBadge(l.priority)}`}>{l.priority?.replace(/[🔴🟠🟡🟢]/, '').trim()}</span></td>
                     <td><span className="text-sm">{l.county}</span></td>

@@ -62,23 +62,23 @@ export default function ProjectPicker({ value, onChange, placeholder = 'Search b
 
   return (
     <div>
-      <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--black)', display: 'block', marginBottom: 6 }}>
-        {label}{required && <span style={{ color: 'var(--error)', marginLeft: 3 }}>*</span>}
+      <label className="project-picker-33ba">
+        {label}{required && <span className="project-picker-0870">*</span>}
       </label>
 
       {/* Selected project display */}
       {value ? (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-l)', background: 'var(--white)' }}>
-          <Briefcase size="1rem" style={{ color: 'var(--navy)', flexShrink: 0 }} />
+        <div className="project-picker-cb28">
+          <Briefcase size="1rem" className="project-picker-8597" />
           <div className="content-body">
             <div className="text-sm-truncate">
               {value.name}
             </div>
-            <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>
+            <div className="project-picker-7483">
               {[value.job_number, value.city && `${value.city}, ${value.state}`].filter(Boolean).join(' · ')}
             </div>
           </div>
-          <button onClick={handleClear} style={{ background: 'none', cursor: 'pointer', color: 'var(--text-3)', padding: 0, display: 'flex', flexShrink: 0 }}>
+          <button onClick={handleClear} className="project-picker-879c">
             <X size="0.9375rem" />
           </button>
         </div>
@@ -86,7 +86,7 @@ export default function ProjectPicker({ value, onChange, placeholder = 'Search b
         <div ref={ref} className="position-relative">
           {/* Search input */}
           <div className="position-relative">
-            <MagnifyingGlass size="0.875rem" style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-3)', pointerEvents: 'none' }} />
+            <MagnifyingGlass size="0.875rem" className="project-picker-d8c8" />
             <input
               value={query}
               onChange={e => setQuery(e.target.value)}
@@ -95,28 +95,28 @@ export default function ProjectPicker({ value, onChange, placeholder = 'Search b
               
             />
             {loading && (
-              <div className="spinner" style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', width: 14, height: 14 }} />
+              <div className="spinner project-picker-c77f" />
             )}
           </div>
 
           {/* Dropdown results */}
           {open && results.length > 0 && (
-            <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 200, background: '#fff', borderRadius: 'var(--r-l)', marginTop: 2, overflow: 'hidden', maxHeight: 280, overflowY: 'auto' }}>
+            <div className="project-picker-3300">
               {results.map(p => (
                 <button key={p.id} onClick={() => handleSelect(p)}
-                  style={{ width: '100%', background: 'none', padding: 'var(--pad-m) var(--pad-l)', textAlign: 'left', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', borderBottom: '1px solid var(--border-l)' }}
+                  className="project-picker-b2f9"
                   onMouseEnter={e => e.currentTarget.style.background = 'var(--white)'}
                   onMouseLeave={e => e.currentTarget.style.background = 'none'}>
-                  <Briefcase size="0.875rem" style={{ color: 'var(--text-3)', flexShrink: 0 }} />
+                  <Briefcase size="0.875rem" className="project-picker-0d77" />
                   <div className="min-width-0">
                     <div className="text-sm-truncate">
                       {p.name}
                     </div>
-                    <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>
+                    <div className="project-picker-7483">
                       {[p.job_number, p.customer_account, p.city && `${p.city}, ${p.state}`].filter(Boolean).join(' · ')}
                     </div>
                   </div>
-                  <span style={{ marginLeft: 'auto', fontSize: 'var(--text-xs)', fontWeight: 600, padding: '1px 6px', borderRadius: 4, background: 'var(--white)', color: 'var(--text-3)', flexShrink: 0 }}>
+                  <span className="project-picker-5a8f">
                     {p.stage}
                   </span>
                 </button>
@@ -125,7 +125,7 @@ export default function ProjectPicker({ value, onChange, placeholder = 'Search b
           )}
 
           {open && !loading && query && results.length === 0 && (
-            <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 200, background: '#fff', borderRadius: 'var(--r-l)', marginTop: 2, padding: 'var(--pad-l)', textAlign: 'center', color: 'var(--text-3)', fontSize: 'var(--text-sm)' }}>
+            <div className="project-picker-a749">
               No projects found for "{query}"
             </div>
           )}

@@ -90,14 +90,14 @@ function COModal({ co, onClose, onAction }) {
   }
 
   return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'flex-end', padding: 0 }}
+    <div className="change-orders-6d60"
       onClick={e => e.target === e.currentTarget && onClose()}>
-      <div style={{ background: '#fff', borderRadius: '20px 20px 0 0', width: '100%', maxHeight: '88vh', overflowY: 'auto', padding: 'var(--space-xxl) var(--space-xl)' }}>
+      <div className="change-orders-4297">
 
         {/* Header */}
         <div className="modal-header">
           <div>
-            <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-muted)', marginBottom: 4 }}>{co.co_number}</div>
+            <div className="change-orders-c6ad">{co.co_number}</div>
             <div className="page-heading">{co.projects?.name || co.job_reference}</div>
             <div className="meta-text meta-text--mt">
               Submitted by <strong>{co.submitted_by}</strong> · {new Date(co.created_at).toLocaleDateString()}
@@ -116,13 +116,13 @@ function COModal({ co, onClose, onAction }) {
         <div style={{ marginBottom: 'var(--space-lg)' }}>
           <div className="text-label">Parts Requested</div>
           {co.change_order_items?.map((item, idx) => (
-            <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-m) 0', borderBottom: '1px solid var(--border-subtle)' }}>
+            <div key={idx} className="change-orders-ab6f">
               <div>
                 <div className="text-sm-semi">{item.parts?.name || '—'}</div>
                 {item.parts?.sku && <div className="text-xs-mono">{item.parts.sku}</div>}
                 {item.notes && <div className="meta-text">{item.notes}</div>}
               </div>
-              <div style={{ fontSize: 'var(--text-sm)', fontWeight: 800, fontFamily: 'var(--mono)' }}>×{item.quantity}</div>
+              <div className="change-orders-b316">×{item.quantity}</div>
             </div>
           ))}
         </div>
@@ -132,14 +132,14 @@ function COModal({ co, onClose, onAction }) {
           <>
             <div style={{ marginBottom: 'var(--space-lg)' }}>
               <label className="form-field__label">
-                Review Notes <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>(optional)</span>
+                Review Notes <span className="change-orders-3f39">(optional)</span>
               </label>
               <textarea value={notes} onChange={e => setNotes(e.target.value)}
                 placeholder="Add context for the field team or warehouse…" rows={2}
-                style={{ width: '100%', padding: 'var(--space-m)', borderRadius: 'var(--radius-lg)', fontSize: 'var(--text-sm)', fontFamily: 'var(--font)', resize: 'vertical' }} />
+                className="change-orders-ce75" />
             </div>
 
-            {error && <div style={{ padding: 'var(--space-xs) var(--space-m)', borderRadius: 'var(--radius-lg)', background: 'var(--state-error-soft)', color: 'var(--state-error-text)', fontSize: 'var(--text-xs)', marginBottom: 'var(--space-m)' }}>{error}</div>}
+            {error && <div className="change-orders-e98b">{error}</div>}
 
             <div className="grid-2col">
               <button onClick={() => handleAction('rejected')} disabled={saving}
@@ -151,7 +151,7 @@ function COModal({ co, onClose, onAction }) {
                 {saving ? <div className="spinner" style={{ borderTopColor: '#fff' }} /> : <><CheckCircle size="1rem" /> Approve → SO</>}
               </button>
             </div>
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', textAlign: 'center', marginTop: 'var(--space-xs)' }}>
+            <div className="change-orders-5b76">
               Approving creates a Draft Sales Order in Warehouse IQ automatically.
             </div>
           </>
@@ -260,7 +260,7 @@ export default function ChangeOrders() {
                       {co.warehouses && <div className="cell-sub">{co.warehouses.name}</div>}
                     </td>
                     <td>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                      <div className="change-orders-cd29">
                         <Package size="0.8125rem" style={{ color: 'var(--text-primary)' }} />
                         <span className="text-sm">{co.change_order_items?.length || 0} part{co.change_order_items?.length !== 1 ? 's' : ''}</span>
                       </div>

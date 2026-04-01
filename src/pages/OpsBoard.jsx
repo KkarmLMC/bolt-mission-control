@@ -86,14 +86,14 @@ function JobPanel({ project, assignments, onClose, onSave }) {
       zIndex: 200, display: 'flex', flexDirection: 'column',
       animation: 'slideInRight 0.2s ease' }}>
       {/* Header */}
-      <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-l)' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--space-m)' }}>
+      <div className="ops-board-ec6b">
+        <div className="ops-board-c353">
           <StageBadge stage={project.stage} />
           <div className="flex-gap-s">
-            <button onClick={() => setEditing(e => !e)} style={{ background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--radius-s)', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
+            <button onClick={() => setEditing(e => !e)} className="ops-board-643f">
               <PencilSimple size="0.8125rem" />
             </button>
-            <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--radius-s)', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
+            <button onClick={onClose} className="ops-board-643f">
               <X size="0.8125rem" />
             </button>
           </div>
@@ -101,13 +101,13 @@ function JobPanel({ project, assignments, onClose, onSave }) {
         <div style={{ fontSize: 'var(--text-md)', fontWeight: 800, color: '#fff', lineHeight: 1.3, marginBottom: 4 }}>
           {project.name}
         </div>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.6)' }}>
+        <div className="ops-board-17b3">
           {project.customer_account} · {project.city}{project.state ? `, ${project.state}` : ''}
         </div>
       </div>
 
       {/* Content */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: 'var(--pad-l)' }}>
+      <div className="ops-board-2b21">
 
         {editing ? (
           <div className="modal-body">
@@ -132,8 +132,8 @@ function JobPanel({ project, assignments, onClose, onSave }) {
               <textarea value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} rows={3} />
             </div>
             <div className="flex-gap-s">
-              <button onClick={() => setEditing(false)} style={{ flex: 1, padding: 'var(--space-s)', borderRadius: 'var(--radius-l)', background: 'transparent', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 600 }}>Cancel</button>
-              <button onClick={handleSave} disabled={saving} style={{ flex: 2, padding: 'var(--space-s)', borderRadius: 'var(--radius-l)', background: 'var(--brand-primary)', color: '#fff', cursor: 'pointer', fontSize: 'var(--text-sm)', fontWeight: 700 }}>
+              <button onClick={() => setEditing(false)} className="ops-board-96a7">Cancel</button>
+              <button onClick={handleSave} disabled={saving} className="ops-board-c6e6">
                 {saving ? 'Saving…' : 'Save Changes'}
               </button>
             </div>
@@ -161,10 +161,10 @@ function JobPanel({ project, assignments, onClose, onSave }) {
                 Assigned Crew
               </div>
               {crew.length === 0 ? (
-                <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', fontStyle: 'italic' }}>No crew assigned yet</div>
+                <div className="ops-board-7506">No crew assigned yet</div>
               ) : crew.map(a => (
-                <div key={a.id} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-m)', padding: 'var(--space-s) 0', borderBottom: '1px solid var(--border-subtle)' }}>
-                  <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--brand-primary)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <div key={a.id} className="ops-board-ff9d">
+                  <div className="ops-board-4dda">
                     {getInitials(a.crew_name)}
                   </div>
                   <div className="content-body">
@@ -192,7 +192,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
       {!editing && (
         <div className="pad-l">
           <button onClick={() => navigate(`/installations/${project.id}`)}
-            style={{ width: '100%', padding: 'var(--space-m)', borderRadius: 'var(--radius-l)', background: 'var(--brand-primary)', color: '#fff', fontWeight: 700, fontSize: 'var(--text-sm)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-s)' }}>
+            className="ops-board-c8bb">
             Open Job Page <ArrowSquareOut size="0.875rem" />
           </button>
         </div>
@@ -206,11 +206,11 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
   const tod = today()
 
   return (
-    <div style={{ overflowX: 'auto', overflowY: 'auto', maxHeight: 'calc(100vh - 220px - 64px)', WebkitOverflowScrolling: 'touch' }}>
+    <div className="ops-board-d7ef">
       <div style={{ minWidth: 160 + days.length * 38 }}>
         {/* Header row */}
-        <div style={{ display: 'flex', borderBottom: '2px solid var(--border-l)', position: 'sticky', top: 0, zIndex: 10, background: '#fff' }}>
-          <div style={{ width: 160, flexShrink: 0, padding: '8px 12px', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase', borderRight: '1px solid var(--border-subtle)' }}>
+        <div className="ops-board-4042">
+          <div className="ops-board-97e8">
             JOB
           </div>
           {days.map(d => {
@@ -242,12 +242,12 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
           return (
             <div key={proj.id} style={{ display: 'flex', borderBottom: '1px solid var(--border-subtle)', minHeight: 44, alignItems: 'center', background: pi % 2 === 0 ? 'transparent' : 'var(--surface-base)' }}>
               {/* Job name column */}
-              <div style={{ width: 160, flexShrink: 0, padding: '6px 12px', borderRight: '1px solid var(--border-subtle)', cursor: 'pointer' }}
+              <div className="ops-board-09d7"
                 onClick={() => onSelectProject(proj)}>
-                <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--text-primary)' }}>
+                <div className="ops-board-4919">
                   {proj.name.split(' — ')[0]}
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: 2 }}>
+                <div className="ops-board-c5b4">
                   <StageBadge stage={proj.stage} small />
                 </div>
               </div>
@@ -281,14 +281,9 @@ function GanttView({ projects, assignments, days, onSelectProject }) {
                           overflow: 'hidden',
                           opacity: 0.85 }}>
                         {isStart && (
-                          <div style={{ position: 'absolute', left: 6, right: 6, display: 'flex', gap: 2, justifyContent: 'flex-start', overflow: 'hidden' }}>
+                          <div className="ops-board-1878">
                             {crew.slice(0, 3).map(a => (
-                              <div key={a.id} title={a.crew_name} style={{
-                                width: 16, height: 16, borderRadius: '50%',
-                                background: 'rgba(255,255,255,0.3)',
-                                fontSize: 'var(--text-2xs)', fontWeight: 700, color: '#fff',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                flexShrink: 0 }}>
+                              <div key={a.id} title={a.crew_name} className="ops-board-e09e">
                                 {getInitials(a.crew_name)[0]}
                               </div>
                             ))}
@@ -335,11 +330,11 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
   }
 
   return (
-    <div style={{ overflowX: 'auto', overflowY: 'auto', maxHeight: 'calc(100vh - 220px - 64px)', WebkitOverflowScrolling: 'touch' }}>
+    <div className="ops-board-d7ef">
       <div style={{ minWidth: 140 + days.length * 80 }}>
         {/* Header */}
-        <div style={{ display: 'flex', borderBottom: '2px solid var(--border-subtle)', position: 'sticky', top: 0, zIndex: 10, background: 'var(--text-inverse)' }}>
-          <div style={{ width: 140, flexShrink: 0, padding: '8px 12px', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase', borderRight: '1px solid var(--border-subtle)' }}>
+        <div className="ops-board-20c3">
+          <div className="ops-board-f463">
             CREW
           </div>
           {days.map(d => {
@@ -365,8 +360,8 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
         {crew.map((c, ci) => (
           <div key={c.name} style={{ display: 'flex', borderBottom: '1px solid var(--border-subtle)', minHeight: 52, alignItems: 'stretch', background: ci % 2 === 0 ? 'transparent' : 'var(--surface-base)' }}>
             {/* Crew name */}
-            <div style={{ width: 140, flexShrink: 0, padding: '8px 12px', borderRight: '1px solid var(--border-subtle)', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--brand-primary)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <div className="ops-board-81e5">
+              <div className="ops-board-4dda">
                 {getInitials(c.name)}
               </div>
               <div className="text-sm-truncate">
@@ -408,12 +403,12 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
 
                   {/* Actual field log indicator */}
                   {actual.length > 0 && (
-                    <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--success)', marginLeft: 2 }} title="Field log recorded" />
+                    <div className="ops-board-3b7b" title="Field log recorded" />
                   )}
 
                   {assigned.length === 0 && !isSun && (
-                    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <div style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--border-subtle)' }} />
+                    <div className="ops-board-ed66">
+                      <div className="ops-board-2e0d" />
                     </div>
                   )}
                 </div>
@@ -456,14 +451,14 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
   return (
     <div>
       {/* Day headers */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', marginBottom: 1 }}>
+      <div className="ops-board-a061">
         {DAY_NAMES.map(d => (
-          <div key={d} style={{ textAlign: 'center', padding: '6px 4px', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase' }}>{d}</div>
+          <div key={d} className="ops-board-f4a3">{d}</div>
         ))}
       </div>
 
       {/* Cells */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 1, background: 'var(--border-subtle)' }}>
+      <div className="ops-board-29ea">
         {cells.map((d, i) => {
           const inMonth = d.getMonth() === month
           const isToday = isSameDay(d, tod)
@@ -497,7 +492,7 @@ function MonthGridView({ projects, assignments, currentDate, onSelectProject }) 
                 )
               })}
               {jobs.length > 3 && (
-                <div style={{ fontSize: 'var(--text-2xs)', color: 'var(--text-muted)', fontWeight: 600 }}>+{jobs.length - 3} more</div>
+                <div className="ops-board-83cf">+{jobs.length - 3} more</div>
               )}
             </div>
           )
@@ -582,13 +577,13 @@ export default function OpsBoard() {
   const endLabel   = `${MON_NAMES[days[days.length-1].getMonth()]} ${days[days.length-1].getDate()}, ${days[days.length-1].getFullYear()}`
 
   return (
-    <div className="page-content fade-in" style={{ padding: 0, display: 'flex', flexDirection: 'column', minHeight: 0, flex: 1 }}>
+    <div className="page-content fade-in ops-board-9035">
 
       {/* Header bar */}
-      <div style={{ padding: 'var(--space-s) var(--space-m)', background: 'var(--surface-base)', borderBottom: '1px solid var(--border-subtle)', flexShrink: 0 }}>
+      <div className="ops-board-657a">
 
         {/* Row 1 — View + Span + Date nav */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)', marginBottom: 'var(--space-s)', flexWrap: 'wrap' }}>
+        <div className="ops-board-528d">
 
           {/* View toggles */}
           <div className="card-section">
@@ -618,11 +613,11 @@ export default function OpsBoard() {
           )}
 
           {/* Date navigation */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)', flexShrink: 0 }}>
-            <button onClick={() => go(-1)} style={{ width: 26, height: 26, borderRadius: 'var(--radius-m)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className="ops-board-612c">
+            <button onClick={() => go(-1)} className="ops-board-f16f">
               <CaretLeft size="0.75rem" />
             </button>
-            <button onClick={() => setCurrentDate(today())} style={{ padding: '3px 8px', borderRadius: 'var(--radius-s)', background: 'transparent', fontSize: 'var(--text-xs)', fontWeight: 600, cursor: 'pointer', color: 'var(--brand-primary)' }}>
+            <button onClick={() => setCurrentDate(today())} className="ops-board-6902">
               Today
             </button>
             <span className="text-label">
@@ -631,7 +626,7 @@ export default function OpsBoard() {
                 ? `${MON_NAMES[currentDate.getMonth()]} ${currentDate.getFullYear()}`
                 : `${startLabel} – ${endLabel}`}
             </span>
-            <button onClick={() => go(1)} style={{ width: 26, height: 26, borderRadius: 'var(--radius-m)', background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <button onClick={() => go(1)} className="ops-board-f16f">
               <CaretRight size="0.75rem" />
             </button>
           </div>
@@ -641,22 +636,22 @@ export default function OpsBoard() {
         <div className="flex-gap-s">
 
           {/* Search */}
-          <div style={{ position: 'relative', flex: 1 }}>
-            <MagnifyingGlass size="0.75rem" style={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+          <div className="ops-board-ea65">
+            <MagnifyingGlass size="0.75rem" className="ops-board-56e5" />
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search jobs…"
-              style={{ paddingLeft: 24, paddingRight: 8, width: '100%', height: 28, fontSize: 'var(--text-xs)' }} />
+              className="ops-board-ccc9" />
           </div>
 
           {/* Stage filter */}
           <select value={stageFilter} onChange={e => setStageFilter(e.target.value)}
-            style={{ height: 28, fontSize: 'var(--text-xs)', paddingLeft: 6, paddingRight: 6, width: 110, flexShrink: 0 }}>
+            className="ops-board-2c1e">
             <option value="all">All Stages</option>
             {STAGES_LIST.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
 
           {/* Conflict badge */}
           {conflicts.length > 0 && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 'var(--radius-s)', background: 'var(--state-error-soft)', color: 'var(--state-error-text)', fontSize: 'var(--text-xs)', fontWeight: 700, flexShrink: 0, whiteSpace: 'nowrap' }}>
+            <div className="ops-board-890e">
               <Warning size="0.75rem" weight="fill" />
               {conflicts.length}
             </div>
@@ -667,9 +662,9 @@ export default function OpsBoard() {
       {/* Board content */}
       <div style={{ flex: 1, overflow: 'auto', WebkitOverflowScrolling: 'touch', padding: view === 'month' ? 'var(--space-l)' : 0, paddingBottom: 'calc(var(--space-l) + env(safe-area-inset-bottom, 0px))' }}>
         {loading ? (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', gap: 'var(--space-m)' }}>
+          <div className="ops-board-cd0d">
             <div className="spinner" />
-            <span style={{ color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>Loading operations board…</span>
+            <span className="ops-board-bf37">Loading operations board…</span>
           </div>
         ) : filteredProjects.length === 0 ? (
           <div className="empty">
@@ -689,7 +684,7 @@ export default function OpsBoard() {
       {/* Job detail panel */}
       {selectedProject && (
         <>
-          <div style={{ position: 'fixed', inset: 0, zIndex: 199, background: 'rgba(0,0,0,0.2)' }}
+          <div className="ops-board-35a8"
             onClick={() => setSelectedProject(null)} />
           <JobPanel
             project={selectedProject}
