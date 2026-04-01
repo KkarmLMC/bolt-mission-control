@@ -60,7 +60,7 @@ export default function PermitFeed({ leads, loading, onAdd, onEdit }) {
             ))}
           </div>
           <div className="search-box" style={{ marginBottom: 8 }}>
-            <MagnifyingGlass size="1rem" style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+            <MagnifyingGlass size="1rem" className="row-item__caret" />
             <input placeholder="Search leads..." value={search} onChange={e => setSearch(e.target.value)} />
             {search && <button onClick={() => setSearch('')} style={{ background: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0, display: 'flex' }}><X size="0.8125rem" /></button>}
           </div>

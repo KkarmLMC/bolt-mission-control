@@ -110,25 +110,25 @@ function JobPanel({ project, assignments, onClose, onSave }) {
       <div style={{ flex: 1, overflowY: 'auto', padding: 'var(--pad-l)' }}>
 
         {editing ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-m)' }}>
+          <div className="modal-body">
             <div>
-              <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', display: 'block', marginBottom: 6 }}>Stage</label>
+              <label className="form-field__label">Stage</label>
               <select value={form.stage} onChange={e => setForm(f => ({ ...f, stage: e.target.value }))}>
                 {STAGES_LIST.map(s => <option key={s}>{s}</option>)}
               </select>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-s)' }}>
               <div>
-                <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', display: 'block', marginBottom: 6 }}>Start Date</label>
+                <label className="form-field__label">Start Date</label>
                 <input type="date" value={form.scheduled_date} onChange={e => setForm(f => ({ ...f, scheduled_date: e.target.value }))} />
               </div>
               <div>
-                <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', display: 'block', marginBottom: 6 }}>End Date</label>
+                <label className="form-field__label">End Date</label>
                 <input type="date" value={form.target_completion} onChange={e => setForm(f => ({ ...f, target_completion: e.target.value }))} />
               </div>
             </div>
             <div>
-              <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', display: 'block', marginBottom: 6 }}>Notes</label>
+              <label className="form-field__label">Notes</label>
               <textarea value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} rows={3} />
             </div>
             <div className="flex-gap-s">
@@ -141,7 +141,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
         ) : (
           <>
             {/* Key info */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-m)', marginBottom: 'var(--space-l)' }}>
+            <div className="grid-2col mb-l">
               {[
                 ['SO Number',   project.job_number || '—'],
                 ['Contract',    project.contract_value ? `$${Number(project.contract_value).toLocaleString()}` : '—'],
@@ -149,7 +149,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
                 ['End',         project.target_completion || '—'],
               ].map(([lbl, val]) => (
                 <div key={lbl} style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-l)', padding: 'var(--space-m)' }}>
-                  <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{lbl}</div>
+                  <div className="text-label">{lbl}</div>
                   <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)', fontFamily: lbl === 'Contract' || lbl === 'SO Number' ? 'var(--mono)' : 'var(--font)' }}>{val}</div>
                 </div>
               ))}
@@ -369,7 +369,7 @@ function CrewBoardView({ projects, assignments, fieldLogs, days, onSelectProject
               <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--brand-primary)', color: '#fff', fontSize: 'var(--text-xs)', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 {getInitials(c.name)}
               </div>
-              <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <div className="text-sm-truncate">
                 {c.name.split(' ')[0]}
               </div>
             </div>

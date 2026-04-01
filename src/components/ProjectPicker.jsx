@@ -71,7 +71,7 @@ export default function ProjectPicker({ value, onChange, placeholder = 'Search b
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-m)', padding: 'var(--pad-m) var(--pad-l)', borderRadius: 'var(--r-l)', background: 'var(--white)' }}>
           <Briefcase size="1rem" style={{ color: 'var(--navy)', flexShrink: 0 }} />
           <div className="content-body">
-            <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <div className="text-sm-truncate">
               {value.name}
             </div>
             <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-3)' }}>

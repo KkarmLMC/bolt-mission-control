@@ -98,8 +98,8 @@ function COModal({ co, onClose, onAction }) {
         <div className="modal-header">
           <div>
             <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--mono)', color: 'var(--text-muted)', marginBottom: 4 }}>{co.co_number}</div>
-            <div style={{ fontSize: 'var(--text-lg)', fontWeight: 800 }}>{co.projects?.name || co.job_reference}</div>
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 4 }}>
+            <div className="page-heading">{co.projects?.name || co.job_reference}</div>
+            <div className="meta-text meta-text--mt">
               Submitted by <strong>{co.submitted_by}</strong> · {new Date(co.created_at).toLocaleDateString()}
             </div>
           </div>
@@ -131,7 +131,7 @@ function COModal({ co, onClose, onAction }) {
         {co.status === 'pending' && (
           <>
             <div style={{ marginBottom: 'var(--space-lg)' }}>
-              <label style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', display: 'block', marginBottom: 6 }}>
+              <label className="form-field__label">
                 Review Notes <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>(optional)</span>
               </label>
               <textarea value={notes} onChange={e => setNotes(e.target.value)}
@@ -160,9 +160,9 @@ function COModal({ co, onClose, onAction }) {
         {/* Already reviewed */}
         {co.status !== 'pending' && co.review_notes && (
           <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-m)', marginTop: 'var(--space-m)' }}>
-            <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>Review Notes</div>
+            <div className="text-label">Review Notes</div>
             <div className="text-sm">{co.review_notes}</div>
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 4 }}>by {co.reviewed_by} · {new Date(co.reviewed_at).toLocaleDateString()}</div>
+            <div className="meta-text meta-text--mt">by {co.reviewed_by} · {new Date(co.reviewed_at).toLocaleDateString()}</div>
           </div>
         )}
       </div>
