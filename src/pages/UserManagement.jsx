@@ -65,9 +65,9 @@ export default function UserManagement() {
       pipeline_role: editData.pipeline_role || null,
       full_name:     editData.full_name }).eq('id', userId)
     setSaving(false)
-    if (error) { showFlash('Save failed: ' + error.message, true); return }
+    if (error) { showFlashMsg('Save failed: ' + error.message, true); return }
     const edited = users.find(u => u.id === userId)
-    await logActivity(db, user?.id, APP_SOURCE, {
+    await logActivity(db, currentUser?.id, APP_SOURCE, {
       category:    'profile',
       action:      'updated_user_role',
       label:       `Updated role for ${editData.full_name || edited?.email}`,
@@ -75,26 +75,23 @@ export default function UserManagement() {
       entity_id:   userId,
       meta:        { role: editData.role, pipeline_role: editData.pipeline_role } })
     setEditId(null)
-    showFlash('User updated.')
+    showFlashMsg('User updated.')
     loadUsers()
   }
 
   const inviteUser = async () => {
     if (!inviteEmail.trim()) return
     setInviting(true)
-    // Use Supabase admin invite
     const { error } = await db.auth.admin?.inviteUserByEmail
       ? db.auth.admin.inviteUserByEmail(inviteEmail.trim())
-      // Fallback: signUp with a temp password — user resets via email
       : db.auth.signUp({
           email: inviteEmail.trim(),
           password: Math.random().toString(36).slice(2) + 'A1!' })
     if (error && !error.message.includes('already registered')) {
       setInviting(false)
-      showFlash('Invite failed: ' + error.message, true)
+      showFlashMsg('Invite failed: ' + error.message, true)
       return
     }
-    // Create/update profile
     const { data: existing } = await db.from('profiles').select('id').eq('email', inviteEmail.trim()).single()
     if (existing) {
       await db.from('profiles').update({
@@ -105,80 +102,74 @@ export default function UserManagement() {
     setInviting(false)
     setShowInvite(false)
     setInviteEmail(''); setInviteName(''); setInviteRole('warehouse'); setInvitePR(null)
-    showFlash('Invite sent — user will receive an email to set their password.')
+    showFlashMsg('Invite sent — user will receive an email to set their password.')
     loadUsers()
   }
 
-  const showFlash = (msg, isErr = false) => {
+  const showFlashMsg = (msg, isErr = false) => {
     setFlash({ msg, isErr })
     setTimeout(() => setFlash(null), 4000)
   }
 
   const roleColor = (r) => ({
-    admin: { bg: 'var(--blue-soft)', color: 'var(--blue)' },
-    management: { bg: 'var(--success-soft)', color: 'var(--success-text)' },
-    warehouse: { bg: 'var(--warning-soft)', color: 'var(--warning)' },
-    field: { bg: 'var(--purple-soft)', color: 'var(--purple)' },
-  }[r] || { bg: 'var(--white)', color: 'var(--black)' })
+    admin: { bg: 'var(--state-info-soft)', color: 'var(--state-info)' },
+    management: { bg: 'var(--state-success-soft)', color: 'var(--state-success-text)' },
+    warehouse: { bg: 'var(--state-warning-soft)', color: 'var(--state-warning)' },
+    field: { bg: 'var(--brand-soft)', color: 'var(--brand-primary)' },
+  }[r] || { bg: 'var(--surface-base)', color: 'var(--text-primary)' })
 
   if (!isAdmin) return null
 
   return (
     <div className="page-content fade-in">
-      {/* Header */}
-      <button onClick={() => navigate(DEFAULT_ROUTE)}
-        style={{ display:'flex',alignItems:'center',gap:6,background:'none',color:'var(--text-3)',fontSize:'var(--text-xs)',cursor:'pointer',padding:0,marginBottom:'var(--mar-m)' }}>
+      <button onClick={() => navigate(DEFAULT_ROUTE)} className="back-link">
         <ArrowLeft size="0.875rem" /> Back
       </button>
 
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 'var(--mar-m)' }}>
-        <button onClick={() => setShowInvite(true)}
-          className="btn btn-navy"
-          style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-s)' }}>
+      <div className="um-invite-header">
+        <button onClick={() => setShowInvite(true)} className="btn btn-navy"
+          style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-s)' }}>
           <UserPlus size="1rem" /> Invite User
         </button>
       </div>
 
-      {/* Flash */}
       {flash && (
-        <div style={{ padding: 'var(--pad-m) var(--pad-l)',borderRadius:'var(--r-l)',marginBottom:'var(--mar-l)',
-          background: flash.isErr ? 'var(--error-soft)' : 'var(--success-soft)',
-          color: flash.isErr ? 'var(--error-alt)' : 'var(--success-text)',fontSize:'var(--text-sm)',fontWeight:'var(--fw-semibold)' }}>
+        <div className={`flash ${flash.isErr ? 'flash--error' : 'flash--success'}`}>
           {flash.isErr ? '✗' : '✓'} {flash.msg}
         </div>
       )}
 
       {/* Pipeline role legend */}
-      <div className="card" style={{ marginBottom: 'var(--mar-l)' }}>
+      <div className="card" style={{ marginBottom: 'var(--space-l)' }}>
         <div className="list-card__header">
-          <span className="list-card__title"><Users size="1rem"  />Pipeline Role Guide</span>
+          <span className="list-card__title"><Users size="1rem" />Pipeline Role Guide</span>
         </div>
-        <div style={{ padding: 'var(--pad-m) var(--pad-l)',display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:'var(--gap-m)' }}>
+        <div className="um-legend-grid">
           {[
             { role:'warehouse_manager', label:'Warehouse Manager', desc:'SO Queue, Run Order, Inventory. Manages the pipeline from QB import to fulfillment.' },
             { role:'fulfillment',       label:'Fulfillment Worker', desc:'Sees only Fulfillment Queue. Pulls parts from shelves, confirms pulled, pushes to shipment.' },
             { role:'shipping',          label:'Shipping Worker',    desc:'Sees only Shipment Queue. Enters carrier + tracking, marks orders shipped.' },
             { role:null,                label:'No Pipeline Role',   desc:'Full sidebar access. For office/admin users who need to see everything.' },
           ].map(item => (
-            <div key={item.role || 'none'} style={{ padding: 'var(--pad-m)',background:'var(--white)',borderRadius:'var(--r-l)' }}>
-              <div style={{ fontSize:'var(--text-xs)',fontWeight:'var(--fw-bold)',color:'var(--navy)',marginBottom:4 }}>{item.label}</div>
-              <div style={{ fontSize:'var(--text-xs)',color:'var(--text-3)',lineHeight:1.5 }}>{item.desc}</div>
+            <div key={item.role || 'none'} className="um-legend-item">
+              <div className="um-legend-title">{item.label}</div>
+              <div className="um-legend-desc">{item.desc}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* Users list */}
-      <div className="card" style={{ marginBottom: 'var(--mar-l)' }}>
+      <div className="card" style={{ marginBottom: 'var(--space-l)' }}>
         <div className="list-card__header">
-          <span className="list-card__title"><Users size="1rem"  />All Users</span>
+          <span className="list-card__title"><Users size="1rem" />All Users</span>
           <span className="list-card__meta">{users.length} users</span>
         </div>
 
         {loading ? (
-          <div style={{ padding: 'var(--pad-xxl)',textAlign:'center' }}><div className="spinner" style={{ margin:'0 auto' }} /></div>
+          <div className="spinner-pad"><div className="spinner spinner-center" /></div>
         ) : users.length === 0 ? (
-          <div className="empty" style={{ padding: 'var(--pad-xxl)' }}>
+          <div className="empty" style={{ padding: 'var(--space-2xl)' }}>
             <div className="empty-title">No users yet</div>
             <div className="empty-desc">Invite your first team member using the button above.</div>
           </div>
@@ -187,80 +178,62 @@ export default function UserManagement() {
           const rc = roleColor(u.role)
           const isSelf = u.id === currentUser?.id
           return (
-            <div key={u.id} style={{ borderBottom: idx < users.length-1 ? '1px solid var(--border-l)' : 'none' }}>
+            <div key={u.id} style={{ borderBottom: idx < users.length-1 ? '1px solid var(--border-subtle)' : 'none' }}>
               {!isEditing ? (
-                /* View row */
-                <div style={{ display:'flex',alignItems:'center',gap:'var(--gap-m)',padding: 'var(--pad-m) var(--pad-l)' }}>
-                  {/* Avatar */}
-                  <div style={{ width:38,height:38,borderRadius:'50%',background:'var(--navy)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0 }}>
-                    <span style={{ fontSize:'var(--text-sm)',fontWeight:'var(--fw-bold)',color:'var(--white)' }}>
+                <div className="um-user-row">
+                  <div className="avatar">
+                    <span className="avatar__text">
                       {(u.full_name||u.email||'?').slice(0,2).toUpperCase()}
                     </span>
                   </div>
-                  {/* Info */}
-                  <div style={{ flex:1,minWidth:0 }}>
-                    <div style={{ display:'flex',alignItems:'center',gap:'var(--gap-s)',flexWrap:'wrap' }}>
-                      <span style={{ fontWeight:'var(--fw-bold)',fontSize:'var(--text-sm)' }}>{u.full_name || '—'}</span>
-                      {isSelf && <span style={{ fontSize:'var(--text-xs)',fontWeight:'var(--fw-semibold)',padding:'1px 5px',borderRadius: 'var(--r-xs)',background:'var(--white)',color:'var(--text-3)' }}>you</span>}
-                      <span style={{ fontSize:'var(--text-xs)',fontWeight:'var(--fw-bold)',padding:'2px 6px',borderRadius:4,background:rc.bg,color:rc.color,textTransform:'capitalize' }}>{u.role}</span>
+                  <div className="um-user-info">
+                    <div className="um-user-name-row">
+                      <span className="um-user-name">{u.full_name || '—'}</span>
+                      {isSelf && <span className="um-self-badge">you</span>}
+                      <span className="badge" style={{ background: rc.bg, color: rc.color, textTransform: 'capitalize' }}>{u.role}</span>
                       {u.pipeline_role && (
-                        <span style={{ fontSize:'var(--text-xs)',fontWeight:'var(--fw-bold)',padding:'2px 6px',borderRadius:4,background:'var(--blue-tint-80)',color:'var(--blue-shade-20)' }}>
+                        <span className="badge" style={{ background: 'var(--state-info-soft)', color: 'var(--state-info)' }}>
                           {PIPELINE_LABELS[u.pipeline_role] || u.pipeline_role}
                         </span>
                       )}
                     </div>
-                    <div style={{ fontSize:'var(--text-xs)',color:'var(--text-3)',marginTop:2 }}>{u.email}</div>
+                    <div className="um-user-email">{u.email}</div>
                   </div>
-                  {/* Edit */}
-                  <button onClick={() => startEdit(u)}
-                    style={{ display:'flex',alignItems:'center',gap:4,background:'none',color:'var(--text-3)',fontSize:'var(--text-xs)',cursor:'pointer',padding:'var(--pad-s)' }}>
+                  <button onClick={() => startEdit(u)} className="um-edit-btn">
                     <PencilSimple size="0.875rem" /> Edit
                   </button>
                 </div>
               ) : (
-                /* Edit form */
-                <div style={{ padding: 'var(--pad-l)',background:'var(--white)' }}>
-                  <div style={{ fontSize:'var(--text-xs)',fontWeight:'var(--fw-bold)',color:'var(--navy)',marginBottom:'var(--mar-m)' }}>
-                    Editing: {u.email}
-                  </div>
-                  <div style={{ display:'grid',gridTemplateColumns:'1fr 1fr',gap:'var(--gap-m)',marginBottom: 'var(--mar-m)' }}>
+                <div className="um-edit-form">
+                  <div className="um-edit-label">Editing: {u.email}</div>
+                  <div className="um-edit-grid">
                     <div>
-                      <label style={{ fontSize:'var(--text-xs)',fontWeight:'var(--fw-bold)',color:'var(--black)',display:'block',marginBottom:6 }}>Name</label>
+                      <label className="form-field__label">Name</label>
                       <input value={editData.full_name||''} onChange={e=>setEditData(p=>({...p,full_name:e.target.value}))} placeholder="Full name" />
                     </div>
                     <div>
-                      <label style={{ fontSize:'var(--text-xs)',fontWeight:'var(--fw-bold)',color:'var(--black)',display:'block',marginBottom:6 }}>App Role</label>
-                      <select value={editData.role||''} onChange={e=>setEditData(p=>({...p,role:e.target.value}))}
-                        style={{ width:'100%',height:40,borderRadius:'var(--r-l)',padding:'0 var(--pad-m)',background:'var(--bg)',fontSize:'var(--text-sm)',fontFamily:'var(--font)' }}>
+                      <label className="form-field__label">App Role</label>
+                      <select value={editData.role||''} onChange={e=>setEditData(p=>({...p,role:e.target.value}))}>
                         {ROLES.map(r => <option key={r} value={r}>{r}</option>)}
                       </select>
                     </div>
                   </div>
-                  <div style={{ marginBottom: 'var(--mar-l)' }}>
-                    <label style={{ fontSize:'var(--text-xs)',fontWeight:'var(--fw-bold)',color:'var(--black)',display:'block',marginBottom:6 }}>
-                      Pipeline Role <span style={{ fontWeight:400,color:'var(--text-3)',textTransform:'none' }}>(controls what this user sees on their tablet)</span>
+                  <div style={{ marginBottom: 'var(--space-l)' }}>
+                    <label className="form-field__label">
+                      Pipeline Role <span style={{ fontWeight: 400, color: 'var(--text-muted)', textTransform: 'none' }}>(controls what this user sees on their tablet)</span>
                     </label>
-                    <div style={{ display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:'var(--gap-s)' }}>
+                    <div className="pr-grid">
                       {PIPELINE_ROLES.map(pr => (
                         <button key={pr.value||'none'} onClick={() => setEditData(p=>({...p,pipeline_role:pr.value}))}
-                          style={{ padding: 'var(--pad-s) var(--pad-m)',borderRadius:'var(--r-l)',cursor:'pointer',fontFamily:'var(--font)',
-                            border: editData.pipeline_role === pr.value ? '2px solid var(--navy)' : '1px solid var(--border-l)',
-                            background: editData.pipeline_role === pr.value ? 'var(--blue-soft)' : 'var(--bg)',
-                            color: editData.pipeline_role === pr.value ? 'var(--navy)' : 'var(--black)',
-                            fontWeight: editData.pipeline_role === pr.value ? 700 : 400,
-                            fontSize:'var(--text-xs)',textAlign:'left' }}>
+                          className={`pr-option${editData.pipeline_role === pr.value ? ' pr-option--active' : ''}`}>
                           {pr.label}
                         </button>
                       ))}
                     </div>
                   </div>
-                  <div style={{ display:'flex',gap:'var(--gap-s)' }}>
-                    <button onClick={cancelEdit}
-                      style={{ flex:1,padding:'var(--pad-s)',borderRadius:'var(--r-l)',background:'transparent',cursor:'pointer',fontSize:'var(--text-sm)',fontWeight:'var(--fw-semibold)',fontFamily:'var(--font)' }}>
-                      Cancel
-                    </button>
-                    <button onClick={() => saveEdit(u.id)} disabled={saving}
-                      style={{ flex:2,padding:'var(--pad-s)',borderRadius:'var(--r-l)',background:'var(--navy)',color:'var(--white)',cursor:'pointer',fontSize:'var(--text-sm)',fontWeight:'var(--fw-bold)',fontFamily:'var(--font)',display:'flex',alignItems:'center',justifyContent:'center',gap:6 }}>
+                  <div className="um-actions">
+                    <button onClick={cancelEdit} className="um-cancel">Cancel</button>
+                    <button onClick={() => saveEdit(u.id)} disabled={saving} className="um-save">
                       {saving ? <><div className="spinner" style={{ width:14,height:14,borderWidth:2 }} /> Saving…</> : <><CheckCircle size="0.9375rem" /> Save Changes</>}
                     </button>
                   </div>
@@ -274,54 +247,47 @@ export default function UserManagement() {
       {/* Invite modal */}
       {showInvite && (
         <>
-          <div onClick={() => setShowInvite(false)}
-            style={{ position:'fixed',inset:0,background:'rgba(0,0,0,0.4)',zIndex:299 }} />
-          <div style={{ position:'fixed',bottom: 'env(safe-area-inset-bottom, 0px)',left:0,right:0,zIndex:300,background:'var(--bg)',borderRadius:'var(--r-xl) var(--r-xl) 0 0',padding:'var(--pad-xl)',maxHeight:'90vh',overflowY:'auto' }}>
-            <div style={{ display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'var(--mar-l)' }}>
-              <div style={{ fontSize:'var(--text-lg)',fontWeight:800 }}>Invite New User</div>
-              <button onClick={() => setShowInvite(false)}
-                style={{ background:'none',cursor:'pointer',padding:'var(--pad-xs)',color:'var(--text-3)' }}>
+          <div className="modal-overlay" onClick={() => setShowInvite(false)} />
+          <div className="modal-sheet">
+            <div className="modal-header">
+              <div className="modal-header__title">Invite New User</div>
+              <button onClick={() => setShowInvite(false)} className="modal-close">
                 <X size="1.25rem" />
               </button>
             </div>
-            <div style={{ display:'flex',flexDirection:'column',gap:'var(--gap-m)' }}>
+            <div className="modal-body">
               <div>
-                <label style={{ fontSize:'var(--text-xs)',fontWeight:'var(--fw-bold)',color:'var(--black)',display:'block',marginBottom:6 }}>Email *</label>
+                <label className="form-field__label">Email *</label>
                 <input type="email" value={inviteEmail} onChange={e=>setInviteEmail(e.target.value)} placeholder="worker@company.com" />
               </div>
               <div>
-                <label style={{ fontSize:'var(--text-xs)',fontWeight:'var(--fw-bold)',color:'var(--black)',display:'block',marginBottom:6 }}>Full Name</label>
+                <label className="form-field__label">Full Name</label>
                 <input value={inviteName} onChange={e=>setInviteName(e.target.value)} placeholder="Optional" />
               </div>
               <div>
-                <label style={{ fontSize:'var(--text-xs)',fontWeight:'var(--fw-bold)',color:'var(--black)',display:'block',marginBottom:6 }}>App Role</label>
-                <select value={inviteRole} onChange={e=>setInviteRole(e.target.value)}
-                  style={{ width:'100%',height:40,borderRadius:'var(--r-l)',padding:'0 var(--pad-m)',background:'var(--bg)',fontSize:'var(--text-sm)',fontFamily:'var(--font)' }}>
+                <label className="form-field__label">App Role</label>
+                <select value={inviteRole} onChange={e=>setInviteRole(e.target.value)}>
                   {ROLES.map(r => <option key={r} value={r}>{r}</option>)}
                 </select>
               </div>
               <div>
-                <label style={{ fontSize:'var(--text-xs)',fontWeight:'var(--fw-bold)',color:'var(--black)',display:'block',marginBottom:8 }}>Pipeline Role</label>
-                <div style={{ display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:'var(--gap-s)' }}>
+                <label className="form-field__label">Pipeline Role</label>
+                <div className="pr-grid">
                   {PIPELINE_ROLES.map(pr => (
                     <button key={pr.value||'none'} onClick={() => setInvitePR(pr.value)}
-                      style={{ padding: 'var(--pad-s) var(--pad-m)',borderRadius:'var(--r-l)',cursor:'pointer',fontFamily:'var(--font)',
-                        border: invitePR === pr.value ? '2px solid var(--navy)' : '1px solid var(--border-l)',
-                        background: invitePR === pr.value ? 'var(--blue-soft)' : 'var(--bg)',
-                        color: invitePR === pr.value ? 'var(--navy)' : 'var(--black)',
-                        fontWeight: invitePR === pr.value ? 700 : 400,
-                        fontSize:'var(--text-xs)',textAlign:'left' }}>
+                      className={`pr-option${invitePR === pr.value ? ' pr-option--active' : ''}`}>
                       {pr.label}
                     </button>
                   ))}
                 </div>
               </div>
               <button onClick={inviteUser} disabled={!inviteEmail.trim() || inviting}
-                style={{ width:'100%',padding:'var(--pad-m)',borderRadius:'var(--r-xl)',
-                  background: inviteEmail.trim() ? 'var(--navy)' : 'var(--border)',
-                  color: inviteEmail.trim() ? 'var(--white)' : 'var(--text-3)',
-                  fontWeight:'var(--fw-bold)',fontSize:'var(--text-sm)',cursor: inviteEmail.trim() && !inviting ? 'pointer' : 'not-allowed',
-                  fontFamily:'var(--font)',display:'flex',alignItems:'center',justifyContent:'center',gap:6,marginTop:'0.5rem' }}>
+                className="submit-btn"
+                style={{
+                  background: inviteEmail.trim() ? 'var(--brand-primary)' : 'var(--border-default)',
+                  color: inviteEmail.trim() ? 'var(--surface-base)' : 'var(--text-muted)',
+                  cursor: inviteEmail.trim() && !inviting ? 'pointer' : 'not-allowed',
+                  marginTop: 'var(--space-s)' }}>
                 {inviting ? <><div className="spinner" style={{ width:16,height:16,borderWidth:2 }} /> Inviting…</> : <><UserPlus size="1rem" /> Send Invite</>}
               </button>
             </div>
