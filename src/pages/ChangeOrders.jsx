@@ -107,7 +107,7 @@ function COModal({ co, onClose, onAction }) {
         </div>
 
         {/* Justification */}
-        <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-lg)', marginBottom: 'var(--space-lg)' }}>
+        <div className="card-section">
           <div className="text-label">Justification</div>
           <div className="text-sm">{co.justification || '—'}</div>
         </div>
@@ -159,7 +159,7 @@ function COModal({ co, onClose, onAction }) {
 
         {/* Already reviewed */}
         {co.status !== 'pending' && co.review_notes && (
-          <div style={{ background: 'var(--surface-base)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-m)', marginTop: 'var(--space-m)' }}>
+          <div className="card-section">
             <div className="text-label">Review Notes</div>
             <div className="text-sm">{co.review_notes}</div>
             <div className="meta-text meta-text--mt">by {co.reviewed_by} · {new Date(co.reviewed_at).toLocaleDateString()}</div>

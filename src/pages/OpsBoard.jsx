@@ -89,7 +89,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
       <div style={{ background: 'var(--brand-primary)', padding: 'var(--space-l)' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 'var(--space-m)' }}>
           <StageBadge stage={project.stage} />
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div className="flex-gap-s">
             <button onClick={() => setEditing(e => !e)} style={{ background: 'rgba(255,255,255,0.15)', borderRadius: 'var(--radius-s)', width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#fff' }}>
               <PencilSimple size="0.8125rem" />
             </button>
@@ -157,7 +157,7 @@ function JobPanel({ project, assignments, onClose, onSave }) {
 
             {/* Assigned crew */}
             <div className="mb-l">
-              <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-s)' }}>
+              <div className="text-label">
                 Assigned Crew
               </div>
               {crew.length === 0 ? (
@@ -178,8 +178,8 @@ function JobPanel({ project, assignments, onClose, onSave }) {
             {/* Notes */}
             {project.notes && (
               <div className="mb-l">
-                <div style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-s)' }}>Notes</div>
-                <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.6, background: 'var(--surface-base)', borderRadius: 'var(--radius-l)', padding: 'var(--space-m)' }}>
+                <div className="text-label">Notes</div>
+                <div className="card-section">
                   {project.notes}
                 </div>
               </div>
@@ -625,7 +625,7 @@ export default function OpsBoard() {
             <button onClick={() => setCurrentDate(today())} style={{ padding: '3px 8px', borderRadius: 'var(--radius-s)', background: 'transparent', fontSize: 'var(--text-xs)', fontWeight: 600, cursor: 'pointer', color: 'var(--brand-primary)' }}>
               Today
             </button>
-            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-primary)', whiteSpace: 'nowrap' }}>
+            <span className="text-label">
 
               {view === 'month'
                 ? `${MON_NAMES[currentDate.getMonth()]} ${currentDate.getFullYear()}`
