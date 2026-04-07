@@ -1,8 +1,12 @@
--- Push subscription storage (multi-app)
-CREATE TABLE push_subscriptions (
+-- StormStack PWA: Push Notifications Migration
+
+-- ============================================================
+-- 1. Push subscription storage (multi-app)
+-- ============================================================
+CREATE TABLE IF NOT EXISTS push_subscriptions (
   id                    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id               UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  app                   TEXT NOT NULL CHECK (app IN ('admin', 'caregiver', 'family')),
+  app                   TEXT NOT NULL CHECK (app IN ('field-ops', 'warehouse-iq', 'mission-control', 'takeoff')),
   origin                TEXT NOT NULL,
   endpoint              TEXT NOT NULL,
   p256dh                TEXT NOT NULL,
@@ -16,10 +20,12 @@ CREATE TABLE push_subscriptions (
   CONSTRAINT uq_push_endpoint UNIQUE (endpoint)
 );
 
-CREATE INDEX idx_push_subs_user_app
+CREATE INDEX IF NOT EXISTS idx_push_subs_user_app
   ON push_subscriptions(user_id, app) WHERE is_active = TRUE;
 
--- RLS: users manage own subscriptions, service_role reads all
+-- ============================================================
+-- 2. RLS
+-- ============================================================
 ALTER TABLE push_subscriptions ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Users manage own subscriptions"
@@ -27,26 +33,36 @@ CREATE POLICY "Users manage own subscriptions"
   USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
 
--- Notification queue (outbound)
-CREATE TABLE notifications (
+-- ============================================================
+-- 3. Notification outbox
+-- ============================================================
+CREATE TABLE IF NOT EXISTS notifications (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id     UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   type        TEXT NOT NULL,
   title       TEXT NOT NULL,
   body        TEXT NOT NULL,
-  target_app  TEXT CHECK (target_app IN ('admin', 'caregiver', 'family')),
+  target_app  TEXT CHECK (target_app IN ('field-ops', 'warehouse-iq', 'mission-control', 'takeoff')),
   url         TEXT DEFAULT '/',
   status      TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'sent', 'failed')),
   sent_at     TIMESTAMPTZ,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_notifications_pending
+CREATE INDEX IF NOT EXISTS idx_notifications_pending
   ON notifications(created_at) WHERE status = 'pending';
 
--- Helper: increment failure count
+ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users read own notifications"
+  ON notifications FOR SELECT
+  USING (auth.uid() = user_id);
+
+-- ============================================================
+-- 4. Helper: increment failure count, auto-deactivate at 5
+-- ============================================================
 CREATE OR REPLACE FUNCTION increment_push_failures(sub_id UUID)
-RETURNS VOID LANGUAGE plpgsql AS $$
+RETURNS VOID LANGUAGE plpgsql SECURITY DEFINER AS $$
 BEGIN
   UPDATE push_subscriptions
   SET consecutive_failures = consecutive_failures + 1,
@@ -55,9 +71,17 @@ BEGIN
   WHERE id = sub_id;
 END $$;
 
--- Trigger: enqueue to pgmq on notification insert
+-- ============================================================
+-- 5. pgmq queue
+-- ============================================================
+CREATE EXTENSION IF NOT EXISTS pgmq;
+SELECT pgmq.create('push_queue');
+
+-- ============================================================
+-- 6. Trigger: enqueue on notification insert
+-- ============================================================
 CREATE OR REPLACE FUNCTION enqueue_push_notification()
-RETURNS TRIGGER LANGUAGE plpgsql AS $$
+RETURNS TRIGGER LANGUAGE plpgsql SECURITY DEFINER AS $$
 BEGIN
   PERFORM pgmq.send('push_queue', jsonb_build_object(
     'notification_id', NEW.id,
@@ -74,7 +98,9 @@ CREATE TRIGGER trg_enqueue_push
   AFTER INSERT ON notifications
   FOR EACH ROW EXECUTE FUNCTION enqueue_push_notification();
 
--- pg_cron: process queue every 15 seconds
+-- ============================================================
+-- 7. pg_cron: process queue every 15 seconds
+-- ============================================================
 SELECT cron.schedule('process-push-queue', '15 seconds',
   $$SELECT net.http_post(
     url := current_setting('app.settings.edge_functions_url') || '/send-push-batch',
@@ -86,8 +112,10 @@ SELECT cron.schedule('process-push-queue', '15 seconds',
   )$$
 );
 
--- Weekly cleanup: purge inactive subscriptions older than 30 days
-SELECT cron.schedule('cleanup-dead-subs', '0 3 * * 0',
+-- ============================================================
+-- 8. pg_cron: weekly cleanup
+-- ============================================================
+SELECT cron.schedule('cleanup-dead-push-subs', '0 3 * * 0',
   $$DELETE FROM push_subscriptions
     WHERE is_active = FALSE AND updated_at < NOW() - INTERVAL '30 days'$$
 );

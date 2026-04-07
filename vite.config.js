@@ -21,10 +21,10 @@ export default defineConfig({
       ],
 
       manifest: {
-        name: 'Tendara Caregiver',
-        short_name: 'Tendara',
-        description: 'Tendara caregiver companion — visits, schedules, and communication.',
-        theme_color: '#0D9B7A',
+        name: 'StormStack Mission Control',
+        short_name: 'Mission Control',
+        description: 'Lightning protection operations dashboard and team management.',
+        theme_color: '#04245c',
         background_color: '#ffffff',
         display: 'standalone',
         scope: '/',
@@ -37,8 +37,8 @@ export default defineConfig({
           { src: 'maskable-icon-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
         screenshots: [
-          { src: 'screenshot-wide.png', sizes: '1280x720', type: 'image/png', form_factor: 'wide', label: 'Dashboard' },
-          { src: 'screenshot-narrow.png', sizes: '750x1334', type: 'image/png', form_factor: 'narrow', label: 'Visit details' },
+          { src: 'screenshot-wide.png', sizes: '1280x720', type: 'image/png', form_factor: 'wide', label: 'Operations dashboard' },
+          { src: 'screenshot-narrow.png', sizes: '750x1334', type: 'image/png', form_factor: 'narrow', label: 'Project details' },
         ],
       },
 

@@ -31,9 +31,7 @@ if (import.meta.env.PROD) {
 // RLS is evaluated server-side using the JWT. Caching authenticated
 // responses risks serving User A's data to User B.
 registerRoute(
-  ({ url }) =>
-    url.hostname.includes('supabase') ||
-    url.hostname === '137.220.48.180',
+  ({ url }) => url.hostname.includes('supabase'),
   new NetworkOnly()
 );
 
@@ -48,26 +46,24 @@ registerRoute(
   })
 );
 
-// User-uploaded images from Supabase Storage (public bucket only)
+// Public storage images (part photos, drawings, etc.)
 registerRoute(
   ({ url }) => url.pathname.startsWith('/storage/v1/object/public/'),
   new StaleWhileRevalidate({
     cacheName: 'public-storage',
-    plugins: [new ExpirationPlugin({ maxEntries: 100, maxAgeSeconds: 30 * 24 * 60 * 60 })],
+    plugins: [new ExpirationPlugin({ maxEntries: 200, maxAgeSeconds: 30 * 24 * 60 * 60 })],
   })
 );
 
 // ─── BACKGROUND SYNC ─────────────────────────────────────────
 // Queue failed POST/PATCH/DELETE to Supabase (Android/Chrome only)
-const bgSync = new BackgroundSyncPlugin('tendara-offline-mutations', {
+const bgSync = new BackgroundSyncPlugin('stormstack-offline-mutations', {
   maxRetentionTime: 24 * 60, // 24 hours
 });
 
 for (const method of ['POST', 'PATCH', 'DELETE']) {
   registerRoute(
-    ({ url }) =>
-      url.hostname.includes('supabase') ||
-      url.hostname === '137.220.48.180',
+    ({ url }) => url.hostname.includes('supabase'),
     new NetworkOnly({ plugins: [bgSync] }),
     method
   );
@@ -78,7 +74,7 @@ for (const method of ['POST', 'PATCH', 'DELETE']) {
 self.addEventListener('push', (event) => {
   // ALWAYS show a notification — iOS revokes subscriptions after ~3
   // push events that don't produce a visible notification.
-  const fallback = { title: 'Tendara', body: 'You have a new notification.' };
+  const fallback = { title: 'StormStack', body: 'You have a new notification.' };
   let data = fallback;
 
   try {

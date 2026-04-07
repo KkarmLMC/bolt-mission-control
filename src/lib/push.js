@@ -1,7 +1,7 @@
 import { db } from './supabase';
 
 const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY;
-const APP_NAME = import.meta.env.VITE_PWA_APP_NAME || 'caregiver';
+const APP_NAME = import.meta.env.VITE_PWA_APP_NAME || 'mission-control';
 
 function urlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
