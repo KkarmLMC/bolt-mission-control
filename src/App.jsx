@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { ArrowLeft, SignOut } from '@phosphor-icons/react'
 import Sidebar from './components/Sidebar'
@@ -11,6 +11,9 @@ import LeadModal from './components/modals/LeadModal'
 import { TaskModal, RelModal } from './components/modals/OtherModals'
 import { useAppData } from './hooks/useAppData'
 import { useAuth } from './lib/useAuth.jsx'
+import { ReloadPrompt } from './components/ReloadPrompt'
+import { OfflineBanner } from './components/OfflineBanner'
+import { subscribeToPush } from './lib/push'
 
 const Login         = lazy(() => import('./pages/Login'))
 const ChangeOrders  = lazy(() => import('./pages/ChangeOrders'))
@@ -75,6 +78,16 @@ export default function App() {
   const handleSaveLead = async (f) => { await saveLead(f); setModal(null) }
   const handleSaveRel  = async (f) => { await saveRel(f);  setModal(null) }
   const handleSaveTask = async (f) => { await saveTask(f); setModal(null) }
+
+  // Re-subscribe to push on every authenticated app launch
+  useEffect(() => {
+    if (!session) return;
+    async function ensureSubscription() {
+      if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
+      await subscribeToPush();
+    }
+    ensureSubscription();
+  }, [session])
 
   // Auth loading spinner
   if (authLoading) return (
@@ -158,6 +171,9 @@ export default function App() {
       {modal?.type === 'lead' && <LeadModal lead={modal.data} onClose={() => setModal(null)} onSave={handleSaveLead} />}
       {modal?.type === 'rel'  && <RelModal  rel={modal.data}  onClose={() => setModal(null)} onSave={handleSaveRel}  />}
       {modal?.type === 'task' && <TaskModal task={modal.data} onClose={() => setModal(null)} onSave={handleSaveTask} />}
+
+      <OfflineBanner />
+      <ReloadPrompt />
     </div>
   )
 }

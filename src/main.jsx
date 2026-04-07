@@ -17,6 +17,7 @@ import App from './App.jsx'
 import { AuthProvider } from './lib/useAuth.jsx'
 import '@kkarm-lmc/shared/styles/globals.css'
 import './styles/globals.css'
+import './styles/pwa.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

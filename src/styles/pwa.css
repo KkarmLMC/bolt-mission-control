@@ -1,0 +1,176 @@
+/* =============================================================================
+   PWA COMPONENTS — Reload prompt, push prompt, offline banner, install banner
+   ============================================================================= */
+
+/* ─── Reload Prompt ─── */
+.reload-prompt {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background: var(--surface-base, #1a2332);
+  border: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  min-width: 280px;
+  max-width: 90vw;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  animation: pwa-slide-up 0.3s ease;
+}
+
+.reload-prompt__text {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  color: var(--text-primary, #fff);
+}
+
+.reload-prompt__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.reload-prompt__btn {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-subtle, rgba(255,255,255,0.12));
+  background: transparent;
+  color: var(--text-secondary, rgba(255,255,255,0.7));
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.reload-prompt__btn:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.reload-prompt__btn--primary {
+  background: #0D9B7A;
+  color: #fff;
+  border-color: #0D9B7A;
+}
+
+.reload-prompt__btn--primary:hover {
+  background: #0b8568;
+}
+
+/* ─── Push Prompt ─── */
+.push-prompt {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9998;
+  background: var(--surface-base, #1a2332);
+  border: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  min-width: 280px;
+  max-width: 90vw;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  animation: pwa-slide-up 0.3s ease;
+}
+
+.push-prompt__message {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  color: var(--text-primary, #fff);
+}
+
+.push-prompt__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.push-prompt__btn {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-subtle, rgba(255,255,255,0.12));
+  background: transparent;
+  color: var(--text-secondary, rgba(255,255,255,0.7));
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.push-prompt__btn:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.push-prompt__btn--primary {
+  background: #0D9B7A;
+  color: #fff;
+  border-color: #0D9B7A;
+}
+
+.push-prompt__btn--primary:hover {
+  background: #0b8568;
+}
+
+/* ─── Offline Banner ─── */
+.offline-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+  background: #E86C4F;
+  color: #fff;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* ─── iOS Install Banner ─── */
+.ios-install-banner {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9997;
+  background: var(--surface-base, #1a2332);
+  border: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  min-width: 280px;
+  max-width: 90vw;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  animation: pwa-slide-up 0.3s ease;
+}
+
+.ios-install-banner__text {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-primary, #fff);
+}
+
+.ios-install-banner__steps {
+  margin: 0 0 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary, rgba(255,255,255,0.7));
+  line-height: 1.5;
+}
+
+.ios-install-banner__dismiss {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-subtle, rgba(255,255,255,0.12));
+  background: transparent;
+  color: var(--text-secondary, rgba(255,255,255,0.7));
+  font-size: 0.8125rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* ─── Shared animation ─── */
+@keyframes pwa-slide-up {
+  from { opacity: 0; transform: translateX(-50%) translateY(1rem); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
